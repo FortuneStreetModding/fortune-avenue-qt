@@ -94,7 +94,7 @@ QDataStream &operator>>(QDataStream &stream, BoardData &data) {
     stream >> squareCount;
     stream.skipRawData(2);
     for (quint16 i=0; i<squareCount; ++i) {
-        SquareData square;
+        SquareData square(i);
         stream >> square;
         data.squares.append(square);
     }

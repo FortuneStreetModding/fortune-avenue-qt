@@ -56,6 +56,7 @@ QVector<QColor> districtColors = {
 };
 
 QFont valueFont("Lato", 18);
+QFont idFont("Lato", 10);
 
 SquareItem::SquareItem(const SquareData &dataValue, QGraphicsItem *parent) : QGraphicsObject(parent), data(dataValue) {
     setFlag(GraphicsItemFlag::ItemIsMovable);
@@ -88,6 +89,10 @@ void SquareItem::paint(QPainter *painter, const QStyleOptionGraphicsItem *option
         painter->setFont(valueFont);
         drawTextCentered(painter, 32, 38, QString::number(data.value));
     }
+
+    painter->setPen(Qt::white);
+    painter->setFont(idFont);
+    painter->drawText(2, 12, QString::number(data.id));
 }
 
 SquareData &SquareItem::getData() {
