@@ -1,0 +1,48 @@
+<RCC>
+    <qresource prefix="/squares">
+        <file>GroundWarpE.png</file>
+        <file>GroundWarpD.png</file>
+        <file>GroundWarpC.png</file>
+        <file>GroundWarpB.png</file>
+        <file>GroundWarpA.png</file>
+        <file>GroundWarp.png</file>
+        <file>GroundVenture.png</file>
+        <file>GroundVacant.png</file>
+        <file>GroundTakeABreak.png</file>
+        <file>GroundSwitch.png</file>
+        <file>GroundSuit04.png</file>
+        <file>GroundSuit03.png</file>
+        <file>GroundSuit02.png</file>
+        <file>GroundSuit01.png</file>
+        <file>GroundStone.png</file>
+        <file>GroundStockBroker.png</file>
+        <file>GroundRollOn.png</file>
+        <file>GroundProperty.png</file>
+        <file>GroundPipe.png</file>
+        <file>GroundMagmalice.png</file>
+        <file>GroundLiftMagmaliceStart.png</file>
+        <file>GroundLift.png</file>
+        <file>GroundDoorYellow.png</file>
+        <file>GroundDoorRed.png</file>
+        <file>GroundDoorMario.png</file>
+        <file>GroundDoorGreen.png</file>
+        <file>GroundDoorDQ.png</file>
+        <file>GroundDoorBlue.png</file>
+        <file>GroundDefault.png</file>
+        <file>GroundCSuit04.png</file>
+        <file>GroundCSuit03.png</file>
+        <file>GroundCSuit02.png</file>
+        <file>GroundCSuit01.png</file>
+        <file>GroundCasino.png</file>
+        <file>GroundCannon.png</file>
+        <file>GroundBoon.png</file>
+        <file>GroundBoom.png</file>
+        <file>GroundBank.png</file>
+        <file>GroundArcade.png</file>
+        <file>EventSquare.png</file>
+        <file>Path.png</file>
+    </qresource>
+    <qresource prefix="/fonts">
+        <file>Lato-Regular.ttf</file>
+    </qresource>
+</RCC>
