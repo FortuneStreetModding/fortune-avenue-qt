@@ -17,6 +17,9 @@ MainWindow::MainWindow(QWidget *parent)
     connect(ui->actionSave, SIGNAL(triggered()), this, SLOT(saveFile()));
     connect(ui->actionSave_As, SIGNAL(triggered()), this, SLOT(saveFileAs()));
     connect(scene, SIGNAL(selectionChanged()), this, SLOT(updateSquareSidebar()));
+    ui->loopingMode->setId(ui->loopingNone, LoopingMode::None);
+    ui->loopingMode->setId(ui->loopingVertical, LoopingMode::Vertical);
+    ui->loopingMode->setId(ui->loopingVerticalHorizontal, LoopingMode::Both);
 }
 
 MainWindow::~MainWindow()
@@ -65,6 +68,10 @@ void MainWindow::loadFile(BoardFile file) {
     qDebug() << "load file";
     ui->initialCash->setText(QString::number(file.boardInfo.initialCash));
     ui->targetAmount->setText(QString::number(file.boardInfo.targetAmount));
+    ui->baseSalary->setText(QString::number(file.boardInfo.baseSalary));
+    ui->salaryIncrement->setText(QString::number(file.boardInfo.salaryIncrement));
+    ui->maxDiceRoll->setText(QString::number(file.boardInfo.maxDiceRoll));
+    ui->loopingMode->button(file.boardInfo.galaxyStatus)->setChecked(true);
     for (auto &square: file.boardData.squares) {
         //qDebug() << square.positionX << square.positionY;
         scene->addItem(new SquareItem(square));
