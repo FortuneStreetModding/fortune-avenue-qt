@@ -20,6 +20,8 @@ MainWindow::MainWindow(QWidget *parent)
     ui->loopingMode->setId(ui->loopingNone, LoopingMode::None);
     ui->loopingMode->setId(ui->loopingVertical, LoopingMode::Vertical);
     ui->loopingMode->setId(ui->loopingVerticalHorizontal, LoopingMode::Both);
+    ui->type->addItem("");
+    ui->type->addItems(squareTexts());
 }
 
 MainWindow::~MainWindow()
@@ -66,6 +68,7 @@ void MainWindow::saveFileAs() {
 
 void MainWindow::loadFile(BoardFile file) {
     qDebug() << "load file";
+    ui->boardEdit->setEnabled(true);
     ui->initialCash->setText(QString::number(file.boardInfo.initialCash));
     ui->targetAmount->setText(QString::number(file.boardInfo.targetAmount));
     ui->baseSalary->setText(QString::number(file.boardInfo.baseSalary));
@@ -88,9 +91,14 @@ BoardFile MainWindow::exportFile() {
 void MainWindow::updateSquareSidebar() {
     auto selectedItems = scene->selectedItems();
     if (selectedItems.size() == 1) {
+        ui->squareEdit->setEnabled(true);
         SquareItem *item = (SquareItem *)selectedItems[0];
         ui->id->setText(QString::number(item->getData().id));
+        ui->type->setCurrentText(squareTypeToText(item->getData().squareType));
+        ui->districtDestinationId->setText(QString::number(item->getData().districtDestinationId));
+
     } else {
         ui->id->setText("");
+        ui->squareEdit->setEnabled(false);
     }
 }

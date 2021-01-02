@@ -65,8 +65,14 @@ enum SquareType : quint16 {
     EventSquare = 0x2E, // custom square
     unknown0x2F = 0x2F,
 
-    VacantPlot = 0x30
+    VacantPlot = 0x30,
+
+    _Unrecognized = 0xFFFF // Returned by textToSquareType for unrecognized things.
 };
+
+QString squareTypeToText(SquareType type);
+SquareType textToSquareType(QString string);
+QList<QString> squareTexts();
 
 struct SquareData {
     static constexpr size_t SIZE = 0x20;
@@ -140,8 +146,6 @@ struct BoardData {
 
     BoardData() : header("I4PL") {}
     QVector<SquareData> squares;
-
-    void updateSquareIds();
 
     friend QDataStream &operator>>(QDataStream &stream, BoardData &data);
     friend QDataStream &operator<<(QDataStream &stream, const BoardData &data);

@@ -1,4 +1,5 @@
 #include "fortunestreetdata.h"
+#include <QMap>
 
 QDataStream &operator>>(QDataStream &stream, WaypointData &data) {
     stream >> data.entryId;
@@ -128,8 +129,43 @@ QDataStream &operator<<(QDataStream &stream, const BoardFile &data) {
     return stream;
 }
 
-void BoardData::updateSquareIds() {
-    for (int i=0; i<squares.size(); ++i) {
-        squares[i].id = i;
-    }
-}
+QMap<QString, SquareType> textToSquareTypes = {
+    {"Property", Property},
+    {"Bank", Bank},
+    {"Venture", VentureSquare},
+    {"Spades", SuitSquareSpade},
+    {"Hearts", SuitSquareHeart},
+    {"Diamonds", SuitSquareDiamond},
+    {"Clubs", SuitSquareClub},
+    {"Spades (Change-of-Suit)", ChangeOfSuitSquareSpade},
+    {"Hearts (Change-of-Suit)", ChangeOfSuitSquareHeart},
+    {"Diamonds (Change-of-Suit)", ChangeOfSuitSquareDiamond},
+    {"Clubs (Change-of-Suit)", ChangeOfSuitSquareClub},
+    {"Take-A-Break", TakeABreakSquare},
+    {"Boon", BoonSquare},
+    {"Boom", BoomSquare},
+    {"Stockbroker", StockBrokerSquare},
+    {"Roll On", RollOnSquare},
+    {"Arcade", ArcadeSquare},
+    {"Switch", SwitchSquare},
+    {"Cannon", CannonSquare},
+    {"Backstreet A", BackStreetSquareA},
+    {"Backstreet B", BackStreetSquareB},
+    {"Backstreet C", BackStreetSquareC},
+    {"Backstreet D", BackStreetSquareD},
+    {"Backstreet E", BackStreetSquareE},
+    {"One-Way Alley Door A", OneWayAlleyDoorA},
+    {"One-Way Alley Door B", OneWayAlleyDoorB},
+    {"One-Way Alley Door C", OneWayAlleyDoorC},
+    {"One-Way Alley Door D", OneWayAlleyDoorD},
+    {"Lift/Magmalice Start", LiftMagmaliceSquareStart},
+    {"Lift End", LiftSquareEnd},
+    {"Magmalice", MagmaliceSquare},
+    {"One-Way Alley End", OneWayAlleySquare},
+    {"Event", EventSquare},
+    {"Vacant Plot", VacantPlot}
+};
+
+QString squareTypeToText(SquareType type) { return textToSquareTypes.key(type, ""); }
+SquareType textToSquareType(QString string) { return textToSquareTypes.value(string, _Unrecognized); }
+QList<QString> squareTexts() { return textToSquareTypes.keys(); }
