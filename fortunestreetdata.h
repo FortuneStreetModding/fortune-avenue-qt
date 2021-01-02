@@ -141,6 +141,8 @@ struct BoardData {
     BoardData() : header("I4PL") {}
     QVector<SquareData> squares;
 
+    void updateSquareIds();
+
     friend QDataStream &operator>>(QDataStream &stream, BoardData &data);
     friend QDataStream &operator<<(QDataStream &stream, const BoardData &data);
 private:

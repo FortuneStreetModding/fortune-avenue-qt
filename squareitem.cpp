@@ -76,7 +76,7 @@ void SquareItem::paint(QPainter *painter, const QStyleOptionGraphicsItem *option
     QPen pen(Qt::transparent, 2, Qt::SolidLine);
     pen.setJoinStyle(Qt::MiterJoin);
     if (isSelected()) {
-        pen.setColor(Qt::white);
+        pen.setColor(QColor("#eeeeee"));
     } else if (data.squareType == Property || data.squareType == VacantPlot) {
         pen.setColor(districtColors.value(data.districtDestinationId, Qt::transparent));
     }

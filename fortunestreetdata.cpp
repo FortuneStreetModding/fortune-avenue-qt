@@ -127,3 +127,9 @@ QDataStream &operator<<(QDataStream &stream, const BoardFile &data) {
     stream << data.boardData;
     return stream;
 }
+
+void BoardData::updateSquareIds() {
+    for (int i=0; i<squares.size(); ++i) {
+        squares[i].id = i;
+    }
+}

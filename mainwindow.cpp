@@ -14,6 +14,9 @@ MainWindow::MainWindow(QWidget *parent)
     ui->graphicsView->centerOn(0, 0);
     connect(ui->actionNew, SIGNAL(triggered()), this, SLOT(newFile()));
     connect(ui->actionOpen, SIGNAL(triggered()), this, SLOT(openFile()));
+    connect(ui->actionSave, SIGNAL(triggered()), this, SLOT(saveFile()));
+    connect(ui->actionSave_As, SIGNAL(triggered()), this, SLOT(saveFileAs()));
+    connect(scene, SIGNAL(selectionChanged()), this, SLOT(updateSquareSidebar()));
 }
 
 MainWindow::~MainWindow()
@@ -48,6 +51,16 @@ void MainWindow::openFile() {
     }
 }
 
+void MainWindow::saveFile() {
+    qDebug() << "save file";
+    // todo expand this stub
+}
+
+void MainWindow::saveFileAs() {
+    qDebug() << "save file as";
+    // todo expand this stub
+}
+
 void MainWindow::loadFile(BoardFile file) {
     qDebug() << "load file";
     ui->initialCash->setText(QString::number(file.boardInfo.initialCash));
@@ -65,3 +78,12 @@ BoardFile MainWindow::exportFile() {
     return file;
 }
 
+void MainWindow::updateSquareSidebar() {
+    auto selectedItems = scene->selectedItems();
+    if (selectedItems.size() == 1) {
+        SquareItem *item = (SquareItem *)selectedItems[0];
+        ui->id->setText(QString::number(item->getData().id));
+    } else {
+        ui->id->setText("");
+    }
+}

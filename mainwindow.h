@@ -24,7 +24,10 @@ private:
     void loadFile(BoardFile file);
     BoardFile exportFile();
 private slots:
+    void updateSquareSidebar();
     void newFile();
     void openFile();
+    void saveFile();
+    void saveFileAs();
 };
 #endif // MAINWINDOW_H
