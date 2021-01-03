@@ -3,6 +3,8 @@ TARGET="Fortune Avenue"
 # update this for release
 VERSION = 1.0.0.0
 
+QMAKE_TARGET_BUNDLE_PREFIX = com.fortunestreetmodding
+
 QT       += core gui
 
 greaterThan(QT_MAJOR_VERSION, 4): QT += widgets
