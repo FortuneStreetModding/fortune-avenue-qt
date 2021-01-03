@@ -6,5 +6,9 @@ FortuneAvenueGraphicsScene::FortuneAvenueGraphicsScene(const QRectF &rect, QObje
     : QGraphicsScene(rect, parent) {}
 FortuneAvenueGraphicsScene::FortuneAvenueGraphicsScene(QObject *parent) : QGraphicsScene(parent) {}
 
+FortuneAvenueGraphicsScene::~FortuneAvenueGraphicsScene() {
+    clearSelection();
+}
+
 int FortuneAvenueGraphicsScene::getSnapSize() const { return snapSize; }
 void FortuneAvenueGraphicsScene::setSnapSize(int value) { snapSize = value; }

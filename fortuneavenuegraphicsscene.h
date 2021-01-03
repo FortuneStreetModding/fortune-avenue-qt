@@ -10,6 +10,7 @@ public:
     FortuneAvenueGraphicsScene(qreal x, qreal y, qreal w, qreal h, QObject *parent = nullptr);
     FortuneAvenueGraphicsScene(const QRectF &rect, QObject *parent = nullptr);
     FortuneAvenueGraphicsScene(QObject *parent = nullptr);
+    ~FortuneAvenueGraphicsScene() override;
     int getSnapSize() const;
     void setSnapSize(int value);
 private:
