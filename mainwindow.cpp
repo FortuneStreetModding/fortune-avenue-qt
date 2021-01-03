@@ -245,7 +245,36 @@ int MainWindow::calcSnapSizeFromInput() {
 }
 
 void MainWindow::calcStockPrices() {
-    // todo implement
+    QStringList builder;
+    QVector<int> districtCount(12);
+    QVector<int> districtSum(12);
+    int highestDistrict = -1;
+    auto items = scene->items(Qt::AscendingOrder);
+    for (auto item: qAsConst(items)) {
+        auto &square = ((SquareItem *)item)->getData();
+        if (square.districtDestinationId >= 12) {
+            continue;
+        }
+        if (square.squareType == VacantPlot) {
+            districtSum[square.districtDestinationId] += 200;
+        } else if (square.squareType == Property) {
+            districtSum[square.districtDestinationId] += square.value;
+        } else {
+            continue;
+        }
+        ++districtCount[square.districtDestinationId];
+        highestDistrict = qMax(highestDistrict, (int)square.districtDestinationId);
+    }
+    for (int i=0; i<=highestDistrict; ++i) {
+        if (districtCount[i] == 0) {
+            continue;
+        }
+        qint64 result = districtSum[i] / districtCount[i];
+        result *= 0xB00;
+        result >>= 16;
+        builder << QString("District %1: %2g").arg(char('A' + i)).arg(result);
+    }
+    QMessageBox::information(this, "District Stock Prices", builder.join("\n"));
 }
 
 void MainWindow::verifyBoard() {
