@@ -8,7 +8,7 @@
 #include "util.h"
 
 MainWindow::MainWindow(QWidget *parent)
-    : QMainWindow(parent), ui(new Ui::MainWindow), scene(new QGraphicsScene(-1600, -1600, 3200, 3200, this))
+    : QMainWindow(parent), ui(new Ui::MainWindow), scene(new FortuneAvenueGraphicsScene(-1600, -1600, 3200, 3200, this))
 {
     ui->setupUi(this);
     waypointStarts = {ui->waypoint1Start, ui->waypoint2Start, ui->waypoint3Start, ui->waypoint4Start};
@@ -31,6 +31,12 @@ MainWindow::MainWindow(QWidget *parent)
     connect(ui->addSquare, &QPushButton::clicked, this, &MainWindow::addSquare);
     connect(ui->removeSquare, &QPushButton::clicked, this, &MainWindow::removeSquare);
     connect(scene, &QGraphicsScene::selectionChanged, this, &MainWindow::updateSquareSidebar);
+    connect(ui->snapToCheck, &QCheckBox::clicked, this, [&](bool) {
+        scene->setSnapSize(ui->snapToCheck->isChecked() ? calcSnapSizeFromInput() : 1);
+    });
+    connect(ui->snapTo, &QLineEdit::textEdited, this, [&](const QString &) {
+        scene->setSnapSize(ui->snapToCheck->isChecked() ? calcSnapSizeFromInput() : 1);
+    });
 
     registerSquareSidebarEvents();
 }
@@ -215,4 +221,9 @@ void MainWindow::removeSquare() {
     }
 
     scene->update();
+}
+
+int MainWindow::calcSnapSizeFromInput() {
+    int result = ui->snapTo->text().toInt();
+    return result > 0 ? result : 1;
 }

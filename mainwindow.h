@@ -4,6 +4,7 @@
 #include <QGraphicsScene>
 #include <QLineEdit>
 #include <QMainWindow>
+#include "fortuneavenuegraphicsscene.h"
 #include "fortunestreetdata.h"
 
 QT_BEGIN_NAMESPACE
@@ -23,7 +24,7 @@ private:
     QVector<QLineEdit *> waypointStarts;
     QVector<QWidget *> waypointDests;
 
-    QGraphicsScene *scene;
+    FortuneAvenueGraphicsScene *scene;
 
     void loadFile(BoardFile file);
     BoardFile exportFile();
@@ -36,5 +37,6 @@ private:
     void saveFileAs();
     void addSquare();
     void removeSquare();
+    int calcSnapSizeFromInput();
 };
 #endif // MAINWINDOW_H

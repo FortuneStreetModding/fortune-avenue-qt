@@ -1,7 +1,10 @@
 #include "squareitem.h"
+
+#include <QApplication>
 #include <QPainter>
 #include <QMap>
 #include <QVector>
+#include "fortuneavenuegraphicsscene.h"
 
 QMap<SquareType, QString> typeToFile = {
     {Property, ":/squares/GroundProperty.png"},
@@ -58,12 +61,11 @@ QVector<QColor> districtColors = {
 QFont valueFont("Lato", 18);
 QFont idFont("Lato", 10);
 
-SquareItem::SquareItem(const SquareData &dataValue, QGraphicsItem *parent) : QGraphicsObject(parent), data(dataValue) {
+SquareItem::SquareItem(const SquareData &dataValue, QGraphicsItem *parent) : QGraphicsItem(parent), data(dataValue) {
     setFlag(ItemIsMovable);
     setFlag(ItemIsSelectable);
+    setFlag(ItemSendsGeometryChanges);
     setPos(data.positionX, data.positionY);
-    connect(this, &SquareItem::xChanged, this, &SquareItem::changeX);
-    connect(this, &SquareItem::yChanged, this, &SquareItem::changeY);
 }
 
 QRectF SquareItem::boundingRect() const {
@@ -104,10 +106,19 @@ void SquareItem::drawTextCentered(QPainter *painter, int x, int y, const QString
     painter->drawText(x - boundingRect.width()/2, y, text);
 }
 
-void SquareItem::changeX() {
-    data.positionX = x();
-};
-
-void SquareItem::changeY() {
-    data.positionY = y();
-};
+QVariant SquareItem::itemChange(GraphicsItemChange change, const QVariant &value) {
+    if (change == ItemPositionChange) {
+        QPointF newPos = value.toPointF();
+        FortuneAvenueGraphicsScene *fortuneScene = qobject_cast<FortuneAvenueGraphicsScene *>(scene());
+        if (QApplication::mouseButtons() == Qt::LeftButton && fortuneScene) {
+            int gridSize = fortuneScene->getSnapSize(); // todo adjust
+            qreal xV = round(newPos.x()/gridSize)*gridSize;
+            qreal yV = round(newPos.y()/gridSize)*gridSize;
+            newPos = QPointF(xV, yV);
+        }
+        data.positionX = x();
+        data.positionY = y();
+        return newPos;
+    }
+    return QGraphicsItem::itemChange(change, value);
+}

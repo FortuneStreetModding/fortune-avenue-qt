@@ -2,20 +2,19 @@
 #define SQUAREITEM_H
 
 #include "fortunestreetdata.h"
-#include <QGraphicsObject>
+#include <QGraphicsItem>
 
-class SquareItem : public QGraphicsObject {
-    Q_OBJECT
+class SquareItem : public QGraphicsItem {
 public:
     SquareItem(const SquareData &dataValue, QGraphicsItem *parent = nullptr);
     QRectF boundingRect() const override;
     void paint(QPainter *painter, const QStyleOptionGraphicsItem *option, QWidget *widget) override;
     SquareData &getData();
+protected:
+    QVariant itemChange(GraphicsItemChange change, const QVariant &value) override;
 private:
     SquareData data;
     static void drawTextCentered(QPainter *painter, int x, int y, const QString &text);
-    void changeX();
-    void changeY();
 };
 
 #endif // SQUAREITEM_H
