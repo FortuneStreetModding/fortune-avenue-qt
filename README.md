@@ -5,7 +5,7 @@ Cross-platform port of Fortune Avenue.
 QT Creator can build for you. Alternatively you can build with the below commands:
 
 ```
-qmake fortune-avenue-qt.pro
+qmake fortune-avenue-port.pro
 make
 ```
 
