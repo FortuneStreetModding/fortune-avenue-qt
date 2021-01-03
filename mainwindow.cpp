@@ -113,8 +113,9 @@ BoardFile MainWindow::exportFile() {
     file.boardInfo.salaryIncrement = ui->salaryIncrement->text().toUShort();
     file.boardInfo.maxDiceRoll = ui->maxDiceRoll->text().toUShort();
     file.boardInfo.galaxyStatus = (LoopingMode)ui->loopingMode->checkedId();
-    auto items = scene->items();
+    auto items = scene->items(Qt::AscendingOrder);
     for (auto item: qAsConst(items)) {
+        //qDebug() << ((SquareItem *)item)->getData().id;
         file.boardData.squares.append(((SquareItem *)item)->getData());
     }
     return file;
