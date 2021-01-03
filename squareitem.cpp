@@ -59,8 +59,8 @@ QFont valueFont("Lato", 18);
 QFont idFont("Lato", 10);
 
 SquareItem::SquareItem(const SquareData &dataValue, QGraphicsItem *parent) : QGraphicsObject(parent), data(dataValue) {
-    setFlag(GraphicsItemFlag::ItemIsMovable);
-    setFlag(GraphicsItemFlag::ItemIsSelectable);
+    setFlag(ItemIsMovable);
+    setFlag(ItemIsSelectable);
     setPos(data.positionX, data.positionY);
     connect(this, &SquareItem::xChanged, this, &SquareItem::changeX);
     connect(this, &SquareItem::yChanged, this, &SquareItem::changeY);

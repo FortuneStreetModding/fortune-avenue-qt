@@ -90,6 +90,7 @@ void MainWindow::saveFileAs() {
     if (saveFile.open(QIODevice::WriteOnly)) {
         QDataStream stream(&saveFile);
         stream << exportFile();
+        setWindowFilePath(saveFileName);
     } else {
         QMessageBox::critical(this, "Error saving file file", "An error occurred while trying to save the file");
     }
