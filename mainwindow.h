@@ -30,7 +30,7 @@ private:
     BoardFile exportFile();
     void registerSquareSidebarEvents();
     void updateSquareSidebar();
-    void updateSquareData(const QString &dummy = "");
+    void updateSquareData(bool calcValue = false, bool calcPrice = false);
     void newFile();
     void openFile();
     void saveFile();

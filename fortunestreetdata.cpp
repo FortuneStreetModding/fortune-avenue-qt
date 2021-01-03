@@ -1,5 +1,6 @@
 #include "fortunestreetdata.h"
 #include <QMap>
+#include <QtMath>
 
 QDataStream &operator>>(QDataStream &stream, WaypointData &data) {
     stream >> data.entryId;
@@ -15,6 +16,14 @@ QDataStream &operator<<(QDataStream &stream, const WaypointData &data) {
         stream << dest;
     }
     return stream;
+}
+
+void SquareData::updateValueFromShopModel() {
+    value = shopModel*10;
+}
+void SquareData::updatePriceFromValue() {
+    qreal yield = -0.15 * qPow(0.2, 0.005 * value) + 0.2;
+    price = qRound(value * yield - 0.2);
 }
 
 QDataStream &operator>>(QDataStream &stream, SquareData &data) {

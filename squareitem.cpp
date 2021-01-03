@@ -64,8 +64,8 @@ QFont idFont("Lato", 10);
 SquareItem::SquareItem(const SquareData &dataValue, QGraphicsItem *parent) : QGraphicsItem(parent), data(dataValue) {
     setFlag(ItemIsMovable);
     setFlag(ItemIsSelectable);
-    setFlag(ItemSendsGeometryChanges);
     setPos(data.positionX, data.positionY);
+    setFlag(ItemSendsGeometryChanges);
 }
 
 QRectF SquareItem::boundingRect() const {
@@ -118,6 +118,7 @@ QVariant SquareItem::itemChange(GraphicsItemChange change, const QVariant &value
         }
         data.positionX = x();
         data.positionY = y();
+        //qDebug() << data.id << data.positionX << data.positionY;
         return newPos;
     }
     return QGraphicsItem::itemChange(change, value);

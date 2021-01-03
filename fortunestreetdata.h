@@ -90,6 +90,9 @@ struct SquareData {
     quint8 unknown2 = 0;
     quint8 shopModel = 0;
 
+    void updateValueFromShopModel();
+    void updatePriceFromValue();
+
     friend QDataStream &operator>>(QDataStream &stream, SquareData &data);
     friend QDataStream &operator<<(QDataStream &stream, const SquareData &data);
 };

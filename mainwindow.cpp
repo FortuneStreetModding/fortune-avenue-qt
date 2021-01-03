@@ -164,23 +164,27 @@ void MainWindow::updateSquareSidebar() {
 }
 
 void MainWindow::registerSquareSidebarEvents() {
-    connect(ui->type, &QComboBox::textActivated, this, &MainWindow::updateSquareData);
-    connect(ui->districtDestinationId, &QLineEdit::textEdited, this, &MainWindow::updateSquareData);
-    connect(ui->shopModel, &QComboBox::textActivated, this, &MainWindow::updateSquareData);
-    connect(ui->initialValue, &QLineEdit::textEdited, this, &MainWindow::updateSquareData);
-    connect(ui->initialPrice, &QLineEdit::textEdited, this, &MainWindow::updateSquareData);
+    connect(ui->type, &QComboBox::textActivated, this, [&](const QString &) { updateSquareData(); });
+    connect(ui->districtDestinationId, &QLineEdit::textEdited, this, [&](const QString &) { updateSquareData(); });
+    connect(ui->shopModel, &QComboBox::textActivated, this, [&](const QString &) {
+        updateSquareData(true, true);
+    });
+    connect(ui->initialValue, &QLineEdit::textEdited, this, [&](const QString &) {
+        updateSquareData(false, true);
+    });
+    connect(ui->initialPrice, &QLineEdit::textEdited, this, [&](const QString &) { updateSquareData(); });
     connect(ui->isLift, &QCheckBox::clicked, this, [&](bool) { updateSquareData(); });
     for (auto &waypointStart: waypointStarts) {
-        connect(waypointStart, &QLineEdit::textEdited, this, &MainWindow::updateSquareData);
+        connect(waypointStart, &QLineEdit::textEdited, this, [&](const QString &) { updateSquareData(); });
     }
     for (auto &waypointDest: waypointDests) {
         for (auto &child: waypointDest->findChildren<QLineEdit *>()) {
-            connect(child, &QLineEdit::textEdited, this, &MainWindow::updateSquareData);
+            connect(child, &QLineEdit::textEdited, this, [&](const QString &) { updateSquareData(); });
         }
     }
 }
 
-void MainWindow::updateSquareData(const QString &) {
+void MainWindow::updateSquareData(bool calcValue, bool calcPrice) {
     qDebug() << "updating square";
     auto selectedItems = scene->selectedItems();
     if (selectedItems.size() == 1) {
@@ -197,6 +201,15 @@ void MainWindow::updateSquareData(const QString &) {
             for (int j=0; j<3; ++j) {
                 item->getData().waypoints[i].destinations[j] = children[j]->text().toUInt();
             }
+        }
+        if (calcValue) {
+            item->getData().updateValueFromShopModel();
+        }
+        if (calcPrice) {
+            item->getData().updatePriceFromValue();
+        }
+        if (calcValue || calcPrice) {
+            updateSquareSidebar();
         }
         item->update();
     }

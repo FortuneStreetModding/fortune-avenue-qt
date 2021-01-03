@@ -4,7 +4,7 @@
 #include <QAbstractButton>
 
 QString addShortcutToText(QString text, QKeySequence shortcut) {
-    return QString("%1 %2").arg(text).arg(shortcut.toString(QKeySequence::NativeText));
+    return QString("%1\n%2").arg(text).arg(shortcut.toString(QKeySequence::NativeText));
 }
 
 void addShortcutTextToButton(QAbstractButton *button) {
