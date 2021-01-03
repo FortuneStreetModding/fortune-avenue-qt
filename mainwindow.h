@@ -26,7 +26,7 @@ private:
 
     FortuneAvenueGraphicsScene *scene;
 
-    void loadFile(BoardFile file);
+    void loadFile(const BoardFile &file);
     BoardFile exportFile();
     void registerSquareSidebarEvents();
     void updateSquareSidebar();

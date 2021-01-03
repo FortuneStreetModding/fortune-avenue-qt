@@ -107,7 +107,7 @@ void MainWindow::saveFileAs() {
     }
 }
 
-void MainWindow::loadFile(BoardFile file) {
+void MainWindow::loadFile(const BoardFile &file) {
     ui->boardEdit->setEnabled(true);
     ui->actionSave->setEnabled(true);
     ui->actionSave_As->setEnabled(true);
