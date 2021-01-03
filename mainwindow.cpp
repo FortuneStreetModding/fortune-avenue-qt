@@ -35,7 +35,7 @@ MainWindow::~MainWindow()
 
 void MainWindow::newFile() {
     qDebug() << "new file";
-    loadFile(BoardFile());
+    loadFile(BoardFile(true));
 }
 
 void MainWindow::openFile() {
@@ -63,12 +63,29 @@ void MainWindow::openFile() {
 
 void MainWindow::saveFile() {
     qDebug() << "save file";
-    // todo expand this stub
+    if (windowFilePath().isEmpty()) {
+        saveFileAs();
+    } else {
+        QFile saveFile(windowFilePath());
+        if (saveFile.open(QIODevice::WriteOnly)) {
+            QDataStream stream(&saveFile);
+            stream << exportFile();
+        } else {
+            QMessageBox::critical(this, "Error saving file file", "An error occurred while trying to save the file");
+        }
+    }
 }
 
 void MainWindow::saveFileAs() {
     qDebug() << "save file as";
-    // todo expand this stub
+    QString saveFileName = QFileDialog::getSaveFileName(this, "Save File", "", "Fortune Street Boards (*.frb)");
+    QFile saveFile(saveFileName);
+    if (saveFile.open(QIODevice::WriteOnly)) {
+        QDataStream stream(&saveFile);
+        stream << exportFile();
+    } else {
+        QMessageBox::critical(this, "Error saving file file", "An error occurred while trying to save the file");
+    }
 }
 
 void MainWindow::loadFile(BoardFile file) {
@@ -80,6 +97,7 @@ void MainWindow::loadFile(BoardFile file) {
     ui->salaryIncrement->setText(QString::number(file.boardInfo.salaryIncrement));
     ui->maxDiceRoll->setText(QString::number(file.boardInfo.maxDiceRoll));
     ui->loopingMode->button(file.boardInfo.galaxyStatus)->setChecked(true);
+    scene->clear();
     for (auto &square: file.boardData.squares) {
         //qDebug() << square.positionX << square.positionY;
         scene->addItem(new SquareItem(square));
@@ -89,7 +107,16 @@ void MainWindow::loadFile(BoardFile file) {
 
 BoardFile MainWindow::exportFile() {
     BoardFile file;
-    // todo add board file stuff
+    file.boardInfo.initialCash = ui->initialCash->text().toUShort();
+    file.boardInfo.targetAmount = ui->targetAmount->text().toUShort();
+    file.boardInfo.baseSalary = ui->baseSalary->text().toUShort();
+    file.boardInfo.salaryIncrement = ui->salaryIncrement->text().toUShort();
+    file.boardInfo.maxDiceRoll = ui->maxDiceRoll->text().toUShort();
+    file.boardInfo.galaxyStatus = (LoopingMode)ui->loopingMode->checkedId();
+    auto items = scene->items();
+    for (auto item: qAsConst(items)) {
+        file.boardData.squares.append(((SquareItem *)item)->getData());
+    }
     return file;
 }
 

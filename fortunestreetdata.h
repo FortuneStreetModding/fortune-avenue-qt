@@ -154,10 +154,12 @@ private:
 struct BoardFile {
     static constexpr size_t SIZE = Header::SIZE + BoardInfo::SIZE + BoardData::SIZE;
 
-    BoardFile() : header("I4DT") {
-        SquareData bank(0);
-        bank.squareType = Bank;
-        boardData.squares.append(bank);
+    BoardFile(bool initialize = false) : header("I4DT") {
+        if (initialize) {
+            SquareData bank(0);
+            bank.squareType = Bank;
+            boardData.squares.append(bank);
+        }
     }
     quint64 unknown;
     BoardInfo boardInfo;
