@@ -5,6 +5,7 @@
 #include <QFileDialog>
 #include <QMessageBox>
 #include "squareitem.h"
+#include "util.h"
 
 MainWindow::MainWindow(QWidget *parent)
     : QMainWindow(parent), ui(new Ui::MainWindow), scene(new QGraphicsScene(-1600, -1600, 3200, 3200, this))
@@ -14,17 +15,23 @@ MainWindow::MainWindow(QWidget *parent)
     waypointDests = {ui->waypoint1Dests, ui->waypoint2Dests, ui->waypoint3Dests, ui->waypoint4Dests};
     ui->graphicsView->setScene(scene);
     ui->graphicsView->centerOn(0, 0);
-    connect(ui->actionNew, &QAction::triggered, this, &MainWindow::newFile);
-    connect(ui->actionOpen, &QAction::triggered, this, &MainWindow::openFile);
-    connect(ui->actionSave, &QAction::triggered, this, &MainWindow::saveFile);
-    connect(ui->actionSave_As, &QAction::triggered, this, &MainWindow::saveFileAs);
-    connect(scene, &QGraphicsScene::selectionChanged, this, &MainWindow::updateSquareSidebar);
     ui->loopingMode->setId(ui->loopingNone, LoopingMode::None);
     ui->loopingMode->setId(ui->loopingVertical, LoopingMode::Vertical);
     ui->loopingMode->setId(ui->loopingVerticalHorizontal, LoopingMode::Both);
     ui->type->addItem("");
     ui->type->addItems(squareTexts());
     ui->shopModel->addItems(shopTexts());
+    addShortcutTextToButton(ui->addSquare);
+    addShortcutTextToButton(ui->removeSquare);
+
+    connect(ui->actionNew, &QAction::triggered, this, &MainWindow::newFile);
+    connect(ui->actionOpen, &QAction::triggered, this, &MainWindow::openFile);
+    connect(ui->actionSave, &QAction::triggered, this, &MainWindow::saveFile);
+    connect(ui->actionSave_As, &QAction::triggered, this, &MainWindow::saveFileAs);
+    connect(ui->addSquare, &QPushButton::clicked, this, &MainWindow::addSquare);
+    connect(ui->removeSquare, &QPushButton::clicked, this, &MainWindow::removeSquare);
+    connect(scene, &QGraphicsScene::selectionChanged, this, &MainWindow::updateSquareSidebar);
+
     registerSquareSidebarEvents();
 }
 
@@ -91,6 +98,9 @@ void MainWindow::saveFileAs() {
 void MainWindow::loadFile(BoardFile file) {
     qDebug() << "load file";
     ui->boardEdit->setEnabled(true);
+    ui->actionSave->setEnabled(true);
+    ui->actionSave_As->setEnabled(true);
+    ui->menuTools->setEnabled(true);
     ui->initialCash->setText(QString::number(file.boardInfo.initialCash));
     ui->targetAmount->setText(QString::number(file.boardInfo.targetAmount));
     ui->baseSalary->setText(QString::number(file.boardInfo.baseSalary));
@@ -182,5 +192,24 @@ void MainWindow::updateSquareData(const QString &) {
             }
         }
         item->update();
+    }
+}
+
+void MainWindow::addSquare() {
+    scene->addItem(new SquareItem(SquareData(scene->items().size() /* add next index */)));
+}
+
+void MainWindow::removeSquare() {
+    auto selectedItems = scene->selectedItems();
+    scene->clearSelection();
+    for (auto selectedItem: qAsConst(selectedItems)) {
+        scene->removeItem(selectedItem);
+        delete selectedItem;
+    }
+
+    // fix square ids
+    auto items = scene->items(Qt::AscendingOrder);
+    for (int i=0; i<items.size(); ++i) {
+        ((SquareData *)items[i])->id = i;
     }
 }

@@ -14,7 +14,6 @@ public:
 private:
     SquareData data;
     static void drawTextCentered(QPainter *painter, int x, int y, const QString &text);
-private slots:
     void changeX();
     void changeY();
 };

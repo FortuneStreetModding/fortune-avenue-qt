@@ -17,7 +17,8 @@ SOURCES += \
 HEADERS += \
     fortunestreetdata.h \
     mainwindow.h \
-    squareitem.h
+    squareitem.h \
+    util.h
 
 FORMS += \
     mainwindow.ui

@@ -28,12 +28,13 @@ private:
     void loadFile(BoardFile file);
     BoardFile exportFile();
     void registerSquareSidebarEvents();
-private slots:
     void updateSquareSidebar();
     void updateSquareData(const QString &dummy = "");
     void newFile();
     void openFile();
     void saveFile();
     void saveFileAs();
+    void addSquare();
+    void removeSquare();
 };
 #endif // MAINWINDOW_H
