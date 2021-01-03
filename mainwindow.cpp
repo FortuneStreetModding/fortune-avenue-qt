@@ -29,6 +29,10 @@ MainWindow::MainWindow(QWidget *parent)
     connect(ui->actionSave, &QAction::triggered, this, &MainWindow::saveFile);
     connect(ui->actionSave_As, &QAction::triggered, this, &MainWindow::saveFileAs);
 
+    connect(ui->actionCalculate_Stock_Prices, &QAction::triggered, this, &MainWindow::calcStockPrices);
+    connect(ui->actionVerify_Board, &QAction::triggered, this, &MainWindow::verifyBoard);
+    connect(ui->actionAuto_Path, &QAction::triggered, this, &MainWindow::autoPath);
+
     connect(ui->actionFortune_Avenue_Help, &QAction::triggered, this, [&]() {
         QDesktopServices::openUrl(QUrl("https://github.com/FortuneStreetModding/fortune-avenue-qt/wiki"));
     });
@@ -238,4 +242,16 @@ void MainWindow::removeSquare() {
 int MainWindow::calcSnapSizeFromInput() {
     int result = ui->snapTo->text().toInt();
     return result > 0 ? result : 1;
+}
+
+void MainWindow::calcStockPrices() {
+    // todo implement
+}
+
+void MainWindow::verifyBoard() {
+    // todo implement
+}
+
+void MainWindow::autoPath() {
+    // todo implement
 }

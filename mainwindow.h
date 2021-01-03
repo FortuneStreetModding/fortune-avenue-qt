@@ -35,6 +35,9 @@ private:
     void openFile();
     void saveFile();
     void saveFileAs();
+    void calcStockPrices();
+    void verifyBoard();
+    void autoPath();
     void addSquare();
     void removeSquare();
     int calcSnapSizeFromInput();
