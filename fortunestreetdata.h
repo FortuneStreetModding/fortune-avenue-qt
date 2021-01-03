@@ -66,8 +66,6 @@ enum SquareType : quint16 {
     unknown0x2F = 0x2F,
 
     VacantPlot = 0x30,
-
-    _Unrecognized = 0xFFFF // Returned by textToSquareType for unrecognized things.
 };
 
 QString squareTypeToText(SquareType type);

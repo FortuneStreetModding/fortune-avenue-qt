@@ -27,8 +27,10 @@ private:
 
     void loadFile(BoardFile file);
     BoardFile exportFile();
+    void registerSquareSidebarEvents();
 private slots:
     void updateSquareSidebar();
+    void updateSquareData(const QString &dummy = "");
     void newFile();
     void openFile();
     void saveFile();

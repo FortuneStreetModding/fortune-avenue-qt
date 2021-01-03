@@ -238,9 +238,9 @@ QMap<QString, quint8> textToShopTypes = {
 };
 
 QString squareTypeToText(SquareType type) { return textToSquareTypes.key(type, ""); }
-SquareType textToSquareType(QString string) { return textToSquareTypes.value(string, _Unrecognized); }
+SquareType textToSquareType(QString string) { return textToSquareTypes.value(string, Property); }
 QList<QString> squareTexts() { return textToSquareTypes.keys(); }
 
 QString shopTypeToText(quint8 shopType) { return textToShopTypes.key(shopType, ""); }
-quint8 textToShopType(QString string) { return textToShopTypes.value(string, 0xFF); }
+quint8 textToShopType(QString string) { return textToShopTypes.value(string, 0); }
 QList<QString> shopTexts() { return textToShopTypes.keys(); }

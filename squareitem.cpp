@@ -62,15 +62,15 @@ SquareItem::SquareItem(const SquareData &dataValue, QGraphicsItem *parent) : QGr
     setFlag(GraphicsItemFlag::ItemIsMovable);
     setFlag(GraphicsItemFlag::ItemIsSelectable);
     setPos(data.positionX, data.positionY);
-    connect(this, SIGNAL(xChanged()), this, SLOT(changeX()));
-    connect(this, SIGNAL(xChanged()), this, SLOT(changeY()));
+    connect(this, &SquareItem::xChanged, this, &SquareItem::changeX);
+    connect(this, &SquareItem::yChanged, this, &SquareItem::changeY);
 }
 
 QRectF SquareItem::boundingRect() const {
     return QRectF(0, 0, 64, 64);
 }
 
-void SquareItem::paint(QPainter *painter, const QStyleOptionGraphicsItem *option, QWidget *widget) {
+void SquareItem::paint(QPainter *painter, const QStyleOptionGraphicsItem *, QWidget *) {
     painter->drawImage(QPoint(0, 0), QImage(typeToFile.value(data.squareType, ":/squares/GroundDefault.png")));
 
     QPen pen(Qt::transparent, 2, Qt::SolidLine);

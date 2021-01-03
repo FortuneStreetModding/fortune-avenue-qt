@@ -14,17 +14,18 @@ MainWindow::MainWindow(QWidget *parent)
     waypointDests = {ui->waypoint1Dests, ui->waypoint2Dests, ui->waypoint3Dests, ui->waypoint4Dests};
     ui->graphicsView->setScene(scene);
     ui->graphicsView->centerOn(0, 0);
-    connect(ui->actionNew, SIGNAL(triggered()), this, SLOT(newFile()));
-    connect(ui->actionOpen, SIGNAL(triggered()), this, SLOT(openFile()));
-    connect(ui->actionSave, SIGNAL(triggered()), this, SLOT(saveFile()));
-    connect(ui->actionSave_As, SIGNAL(triggered()), this, SLOT(saveFileAs()));
-    connect(scene, SIGNAL(selectionChanged()), this, SLOT(updateSquareSidebar()));
+    connect(ui->actionNew, &QAction::triggered, this, &MainWindow::newFile);
+    connect(ui->actionOpen, &QAction::triggered, this, &MainWindow::openFile);
+    connect(ui->actionSave, &QAction::triggered, this, &MainWindow::saveFile);
+    connect(ui->actionSave_As, &QAction::triggered, this, &MainWindow::saveFileAs);
+    connect(scene, &QGraphicsScene::selectionChanged, this, &MainWindow::updateSquareSidebar);
     ui->loopingMode->setId(ui->loopingNone, LoopingMode::None);
     ui->loopingMode->setId(ui->loopingVertical, LoopingMode::Vertical);
     ui->loopingMode->setId(ui->loopingVerticalHorizontal, LoopingMode::Both);
     ui->type->addItem("");
     ui->type->addItems(squareTexts());
     ui->shopModel->addItems(shopTexts());
+    registerSquareSidebarEvents();
 }
 
 MainWindow::~MainWindow()
@@ -106,13 +107,52 @@ void MainWindow::updateSquareSidebar() {
         ui->isLift->setChecked(item->getData().oneWayLift);
         for (int i=0; i<4; ++i) {
             waypointStarts[i]->setText(QString::number(item->getData().waypoints[i].entryId));
+            auto children = waypointDests[i]->findChildren<QLineEdit *>();
             for (int j=0; j<3; ++j) {
-                auto children = waypointDests[i]->findChildren<QLineEdit *>();
                 children[j]->setText(QString::number(item->getData().waypoints[i].destinations[j]));
             }
         }
     } else {
         ui->squareEdit->setEnabled(false);
         ui->id->setText("");
+    }
+}
+
+void MainWindow::registerSquareSidebarEvents() {
+    connect(ui->type, &QComboBox::textActivated, this, &MainWindow::updateSquareData);
+    connect(ui->districtDestinationId, &QLineEdit::textEdited, this, &MainWindow::updateSquareData);
+    connect(ui->shopModel, &QComboBox::textActivated, this, &MainWindow::updateSquareData);
+    connect(ui->initialValue, &QLineEdit::textEdited, this, &MainWindow::updateSquareData);
+    connect(ui->initialPrice, &QLineEdit::textEdited, this, &MainWindow::updateSquareData);
+    connect(ui->isLift, &QCheckBox::clicked, this, [&](bool) { updateSquareData(); });
+    for (auto &waypointStart: waypointStarts) {
+        connect(waypointStart, &QLineEdit::textEdited, this, &MainWindow::updateSquareData);
+    }
+    for (auto &waypointDest: waypointDests) {
+        for (auto &child: waypointDest->findChildren<QLineEdit *>()) {
+            connect(child, &QLineEdit::textEdited, this, &MainWindow::updateSquareData);
+        }
+    }
+}
+
+void MainWindow::updateSquareData(const QString &) {
+    qDebug() << "updating square";
+    auto selectedItems = scene->selectedItems();
+    if (selectedItems.size() == 1) {
+        SquareItem *item = (SquareItem *)selectedItems[0];
+        item->getData().squareType = textToSquareType(ui->type->currentText());
+        item->getData().districtDestinationId = ui->districtDestinationId->text().toUInt();
+        item->getData().shopModel = textToShopType(ui->shopModel->currentText());
+        item->getData().value = ui->initialValue->text().toUShort();
+        item->getData().price = ui->initialPrice->text().toUShort();
+        item->getData().oneWayLift = ui->isLift->isChecked();
+        for (int i=0; i<4; ++i) {
+            item->getData().waypoints[i].entryId = waypointStarts[i]->text().toUInt();
+            auto children = waypointDests[i]->findChildren<QLineEdit *>();
+            for (int j=0; j<3; ++j) {
+                item->getData().waypoints[i].destinations[j] = children[j]->text().toUInt();
+            }
+        }
+        item->update();
     }
 }
