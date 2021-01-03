@@ -2,6 +2,7 @@
 #define MAINWINDOW_H
 
 #include <QGraphicsScene>
+#include <QLineEdit>
 #include <QMainWindow>
 #include "fortunestreetdata.h"
 
@@ -18,6 +19,9 @@ public:
     ~MainWindow();
 private:
     Ui::MainWindow *ui;
+
+    QVector<QLineEdit *> waypointStarts;
+    QVector<QWidget *> waypointDests;
 
     QGraphicsScene *scene;
 

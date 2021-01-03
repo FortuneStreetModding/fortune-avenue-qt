@@ -163,7 +163,7 @@
         </size>
        </property>
        <property name="currentIndex">
-        <number>0</number>
+        <number>1</number>
        </property>
        <widget class="QWidget" name="info">
         <attribute name="title">
@@ -389,6 +389,50 @@
             </item>
             <item>
              <widget class="QLineEdit" name="lineEdit_9"/>
+            </item>
+           </layout>
+          </widget>
+         </item>
+         <item>
+          <widget class="QLabel" name="label_19">
+           <property name="text">
+            <string>Waypoint 4 Start</string>
+           </property>
+          </widget>
+         </item>
+         <item>
+          <widget class="QLineEdit" name="waypoint4Start"/>
+         </item>
+         <item>
+          <widget class="QLabel" name="label_20">
+           <property name="text">
+            <string>Waypoint 4 Destinations</string>
+           </property>
+          </widget>
+         </item>
+         <item>
+          <widget class="QWidget" name="waypoint4Dests" native="true">
+           <layout class="QHBoxLayout" name="horizontalLayout_5">
+            <property name="leftMargin">
+             <number>0</number>
+            </property>
+            <property name="topMargin">
+             <number>0</number>
+            </property>
+            <property name="rightMargin">
+             <number>0</number>
+            </property>
+            <property name="bottomMargin">
+             <number>0</number>
+            </property>
+            <item>
+             <widget class="QLineEdit" name="lineEdit_10"/>
+            </item>
+            <item>
+             <widget class="QLineEdit" name="lineEdit_11"/>
+            </item>
+            <item>
+             <widget class="QLineEdit" name="lineEdit_12"/>
             </item>
            </layout>
           </widget>

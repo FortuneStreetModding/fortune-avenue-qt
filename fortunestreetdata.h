@@ -171,4 +171,8 @@ private:
     Header header;
 };
 
+QString shopTypeToText(quint8 shopType);
+quint8 textToShopType(QString string);
+QList<QString> shopTexts();
+
 #endif // FORTUNESTREETDATA_H
