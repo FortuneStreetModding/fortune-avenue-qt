@@ -1,7 +1,7 @@
 #include "mainwindow.h"
 #include "ui_mainwindow.h"
 
-#include <QDebug>
+#include <QDesktopServices>
 #include <QFileDialog>
 #include <QMessageBox>
 #include "squareitem.h"
@@ -28,6 +28,11 @@ MainWindow::MainWindow(QWidget *parent)
     connect(ui->actionOpen, &QAction::triggered, this, &MainWindow::openFile);
     connect(ui->actionSave, &QAction::triggered, this, &MainWindow::saveFile);
     connect(ui->actionSave_As, &QAction::triggered, this, &MainWindow::saveFileAs);
+
+    connect(ui->actionFortune_Avenue_Help, &QAction::triggered, this, [&]() {
+        QDesktopServices::openUrl(QUrl("https://github.com/FortuneStreetModding/fortune-avenue-qt/wiki"));
+    });
+
     connect(ui->addSquare, &QPushButton::clicked, this, &MainWindow::addSquare);
     connect(ui->removeSquare, &QPushButton::clicked, this, &MainWindow::removeSquare);
     connect(scene, &QGraphicsScene::selectionChanged, this, &MainWindow::updateSquareSidebar);
@@ -47,12 +52,10 @@ MainWindow::~MainWindow()
 }
 
 void MainWindow::newFile() {
-    qDebug() << "new file";
     loadFile(BoardFile(true));
 }
 
 void MainWindow::openFile() {
-    qDebug() << "open file";
     QString filename = QFileDialog::getOpenFileName(this, "Open File", "", "Fortune Street Boards (*.frb)");
     if (filename.isEmpty()) {
         return;
@@ -75,7 +78,6 @@ void MainWindow::openFile() {
 }
 
 void MainWindow::saveFile() {
-    qDebug() << "save file";
     if (windowFilePath().isEmpty()) {
         saveFileAs();
     } else {
@@ -90,7 +92,6 @@ void MainWindow::saveFile() {
 }
 
 void MainWindow::saveFileAs() {
-    qDebug() << "save file as";
     QString saveFileName = QFileDialog::getSaveFileName(this, "Save File", "", "Fortune Street Boards (*.frb)");
     QFile saveFile(saveFileName);
     if (saveFile.open(QIODevice::WriteOnly)) {
@@ -103,7 +104,6 @@ void MainWindow::saveFileAs() {
 }
 
 void MainWindow::loadFile(BoardFile file) {
-    qDebug() << "load file";
     ui->boardEdit->setEnabled(true);
     ui->actionSave->setEnabled(true);
     ui->actionSave_As->setEnabled(true);
@@ -185,7 +185,6 @@ void MainWindow::registerSquareSidebarEvents() {
 }
 
 void MainWindow::updateSquareData(bool calcValue, bool calcPrice) {
-    qDebug() << "updating square";
     auto selectedItems = scene->selectedItems();
     if (selectedItems.size() == 1) {
         SquareItem *item = (SquareItem *)selectedItems[0];
