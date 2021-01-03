@@ -210,6 +210,8 @@ void MainWindow::removeSquare() {
     // fix square ids
     auto items = scene->items(Qt::AscendingOrder);
     for (int i=0; i<items.size(); ++i) {
-        ((SquareData *)items[i])->id = i;
+        ((SquareItem *)items[i])->getData().id = i;
     }
+
+    scene->update();
 }
