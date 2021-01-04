@@ -226,6 +226,19 @@
           </widget>
          </item>
          <item>
+          <widget class="QLabel" name="label_21">
+           <property name="text">
+            <string>Position (x, y)</string>
+           </property>
+          </widget>
+         </item>
+         <item>
+          <widget class="QLineEdit" name="positionX"/>
+         </item>
+         <item>
+          <widget class="QLineEdit" name="positionY"/>
+         </item>
+         <item>
           <widget class="QLabel" name="label_9">
            <property name="text">
             <string>Type</string>

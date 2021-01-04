@@ -58,7 +58,7 @@ MainWindow::MainWindow(QWidget *parent)
 
     connect(ui->addSquare, &QPushButton::clicked, this, &MainWindow::addSquare);
     connect(ui->removeSquare, &QPushButton::clicked, this, &MainWindow::removeSquare);
-    connect(scene, &QGraphicsScene::selectionChanged, this, &MainWindow::updateSquareSidebar);
+    connect(scene, &QGraphicsScene::changed, this, [&](const QList<QRectF> &) { updateSquareSidebar(); });
     connect(ui->snapToCheck, &QCheckBox::clicked, this, [&](bool) {
         scene->setSnapSize(ui->snapToCheck->isChecked() ? calcSnapSizeFromInput() : 1);
     });
@@ -189,6 +189,8 @@ void MainWindow::updateSquareSidebar() {
                 children[j]->setText(QString::number(item->getData().waypoints[i].destinations[j]));
             }
         }
+        ui->positionX->setText(QString::number(item->getData().positionX));
+        ui->positionY->setText(QString::number(item->getData().positionY));
     } else {
         ui->squareEdit->setEnabled(false);
         ui->id->setText("");
@@ -197,6 +199,8 @@ void MainWindow::updateSquareSidebar() {
 
 void MainWindow::registerSquareSidebarEvents() {
     connect(ui->type, &QComboBox::textActivated, this, [&](const QString &) { updateSquareData(); });
+    connect(ui->positionX, &QLineEdit::textEdited, this, [&](const QString &) { updateSquareData(); });
+    connect(ui->positionY, &QLineEdit::textEdited, this, [&](const QString &) { updateSquareData(); });
     connect(ui->districtDestinationId, &QLineEdit::textEdited, this, [&](const QString &) { updateSquareData(); });
     connect(ui->shopModel, &QComboBox::textActivated, this, [&](const QString &) {
         updateSquareData(true, true);
@@ -233,6 +237,15 @@ void MainWindow::updateSquareData(bool calcValue, bool calcPrice) {
                 item->getData().waypoints[i].destinations[j] = children[j]->text().toUInt();
             }
         }
+
+        // temporarily disable snapping for setting position
+        {
+            int oldSnapSize = scene->getSnapSize();
+            scene->setSnapSize(1);
+            item->setPos(ui->positionX->text().toInt(), ui->positionY->text().toInt());
+            scene->setSnapSize(oldSnapSize);
+        }
+
         if (calcValue) {
             item->getData().updateValueFromShopModel();
         }
