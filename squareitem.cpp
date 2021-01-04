@@ -60,6 +60,7 @@ QVector<QColor> districtColors = {
 
 QFont valueFont("Lato", 18);
 QFont idFont("Lato", 10);
+QFont rentFont("Lato", 12);
 
 SquareItem::SquareItem(const SquareData &dataValue, QGraphicsItem *parent) : QGraphicsItem(parent), data(dataValue) {
     setFlag(ItemIsMovable);
@@ -90,6 +91,8 @@ void SquareItem::paint(QPainter *painter, const QStyleOptionGraphicsItem *, QWid
         painter->setPen(Qt::white);
         painter->setFont(valueFont);
         drawTextCentered(painter, 32, 38, QString::number(data.value));
+        painter->setFont(rentFont);
+        drawTextRightAligned(painter, 60, 60, QString::number(data.price));
     }
 
     painter->setPen(Qt::white);
@@ -104,6 +107,11 @@ SquareData &SquareItem::getData() {
 void SquareItem::drawTextCentered(QPainter *painter, int x, int y, const QString &text) {
     auto boundingRect = painter->fontMetrics().boundingRect(text);
     painter->drawText(x - boundingRect.width()/2, y, text);
+}
+
+void SquareItem::drawTextRightAligned(QPainter *painter, int x, int y, const QString &text) {
+    auto boundingRect = painter->fontMetrics().boundingRect(text);
+    painter->drawText(x - boundingRect.width(), y, text);
 }
 
 QVariant SquareItem::itemChange(GraphicsItemChange change, const QVariant &value) {

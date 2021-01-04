@@ -16,6 +16,7 @@ protected:
 private:
     SquareData data;
     static void drawTextCentered(QPainter *painter, int x, int y, const QString &text);
+    static void drawTextRightAligned(QPainter *painter, int x, int y, const QString &text);
 };
 
 #endif // SQUAREITEM_H
