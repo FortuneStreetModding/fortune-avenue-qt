@@ -1,9 +1,11 @@
 #include "mainwindow.h"
 #include "ui_mainwindow.h"
 
+#include <algorithm>
 #include <QDesktopServices>
 #include <QFileDialog>
 #include <QMessageBox>
+#include <QSet>
 #include "squareitem.h"
 #include "util.h"
 
@@ -278,7 +280,105 @@ void MainWindow::calcStockPrices() {
 }
 
 void MainWindow::verifyBoard() {
-    // todo implement
+    QStringList errors, warnings;
+    QVector<int> districtCount(12);
+    int highestDistrict;
+
+    BoardFile file = exportFile();
+    if (file.boardData.squares.size() > 0 && file.boardData.squares[0].squareType != Bank) {
+        warnings << "There should be a bank at ID 0.";
+    }
+    if (file.boardData.squares.size() < 3) {
+        errors << "Board must have at least 3 spaces.";
+    }
+    if (file.boardInfo.maxDiceRoll < 1 || file.boardInfo.maxDiceRoll > 9) {
+        errors << "Max. die roll must be between 1 and 9 inclusive.";
+    }
+    for (auto &square: file.boardData.squares) {
+        if (square.squareType == Property || square.squareType == VacantPlot) {
+            if (square.districtDestinationId >= 12) {
+                warnings << QString("Square %1 has district value %2. Maximum is 11.").arg(square.id).arg(square.districtDestinationId);
+            } else {
+                ++districtCount[square.districtDestinationId];
+                highestDistrict = qMax(highestDistrict, (int)square.districtDestinationId);
+            }
+        }
+        // ignore waypoints for one-way alleys
+        if (square.squareType == OneWayAlleyDoorA
+                || square.squareType == OneWayAlleyDoorB
+                || square.squareType == OneWayAlleyDoorC
+                || square.squareType == OneWayAlleyDoorD
+                || square.squareType == OneWayAlleySquare) {
+            continue;
+        }
+
+        QSet<quint8> destinations;
+        for (int i=0; i<4; ++i) {
+            if (square.waypoints[i].entryId > file.boardData.squares.size()) {
+                if (square.waypoints[i].entryId != 255) {
+                    errors << QString("Starting square of Waypoint %1 of Square %2 is Square %3 which does not exist")
+                              .arg(i+1).arg(square.id).arg(square.waypoints[i].entryId);
+                } else {
+                    // Since this waypoint has an entry point of 255,
+                    // we ignore it entirely.
+                    continue;
+                }
+            } else {
+                auto &otherSquare = file.boardData.squares[square.waypoints[i].entryId];
+                if (qAbs(square.positionX - otherSquare.positionX) > 96
+                        || qAbs(square.positionY - otherSquare.positionY) > 96) {
+                    warnings << QString("Starting square of Waypoint %1 of Square %2 is Square %3 which is too far")
+                              .arg(i+1).arg(square.id).arg(square.waypoints[i].entryId);
+                }
+            }
+            for (int j=0; j<3; ++j) {
+                auto dest = square.waypoints[i].destinations[j];
+                destinations.insert(dest);
+
+                if (dest > file.boardData.squares.size()) {
+                    if (dest != 255) {
+                        errors << QString("Destination square #%4 of Waypoint %1 of Square %2 is Square %3 which does not exist")
+                                  .arg(i+1).arg(square.id).arg(dest).arg(j+1);
+                    }
+                } else {
+                    auto &otherSquare = file.boardData.squares[dest];
+                    if (qAbs(square.positionX - otherSquare.positionX) > 96
+                            || qAbs(square.positionY - otherSquare.positionY) > 96) {
+                        warnings << QString("Destination square #%4 of Waypoint %1 of Square %2 is Square %3 which is too far")
+                                  .arg(i+1).arg(square.id).arg(dest).arg(j+1);
+                    }
+                }
+            }
+        }
+
+        destinations.remove(255);
+        if (destinations.size() > 4) {
+            errors << QString("Square %1 has %2 destinations, which is more than the maximum of 4.")
+                      .arg(square.id).arg(destinations.size());
+        }
+    }
+
+    for (int i=0; i<=highestDistrict; ++i) {
+        if (districtCount[i] == 0) {
+            errors << QString("Did you skip District %1 when assigning districts?").arg(i);
+        } else if (districtCount[i] < 3) {
+            warnings << QString("District %1 has %2 shops which is less than the recommended minimum of 3").arg(i).arg(districtCount[i]);
+        } else if (districtCount[i] > 6) {
+            errors << QString("District %1 has %2 shops which is more than the maximum of 6").arg(i).arg(districtCount[i]);
+        }
+    }
+
+    if (errors.isEmpty() && warnings.isEmpty()) {
+        QMessageBox::information(this, "Verification", "Board passed verification.");
+    } else {
+        QString numErrorsWarnings = QString("%1 error(s) and %2 warning(s):\n")
+                .arg(errors.size()).arg(warnings.size());
+        if (!errors.isEmpty()) {
+            QMessageBox::critical(this, "Verification", numErrorsWarnings + errors.join("\n"));
+        } else {
+            QMessageBox::warning(this, "Verification", numErrorsWarnings + warnings.join("\n"));
+        }
+    }
 }
 
 void MainWindow::autoPath() {
