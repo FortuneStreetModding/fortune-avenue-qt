@@ -1,7 +1,6 @@
 #include "mainwindow.h"
 #include "ui_mainwindow.h"
 
-#include <algorithm>
 #include <QDesktopServices>
 #include <QFileDialog>
 #include <QMessageBox>
@@ -92,7 +91,7 @@ void MainWindow::saveFile() {
             QDataStream stream(&saveFile);
             stream << exportFile();
         } else {
-            QMessageBox::critical(this, "Error saving file file", "An error occurred while trying to save the file");
+            QMessageBox::critical(this, "Error saving file", "An error occurred while trying to save the file");
         }
     }
 }
@@ -105,7 +104,7 @@ void MainWindow::saveFileAs() {
         stream << exportFile();
         setWindowFilePath(saveFileName);
     } else {
-        QMessageBox::critical(this, "Error saving file file", "An error occurred while trying to save the file");
+        QMessageBox::critical(this, "Error saving file", "An error occurred while trying to save the file");
     }
 }
 
@@ -394,5 +393,43 @@ void MainWindow::verifyBoard() {
 }
 
 void MainWindow::autoPath() {
-    // todo implement
+    auto items = scene->items(Qt::AscendingOrder);
+    for (auto item: qAsConst(items)) {
+        auto &square = ((SquareItem *)item)->getData();
+        // ignore waypoints for one-way alleys for now
+        if (square.squareType == OneWayAlleyDoorA
+                || square.squareType == OneWayAlleyDoorB
+                || square.squareType == OneWayAlleyDoorC
+                || square.squareType == OneWayAlleyDoorD
+                || square.squareType == OneWayAlleySquare) {
+            continue;
+        }
+        for (auto &waypoint: square.waypoints) {
+            waypoint.entryId = 255;
+            for (auto &dest: waypoint.destinations) {
+                dest = 255;
+            }
+        }
+        QVector<int> touchingSquares;
+        for (int i=0; i<items.size(); ++i) {
+            auto &otherSquare = ((SquareItem *)items[i])->getData();
+            if (otherSquare.id != square.id
+                    && qAbs(square.positionX - otherSquare.positionX) <= 64
+                    && qAbs(square.positionY - otherSquare.positionY) <= 64) {
+                touchingSquares.append(i);
+            }
+        }
+        int touchingSquaresNo = qMin(touchingSquares.size(), 4);
+        for (int i=0; i<touchingSquaresNo; ++i) {
+            square.waypoints[i].entryId = touchingSquares[i];
+            int k=0;
+            for (int j=0; j<touchingSquaresNo; ++j) {
+                if (j != i) {
+                    square.waypoints[i].destinations[k++] = touchingSquares[j];
+                }
+            }
+        }
+    }
+    QMessageBox::information(this, "Auto-pathing", "Auto-pathed entire map");
+    updateSquareSidebar();
 }
