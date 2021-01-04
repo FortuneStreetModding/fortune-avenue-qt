@@ -628,7 +628,7 @@ No for Magmalice lift</string>
     <string>Zoom In</string>
    </property>
    <property name="shortcut">
-    <string>Ctrl+-</string>
+    <string>Ctrl+Shift+=</string>
    </property>
   </action>
   <action name="actionZoom_Out">
@@ -636,7 +636,7 @@ No for Magmalice lift</string>
     <string>Zoom Out</string>
    </property>
    <property name="shortcut">
-    <string>Ctrl+Shift+=</string>
+    <string>Ctrl+-</string>
    </property>
   </action>
   <action name="actionDraw_Axes">

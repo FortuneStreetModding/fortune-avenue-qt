@@ -31,15 +31,15 @@ MainWindow::MainWindow(QWidget *parent)
     connect(ui->actionSave_As, &QAction::triggered, this, &MainWindow::saveFileAs);
 
     connect(ui->actionZoom_In, &QAction::triggered, this, [&]() {
-        if (zoomPercent > 10) {
-            zoomPercent -= 10;
-        }
+        zoomPercent += 10;
         ui->graphicsView->resetTransform();
         ui->graphicsView->scale(zoomPercent / 100.0, zoomPercent / 100.0);
         ui->statusbar->showMessage(QString("Zoom: %1%").arg(zoomPercent));
     });
     connect(ui->actionZoom_Out, &QAction::triggered, this, [&]() {
-        zoomPercent += 10;
+        if (zoomPercent > 10) {
+            zoomPercent -= 10;
+        }
         ui->graphicsView->resetTransform();
         ui->graphicsView->scale(zoomPercent / 100.0, zoomPercent / 100.0);
         ui->statusbar->showMessage(QString("Zoom: %1%").arg(zoomPercent));
