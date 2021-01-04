@@ -1,5 +1,5 @@
 #include "fortunestreetdata.h"
-#include <QMap>
+#include "orderedmap.h"
 #include <QtMath>
 
 QDataStream &operator>>(QDataStream &stream, WaypointData &data) {
@@ -138,7 +138,7 @@ QDataStream &operator<<(QDataStream &stream, const BoardFile &data) {
     return stream;
 }
 
-QMap<QString, SquareType> textToSquareTypes = {
+OrderedMap<QString, SquareType> textToSquareTypes = {
     {"Property", Property},
     {"Bank", Bank},
     {"Venture", VentureSquare},
@@ -174,7 +174,7 @@ QMap<QString, SquareType> textToSquareTypes = {
     {"Event", EventSquare},
     {"Vacant Plot", VacantPlot}
 };
-QMap<QString, quint8> textToShopTypes = {
+OrderedMap<QString, quint8> textToShopTypes = {
     { "",0},
     { "(50g) Scrap-paper shop",5},
     { "(60g) Wool shop",6},
@@ -246,10 +246,23 @@ QMap<QString, quint8> textToShopTypes = {
     {"(980g) Department store",98}
 };
 
-QString squareTypeToText(SquareType type) { return textToSquareTypes.key(type, ""); }
+QString squareTypeToText(SquareType type) {
+    for (auto it = textToSquareTypes.begin(); it != textToSquareTypes.end(); ++it) {
+        if (it.value() == type) {
+            return it.key();
+        }
+    }
+    return "";
+}
 SquareType textToSquareType(QString string) { return textToSquareTypes.value(string, Property); }
 QList<QString> squareTexts() { return textToSquareTypes.keys(); }
 
-QString shopTypeToText(quint8 shopType) { return textToShopTypes.key(shopType, ""); }
+QString shopTypeToText(quint8 shopType) {
+    for (auto it = textToShopTypes.begin(); it != textToShopTypes.end(); ++it) {
+        if (it.value() == shopType) {
+            return it.key();
+        }
+    }
+    return ""; }
 quint8 textToShopType(QString string) { return textToShopTypes.value(string, 0); }
 QList<QString> shopTexts() { return textToShopTypes.keys(); }

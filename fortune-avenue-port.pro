@@ -26,6 +26,7 @@ HEADERS += \
     fortuneavenuegraphicsscene.h \
     fortunestreetdata.h \
     mainwindow.h \
+    orderedmap.h \
     squareitem.h \
     util.h
 
