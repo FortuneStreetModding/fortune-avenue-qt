@@ -9,13 +9,13 @@
 #include "util.h"
 
 MainWindow::MainWindow(QWidget *parent)
-    : QMainWindow(parent), ui(new Ui::MainWindow), scene(new FortuneAvenueGraphicsScene(-1600, -1600, 3200, 3200, this))
+    : QMainWindow(parent), ui(new Ui::MainWindow), scene(new FortuneAvenueGraphicsScene(-1600 + 32, -1600 + 32, 3200 + 32, 3200 + 32, this))
 {
     ui->setupUi(this);
     waypointStarts = {ui->waypoint1Start, ui->waypoint2Start, ui->waypoint3Start, ui->waypoint4Start};
     waypointDests = {ui->waypoint1Dests, ui->waypoint2Dests, ui->waypoint3Dests, ui->waypoint4Dests};
     ui->graphicsView->setScene(scene);
-    ui->graphicsView->centerOn(0, 0);
+    ui->graphicsView->centerOn(32, 32);
     ui->loopingMode->setId(ui->loopingNone, LoopingMode::None);
     ui->loopingMode->setId(ui->loopingVertical, LoopingMode::Vertical);
     ui->loopingMode->setId(ui->loopingVerticalHorizontal, LoopingMode::Both);
@@ -44,6 +44,9 @@ MainWindow::MainWindow(QWidget *parent)
         ui->graphicsView->scale(zoomPercent / 100.0, zoomPercent / 100.0);
         ui->statusbar->showMessage(QString("Zoom: %1%").arg(zoomPercent));
     });
+    connect(ui->actionDraw_Axes, &QAction::triggered, this, [&]() {
+        scene->setAxesVisible(ui->actionDraw_Axes->isChecked());
+    });
 
     connect(ui->actionCalculate_Stock_Prices, &QAction::triggered, this, &MainWindow::calcStockPrices);
     connect(ui->actionVerify_Board, &QAction::triggered, this, &MainWindow::verifyBoard);
@@ -65,9 +68,9 @@ MainWindow::MainWindow(QWidget *parent)
     connect(ui->snapAll, &QPushButton::clicked, this, [&](bool) {
         int oldSnapSize = scene->getSnapSize();
         scene->setSnapSize(calcSnapSizeFromInput());
-        auto items = scene->items();
+        auto items = scene->squareItems();
         for (auto item: items) {
-            item->setPos(((SquareItem *)item)->getSnapLocation(item->pos()));
+            item->setPos(item->getSnapLocation(item->pos()));
         }
         scene->setSnapSize(oldSnapSize);
     });
@@ -144,7 +147,7 @@ void MainWindow::loadFile(const BoardFile &file) {
     ui->salaryIncrement->setText(QString::number(file.boardInfo.salaryIncrement));
     ui->maxDiceRoll->setText(QString::number(file.boardInfo.maxDiceRoll));
     ui->loopingMode->button(file.boardInfo.galaxyStatus)->setChecked(true);
-    scene->clear();
+    scene->clearSquares();
     for (auto &square: file.boardData.squares) {
         //qDebug() << square.positionX << square.positionY;
         scene->addItem(new SquareItem(square));
@@ -160,10 +163,9 @@ BoardFile MainWindow::exportFile() {
     file.boardInfo.salaryIncrement = ui->salaryIncrement->text().toUShort();
     file.boardInfo.maxDiceRoll = ui->maxDiceRoll->text().toUShort();
     file.boardInfo.galaxyStatus = (LoopingMode)ui->loopingMode->checkedId();
-    auto items = scene->items(Qt::AscendingOrder);
+    auto items = scene->squareItems();
     for (auto item: qAsConst(items)) {
-        //qDebug() << ((SquareItem *)item)->getData().id;
-        file.boardData.squares.append(((SquareItem *)item)->getData());
+        file.boardData.squares.append(item->getData());
     }
     return file;
 }
@@ -245,7 +247,7 @@ void MainWindow::updateSquareData(bool calcValue, bool calcPrice) {
 }
 
 void MainWindow::addSquare() {
-    scene->addItem(new SquareItem(SquareData(scene->items().size() /* add next index */)));
+    scene->addItem(new SquareItem(SquareData(scene->squareItems().size() /* add next index */)));
 }
 
 void MainWindow::removeSquare() {
@@ -258,15 +260,15 @@ void MainWindow::removeSquare() {
 
     // fix square ids
     QMap<quint8, quint8> oldToNewIDs;
-    auto items = scene->items(Qt::AscendingOrder);
+    auto items = scene->squareItems();
     for (int i=0; i<items.size(); ++i) {
-        oldToNewIDs[((SquareItem *)items[i])->getData().id] = i;
-        ((SquareItem *)items[i])->getData().id = i;
+        oldToNewIDs[items[i]->getData().id] = i;
+        items[i]->getData().id = i;
     }
 
     // and waypoints
     for (auto item: items) {
-        for (auto &waypoint: ((SquareItem *)item)->getData().waypoints) {
+        for (auto &waypoint: item->getData().waypoints) {
             waypoint.entryId = oldToNewIDs.value(waypoint.entryId, 255);
             for (auto &dest: waypoint.destinations) {
                 dest = oldToNewIDs.value(dest, 255);
@@ -287,9 +289,9 @@ void MainWindow::calcStockPrices() {
     QVector<int> districtCount(12);
     QVector<int> districtSum(12);
     int highestDistrict = -1;
-    auto items = scene->items(Qt::AscendingOrder);
+    auto items = scene->squareItems();
     for (auto item: qAsConst(items)) {
-        auto &square = ((SquareItem *)item)->getData();
+        auto &square = item->getData();
         if (square.districtDestinationId >= 12) {
             continue;
         }
@@ -418,9 +420,9 @@ void MainWindow::verifyBoard() {
 }
 
 void MainWindow::autoPath() {
-    auto items = scene->items(Qt::AscendingOrder);
+    auto items = scene->squareItems();
     for (auto item: qAsConst(items)) {
-        auto &square = ((SquareItem *)item)->getData();
+        auto &square = item->getData();
         // ignore waypoints for one-way alleys for now
         if (square.squareType == OneWayAlleyDoorA
                 || square.squareType == OneWayAlleyDoorB
@@ -437,7 +439,7 @@ void MainWindow::autoPath() {
         }
         QVector<int> touchingSquares;
         for (int i=0; i<items.size(); ++i) {
-            auto &otherSquare = ((SquareItem *)items[i])->getData();
+            auto &otherSquare = items[i]->getData();
             if (otherSquare.id != square.id
                     && qAbs(square.positionX - otherSquare.positionX) <= 64
                     && qAbs(square.positionY - otherSquare.positionY) <= 64) {

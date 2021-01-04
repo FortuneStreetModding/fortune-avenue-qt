@@ -1,10 +1,12 @@
 #include "fortuneavenuegraphicsscene.h"
 
 FortuneAvenueGraphicsScene::FortuneAvenueGraphicsScene(qreal x, qreal y, qreal w, qreal h, QObject *parent)
-    : QGraphicsScene(x, y, w, h, parent) {}
+    : QGraphicsScene(x, y, w, h, parent) { initAxesItems(); }
 FortuneAvenueGraphicsScene::FortuneAvenueGraphicsScene(const QRectF &rect, QObject *parent)
-    : QGraphicsScene(rect, parent) {}
-FortuneAvenueGraphicsScene::FortuneAvenueGraphicsScene(QObject *parent) : QGraphicsScene(parent) {}
+    : QGraphicsScene(rect, parent) { initAxesItems(); }
+FortuneAvenueGraphicsScene::FortuneAvenueGraphicsScene(QObject *parent) : QGraphicsScene(parent) {
+    initAxesItems();
+}
 
 FortuneAvenueGraphicsScene::~FortuneAvenueGraphicsScene() {
     clearSelection();
@@ -12,3 +14,33 @@ FortuneAvenueGraphicsScene::~FortuneAvenueGraphicsScene() {
 
 int FortuneAvenueGraphicsScene::getSnapSize() const { return snapSize; }
 void FortuneAvenueGraphicsScene::setSnapSize(int value) { snapSize = value; }
+
+QVector<SquareItem *> FortuneAvenueGraphicsScene::squareItems() {
+    auto itemsList = items(Qt::AscendingOrder);
+    QVector<SquareItem *> result;
+    for (int i=axesItems.size(); i<itemsList.size(); ++i) {
+        result.append((SquareItem *) itemsList[i]);
+    }
+    return result;
+}
+
+void FortuneAvenueGraphicsScene::initAxesItems() {
+    auto sceneRectVal = sceneRect();
+    axesItems.append(addLine(sceneRectVal.left(), 32, sceneRectVal.right(), 32, QPen(Qt::black)));
+    axesItems.append(addLine(32, sceneRectVal.top(), 32, sceneRectVal.bottom(), QPen(Qt::black)));
+    setAxesVisible(false);
+}
+
+void FortuneAvenueGraphicsScene::setAxesVisible(bool visible) {
+    for (auto axesItem: axesItems) {
+        axesItem->setVisible(visible);
+    }
+}
+
+void FortuneAvenueGraphicsScene::clearSquares() {
+    auto squareItemsVal = squareItems();
+    for (auto squareItem: squareItemsVal) {
+        removeItem(squareItem);
+        delete squareItem;
+    }
+}

@@ -544,6 +544,7 @@ No for Magmalice lift</string>
     </property>
     <addaction name="actionZoom_In"/>
     <addaction name="actionZoom_Out"/>
+    <addaction name="actionDraw_Axes"/>
    </widget>
    <addaction name="menuFile"/>
    <addaction name="menuView"/>
@@ -623,6 +624,17 @@ No for Magmalice lift</string>
    </property>
    <property name="shortcut">
     <string>Ctrl+Shift+=</string>
+   </property>
+  </action>
+  <action name="actionDraw_Axes">
+   <property name="checkable">
+    <bool>true</bool>
+   </property>
+   <property name="text">
+    <string>Draw Axes</string>
+   </property>
+   <property name="shortcut">
+    <string>Ctrl+K</string>
    </property>
   </action>
  </widget>
