@@ -10,6 +10,7 @@ public:
     QRectF boundingRect() const override;
     void paint(QPainter *painter, const QStyleOptionGraphicsItem *option, QWidget *widget) override;
     SquareData &getData();
+    QPointF getSnapLocation(const QPointF &loc);
 protected:
     QVariant itemChange(GraphicsItemChange change, const QVariant &value) override;
 private:

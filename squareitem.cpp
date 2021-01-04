@@ -109,17 +109,23 @@ void SquareItem::drawTextCentered(QPainter *painter, int x, int y, const QString
 QVariant SquareItem::itemChange(GraphicsItemChange change, const QVariant &value) {
     if (change == ItemPositionChange) {
         QPointF newPos = value.toPointF();
-        FortuneAvenueGraphicsScene *fortuneScene = qobject_cast<FortuneAvenueGraphicsScene *>(scene());
-        if (QApplication::mouseButtons() == Qt::LeftButton && fortuneScene) {
-            int gridSize = fortuneScene->getSnapSize(); // todo adjust
-            qreal xV = round(newPos.x()/gridSize)*gridSize;
-            qreal yV = round(newPos.y()/gridSize)*gridSize;
-            newPos = QPointF(xV, yV);
+        if (QApplication::mouseButtons() == Qt::LeftButton) {
+            newPos = getSnapLocation(newPos);
         }
-        data.positionX = x();
-        data.positionY = y();
-        //qDebug() << data.id << data.positionX << data.positionY;
+        data.positionX = newPos.x();
+        data.positionY = newPos.y();
         return newPos;
     }
     return QGraphicsItem::itemChange(change, value);
+}
+
+QPointF SquareItem::getSnapLocation(const QPointF &loc) {
+    FortuneAvenueGraphicsScene *fortuneScene = qobject_cast<FortuneAvenueGraphicsScene *>(scene());
+    if (fortuneScene) {
+        int gridSize = fortuneScene->getSnapSize();
+        qreal xV = round(loc.x()/gridSize)*gridSize;
+        qreal yV = round(loc.y()/gridSize)*gridSize;
+        return QPointF(xV, yV);
+    }
+    return loc;
 }

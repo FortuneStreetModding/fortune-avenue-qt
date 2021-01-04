@@ -47,6 +47,15 @@ MainWindow::MainWindow(QWidget *parent)
     connect(ui->snapTo, &QLineEdit::textEdited, this, [&](const QString &) {
         scene->setSnapSize(ui->snapToCheck->isChecked() ? calcSnapSizeFromInput() : 1);
     });
+    connect(ui->snapAll, &QPushButton::clicked, this, [&](bool) {
+        int oldSnapSize = scene->getSnapSize();
+        scene->setSnapSize(calcSnapSizeFromInput());
+        auto items = scene->items();
+        for (auto item: items) {
+            item->setPos(((SquareItem *)item)->getSnapLocation(item->pos()));
+        }
+        scene->setSnapSize(oldSnapSize);
+    });
 
     registerSquareSidebarEvents();
 }
