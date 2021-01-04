@@ -233,9 +233,21 @@ void MainWindow::removeSquare() {
     }
 
     // fix square ids
+    QMap<quint8, quint8> oldToNewIDs;
     auto items = scene->items(Qt::AscendingOrder);
     for (int i=0; i<items.size(); ++i) {
+        oldToNewIDs[((SquareItem *)items[i])->getData().id] = i;
         ((SquareItem *)items[i])->getData().id = i;
+    }
+
+    // and waypoints
+    for (auto item: items) {
+        for (auto &waypoint: ((SquareItem *)item)->getData().waypoints) {
+            waypoint.entryId = oldToNewIDs.value(waypoint.entryId, 255);
+            for (auto &dest: waypoint.destinations) {
+                dest = oldToNewIDs.value(dest, 255);
+            }
+        }
     }
 
     scene->update();
