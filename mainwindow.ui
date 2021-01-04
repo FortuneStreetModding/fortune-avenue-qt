@@ -271,7 +271,9 @@
          <item>
           <widget class="QCheckBox" name="isLift">
            <property name="text">
-            <string>Is Lift</string>
+            <string>Lift/Magmalice Start:
+Yes for Yoshi-type lift
+No for Magmalice lift</string>
            </property>
           </widget>
          </item>
