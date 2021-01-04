@@ -1,5 +1,7 @@
 #include "fortuneavenuegraphicsscene.h"
 
+#include "darkdetect.h"
+
 FortuneAvenueGraphicsScene::FortuneAvenueGraphicsScene(qreal x, qreal y, qreal w, qreal h, QObject *parent)
     : QGraphicsScene(x, y, w, h, parent) { initAxesItems(); }
 FortuneAvenueGraphicsScene::FortuneAvenueGraphicsScene(const QRectF &rect, QObject *parent)
@@ -26,20 +28,21 @@ QVector<SquareItem *> FortuneAvenueGraphicsScene::squareItems() {
 
 void FortuneAvenueGraphicsScene::initAxesItems() {
     auto sceneRectVal = sceneRect();
-    axesItems.append(addLine(sceneRectVal.left(), 32, sceneRectVal.right(), 32, QPen(Qt::black)));
-    axesItems.append(addLine(32, sceneRectVal.top(), 32, sceneRectVal.bottom(), QPen(Qt::black)));
+    QColor color = isDarkMode() ? Qt::white : Qt::black;
+    axesItems.append(addLine(sceneRectVal.left(), 32, sceneRectVal.right(), 32, QPen(color)));
+    axesItems.append(addLine(32, sceneRectVal.top(), 32, sceneRectVal.bottom(), QPen(color)));
     setAxesVisible(false);
 }
 
 void FortuneAvenueGraphicsScene::setAxesVisible(bool visible) {
-    for (auto axesItem: axesItems) {
+    for (auto axesItem: qAsConst(axesItems)) {
         axesItem->setVisible(visible);
     }
 }
 
 void FortuneAvenueGraphicsScene::clearSquares() {
     auto squareItemsVal = squareItems();
-    for (auto squareItem: squareItemsVal) {
+    for (auto squareItem: qAsConst(squareItemsVal)) {
         removeItem(squareItem);
         delete squareItem;
     }

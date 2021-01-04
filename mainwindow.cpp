@@ -9,7 +9,7 @@
 #include "util.h"
 
 MainWindow::MainWindow(QWidget *parent)
-    : QMainWindow(parent), ui(new Ui::MainWindow), scene(new FortuneAvenueGraphicsScene(-1600 + 32, -1600 + 32, 3200 + 32, 3200 + 32, this))
+    : QMainWindow(parent), ui(new Ui::MainWindow), scene(new FortuneAvenueGraphicsScene(-1600 + 32, -1600 + 32, 3200, 3200, this))
 {
     ui->setupUi(this);
     waypointStarts = {ui->waypoint1Start, ui->waypoint2Start, ui->waypoint3Start, ui->waypoint4Start};
@@ -69,7 +69,7 @@ MainWindow::MainWindow(QWidget *parent)
         int oldSnapSize = scene->getSnapSize();
         scene->setSnapSize(calcSnapSizeFromInput());
         auto items = scene->squareItems();
-        for (auto item: items) {
+        for (auto item: qAsConst(items)) {
             item->setPos(item->getSnapLocation(item->pos()));
         }
         scene->setSnapSize(oldSnapSize);
@@ -280,7 +280,7 @@ void MainWindow::removeSquare() {
     }
 
     // and waypoints
-    for (auto item: items) {
+    for (auto item: qAsConst(items)) {
         for (auto &waypoint: item->getData().waypoints) {
             waypoint.entryId = oldToNewIDs.value(waypoint.entryId, 255);
             for (auto &dest: waypoint.destinations) {

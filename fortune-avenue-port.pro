@@ -23,6 +23,7 @@ SOURCES += \
     squareitem.cpp
 
 HEADERS += \
+    darkdetect.h \
     fortuneavenuegraphicsscene.h \
     fortunestreetdata.h \
     mainwindow.h \
