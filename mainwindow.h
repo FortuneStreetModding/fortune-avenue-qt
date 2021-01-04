@@ -26,6 +26,8 @@ private:
 
     FortuneAvenueGraphicsScene *scene;
 
+    int zoomPercent = 100;
+
     void loadFile(const BoardFile &file);
     BoardFile exportFile();
     void registerSquareSidebarEvents();

@@ -30,6 +30,21 @@ MainWindow::MainWindow(QWidget *parent)
     connect(ui->actionSave, &QAction::triggered, this, &MainWindow::saveFile);
     connect(ui->actionSave_As, &QAction::triggered, this, &MainWindow::saveFileAs);
 
+    connect(ui->actionZoom_In, &QAction::triggered, this, [&]() {
+        if (zoomPercent > 10) {
+            zoomPercent -= 10;
+        }
+        ui->graphicsView->resetTransform();
+        ui->graphicsView->scale(zoomPercent / 100.0, zoomPercent / 100.0);
+        ui->statusbar->showMessage(QString("Zoom: %1%").arg(zoomPercent));
+    });
+    connect(ui->actionZoom_Out, &QAction::triggered, this, [&]() {
+        zoomPercent += 10;
+        ui->graphicsView->resetTransform();
+        ui->graphicsView->scale(zoomPercent / 100.0, zoomPercent / 100.0);
+        ui->statusbar->showMessage(QString("Zoom: %1%").arg(zoomPercent));
+    });
+
     connect(ui->actionCalculate_Stock_Prices, &QAction::triggered, this, &MainWindow::calcStockPrices);
     connect(ui->actionVerify_Board, &QAction::triggered, this, &MainWindow::verifyBoard);
     connect(ui->actionAuto_Path, &QAction::triggered, this, &MainWindow::autoPath);
@@ -122,6 +137,7 @@ void MainWindow::loadFile(const BoardFile &file) {
     ui->actionSave->setEnabled(true);
     ui->actionSave_As->setEnabled(true);
     ui->menuTools->setEnabled(true);
+    ui->menuView->setEnabled(true);
     ui->initialCash->setText(QString::number(file.boardInfo.initialCash));
     ui->targetAmount->setText(QString::number(file.boardInfo.targetAmount));
     ui->baseSalary->setText(QString::number(file.boardInfo.baseSalary));

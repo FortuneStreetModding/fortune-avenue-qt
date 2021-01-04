@@ -535,7 +535,18 @@ No for Magmalice lift</string>
     </property>
     <addaction name="actionFortune_Avenue_Help"/>
    </widget>
+   <widget class="QMenu" name="menuView">
+    <property name="enabled">
+     <bool>false</bool>
+    </property>
+    <property name="title">
+     <string>View</string>
+    </property>
+    <addaction name="actionZoom_In"/>
+    <addaction name="actionZoom_Out"/>
+   </widget>
    <addaction name="menuFile"/>
+   <addaction name="menuView"/>
    <addaction name="menuTools"/>
    <addaction name="menuHelp"/>
   </widget>
@@ -596,6 +607,22 @@ No for Magmalice lift</string>
   <action name="actionFortune_Avenue_Help">
    <property name="text">
     <string>Fortune Avenue Help</string>
+   </property>
+  </action>
+  <action name="actionZoom_In">
+   <property name="text">
+    <string>Zoom In</string>
+   </property>
+   <property name="shortcut">
+    <string>Ctrl+-</string>
+   </property>
+  </action>
+  <action name="actionZoom_Out">
+   <property name="text">
+    <string>Zoom Out</string>
+   </property>
+   <property name="shortcut">
+    <string>Ctrl+Shift+=</string>
    </property>
   </action>
  </widget>
