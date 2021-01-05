@@ -29,6 +29,7 @@ HEADERS += \
     mainwindow.h \
     orderedmap.h \
     squareitem.h \
+    static_block.hpp \
     util.h
 
 FORMS += \

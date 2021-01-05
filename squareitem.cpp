@@ -6,6 +6,7 @@
 #include <QtMath>
 #include <QVector>
 #include "fortuneavenuegraphicsscene.h"
+#include "static_block.hpp"
 
 QMap<SquareType, QString> typeToFile = {
     {Property, ":/squares/GroundProperty.png"},
@@ -59,9 +60,15 @@ QVector<QColor> districtColors = {
     QColor("#FF50A0")
 };
 
-QFont valueFont("Lato", 18);
-QFont idFont("Lato", 10);
-QFont rentFont("Lato", 12);
+QFont valueFont("Lato");
+QFont idFont("Lato");
+QFont rentFont("Lato");
+
+static_block {
+    valueFont.setPixelSize(18);
+    idFont.setPixelSize(10);
+    rentFont.setPixelSize(12);
+}
 
 SquareItem::SquareItem(const SquareData &dataValue, QGraphicsItem *parent) : QGraphicsItem(parent), data(dataValue) {
     setFlag(ItemIsMovable);
