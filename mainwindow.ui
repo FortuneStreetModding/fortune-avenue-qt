@@ -25,14 +25,14 @@
         <bool>false</bool>
        </property>
        <property name="sizePolicy">
-        <sizepolicy hsizetype="Fixed" vsizetype="Preferred">
+        <sizepolicy hsizetype="Preferred" vsizetype="Preferred">
          <horstretch>0</horstretch>
          <verstretch>0</verstretch>
         </sizepolicy>
        </property>
        <property name="maximumSize">
         <size>
-         <width>250</width>
+         <width>16777215</width>
          <height>16777215</height>
         </size>
        </property>
@@ -192,14 +192,14 @@
         <bool>false</bool>
        </property>
        <property name="sizePolicy">
-        <sizepolicy hsizetype="Fixed" vsizetype="Preferred">
+        <sizepolicy hsizetype="Preferred" vsizetype="Preferred">
          <horstretch>0</horstretch>
          <verstretch>0</verstretch>
         </sizepolicy>
        </property>
        <property name="maximumSize">
         <size>
-         <width>250</width>
+         <width>16777215</width>
          <height>16777215</height>
         </size>
        </property>
