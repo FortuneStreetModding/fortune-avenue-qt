@@ -3,6 +3,7 @@
 #include <QApplication>
 #include <QPainter>
 #include <QMap>
+#include <QtMath>
 #include <QVector>
 #include "fortuneavenuegraphicsscene.h"
 
@@ -131,8 +132,8 @@ QPointF SquareItem::getSnapLocation(const QPointF &loc) {
     FortuneAvenueGraphicsScene *fortuneScene = qobject_cast<FortuneAvenueGraphicsScene *>(scene());
     if (fortuneScene) {
         int gridSize = fortuneScene->getSnapSize();
-        qreal xV = round(loc.x()/gridSize)*gridSize;
-        qreal yV = round(loc.y()/gridSize)*gridSize;
+        qreal xV = qRound(loc.x()/gridSize)*gridSize;
+        qreal yV = qRound(loc.y()/gridSize)*gridSize;
         return QPointF(xV, yV);
     }
     return loc;
