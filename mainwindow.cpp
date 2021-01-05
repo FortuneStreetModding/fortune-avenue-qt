@@ -333,7 +333,7 @@ void MainWindow::calcStockPrices() {
 void MainWindow::verifyBoard() {
     QStringList errors, warnings;
     QVector<int> districtCount(12);
-    int highestDistrict;
+    int highestDistrict = -1;
 
     BoardFile file = exportFile();
     if (file.boardData.squares.size() > 0 && file.boardData.squares[0].squareType != Bank) {
