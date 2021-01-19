@@ -15,8 +15,9 @@ protected:
     QVariant itemChange(GraphicsItemChange change, const QVariant &value) override;
 private:
     SquareData data;
-    static void drawTextCentered(QPainter *painter, int x, int y, const QString &text);
-    static void drawTextRightAligned(QPainter *painter, int x, int y, const QString &text);
+    static void drawBackgroundedTextCentered(QPainter *painter, int x, int y, const QString &text, const QBrush &bgBrush);
+    static void drawBackgroundedTextRightAligned(QPainter *painter, int x, int y, const QString &text, const QBrush &bgBrush);
+    static void drawBackgroundedText(QPainter *painter, int x, int y, const QString &text, const QBrush &bgBrush);
 };
 
 #endif // SQUAREITEM_H

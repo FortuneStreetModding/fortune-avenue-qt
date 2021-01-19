@@ -60,11 +60,12 @@ MainWindow::MainWindow(QWidget *parent)
     connect(ui->removeSquare, &QPushButton::clicked, this, &MainWindow::removeSquare);
     connect(scene, &QGraphicsScene::changed, this, [&](const QList<QRectF> &) { updateSquareSidebar(); });
     connect(ui->snapToCheck, &QCheckBox::clicked, this, [&](bool) {
-        scene->setSnapSize(ui->snapToCheck->isChecked() ? calcSnapSizeFromInput() : 1);
+        updateSnapSize();
     });
     connect(ui->snapTo, &QLineEdit::textEdited, this, [&](const QString &) {
-        scene->setSnapSize(ui->snapToCheck->isChecked() ? calcSnapSizeFromInput() : 1);
+        updateSnapSize();
     });
+    updateSnapSize();
     connect(ui->snapAll, &QPushButton::clicked, this, [&](bool) {
         int oldSnapSize = scene->getSnapSize();
         scene->setSnapSize(calcSnapSizeFromInput());
@@ -88,7 +89,7 @@ void MainWindow::newFile() {
 }
 
 void MainWindow::openFile() {
-    QString filename = QFileDialog::getOpenFileName(this, "Open File", "", "Fortune Street Boards (*.frb)");
+    QString filename = QFileDialog::getOpenFileName(this, "Open File", QString(), "Fortune Street Boards (*.frb)");
     if (filename.isEmpty()) {
         return;
     }
@@ -124,7 +125,7 @@ void MainWindow::saveFile() {
 }
 
 void MainWindow::saveFileAs() {
-    QString saveFileName = QFileDialog::getSaveFileName(this, "Save File", "", "Fortune Street Boards (*.frb)");
+    QString saveFileName = QFileDialog::getSaveFileName(this, "Save File", QString(), "Fortune Street Boards (*.frb)");
     QFile saveFile(saveFileName);
     if (saveFile.open(QIODevice::WriteOnly)) {
         QDataStream stream(&saveFile);
@@ -295,6 +296,10 @@ void MainWindow::removeSquare() {
 int MainWindow::calcSnapSizeFromInput() {
     int result = ui->snapTo->text().toInt();
     return result > 0 ? result : 1;
+}
+
+void MainWindow::updateSnapSize() {
+    scene->setSnapSize(ui->snapToCheck->isChecked() ? calcSnapSizeFromInput() : 1);
 }
 
 void MainWindow::calcStockPrices() {

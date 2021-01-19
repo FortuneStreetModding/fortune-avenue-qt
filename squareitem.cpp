@@ -5,6 +5,7 @@
 #include <QMap>
 #include <QtMath>
 #include <QVector>
+#include "darkdetect.h"
 #include "fortuneavenuegraphicsscene.h"
 #include "static_block.hpp"
 
@@ -87,7 +88,7 @@ void SquareItem::paint(QPainter *painter, const QStyleOptionGraphicsItem *, QWid
     QPen pen(Qt::transparent, 2, Qt::SolidLine);
     pen.setJoinStyle(Qt::MiterJoin);
     if (isSelected()) {
-        pen.setColor(QColor("#eeeeee"));
+        pen.setColor(isDarkMode() ? QColor("#eeeeee") : QColor("#111111"));
     } else if (data.squareType == Property || data.squareType == VacantPlot) {
         pen.setColor(districtColors.value(data.districtDestinationId, Qt::transparent));
     }
@@ -95,31 +96,41 @@ void SquareItem::paint(QPainter *painter, const QStyleOptionGraphicsItem *, QWid
 
     painter->drawRect(0 + 2/2, 0 + 2/2, 64 - 2, 64 - 2);
 
+    QColor backgroundPen(0,0,0,127);
+
     if (data.squareType == Property) {
         painter->setPen(Qt::white);
         painter->setFont(valueFont);
-        drawTextCentered(painter, 32, 38, QString::number(data.value));
+        drawBackgroundedTextCentered(painter, 32, 38, QString::number(data.value), backgroundPen);
         painter->setFont(rentFont);
-        drawTextRightAligned(painter, 60, 60, QString::number(data.price));
+        drawBackgroundedTextRightAligned(painter, 60, 60, QString::number(data.price), backgroundPen);
     }
 
     painter->setPen(Qt::white);
     painter->setFont(idFont);
-    painter->drawText(2, 12, QString::number(data.id));
+    drawBackgroundedText(painter, 2, 12, QString::number(data.id), backgroundPen);
 }
 
 SquareData &SquareItem::getData() {
     return data;
 }
 
-void SquareItem::drawTextCentered(QPainter *painter, int x, int y, const QString &text) {
+void SquareItem::drawBackgroundedTextCentered(QPainter *painter, int x, int y, const QString &text, const QBrush &bgBrush) {
     auto boundingRect = painter->fontMetrics().boundingRect(text);
-    painter->drawText(x - boundingRect.width()/2, y, text);
+    drawBackgroundedText(painter, x - boundingRect.width()/2, y, text, bgBrush);
 }
 
-void SquareItem::drawTextRightAligned(QPainter *painter, int x, int y, const QString &text) {
+void SquareItem::drawBackgroundedTextRightAligned(QPainter *painter, int x, int y, const QString &text, const QBrush &bgBrush) {
     auto boundingRect = painter->fontMetrics().boundingRect(text);
-    painter->drawText(x - boundingRect.width(), y, text);
+    drawBackgroundedText(painter, x - boundingRect.width(), y, text, bgBrush);
+}
+
+void SquareItem::drawBackgroundedText(QPainter *painter, int x, int y, const QString &text, const QBrush &bgBrush) {
+    int width = painter->fontMetrics().horizontalAdvance(text);
+    int ascent = painter->fontMetrics().ascent();
+    int height = painter->fontMetrics().height();
+    painter->fillRect(x, y - ascent, width, height, bgBrush);
+    painter->drawText(x, y, text);
 }
 
 QVariant SquareItem::itemChange(GraphicsItemChange change, const QVariant &value) {
