@@ -192,7 +192,11 @@
         </item>
        </layout>
       </widget>
-      <widget class="QGraphicsView" name="graphicsView"/>
+      <widget class="QGraphicsView" name="graphicsView">
+       <property name="dragMode">
+        <enum>QGraphicsView::RubberBandDrag</enum>
+       </property>
+      </widget>
       <widget class="QTabWidget" name="squareEdit">
        <property name="enabled">
         <bool>false</bool>
@@ -578,6 +582,7 @@ No for Magmalice lift</string>
     <addaction name="actionZoom_In"/>
     <addaction name="actionZoom_Out"/>
     <addaction name="actionDraw_Axes"/>
+    <addaction name="actionDrag_to_Pan"/>
    </widget>
    <addaction name="menuFile"/>
    <addaction name="menuView"/>
@@ -663,11 +668,25 @@ No for Magmalice lift</string>
    <property name="checkable">
     <bool>true</bool>
    </property>
+   <property name="checked">
+    <bool>true</bool>
+   </property>
    <property name="text">
     <string>Draw Axes</string>
    </property>
    <property name="shortcut">
     <string>Ctrl+K</string>
+   </property>
+  </action>
+  <action name="actionDrag_to_Pan">
+   <property name="checkable">
+    <bool>true</bool>
+   </property>
+   <property name="text">
+    <string>Drag to Pan</string>
+   </property>
+   <property name="shortcut">
+    <string>Ctrl+D</string>
    </property>
   </action>
  </widget>

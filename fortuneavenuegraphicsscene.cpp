@@ -31,7 +31,7 @@ void FortuneAvenueGraphicsScene::initAxesItems() {
     QColor color = isDarkMode() ? Qt::white : Qt::black;
     axesItems.append(addLine(sceneRectVal.left(), 32, sceneRectVal.right(), 32, QPen(color)));
     axesItems.append(addLine(32, sceneRectVal.top(), 32, sceneRectVal.bottom(), QPen(color)));
-    setAxesVisible(false);
+    setAxesVisible(true);
 }
 
 void FortuneAvenueGraphicsScene::setAxesVisible(bool visible) {

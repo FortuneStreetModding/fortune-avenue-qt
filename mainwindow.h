@@ -44,5 +44,6 @@ private:
     void removeSquare();
     int calcSnapSizeFromInput();
     void updateSnapSize();
+    void updateZoom();
 };
 #endif // MAINWINDOW_H

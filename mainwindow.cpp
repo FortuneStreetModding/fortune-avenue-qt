@@ -32,20 +32,19 @@ MainWindow::MainWindow(QWidget *parent)
 
     connect(ui->actionZoom_In, &QAction::triggered, this, [&]() {
         zoomPercent += 10;
-        ui->graphicsView->resetTransform();
-        ui->graphicsView->scale(zoomPercent / 100.0, zoomPercent / 100.0);
-        ui->statusbar->showMessage(QString("Zoom: %1%").arg(zoomPercent));
+        updateZoom();
     });
     connect(ui->actionZoom_Out, &QAction::triggered, this, [&]() {
         if (zoomPercent > 10) {
             zoomPercent -= 10;
         }
-        ui->graphicsView->resetTransform();
-        ui->graphicsView->scale(zoomPercent / 100.0, zoomPercent / 100.0);
-        ui->statusbar->showMessage(QString("Zoom: %1%").arg(zoomPercent));
+        updateZoom();
     });
-    connect(ui->actionDraw_Axes, &QAction::triggered, this, [&]() {
-        scene->setAxesVisible(ui->actionDraw_Axes->isChecked());
+    connect(ui->actionDraw_Axes, &QAction::triggered, this, [&](bool checked) {
+        scene->setAxesVisible(checked);
+    });
+    connect(ui->actionDrag_to_Pan, &QAction::triggered, this, [&](bool checked) {
+        ui->graphicsView->setDragMode(checked ? QGraphicsView::ScrollHandDrag : QGraphicsView::RubberBandDrag);
     });
 
     connect(ui->actionCalculate_Stock_Prices, &QAction::triggered, this, &MainWindow::calcStockPrices);
@@ -82,6 +81,12 @@ MainWindow::MainWindow(QWidget *parent)
 MainWindow::~MainWindow()
 {
     delete ui;
+}
+
+void MainWindow::updateZoom() {
+    ui->graphicsView->resetTransform();
+    ui->graphicsView->scale(zoomPercent / 100.0, zoomPercent / 100.0);
+    ui->statusbar->showMessage(QString("Zoom: %1%").arg(zoomPercent));
 }
 
 void MainWindow::newFile() {
