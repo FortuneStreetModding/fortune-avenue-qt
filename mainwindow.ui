@@ -295,6 +295,20 @@
           <widget class="QLineEdit" name="initialPrice"/>
          </item>
          <item>
+          <widget class="QLabel" name="label_22">
+           <property name="text">
+            <string>Yield</string>
+           </property>
+          </widget>
+         </item>
+         <item>
+          <widget class="QLineEdit" name="yield">
+           <property name="enabled">
+            <bool>false</bool>
+           </property>
+          </widget>
+         </item>
+         <item>
           <widget class="QCheckBox" name="isLift">
            <property name="text">
             <string>Lift/Magmalice Start:

@@ -192,6 +192,7 @@ void MainWindow::updateSquareSidebar() {
         }
         ui->positionX->setText(QString::number(item->getData().positionX));
         ui->positionY->setText(QString::number(item->getData().positionY));
+        ui->yield->setText(QString::number(item->getData().getYield()));
     } else {
         ui->squareEdit->setEnabled(false);
         ui->id->setText("");

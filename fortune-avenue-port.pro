@@ -1,7 +1,7 @@
 TARGET="Fortune Avenue"
 
 # update this for release
-VERSION = 1.0.0.0
+VERSION = 2.0.0.0
 
 QMAKE_TARGET_BUNDLE_PREFIX = com.fortunestreetmodding
 
