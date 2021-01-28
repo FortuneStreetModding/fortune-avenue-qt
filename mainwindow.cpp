@@ -5,6 +5,7 @@
 #include <QFileDialog>
 #include <QMessageBox>
 #include <QSet>
+#include "autopath.h"
 #include "squareitem.h"
 #include "util.h"
 
@@ -225,6 +226,38 @@ void MainWindow::registerSquareSidebarEvents() {
             connect(child, &QLineEdit::textEdited, this, [&](const QString &) { updateSquareData(); });
         }
     }
+
+    ui->fromButtons->setId(ui->from_northwest, AutoPath::Northwest);
+    ui->fromButtons->setId(ui->from_north, AutoPath::North);
+    ui->fromButtons->setId(ui->from_northeast, AutoPath::Northeast);
+    ui->fromButtons->setId(ui->from_west, AutoPath::West);
+    ui->fromButtons->setId(ui->from_east, AutoPath::East);
+    ui->fromButtons->setId(ui->from_southwest, AutoPath::Southwest);
+    ui->fromButtons->setId(ui->from_south, AutoPath::South);
+    ui->fromButtons->setId(ui->from_southeast, AutoPath::Southeast);
+
+    ui->toButtons->setId(ui->to_northwest, AutoPath::Northwest);
+    ui->toButtons->setId(ui->to_north, AutoPath::North);
+    ui->toButtons->setId(ui->to_northeast, AutoPath::Northeast);
+    ui->toButtons->setId(ui->to_west, AutoPath::West);
+    ui->toButtons->setId(ui->to_east, AutoPath::East);
+    ui->toButtons->setId(ui->to_southwest, AutoPath::Southwest);
+    ui->toButtons->setId(ui->to_south, AutoPath::South);
+    ui->toButtons->setId(ui->to_southeast, AutoPath::Southeast);
+
+    connect(ui->fromButtons, &QButtonGroup::idClicked, this, &MainWindow::updateDestinationUI);
+    connect(ui->toButtons, &QButtonGroup::idClicked, this, [&](int toDir) {
+        auto fromDir = ui->fromButtons->checkedId();
+        auto selectedItems = scene->selectedItems();
+        if (fromDir >= 0 && selectedItems.size() == 1) {
+            SquareItem *item = (SquareItem *)selectedItems[0];
+            if (ui->toButtons->button(toDir)->isChecked()) {
+                item->getData().validDirections.insert((AutoPath::Direction)fromDir, (AutoPath::Direction)toDir);
+            } else {
+                item->getData().validDirections.remove((AutoPath::Direction)fromDir, (AutoPath::Direction)toDir);
+            }
+        }
+    });
 }
 
 void MainWindow::updateSquareData(bool calcValue, bool calcPrice) {
@@ -252,6 +285,8 @@ void MainWindow::updateSquareData(bool calcValue, bool calcPrice) {
             item->setPos(ui->positionX->text().toInt(), ui->positionY->text().toInt());
             scene->setSnapSize(oldSnapSize);
         }
+
+        updateDestinationUI();
 
         if (calcValue) {
             item->getData().updateValueFromShopModel();
@@ -446,41 +481,47 @@ void MainWindow::verifyBoard() {
 void MainWindow::autoPath() {
     auto items = scene->squareItems();
     for (auto item: qAsConst(items)) {
-        auto &square = item->getData();
-        // ignore waypoints for one-way alleys for now
-        if (square.squareType == OneWayAlleyDoorA
-                || square.squareType == OneWayAlleyDoorB
-                || square.squareType == OneWayAlleyDoorC
-                || square.squareType == OneWayAlleyDoorD
-                || square.squareType == OneWayAlleySquare) {
-            continue;
-        }
-        for (auto &waypoint: square.waypoints) {
-            waypoint.entryId = 255;
-            for (auto &dest: waypoint.destinations) {
-                dest = 255;
+        QMap<AutoPath::Direction, SquareItem *> touchingSquares;
+        for (auto dir: AutoPath::DIRECTIONS) {
+            auto squareInDir = AutoPath::getSquareInDirection(item, items, dir);
+            if (squareInDir) {
+                touchingSquares[dir] = squareInDir;
             }
         }
-        QVector<int> touchingSquares;
-        for (int i=0; i<items.size(); ++i) {
-            auto &otherSquare = items[i]->getData();
-            if (otherSquare.id != square.id
-                    && qAbs(square.positionX - otherSquare.positionX) <= 64
-                    && qAbs(square.positionY - otherSquare.positionY) <= 64) {
-                touchingSquares.append(i);
-            }
+        if (touchingSquares.contains(AutoPath::North)) {
+            touchingSquares.remove(AutoPath::Northeast);
+            touchingSquares.remove(AutoPath::Northwest);
         }
-        int touchingSquaresNo = qMin(touchingSquares.size(), 4);
-        for (int i=0; i<touchingSquaresNo; ++i) {
-            square.waypoints[i].entryId = touchingSquares[i];
-            int k=0;
-            for (int j=0; j<touchingSquaresNo; ++j) {
-                if (j != i) {
-                    square.waypoints[i].destinations[k++] = touchingSquares[j];
-                }
-            }
+        if (touchingSquares.contains(AutoPath::South)) {
+            touchingSquares.remove(AutoPath::Southeast);
+            touchingSquares.remove(AutoPath::Southwest);
         }
+        if (touchingSquares.contains(AutoPath::West)) {
+            touchingSquares.remove(AutoPath::Northwest);
+            touchingSquares.remove(AutoPath::Southwest);
+        }
+        if (touchingSquares.contains(AutoPath::East)) {
+            touchingSquares.remove(AutoPath::Northeast);
+            touchingSquares.remove(AutoPath::Southeast);
+        }
+        //qDebug() << item->getData().id << touchingSquares.keys();
+        AutoPath::pathSquare(item, touchingSquares);
     }
     QMessageBox::information(this, "Auto-pathing", "Auto-pathed entire map");
     updateSquareSidebar();
+}
+
+void MainWindow::updateDestinationUI() {
+    auto selectedItems = scene->selectedItems();
+    if (selectedItems.size() == 1) {
+        SquareItem *item = (SquareItem *)selectedItems[0];
+        auto allButtons = ui->toButtons->buttons();
+        for (auto toButton: qAsConst(allButtons)) {
+            toButton->setChecked(false);
+        }
+        auto allowedDirections = item->getData().validDirections.equal_range((AutoPath::Direction)ui->fromButtons->checkedId());
+        for (auto it=allowedDirections.first; it!=allowedDirections.second; ++it) {
+            ui->toButtons->button(it.value())->setChecked(true);
+        }
+    }
 }

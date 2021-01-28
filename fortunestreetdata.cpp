@@ -83,7 +83,7 @@ QDataStream &operator>>(QDataStream &stream, BoardInfo &data) {
     stream >> data.baseSalary >> data.salaryIncrement;
     stream >> data.maxDiceRoll;
     stream >> data.galaxyStatus;
-    stream.skipRawData(4);
+    stream >> data.versionFlag;
     return stream;
 }
 
@@ -95,7 +95,7 @@ QDataStream &operator<<(QDataStream &stream, const BoardInfo &data) {
     stream << data.baseSalary << data.salaryIncrement;
     stream << data.maxDiceRoll;
     stream << data.galaxyStatus;
-    stream << (quint32)0;
+    stream << data.versionFlag;
     return stream;
 }
 
@@ -129,6 +129,9 @@ QDataStream &operator>>(QDataStream &stream, BoardFile &data) {
     stream >> data.unknown;
     stream >> data.boardInfo;
     stream >> data.boardData;
+    if (data.boardInfo.versionFlag >= 1) {
+        data.readAutopathData(stream);
+    }
     return stream;
 }
 
@@ -137,7 +140,37 @@ QDataStream &operator<<(QDataStream &stream, const BoardFile &data) {
     stream << data.unknown;
     stream << data.boardInfo;
     stream << data.boardData;
+    if (data.boardInfo.versionFlag >= 1) {
+        data.writeAutopathData(stream);
+    }
     return stream;
+}
+
+static_assert(sizeof(AutoPath::DIRECTIONS)/sizeof(AutoPath::Direction) <= 8, "too many directions to fit into a 64-bit integer");
+
+void BoardFile::readAutopathData(QDataStream &stream) {
+    for (auto &square: boardData.squares) {
+        square.validDirections.clear();
+        quint64 autopathFlags;
+        stream >> autopathFlags;
+        for (auto from: AutoPath::DIRECTIONS) {
+            for (auto to: AutoPath::DIRECTIONS) {
+                if (autopathFlags & ( Q_UINT64_C(0x1) << (from * 8 + to) )) {
+                    square.validDirections.insert(from, to);
+                }
+            }
+        }
+    }
+}
+
+void BoardFile::writeAutopathData(QDataStream &stream) const {
+    for (auto &square: boardData.squares) {
+        quint64 autopathFlags = 0;
+        for (auto it=square.validDirections.begin(); it!=square.validDirections.end(); ++it) {
+            autopathFlags |= Q_UINT64_C(0x1) << (it.key()*8 + it.value());
+        }
+        stream << autopathFlags;
+    }
 }
 
 OrderedMap<QString, SquareType> textToSquareTypes = {
@@ -265,6 +298,7 @@ QString shopTypeToText(quint8 shopType) {
             return it.key();
         }
     }
-    return ""; }
+    return "";
+}
 quint8 textToShopType(QString string) { return textToShopTypes.value(string, 0); }
 QList<QString> shopTexts() { return textToShopTypes.keys(); }

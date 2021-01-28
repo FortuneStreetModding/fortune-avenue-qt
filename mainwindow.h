@@ -45,5 +45,6 @@ private:
     int calcSnapSizeFromInput();
     void updateSnapSize();
     void updateZoom();
+    void updateDestinationUI();
 };
 #endif // MAINWINDOW_H

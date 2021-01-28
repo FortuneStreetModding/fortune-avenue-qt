@@ -16,6 +16,7 @@ CONFIG += c++11
 #DEFINES += QT_DISABLE_DEPRECATED_BEFORE=0x060000    # disables all the APIs deprecated before Qt 6.0.0
 
 SOURCES += \
+    autopath.cpp \
     fortuneavenuegraphicsscene.cpp \
     fortunestreetdata.cpp \
     main.cpp \
@@ -23,7 +24,9 @@ SOURCES += \
     squareitem.cpp
 
 HEADERS += \
+    autopath.h \
     darkdetect.h \
+    directions.h \
     fortuneavenuegraphicsscene.h \
     fortunestreetdata.h \
     mainwindow.h \

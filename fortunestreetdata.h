@@ -2,7 +2,9 @@
 #define FORTUNESTREETDATA_H
 
 #include <QDataStream>
+#include <QMultiMap>
 #include <QVector>
+#include "directions.h"
 
 struct WaypointData {
     quint8 entryId = 255;
@@ -75,7 +77,13 @@ QList<QString> squareTexts();
 struct SquareData {
     static constexpr size_t SIZE = 0x20;
 
-    SquareData(quint8 idValue = 0) : id(idValue) {}
+    SquareData(quint8 idValue = 0) : id(idValue) {
+        for (auto from: AutoPath::DIRECTIONS) {
+            for (auto to: AutoPath::DIRECTIONS) {
+                validDirections.insert(from, to);
+            }
+        }
+    }
 
     quint8 id;
     SquareType squareType = Property;
@@ -89,6 +97,7 @@ struct SquareData {
     quint16 price = 0;
     quint8 unknown2 = 0;
     quint8 shopModel = 0;
+    QMultiMap<AutoPath::Direction, AutoPath::Direction> validDirections;
 
     void updateValueFromShopModel();
     void updatePriceFromValue();
@@ -136,6 +145,7 @@ struct BoardInfo {
     quint16 salaryIncrement = 100;
     quint16 maxDiceRoll = 6;
     LoopingMode galaxyStatus = None;
+    quint32 versionFlag = 1;
 
     friend QDataStream &operator>>(QDataStream &stream, BoardInfo &data);
     friend QDataStream &operator<<(QDataStream &stream, const BoardInfo &data);
@@ -173,6 +183,9 @@ struct BoardFile {
     friend QDataStream &operator<<(QDataStream &stream, const BoardFile &data);
 private:
     Header header;
+
+    void readAutopathData(QDataStream &stream);
+    void writeAutopathData(QDataStream &stream) const;
 };
 
 QString shopTypeToText(quint8 shopType);

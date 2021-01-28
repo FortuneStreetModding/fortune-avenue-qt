@@ -243,10 +243,14 @@
           </widget>
          </item>
          <item>
-          <widget class="QLineEdit" name="positionX"/>
-         </item>
-         <item>
-          <widget class="QLineEdit" name="positionY"/>
+          <layout class="QHBoxLayout" name="horizontalLayout_7">
+           <item>
+            <widget class="QLineEdit" name="positionY"/>
+           </item>
+           <item>
+            <widget class="QLineEdit" name="positionX"/>
+           </item>
+          </layout>
          </item>
          <item>
           <widget class="QLabel" name="label_9">
@@ -314,11 +318,315 @@
          </item>
          <item>
           <widget class="QCheckBox" name="isLift">
-           <property name="text">
+           <property name="toolTip">
             <string>Lift/Magmalice Start:
 Yes for Yoshi-type lift
 No for Magmalice lift</string>
            </property>
+           <property name="text">
+            <string>Is Yoshi-type Lift?</string>
+           </property>
+          </widget>
+         </item>
+         <item>
+          <widget class="QWidget" name="widget" native="true">
+           <layout class="QGridLayout" name="gridLayout">
+            <property name="leftMargin">
+             <number>0</number>
+            </property>
+            <property name="topMargin">
+             <number>0</number>
+            </property>
+            <property name="rightMargin">
+             <number>0</number>
+            </property>
+            <property name="bottomMargin">
+             <number>0</number>
+            </property>
+            <item row="1" column="1">
+             <widget class="QToolButton" name="from_north">
+              <property name="text">
+               <string>...</string>
+              </property>
+              <property name="icon">
+               <iconset theme=":/buttonicons/arrow_north.svg"/>
+              </property>
+              <property name="checkable">
+               <bool>true</bool>
+              </property>
+              <attribute name="buttonGroup">
+               <string notr="true">fromButtons</string>
+              </attribute>
+             </widget>
+            </item>
+            <item row="1" column="3">
+             <spacer name="horizontalSpacer">
+              <property name="orientation">
+               <enum>Qt::Horizontal</enum>
+              </property>
+              <property name="sizeHint" stdset="0">
+               <size>
+                <width>40</width>
+                <height>20</height>
+               </size>
+              </property>
+             </spacer>
+            </item>
+            <item row="1" column="0">
+             <widget class="QToolButton" name="from_northwest">
+              <property name="text">
+               <string>...</string>
+              </property>
+              <property name="icon">
+               <iconset theme=":/buttonicons/arrow_northwest.svg"/>
+              </property>
+              <property name="checkable">
+               <bool>true</bool>
+              </property>
+              <attribute name="buttonGroup">
+               <string notr="true">fromButtons</string>
+              </attribute>
+             </widget>
+            </item>
+            <item row="1" column="4">
+             <widget class="QToolButton" name="to_northwest">
+              <property name="text">
+               <string>...</string>
+              </property>
+              <property name="icon">
+               <iconset theme=":/buttonicons/arrow_northwest.svg"/>
+              </property>
+              <property name="checkable">
+               <bool>true</bool>
+              </property>
+              <attribute name="buttonGroup">
+               <string notr="true">toButtons</string>
+              </attribute>
+             </widget>
+            </item>
+            <item row="3" column="5">
+             <widget class="QToolButton" name="to_south">
+              <property name="text">
+               <string>...</string>
+              </property>
+              <property name="icon">
+               <iconset theme=":/buttonicons/arrow_south.svg"/>
+              </property>
+              <property name="checkable">
+               <bool>true</bool>
+              </property>
+              <attribute name="buttonGroup">
+               <string notr="true">toButtons</string>
+              </attribute>
+             </widget>
+            </item>
+            <item row="3" column="2">
+             <widget class="QToolButton" name="from_southeast">
+              <property name="text">
+               <string>...</string>
+              </property>
+              <property name="icon">
+               <iconset theme=":/buttonicons/arrow_southeast.svg"/>
+              </property>
+              <property name="checkable">
+               <bool>true</bool>
+              </property>
+              <attribute name="buttonGroup">
+               <string notr="true">fromButtons</string>
+              </attribute>
+             </widget>
+            </item>
+            <item row="1" column="2">
+             <widget class="QToolButton" name="from_northeast">
+              <property name="text">
+               <string>...</string>
+              </property>
+              <property name="icon">
+               <iconset theme=":/buttonicons/arrow_northeast.svg"/>
+              </property>
+              <property name="checkable">
+               <bool>true</bool>
+              </property>
+              <attribute name="buttonGroup">
+               <string notr="true">fromButtons</string>
+              </attribute>
+             </widget>
+            </item>
+            <item row="1" column="5">
+             <widget class="QToolButton" name="to_north">
+              <property name="text">
+               <string>...</string>
+              </property>
+              <property name="icon">
+               <iconset theme=":/buttonicons/arrow_north.svg"/>
+              </property>
+              <property name="checkable">
+               <bool>true</bool>
+              </property>
+              <attribute name="buttonGroup">
+               <string notr="true">toButtons</string>
+              </attribute>
+             </widget>
+            </item>
+            <item row="2" column="4">
+             <widget class="QToolButton" name="to_west">
+              <property name="text">
+               <string>...</string>
+              </property>
+              <property name="icon">
+               <iconset theme=":/buttonicons/arrow_west.svg"/>
+              </property>
+              <property name="checkable">
+               <bool>true</bool>
+              </property>
+              <attribute name="buttonGroup">
+               <string notr="true">toButtons</string>
+              </attribute>
+             </widget>
+            </item>
+            <item row="2" column="6">
+             <widget class="QToolButton" name="to_east">
+              <property name="text">
+               <string>...</string>
+              </property>
+              <property name="icon">
+               <iconset theme=":/buttonicons/arrow_east.svg"/>
+              </property>
+              <property name="checkable">
+               <bool>true</bool>
+              </property>
+              <attribute name="buttonGroup">
+               <string notr="true">toButtons</string>
+              </attribute>
+             </widget>
+            </item>
+            <item row="3" column="1">
+             <widget class="QToolButton" name="from_south">
+              <property name="text">
+               <string>...</string>
+              </property>
+              <property name="icon">
+               <iconset theme=":/buttonicons/arrow_south.svg"/>
+              </property>
+              <property name="checkable">
+               <bool>true</bool>
+              </property>
+              <attribute name="buttonGroup">
+               <string notr="true">fromButtons</string>
+              </attribute>
+             </widget>
+            </item>
+            <item row="3" column="6">
+             <widget class="QToolButton" name="to_southeast">
+              <property name="text">
+               <string>...</string>
+              </property>
+              <property name="icon">
+               <iconset theme=":/buttonicons/arrow_southeast.svg"/>
+              </property>
+              <property name="checkable">
+               <bool>true</bool>
+              </property>
+              <attribute name="buttonGroup">
+               <string notr="true">toButtons</string>
+              </attribute>
+             </widget>
+            </item>
+            <item row="3" column="4">
+             <widget class="QToolButton" name="to_southwest">
+              <property name="text">
+               <string>...</string>
+              </property>
+              <property name="icon">
+               <iconset theme=":/buttonicons/arrow_southwest.svg"/>
+              </property>
+              <property name="checkable">
+               <bool>true</bool>
+              </property>
+              <attribute name="buttonGroup">
+               <string notr="true">toButtons</string>
+              </attribute>
+             </widget>
+            </item>
+            <item row="2" column="0">
+             <widget class="QToolButton" name="from_west">
+              <property name="text">
+               <string>...</string>
+              </property>
+              <property name="icon">
+               <iconset theme=":/buttonicons/arrow_west.svg"/>
+              </property>
+              <property name="checkable">
+               <bool>true</bool>
+              </property>
+              <attribute name="buttonGroup">
+               <string notr="true">fromButtons</string>
+              </attribute>
+             </widget>
+            </item>
+            <item row="3" column="0">
+             <widget class="QToolButton" name="from_southwest">
+              <property name="text">
+               <string>...</string>
+              </property>
+              <property name="icon">
+               <iconset theme=":/buttonicons/arrow_southwest.svg"/>
+              </property>
+              <property name="checkable">
+               <bool>true</bool>
+              </property>
+              <attribute name="buttonGroup">
+               <string notr="true">fromButtons</string>
+              </attribute>
+             </widget>
+            </item>
+            <item row="1" column="6">
+             <widget class="QToolButton" name="to_northeast">
+              <property name="text">
+               <string>...</string>
+              </property>
+              <property name="icon">
+               <iconset theme=":/buttonicons/arrow_northeast.svg"/>
+              </property>
+              <property name="checkable">
+               <bool>true</bool>
+              </property>
+              <attribute name="buttonGroup">
+               <string notr="true">toButtons</string>
+              </attribute>
+             </widget>
+            </item>
+            <item row="2" column="2">
+             <widget class="QToolButton" name="from_east">
+              <property name="text">
+               <string>...</string>
+              </property>
+              <property name="icon">
+               <iconset theme=":/buttonicons/arrow_east.svg"/>
+              </property>
+              <property name="checkable">
+               <bool>true</bool>
+              </property>
+              <attribute name="buttonGroup">
+               <string notr="true">fromButtons</string>
+              </attribute>
+             </widget>
+            </item>
+            <item row="0" column="0" colspan="3">
+             <widget class="QLabel" name="label_23">
+              <property name="text">
+               <string>From</string>
+              </property>
+             </widget>
+            </item>
+            <item row="0" column="4" colspan="3">
+             <widget class="QLabel" name="label_24">
+              <property name="text">
+               <string>To</string>
+              </property>
+             </widget>
+            </item>
+           </layout>
           </widget>
          </item>
          <item>
@@ -694,5 +1002,11 @@ No for Magmalice lift</string>
  <connections/>
  <buttongroups>
   <buttongroup name="loopingMode"/>
+  <buttongroup name="fromButtons"/>
+  <buttongroup name="toButtons">
+   <property name="exclusive">
+    <bool>false</bool>
+   </property>
+  </buttongroup>
  </buttongroups>
 </ui>
