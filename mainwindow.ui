@@ -349,7 +349,7 @@ No for Magmalice lift</string>
                <string>...</string>
               </property>
               <property name="icon">
-               <iconset theme=":/buttonicons/arrow_north.svg"/>
+               <iconset theme=":/buttonicons/arrow_south.svg"/>
               </property>
               <property name="checkable">
                <bool>true</bool>
@@ -378,7 +378,7 @@ No for Magmalice lift</string>
                <string>...</string>
               </property>
               <property name="icon">
-               <iconset theme=":/buttonicons/arrow_northwest.svg"/>
+               <iconset theme=":/buttonicons/arrow_southeast.svg"/>
               </property>
               <property name="checkable">
                <bool>true</bool>
@@ -426,7 +426,7 @@ No for Magmalice lift</string>
                <string>...</string>
               </property>
               <property name="icon">
-               <iconset theme=":/buttonicons/arrow_southeast.svg"/>
+               <iconset theme=":/buttonicons/arrow_northwest.svg"/>
               </property>
               <property name="checkable">
                <bool>true</bool>
@@ -442,7 +442,7 @@ No for Magmalice lift</string>
                <string>...</string>
               </property>
               <property name="icon">
-               <iconset theme=":/buttonicons/arrow_northeast.svg"/>
+               <iconset theme=":/buttonicons/arrow_southwest.svg"/>
               </property>
               <property name="checkable">
                <bool>true</bool>
@@ -506,7 +506,7 @@ No for Magmalice lift</string>
                <string>...</string>
               </property>
               <property name="icon">
-               <iconset theme=":/buttonicons/arrow_south.svg"/>
+               <iconset theme=":/buttonicons/arrow_north.svg"/>
               </property>
               <property name="checkable">
                <bool>true</bool>
@@ -554,7 +554,7 @@ No for Magmalice lift</string>
                <string>...</string>
               </property>
               <property name="icon">
-               <iconset theme=":/buttonicons/arrow_west.svg"/>
+               <iconset theme=":/buttonicons/arrow_east.svg"/>
               </property>
               <property name="checkable">
                <bool>true</bool>
@@ -570,7 +570,7 @@ No for Magmalice lift</string>
                <string>...</string>
               </property>
               <property name="icon">
-               <iconset theme=":/buttonicons/arrow_southwest.svg"/>
+               <iconset theme=":/buttonicons/arrow_northeast.svg"/>
               </property>
               <property name="checkable">
                <bool>true</bool>
@@ -602,7 +602,7 @@ No for Magmalice lift</string>
                <string>...</string>
               </property>
               <property name="icon">
-               <iconset theme=":/buttonicons/arrow_east.svg"/>
+               <iconset theme=":/buttonicons/arrow_west.svg"/>
               </property>
               <property name="checkable">
                <bool>true</bool>
@@ -851,7 +851,7 @@ No for Magmalice lift</string>
      <x>0</x>
      <y>0</y>
      <width>1280</width>
-     <height>24</height>
+     <height>21</height>
     </rect>
    </property>
    <widget class="QMenu" name="menuFile">
@@ -1001,12 +1001,12 @@ No for Magmalice lift</string>
  <resources/>
  <connections/>
  <buttongroups>
-  <buttongroup name="loopingMode"/>
-  <buttongroup name="fromButtons"/>
   <buttongroup name="toButtons">
    <property name="exclusive">
     <bool>false</bool>
    </property>
   </buttongroup>
+  <buttongroup name="fromButtons"/>
+  <buttongroup name="loopingMode"/>
  </buttongroups>
 </ui>
