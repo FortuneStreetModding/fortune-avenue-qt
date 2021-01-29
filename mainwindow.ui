@@ -7,7 +7,7 @@
     <x>0</x>
     <y>0</y>
     <width>1280</width>
-    <height>720</height>
+    <height>739</height>
    </rect>
   </property>
   <property name="windowTitle">
@@ -174,6 +174,20 @@
          <widget class="QPushButton" name="snapAll">
           <property name="text">
            <string>Snap All</string>
+          </property>
+         </widget>
+        </item>
+        <item>
+         <widget class="QLabel" name="label_25">
+          <property name="text">
+           <string>File Version</string>
+          </property>
+         </widget>
+        </item>
+        <item>
+         <widget class="QLineEdit" name="fileVersion">
+          <property name="enabled">
+           <bool>false</bool>
           </property>
          </widget>
         </item>
@@ -851,7 +865,7 @@ No for Magmalice lift</string>
      <x>0</x>
      <y>0</y>
      <width>1280</width>
-     <height>21</height>
+     <height>24</height>
     </rect>
    </property>
    <widget class="QMenu" name="menuFile">
@@ -1001,12 +1015,12 @@ No for Magmalice lift</string>
  <resources/>
  <connections/>
  <buttongroups>
+  <buttongroup name="loopingMode"/>
   <buttongroup name="toButtons">
    <property name="exclusive">
     <bool>false</bool>
    </property>
   </buttongroup>
   <buttongroup name="fromButtons"/>
-  <buttongroup name="loopingMode"/>
  </buttongroups>
 </ui>

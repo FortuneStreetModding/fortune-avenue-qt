@@ -173,6 +173,8 @@ struct BoardFile {
             SquareData bank(0);
             bank.squareType = Bank;
             boardData.squares.append(bank);
+
+            boardInfo.versionFlag = 1;
         }
     }
     quint64 unknown;

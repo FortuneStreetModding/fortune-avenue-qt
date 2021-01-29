@@ -7,7 +7,9 @@
 namespace AutoPath {
 
 SquareItem *getSquareInDirection(SquareItem *square, const QVector<SquareItem *> &squares, Direction dir);
+QMap<Direction, SquareItem *> getTouchingSquares(SquareItem *square, const QVector<SquareItem *> &squares);
 bool pathSquare(SquareItem *square, const QMap<Direction, SquareItem *> &touchingSquares);
+void enumerateAutopathingRules(SquareItem *square, const QMap<Direction, SquareItem *> &touchingSquares);
 
 }
 

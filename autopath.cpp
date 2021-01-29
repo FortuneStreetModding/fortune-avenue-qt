@@ -31,6 +31,33 @@ SquareItem *getSquareInDirection(SquareItem *square, const QVector<SquareItem *>
     return nullptr;
 }
 
+QMap<Direction, SquareItem *> getTouchingSquares(SquareItem *square, const QVector<SquareItem *> &squares) {
+    QMap<Direction, SquareItem *> touchingSquares;
+    for (auto dir: AutoPath::DIRECTIONS) {
+        auto squareInDir = AutoPath::getSquareInDirection(square, squares, dir);
+        if (squareInDir) {
+            touchingSquares[dir] = squareInDir;
+        }
+    }
+    if (touchingSquares.contains(AutoPath::North)) {
+        touchingSquares.remove(AutoPath::Northeast);
+        touchingSquares.remove(AutoPath::Northwest);
+    }
+    if (touchingSquares.contains(AutoPath::South)) {
+        touchingSquares.remove(AutoPath::Southeast);
+        touchingSquares.remove(AutoPath::Southwest);
+    }
+    if (touchingSquares.contains(AutoPath::West)) {
+        touchingSquares.remove(AutoPath::Northwest);
+        touchingSquares.remove(AutoPath::Southwest);
+    }
+    if (touchingSquares.contains(AutoPath::East)) {
+        touchingSquares.remove(AutoPath::Northeast);
+        touchingSquares.remove(AutoPath::Southeast);
+    }
+    return touchingSquares;
+}
+
 bool pathSquare(SquareItem *square, const QMap<Direction, SquareItem *> &touchingSquares) {
     if (touchingSquares.size() > 4) {
         return false;
@@ -59,6 +86,31 @@ bool pathSquare(SquareItem *square, const QMap<Direction, SquareItem *> &touchin
         }
     }
     return true;
+}
+
+static Direction idToDirection(const QMap<Direction, SquareItem *> &touchingSquares, int id) {
+    for (auto it=touchingSquares.begin(); it!=touchingSquares.end(); ++it) {
+        if (it.value()->getData().id == id) {
+            return it.key();
+        }
+    }
+    return _UnrecognizedDirection;
+}
+
+void enumerateAutopathingRules(SquareItem *square, const QMap<Direction, SquareItem *> &touchingSquares) {
+    auto &data = square->getData();
+    data.validDirections.clear();
+    for (auto &waypoint: data.waypoints) {
+        auto fromDir = idToDirection(touchingSquares, waypoint.entryId);
+        if (fromDir != _UnrecognizedDirection) {
+            for (auto dest: waypoint.destinations) {
+                auto toDir = idToDirection(touchingSquares, dest);
+                if (toDir != _UnrecognizedDirection) {
+                    data.validDirections.insert(fromDir, toDir);
+                }
+            }
+        }
+    }
 }
 
 }

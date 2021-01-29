@@ -148,17 +148,31 @@ void MainWindow::loadFile(const BoardFile &file) {
     ui->actionSave_As->setEnabled(true);
     ui->menuTools->setEnabled(true);
     ui->menuView->setEnabled(true);
+
     ui->initialCash->setText(QString::number(file.boardInfo.initialCash));
     ui->targetAmount->setText(QString::number(file.boardInfo.targetAmount));
     ui->baseSalary->setText(QString::number(file.boardInfo.baseSalary));
     ui->salaryIncrement->setText(QString::number(file.boardInfo.salaryIncrement));
     ui->maxDiceRoll->setText(QString::number(file.boardInfo.maxDiceRoll));
     ui->loopingMode->button(file.boardInfo.galaxyStatus)->setChecked(true);
+    ui->fileVersion->setText(QString::number(file.boardInfo.versionFlag));
     scene->clearSquares();
     for (auto &square: file.boardData.squares) {
-        //qDebug() << square.positionX << square.positionY;
         scene->addItem(new SquareItem(square));
     }
+
+    if (file.boardInfo.versionFlag == 0) {
+        auto response = QMessageBox::question(this, "Open File", "This file is version 0, but the latest version is version 1. Would you like to upgrade the file to version 1?");
+        if (response == QMessageBox::Yes) {
+            ui->fileVersion->setText(QString::number(1));
+            auto items = scene->squareItems();
+            for (auto item: qAsConst(items)) {
+                auto touchingSquares = AutoPath::getTouchingSquares(item, items);
+                AutoPath::enumerateAutopathingRules(item, touchingSquares);
+            }
+        }
+    }
+
     QCoreApplication::processEvents();
 }
 
@@ -170,6 +184,7 @@ BoardFile MainWindow::exportFile() {
     file.boardInfo.salaryIncrement = ui->salaryIncrement->text().toUShort();
     file.boardInfo.maxDiceRoll = ui->maxDiceRoll->text().toUShort();
     file.boardInfo.galaxyStatus = (LoopingMode)ui->loopingMode->checkedId();
+    file.boardInfo.versionFlag = ui->fileVersion->text().toUInt();
     auto items = scene->squareItems();
     for (auto item: qAsConst(items)) {
         file.boardData.squares.append(item->getData());
@@ -199,6 +214,8 @@ void MainWindow::updateSquareSidebar() {
         ui->positionX->setText(QString::number(item->getData().positionX));
         ui->positionY->setText(QString::number(item->getData().positionY));
         ui->yield->setText(QString::number(item->getData().getYield()));
+
+        updateDestinationUI();
     } else {
         ui->squareEdit->setEnabled(false);
         ui->id->setText("");
@@ -285,8 +302,6 @@ void MainWindow::updateSquareData(bool calcValue, bool calcPrice) {
             item->setPos(ui->positionX->text().toInt(), ui->positionY->text().toInt());
             scene->setSnapSize(oldSnapSize);
         }
-
-        updateDestinationUI();
 
         if (calcValue) {
             item->getData().updateValueFromShopModel();
@@ -481,30 +496,7 @@ void MainWindow::verifyBoard() {
 void MainWindow::autoPath() {
     auto items = scene->squareItems();
     for (auto item: qAsConst(items)) {
-        QMap<AutoPath::Direction, SquareItem *> touchingSquares;
-        for (auto dir: AutoPath::DIRECTIONS) {
-            auto squareInDir = AutoPath::getSquareInDirection(item, items, dir);
-            if (squareInDir) {
-                touchingSquares[dir] = squareInDir;
-            }
-        }
-        if (touchingSquares.contains(AutoPath::North)) {
-            touchingSquares.remove(AutoPath::Northeast);
-            touchingSquares.remove(AutoPath::Northwest);
-        }
-        if (touchingSquares.contains(AutoPath::South)) {
-            touchingSquares.remove(AutoPath::Southeast);
-            touchingSquares.remove(AutoPath::Southwest);
-        }
-        if (touchingSquares.contains(AutoPath::West)) {
-            touchingSquares.remove(AutoPath::Northwest);
-            touchingSquares.remove(AutoPath::Southwest);
-        }
-        if (touchingSquares.contains(AutoPath::East)) {
-            touchingSquares.remove(AutoPath::Northeast);
-            touchingSquares.remove(AutoPath::Southeast);
-        }
-        //qDebug() << item->getData().id << touchingSquares.keys();
+        QMap<AutoPath::Direction, SquareItem *> touchingSquares = AutoPath::getTouchingSquares(item, items);
         AutoPath::pathSquare(item, touchingSquares);
     }
     QMessageBox::information(this, "Auto-pathing", "Auto-pathed entire map");

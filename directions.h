@@ -4,7 +4,9 @@
 namespace AutoPath {
 
 enum Direction {
-    North, South, West, East, Northwest, Northeast, Southwest, Southeast
+    North, South, West, East, Northwest, Northeast, Southwest, Southeast,
+
+    _UnrecognizedDirection = -1
 };
 const Direction DIRECTIONS[] = {
     North,
