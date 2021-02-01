@@ -49,6 +49,22 @@
         <file>buttonicons/arrow_southeast.svg</file>
         <file>buttonicons/arrow_southwest.svg</file>
         <file>buttonicons/arrow_west.svg</file>
+        <file>buttonicons/arrow_west_green.svg</file>
+        <file>buttonicons/arrow_southwest_green.svg</file>
+        <file>buttonicons/arrow_southeast_green.svg</file>
+        <file>buttonicons/arrow_south_green.svg</file>
+        <file>buttonicons/arrow_northwest_green.svg</file>
+        <file>buttonicons/arrow_northeast_green.svg</file>
+        <file>buttonicons/arrow_north_green.svg</file>
+        <file>buttonicons/arrow_east_green.svg</file>
+        <file>buttonicons/arrow_west_red.svg</file>
+        <file>buttonicons/arrow_southwest_red.svg</file>
+        <file>buttonicons/arrow_southeast_red.svg</file>
+        <file>buttonicons/arrow_south_red.svg</file>
+        <file>buttonicons/arrow_northwest_red.svg</file>
+        <file>buttonicons/arrow_northeast_red.svg</file>
+        <file>buttonicons/arrow_north_red.svg</file>
+        <file>buttonicons/arrow_east_red.svg</file>
     </qresource>
     <qresource prefix="/fonts">
         <file>Lato-Regular.ttf</file>

@@ -1,0 +1,4 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<svg width="100" height="100" xmlns="http://www.w3.org/2000/svg">
+	<polygon fill="red" transform="rotate(180,50,50)" points="0,50 20,30 20,40 100,40 100,60 20,60 20,70" />
+</svg>
