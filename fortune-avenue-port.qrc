@@ -65,6 +65,30 @@
         <file>buttonicons/arrow_northeast_red.svg</file>
         <file>buttonicons/arrow_north_red.svg</file>
         <file>buttonicons/arrow_east_red.svg</file>
+        <file>buttonicons/dark/arrow_east.svg</file>
+        <file>buttonicons/dark/arrow_east_green.svg</file>
+        <file>buttonicons/dark/arrow_east_red.svg</file>
+        <file>buttonicons/dark/arrow_north.svg</file>
+        <file>buttonicons/dark/arrow_north_green.svg</file>
+        <file>buttonicons/dark/arrow_north_red.svg</file>
+        <file>buttonicons/dark/arrow_northeast.svg</file>
+        <file>buttonicons/dark/arrow_northeast_green.svg</file>
+        <file>buttonicons/dark/arrow_northeast_red.svg</file>
+        <file>buttonicons/dark/arrow_northwest.svg</file>
+        <file>buttonicons/dark/arrow_northwest_green.svg</file>
+        <file>buttonicons/dark/arrow_northwest_red.svg</file>
+        <file>buttonicons/dark/arrow_south.svg</file>
+        <file>buttonicons/dark/arrow_south_green.svg</file>
+        <file>buttonicons/dark/arrow_south_red.svg</file>
+        <file>buttonicons/dark/arrow_southeast.svg</file>
+        <file>buttonicons/dark/arrow_southeast_green.svg</file>
+        <file>buttonicons/dark/arrow_southeast_red.svg</file>
+        <file>buttonicons/dark/arrow_southwest.svg</file>
+        <file>buttonicons/dark/arrow_southwest_green.svg</file>
+        <file>buttonicons/dark/arrow_southwest_red.svg</file>
+        <file>buttonicons/dark/arrow_west.svg</file>
+        <file>buttonicons/dark/arrow_west_green.svg</file>
+        <file>buttonicons/dark/arrow_west_red.svg</file>
     </qresource>
     <qresource prefix="/fonts">
         <file>Lato-Regular.ttf</file>

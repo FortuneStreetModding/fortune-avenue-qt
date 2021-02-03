@@ -6,8 +6,11 @@
 #include <QMessageBox>
 #include <QSet>
 #include "autopath.h"
+#include "darkdetect.h"
 #include "squareitem.h"
 #include "util.h"
+
+#include <QDebug>
 
 MainWindow::MainWindow(QWidget *parent)
     : QMainWindow(parent), ui(new Ui::MainWindow), scene(new FortuneAvenueGraphicsScene(-1600 + 32, -1600 + 32, 3200, 3200, this))
@@ -252,6 +255,18 @@ void MainWindow::registerSquareSidebarEvents() {
     ui->fromButtons->setId(ui->from_southwest, AutoPath::Southwest);
     ui->fromButtons->setId(ui->from_south, AutoPath::South);
     ui->fromButtons->setId(ui->from_southeast, AutoPath::Southeast);
+
+    auto fromButtons = ui->fromButtons->buttons();
+    for (auto button: qAsConst(fromButtons)) {
+        if (isDarkMode()) {
+            auto icon = button->icon();
+            icon.addFile(QString(":/buttonicons/dark/arrow_%1.svg")
+                         .arg(AutoPath::getDirectionName(
+                                  AutoPath::getOppositeDirection((AutoPath::Direction)ui->fromButtons->id(button))
+                                  )));
+            button->setIcon(icon);
+        }
+    }
 
     ui->toButtons->setId(ui->to_northwest, AutoPath::Northwest);
     ui->toButtons->setId(ui->to_north, AutoPath::North);

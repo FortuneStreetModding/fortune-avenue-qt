@@ -1,6 +1,8 @@
 #ifndef DIRECTIONS_H
 #define DIRECTIONS_H
 
+#include <QString>
+
 namespace AutoPath {
 
 enum Direction {
@@ -45,6 +47,50 @@ inline int getYOffset(Direction dir) {
         return 1;
     default:
         return 0;
+    }
+}
+inline QString getDirectionName(Direction dir) {
+    switch (dir) {
+    case North:
+        return "north";
+    case Northwest:
+        return "northwest";
+    case Northeast:
+        return "northeast";
+    case South:
+        return "south";
+    case Southwest:
+        return "southwest";
+    case Southeast:
+        return "southeast";
+    case West:
+        return "west";
+    case East:
+        return "east";
+    default:
+        return "";
+    }
+}
+inline Direction getOppositeDirection(Direction dir) {
+    switch (dir) {
+    case North:
+        return South;
+    case Northwest:
+        return Southeast;
+    case Northeast:
+        return Southwest;
+    case South:
+        return North;
+    case Southwest:
+        return Northeast;
+    case Southeast:
+        return Northwest;
+    case West:
+        return East;
+    case East:
+        return West;
+    default:
+        return _UnrecognizedDirection;
     }
 }
 

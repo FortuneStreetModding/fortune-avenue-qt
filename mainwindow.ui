@@ -364,7 +364,8 @@ No for Magmalice lift</string>
               </property>
               <property name="icon">
                <iconset resource="fortune-avenue-port.qrc">
-                <normaloff>:/buttonicons/arrow_south.svg</normaloff>:/buttonicons/arrow_south.svg</iconset>
+                <normaloff>:/buttonicons/arrow_south.svg</normaloff>
+                <normalon>:/buttonicons/arrow_south_green.svg</normalon>:/buttonicons/arrow_south.svg</iconset>
               </property>
               <property name="checkable">
                <bool>true</bool>
@@ -394,7 +395,8 @@ No for Magmalice lift</string>
               </property>
               <property name="icon">
                <iconset resource="fortune-avenue-port.qrc">
-                <normaloff>:/buttonicons/arrow_southeast.svg</normaloff>:/buttonicons/arrow_southeast.svg</iconset>
+                <normaloff>:/buttonicons/arrow_southeast.svg</normaloff>
+                <normalon>:/buttonicons/arrow_southeast_green.svg</normalon>:/buttonicons/arrow_southeast.svg</iconset>
               </property>
               <property name="checkable">
                <bool>true</bool>
@@ -447,7 +449,8 @@ No for Magmalice lift</string>
               </property>
               <property name="icon">
                <iconset resource="fortune-avenue-port.qrc">
-                <normaloff>:/buttonicons/arrow_northwest.svg</normaloff>:/buttonicons/arrow_northwest.svg</iconset>
+                <normaloff>:/buttonicons/arrow_northwest.svg</normaloff>
+                <normalon>:/buttonicons/arrow_northwest_green.svg</normalon>:/buttonicons/arrow_northwest.svg</iconset>
               </property>
               <property name="checkable">
                <bool>true</bool>
@@ -464,7 +467,8 @@ No for Magmalice lift</string>
               </property>
               <property name="icon">
                <iconset resource="fortune-avenue-port.qrc">
-                <normaloff>:/buttonicons/arrow_southwest.svg</normaloff>:/buttonicons/arrow_southwest.svg</iconset>
+                <normaloff>:/buttonicons/arrow_southwest.svg</normaloff>
+                <normalon>:/buttonicons/arrow_southwest_green.svg</normalon>:/buttonicons/arrow_southwest.svg</iconset>
               </property>
               <property name="checkable">
                <bool>true</bool>
@@ -535,7 +539,8 @@ No for Magmalice lift</string>
               </property>
               <property name="icon">
                <iconset resource="fortune-avenue-port.qrc">
-                <normaloff>:/buttonicons/arrow_north.svg</normaloff>:/buttonicons/arrow_north.svg</iconset>
+                <normaloff>:/buttonicons/arrow_north.svg</normaloff>
+                <normalon>:/buttonicons/arrow_north_green.svg</normalon>:/buttonicons/arrow_north.svg</iconset>
               </property>
               <property name="checkable">
                <bool>true</bool>
@@ -588,7 +593,8 @@ No for Magmalice lift</string>
               </property>
               <property name="icon">
                <iconset resource="fortune-avenue-port.qrc">
-                <normaloff>:/buttonicons/arrow_east.svg</normaloff>:/buttonicons/arrow_east.svg</iconset>
+                <normaloff>:/buttonicons/arrow_east.svg</normaloff>
+                <normalon>:/buttonicons/arrow_east_green.svg</normalon>:/buttonicons/arrow_east.svg</iconset>
               </property>
               <property name="checkable">
                <bool>true</bool>
@@ -605,7 +611,8 @@ No for Magmalice lift</string>
               </property>
               <property name="icon">
                <iconset resource="fortune-avenue-port.qrc">
-                <normaloff>:/buttonicons/arrow_northeast.svg</normaloff>:/buttonicons/arrow_northeast.svg</iconset>
+                <normaloff>:/buttonicons/arrow_northeast.svg</normaloff>
+                <normalon>:/buttonicons/arrow_northeast_green.svg</normalon>:/buttonicons/arrow_northeast.svg</iconset>
               </property>
               <property name="checkable">
                <bool>true</bool>
@@ -640,7 +647,8 @@ No for Magmalice lift</string>
               </property>
               <property name="icon">
                <iconset resource="fortune-avenue-port.qrc">
-                <normaloff>:/buttonicons/arrow_west.svg</normaloff>:/buttonicons/arrow_west.svg</iconset>
+                <normaloff>:/buttonicons/arrow_west.svg</normaloff>
+                <normalon>:/buttonicons/arrow_west_green.svg</normalon>:/buttonicons/arrow_west.svg</iconset>
               </property>
               <property name="checkable">
                <bool>true</bool>
