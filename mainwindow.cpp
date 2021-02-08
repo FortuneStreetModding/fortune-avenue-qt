@@ -288,6 +288,41 @@ void MainWindow::registerSquareSidebarEvents() {
             }
         }
     });
+
+    connect(ui->resetPaths, &QPushButton::clicked, this, [&]() {
+        auto selectedItems = scene->selectedItems();
+        if (selectedItems.size() == 1) {
+            SquareItem *item = (SquareItem *)selectedItems[0];
+            for (auto from: AutoPath::DIRECTIONS) {
+                for (auto to: AutoPath::DIRECTIONS) {
+                    item->getData().validDirections.insert(from, to);
+                }
+            }
+            updateDestinationUI();
+        }
+    });
+
+    connect(ui->allowAll, &QPushButton::clicked, this, [&]() {
+        auto fromDir = ui->fromButtons->checkedId();
+        auto selectedItems = scene->selectedItems();
+        if (fromDir >= 0 && selectedItems.size() == 1) {
+            SquareItem *item = (SquareItem *)selectedItems[0];
+            for (auto to: AutoPath::DIRECTIONS) {
+                item->getData().validDirections.insert((AutoPath::Direction)fromDir, to);
+            }
+            updateDestinationUI();
+        }
+    });
+
+    connect(ui->disallowAll, &QPushButton::clicked, this, [&]() {
+        auto fromDir = ui->fromButtons->checkedId();
+        auto selectedItems = scene->selectedItems();
+        if (fromDir >= 0 && selectedItems.size() == 1) {
+            SquareItem *item = (SquareItem *)selectedItems[0];
+            item->getData().validDirections.remove((AutoPath::Direction)fromDir);
+            updateDestinationUI();
+        }
+    });
 }
 
 void MainWindow::updateSquareData(bool calcValue, bool calcPrice) {
