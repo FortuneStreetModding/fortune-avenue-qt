@@ -2,39 +2,36 @@
 
 namespace AutoPath {
 
-static constexpr int DIRECTION_CHECK_RANGE = 100;
-static constexpr int ALLOWED_VARIANCE = 20;
-
-static bool squareInRange(SquareItem *square, SquareItem *other) {
-    return qAbs(square->getData().positionX - other->getData().positionX) <= DIRECTION_CHECK_RANGE
-            && qAbs(square->getData().positionY - other->getData().positionY) <= DIRECTION_CHECK_RANGE;
+static bool squareInRange(SquareItem *square, SquareItem *other, int directionCheckRange) {
+    return qAbs(square->getData().positionX - other->getData().positionX) <= directionCheckRange
+            && qAbs(square->getData().positionY - other->getData().positionY) <= directionCheckRange;
 }
 
-static int coordinateOnDesiredOffset(int val, int otherVal, int offset) {
+static int coordinateOnDesiredOffset(int val, int otherVal, int offset, int allowedVariance) {
     if (offset < 0) {
         return otherVal < val;
     } else if (offset > 0) {
         return otherVal > val;
     } else {
-        return qAbs(otherVal - val) <= ALLOWED_VARIANCE;
+        return qAbs(otherVal - val) <= allowedVariance;
     }
 }
 
-SquareItem *getSquareInDirection(SquareItem *square, const QVector<SquareItem *> &squares, Direction dir) {
+SquareItem *getSquareInDirection(SquareItem *square, const QVector<SquareItem *> &squares, Direction dir, int directionCheckRange, int allowedVariance) {
     for (auto other: squares) {
-        if (squareInRange(square, other)
-                && coordinateOnDesiredOffset(square->getData().positionX, other->getData().positionX, getXOffset(dir))
-                && coordinateOnDesiredOffset(square->getData().positionY, other->getData().positionY, getYOffset(dir))) {
+        if (squareInRange(square, other, directionCheckRange)
+                && coordinateOnDesiredOffset(square->getData().positionX, other->getData().positionX, getXOffset(dir), allowedVariance)
+                && coordinateOnDesiredOffset(square->getData().positionY, other->getData().positionY, getYOffset(dir), allowedVariance)) {
             return other;
         }
     }
     return nullptr;
 }
 
-QMap<Direction, SquareItem *> getTouchingSquares(SquareItem *square, const QVector<SquareItem *> &squares) {
+QMap<Direction, SquareItem *> getTouchingSquares(SquareItem *square, const QVector<SquareItem *> &squares, int directionCheckRange, int allowedVariance) {
     QMap<Direction, SquareItem *> touchingSquares;
     for (auto dir: AutoPath::DIRECTIONS) {
-        auto squareInDir = AutoPath::getSquareInDirection(square, squares, dir);
+        auto squareInDir = AutoPath::getSquareInDirection(square, squares, dir, directionCheckRange, allowedVariance);
         if (squareInDir) {
             touchingSquares[dir] = squareInDir;
         }

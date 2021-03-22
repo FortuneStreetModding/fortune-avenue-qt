@@ -22,7 +22,7 @@
       </property>
       <widget class="QFrame" name="boardEdit">
        <property name="enabled">
-        <bool>false</bool>
+        <bool>true</bool>
        </property>
        <property name="sizePolicy">
         <sizepolicy hsizetype="Preferred" vsizetype="Preferred">
@@ -42,156 +42,15 @@
        <property name="frameShadow">
         <enum>QFrame::Raised</enum>
        </property>
-       <layout class="QVBoxLayout" name="verticalLayout_3">
-        <item alignment="Qt::AlignTop">
-         <widget class="QLabel" name="label">
+       <layout class="QGridLayout" name="gridLayout_3">
+        <item row="23" column="0">
+         <widget class="QLabel" name="label_27">
           <property name="text">
-           <string>Initial Cash</string>
+           <string>Straight-Line Tolerance</string>
           </property>
          </widget>
         </item>
-        <item alignment="Qt::AlignTop">
-         <widget class="QLineEdit" name="initialCash"/>
-        </item>
-        <item>
-         <widget class="QLabel" name="label_3">
-          <property name="text">
-           <string>Target Amount</string>
-          </property>
-         </widget>
-        </item>
-        <item>
-         <widget class="QLineEdit" name="targetAmount"/>
-        </item>
-        <item>
-         <widget class="QLabel" name="label_5">
-          <property name="text">
-           <string>Base Salary</string>
-          </property>
-         </widget>
-        </item>
-        <item>
-         <widget class="QLineEdit" name="baseSalary"/>
-        </item>
-        <item>
-         <widget class="QLabel" name="label_6">
-          <property name="text">
-           <string>Salary Increment</string>
-          </property>
-         </widget>
-        </item>
-        <item>
-         <widget class="QLineEdit" name="salaryIncrement"/>
-        </item>
-        <item>
-         <widget class="QLabel" name="label_7">
-          <property name="text">
-           <string>Maximum Dice Roll</string>
-          </property>
-         </widget>
-        </item>
-        <item>
-         <widget class="QLineEdit" name="maxDiceRoll"/>
-        </item>
-        <item>
-         <widget class="QLabel" name="label_8">
-          <property name="text">
-           <string>Looping Mode</string>
-          </property>
-         </widget>
-        </item>
-        <item>
-         <widget class="QRadioButton" name="loopingNone">
-          <property name="text">
-           <string>None</string>
-          </property>
-          <attribute name="buttonGroup">
-           <string notr="true">loopingMode</string>
-          </attribute>
-         </widget>
-        </item>
-        <item>
-         <widget class="QRadioButton" name="loopingVertical">
-          <property name="text">
-           <string>Vertical</string>
-          </property>
-          <attribute name="buttonGroup">
-           <string notr="true">loopingMode</string>
-          </attribute>
-         </widget>
-        </item>
-        <item>
-         <widget class="QRadioButton" name="loopingVerticalHorizontal">
-          <property name="text">
-           <string>Vertical + Horizontal</string>
-          </property>
-          <attribute name="buttonGroup">
-           <string notr="true">loopingMode</string>
-          </attribute>
-         </widget>
-        </item>
-        <item>
-         <widget class="QPushButton" name="addSquare">
-          <property name="text">
-           <string>Add Square</string>
-          </property>
-          <property name="shortcut">
-           <string>Ctrl+E</string>
-          </property>
-         </widget>
-        </item>
-        <item>
-         <widget class="QPushButton" name="removeSquare">
-          <property name="text">
-           <string>Remove Square(s)</string>
-          </property>
-          <property name="shortcut">
-           <string>Backspace</string>
-          </property>
-         </widget>
-        </item>
-        <item>
-         <widget class="QCheckBox" name="snapToCheck">
-          <property name="text">
-           <string>Snap To:</string>
-          </property>
-          <property name="checked">
-           <bool>true</bool>
-          </property>
-          <property name="tristate">
-           <bool>false</bool>
-          </property>
-         </widget>
-        </item>
-        <item>
-         <widget class="QLineEdit" name="snapTo">
-          <property name="text">
-           <string>16</string>
-          </property>
-         </widget>
-        </item>
-        <item>
-         <widget class="QPushButton" name="snapAll">
-          <property name="text">
-           <string>Snap All</string>
-          </property>
-         </widget>
-        </item>
-        <item>
-         <widget class="QLabel" name="label_25">
-          <property name="text">
-           <string>File Version</string>
-          </property>
-         </widget>
-        </item>
-        <item>
-         <widget class="QLineEdit" name="fileVersion">
-          <property name="enabled">
-           <bool>false</bool>
-          </property>
-         </widget>
-        </item>
-        <item>
+        <item row="24" column="0">
          <spacer name="verticalSpacer">
           <property name="orientation">
            <enum>Qt::Vertical</enum>
@@ -203,6 +62,205 @@
            </size>
           </property>
          </spacer>
+        </item>
+        <item row="23" column="1">
+         <widget class="QSpinBox" name="straightLineTolerance">
+          <property name="maximum">
+           <number>63</number>
+          </property>
+          <property name="value">
+           <number>20</number>
+          </property>
+         </widget>
+        </item>
+        <item row="22" column="0">
+         <widget class="QLabel" name="label_26">
+          <property name="text">
+           <string>Autopath Range</string>
+          </property>
+         </widget>
+        </item>
+        <item row="22" column="1">
+         <widget class="QSpinBox" name="autopathRange">
+          <property name="minimum">
+           <number>64</number>
+          </property>
+          <property name="maximum">
+           <number>100</number>
+          </property>
+          <property name="value">
+           <number>64</number>
+          </property>
+         </widget>
+        </item>
+        <item row="0" column="0" colspan="2">
+         <widget class="QWidget" name="subBoardEdit" native="true">
+          <property name="enabled">
+           <bool>false</bool>
+          </property>
+          <layout class="QGridLayout" name="gridLayout_5">
+           <property name="leftMargin">
+            <number>0</number>
+           </property>
+           <property name="topMargin">
+            <number>0</number>
+           </property>
+           <property name="rightMargin">
+            <number>0</number>
+           </property>
+           <property name="bottomMargin">
+            <number>0</number>
+           </property>
+           <item row="4" column="0">
+            <widget class="QLabel" name="label_7">
+             <property name="text">
+              <string>Max. Dice Roll</string>
+             </property>
+            </widget>
+           </item>
+           <item row="11" column="0">
+            <widget class="QCheckBox" name="snapToCheck">
+             <property name="text">
+              <string>Snap To:</string>
+             </property>
+             <property name="checked">
+              <bool>true</bool>
+             </property>
+             <property name="tristate">
+              <bool>false</bool>
+             </property>
+            </widget>
+           </item>
+           <item row="10" column="0" colspan="2">
+            <widget class="QPushButton" name="removeSquare">
+             <property name="text">
+              <string>Remove Square(s)</string>
+             </property>
+             <property name="shortcut">
+              <string>Backspace</string>
+             </property>
+            </widget>
+           </item>
+           <item row="9" column="0" colspan="2">
+            <widget class="QPushButton" name="addSquare">
+             <property name="text">
+              <string>Add Square</string>
+             </property>
+             <property name="shortcut">
+              <string>Ctrl+E</string>
+             </property>
+            </widget>
+           </item>
+           <item row="7" column="0" colspan="2">
+            <widget class="QRadioButton" name="loopingVertical">
+             <property name="text">
+              <string>Vertical</string>
+             </property>
+             <attribute name="buttonGroup">
+              <string notr="true">loopingMode</string>
+             </attribute>
+            </widget>
+           </item>
+           <item row="1" column="1">
+            <widget class="QLineEdit" name="targetAmount"/>
+           </item>
+           <item row="1" column="0">
+            <widget class="QLabel" name="label_3">
+             <property name="text">
+              <string>Target Amount</string>
+             </property>
+            </widget>
+           </item>
+           <item row="3" column="1">
+            <widget class="QLineEdit" name="salaryIncrement"/>
+           </item>
+           <item row="2" column="0">
+            <widget class="QLabel" name="label_5">
+             <property name="text">
+              <string>Base Salary</string>
+             </property>
+            </widget>
+           </item>
+           <item row="5" column="0" colspan="2">
+            <widget class="QLabel" name="label_8">
+             <property name="text">
+              <string>Looping Mode</string>
+             </property>
+            </widget>
+           </item>
+           <item row="4" column="1">
+            <widget class="QLineEdit" name="maxDiceRoll"/>
+           </item>
+           <item row="0" column="0">
+            <widget class="QLabel" name="label">
+             <property name="text">
+              <string>Initial Cash</string>
+             </property>
+            </widget>
+           </item>
+           <item row="6" column="0" colspan="2">
+            <widget class="QRadioButton" name="loopingNone">
+             <property name="text">
+              <string>None</string>
+             </property>
+             <attribute name="buttonGroup">
+              <string notr="true">loopingMode</string>
+             </attribute>
+            </widget>
+           </item>
+           <item row="11" column="1">
+            <widget class="QLineEdit" name="snapTo">
+             <property name="text">
+              <string>16</string>
+             </property>
+            </widget>
+           </item>
+           <item row="8" column="0" colspan="2">
+            <widget class="QRadioButton" name="loopingVerticalHorizontal">
+             <property name="text">
+              <string>Vertical + Horizontal</string>
+             </property>
+             <attribute name="buttonGroup">
+              <string notr="true">loopingMode</string>
+             </attribute>
+            </widget>
+           </item>
+           <item row="0" column="1">
+            <widget class="QLineEdit" name="initialCash"/>
+           </item>
+           <item row="2" column="1">
+            <widget class="QLineEdit" name="baseSalary"/>
+           </item>
+           <item row="3" column="0">
+            <widget class="QLabel" name="label_6">
+             <property name="text">
+              <string>Salary Increment</string>
+             </property>
+            </widget>
+           </item>
+           <item row="13" column="0">
+            <widget class="QLabel" name="label_25">
+             <property name="text">
+              <string>File Version</string>
+             </property>
+            </widget>
+           </item>
+           <item row="12" column="0" colspan="2">
+            <widget class="QPushButton" name="snapAll">
+             <property name="text">
+              <string>Snap All</string>
+             </property>
+            </widget>
+           </item>
+           <item row="13" column="1">
+            <widget class="QLineEdit" name="fileVersion">
+             <property name="enabled">
+              <bool>false</bool>
+             </property>
+            </widget>
+           </item>
+          </layout>
+         </widget>
         </item>
        </layout>
       </widget>
@@ -237,123 +295,6 @@
         <layout class="QGridLayout" name="gridLayout_2">
          <item row="4" column="1">
           <widget class="QComboBox" name="type"/>
-         </item>
-         <item row="18" column="0">
-          <spacer name="verticalSpacer_2">
-           <property name="orientation">
-            <enum>Qt::Vertical</enum>
-           </property>
-           <property name="sizeHint" stdset="0">
-            <size>
-             <width>20</width>
-             <height>40</height>
-            </size>
-           </property>
-          </spacer>
-         </item>
-         <item row="0" column="1">
-          <widget class="QLineEdit" name="id">
-           <property name="enabled">
-            <bool>false</bool>
-           </property>
-          </widget>
-         </item>
-         <item row="4" column="0">
-          <widget class="QLabel" name="label_9">
-           <property name="text">
-            <string>Type</string>
-           </property>
-          </widget>
-         </item>
-         <item row="2" column="0">
-          <widget class="QLabel" name="label_21">
-           <property name="text">
-            <string>Position (x, y)</string>
-           </property>
-          </widget>
-         </item>
-         <item row="12" column="0">
-          <widget class="QLabel" name="label_13">
-           <property name="text">
-            <string>Initial Price</string>
-           </property>
-          </widget>
-         </item>
-         <item row="2" column="1">
-          <layout class="QHBoxLayout" name="horizontalLayout_7">
-           <item>
-            <widget class="QLineEdit" name="positionY"/>
-           </item>
-           <item>
-            <widget class="QLineEdit" name="positionX"/>
-           </item>
-          </layout>
-         </item>
-         <item row="0" column="0">
-          <widget class="QLabel" name="label_2">
-           <property name="text">
-            <string>ID</string>
-           </property>
-          </widget>
-         </item>
-         <item row="14" column="0">
-          <widget class="QLabel" name="label_22">
-           <property name="text">
-            <string>Yield</string>
-           </property>
-          </widget>
-         </item>
-         <item row="6" column="1">
-          <widget class="QLineEdit" name="districtDestinationId"/>
-         </item>
-         <item row="8" column="1">
-          <widget class="QComboBox" name="shopModel"/>
-         </item>
-         <item row="10" column="0">
-          <widget class="QLabel" name="label_12">
-           <property name="text">
-            <string>Initial Value</string>
-           </property>
-          </widget>
-         </item>
-         <item row="8" column="0">
-          <widget class="QLabel" name="label_11">
-           <property name="text">
-            <string>Shop Model</string>
-           </property>
-          </widget>
-         </item>
-         <item row="6" column="0">
-          <widget class="QLabel" name="label_10">
-           <property name="text">
-            <string>District/Destination ID</string>
-           </property>
-          </widget>
-         </item>
-         <item row="10" column="1">
-          <widget class="QLineEdit" name="initialValue"/>
-         </item>
-         <item row="12" column="1">
-          <widget class="QLineEdit" name="initialPrice"/>
-         </item>
-         <item row="14" column="1">
-          <widget class="QLineEdit" name="yield">
-           <property name="enabled">
-            <bool>false</bool>
-           </property>
-          </widget>
-         </item>
-         <item row="16" column="0" colspan="2">
-          <widget class="QCheckBox" name="isLift">
-           <property name="toolTip">
-            <string>Lift/Magmalice Start:
-Yes for Yoshi-type lift
-No for Magmalice lift</string>
-           </property>
-           <property name="text">
-            <string>Is Yoshi-type Lift?</string>
-           </property>
-          </widget>
          </item>
          <item row="17" column="0" colspan="2">
           <widget class="QWidget" name="widget" native="true">
@@ -397,6 +338,9 @@ No for Magmalice lift</string>
             </item>
             <item row="1" column="5">
              <widget class="QToolButton" name="to_north">
+              <property name="enabled">
+               <bool>false</bool>
+              </property>
               <property name="text">
                <string>...</string>
               </property>
@@ -451,6 +395,9 @@ No for Magmalice lift</string>
             </item>
             <item row="1" column="4">
              <widget class="QToolButton" name="to_northwest">
+              <property name="enabled">
+               <bool>false</bool>
+              </property>
               <property name="text">
                <string>...</string>
               </property>
@@ -494,6 +441,9 @@ No for Magmalice lift</string>
             </item>
             <item row="2" column="4">
              <widget class="QToolButton" name="to_west">
+              <property name="enabled">
+               <bool>false</bool>
+              </property>
               <property name="text">
                <string>...</string>
               </property>
@@ -530,6 +480,9 @@ No for Magmalice lift</string>
             </item>
             <item row="2" column="6">
              <widget class="QToolButton" name="to_east">
+              <property name="enabled">
+               <bool>false</bool>
+              </property>
               <property name="text">
                <string>...</string>
               </property>
@@ -562,6 +515,9 @@ No for Magmalice lift</string>
             </item>
             <item row="3" column="6">
              <widget class="QToolButton" name="to_southeast">
+              <property name="enabled">
+               <bool>false</bool>
+              </property>
               <property name="text">
                <string>...</string>
               </property>
@@ -629,6 +585,9 @@ No for Magmalice lift</string>
             </item>
             <item row="1" column="6">
              <widget class="QToolButton" name="to_northeast">
+              <property name="enabled">
+               <bool>false</bool>
+              </property>
               <property name="text">
                <string>...</string>
               </property>
@@ -647,6 +606,9 @@ No for Magmalice lift</string>
             </item>
             <item row="3" column="4">
              <widget class="QToolButton" name="to_southwest">
+              <property name="enabled">
+               <bool>false</bool>
+              </property>
               <property name="text">
                <string>...</string>
               </property>
@@ -683,6 +645,9 @@ No for Magmalice lift</string>
             </item>
             <item row="3" column="5">
              <widget class="QToolButton" name="to_south">
+              <property name="enabled">
+               <bool>false</bool>
+              </property>
               <property name="text">
                <string>...</string>
               </property>
@@ -707,6 +672,123 @@ No for Magmalice lift</string>
              </widget>
             </item>
            </layout>
+          </widget>
+         </item>
+         <item row="19" column="0">
+          <spacer name="verticalSpacer_2">
+           <property name="orientation">
+            <enum>Qt::Vertical</enum>
+           </property>
+           <property name="sizeHint" stdset="0">
+            <size>
+             <width>20</width>
+             <height>40</height>
+            </size>
+           </property>
+          </spacer>
+         </item>
+         <item row="0" column="1">
+          <widget class="QLineEdit" name="id">
+           <property name="enabled">
+            <bool>false</bool>
+           </property>
+          </widget>
+         </item>
+         <item row="4" column="0">
+          <widget class="QLabel" name="label_9">
+           <property name="text">
+            <string>Type</string>
+           </property>
+          </widget>
+         </item>
+         <item row="2" column="0">
+          <widget class="QLabel" name="label_21">
+           <property name="text">
+            <string>Position (x, y)</string>
+           </property>
+          </widget>
+         </item>
+         <item row="10" column="1">
+          <widget class="QLineEdit" name="initialValue"/>
+         </item>
+         <item row="16" column="0" colspan="2">
+          <widget class="QCheckBox" name="isLift">
+           <property name="toolTip">
+            <string>Lift/Magmalice Start:
+Yes for Yoshi-type lift
+No for Magmalice lift</string>
+           </property>
+           <property name="text">
+            <string>Is Yoshi-type Lift?</string>
+           </property>
+          </widget>
+         </item>
+         <item row="12" column="0">
+          <widget class="QLabel" name="label_13">
+           <property name="text">
+            <string>Initial Price</string>
+           </property>
+          </widget>
+         </item>
+         <item row="2" column="1">
+          <layout class="QHBoxLayout" name="horizontalLayout_7">
+           <item>
+            <widget class="QLineEdit" name="positionY"/>
+           </item>
+           <item>
+            <widget class="QLineEdit" name="positionX"/>
+           </item>
+          </layout>
+         </item>
+         <item row="14" column="1">
+          <widget class="QLineEdit" name="yield">
+           <property name="enabled">
+            <bool>false</bool>
+           </property>
+          </widget>
+         </item>
+         <item row="0" column="0">
+          <widget class="QLabel" name="label_2">
+           <property name="text">
+            <string>ID</string>
+           </property>
+          </widget>
+         </item>
+         <item row="14" column="0">
+          <widget class="QLabel" name="label_22">
+           <property name="text">
+            <string>Yield</string>
+           </property>
+          </widget>
+         </item>
+         <item row="6" column="1">
+          <widget class="QLineEdit" name="districtDestinationId"/>
+         </item>
+         <item row="12" column="1">
+          <widget class="QLineEdit" name="initialPrice"/>
+         </item>
+         <item row="8" column="1">
+          <widget class="QComboBox" name="shopModel"/>
+         </item>
+         <item row="10" column="0">
+          <widget class="QLabel" name="label_12">
+           <property name="text">
+            <string>Initial Value</string>
+           </property>
+          </widget>
+         </item>
+         <item row="8" column="0">
+          <widget class="QLabel" name="label_11">
+           <property name="text">
+            <string>Shop Model</string>
+           </property>
+          </widget>
+         </item>
+         <item row="6" column="0">
+          <widget class="QLabel" name="label_10">
+           <property name="text">
+            <string>District/Destination ID</string>
+           </property>
           </widget>
          </item>
         </layout>

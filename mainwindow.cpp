@@ -144,7 +144,7 @@ void MainWindow::saveFileAs() {
 }
 
 void MainWindow::loadFile(const BoardFile &file) {
-    ui->boardEdit->setEnabled(true);
+    ui->subBoardEdit->setEnabled(true);
     ui->actionSave->setEnabled(true);
     ui->actionSave_As->setEnabled(true);
     ui->menuTools->setEnabled(true);
@@ -157,18 +157,25 @@ void MainWindow::loadFile(const BoardFile &file) {
     ui->maxDiceRoll->setText(QString::number(file.boardInfo.maxDiceRoll));
     ui->loopingMode->button(file.boardInfo.galaxyStatus)->setChecked(true);
     ui->fileVersion->setText(QString::number(file.boardInfo.versionFlag));
+    ui->autopathRange->setValue(file.boardInfo.autopathRange);
+    ui->straightLineTolerance->setValue(file.boardInfo.straightLineTolerance);
     scene->clearSquares();
     for (auto &square: file.boardData.squares) {
         scene->addItem(new SquareItem(square));
     }
 
-    if (file.boardInfo.versionFlag == 0) {
-        auto response = QMessageBox::question(this, "Open File", "This file is version 0, but the latest version is version 1. Would you like to upgrade the file to version 1?");
+    if (file.boardInfo.versionFlag < 2) {
+        auto response = QMessageBox::question(
+            this,
+            "Open File",
+            QString("This file is version %1, but the latest version is version 2. Would you like to upgrade the file to the latest version?")
+                .arg(file.boardInfo.versionFlag)
+        );
         if (response == QMessageBox::Yes) {
-            ui->fileVersion->setText(QString::number(1));
+            ui->fileVersion->setText(QString::number(2));
             auto items = scene->squareItems();
             for (auto item: qAsConst(items)) {
-                auto touchingSquares = AutoPath::getTouchingSquares(item, items);
+                auto touchingSquares = AutoPath::getTouchingSquares(item, items, ui->autopathRange->text().toInt(), ui->straightLineTolerance->text().toInt());
                 AutoPath::enumerateAutopathingRules(item, touchingSquares);
             }
         }
@@ -186,10 +193,17 @@ BoardFile MainWindow::exportFile() {
     file.boardInfo.maxDiceRoll = ui->maxDiceRoll->text().toUShort();
     file.boardInfo.galaxyStatus = (LoopingMode)ui->loopingMode->checkedId();
     file.boardInfo.versionFlag = ui->fileVersion->text().toUInt();
+
+    // VERSION 1
     auto items = scene->squareItems();
     for (auto item: qAsConst(items)) {
         file.boardData.squares.append(item->getData());
     }
+
+    // VERSION 2
+    file.boardInfo.autopathRange = ui->autopathRange->value();
+    file.boardInfo.straightLineTolerance = ui->straightLineTolerance->value();
+
     return file;
 }
 
@@ -275,7 +289,13 @@ void MainWindow::registerSquareSidebarEvents() {
     ui->toButtons->setId(ui->to_south, AutoPath::South);
     ui->toButtons->setId(ui->to_southeast, AutoPath::Southeast);
 
-    connect(ui->fromButtons, &QButtonGroup::idClicked, this, &MainWindow::updateDestinationUI);
+    connect(ui->fromButtons, &QButtonGroup::idClicked, this, [&]() {
+        auto toButtons = ui->toButtons->buttons();
+        for (auto button: qAsConst(toButtons)) {
+            button->setEnabled(true);
+        }
+        updateDestinationUI();
+    });
     connect(ui->toButtons, &QButtonGroup::idClicked, this, [&](int toDir) {
         auto fromDir = ui->fromButtons->checkedId();
         auto selectedItems = scene->selectedItems();
@@ -544,7 +564,7 @@ void MainWindow::verifyBoard() {
 void MainWindow::autoPath() {
     auto items = scene->squareItems();
     for (auto item: qAsConst(items)) {
-        QMap<AutoPath::Direction, SquareItem *> touchingSquares = AutoPath::getTouchingSquares(item, items);
+        QMap<AutoPath::Direction, SquareItem *> touchingSquares = AutoPath::getTouchingSquares(item, items, ui->autopathRange->text().toInt(), ui->straightLineTolerance->text().toInt());
         AutoPath::pathSquare(item, touchingSquares);
     }
     QMessageBox::information(this, "Auto-pathing", "Auto-pathed entire map");

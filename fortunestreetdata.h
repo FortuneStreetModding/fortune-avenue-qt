@@ -146,6 +146,8 @@ struct BoardInfo {
     quint16 maxDiceRoll = 6;
     LoopingMode galaxyStatus = None;
     quint32 versionFlag = 1;
+    quint16 autopathRange = 64;
+    quint16 straightLineTolerance = 20;
 
     friend QDataStream &operator>>(QDataStream &stream, BoardInfo &data);
     friend QDataStream &operator<<(QDataStream &stream, const BoardInfo &data);
