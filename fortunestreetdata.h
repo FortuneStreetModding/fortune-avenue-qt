@@ -145,7 +145,7 @@ struct BoardInfo {
     quint16 salaryIncrement = 100;
     quint16 maxDiceRoll = 6;
     LoopingMode galaxyStatus = None;
-    quint32 versionFlag = 1;
+    quint32 versionFlag = 2;
     quint16 autopathRange = 64;
     quint16 straightLineTolerance = 20;
 
@@ -175,8 +175,6 @@ struct BoardFile {
             SquareData bank(0);
             bank.squareType = Bank;
             boardData.squares.append(bank);
-
-            boardInfo.versionFlag = 1;
         }
     }
     quint64 unknown;

@@ -1,4 +1,5 @@
 #include "autopath.h"
+//#include <QDebug>
 
 namespace AutoPath {
 

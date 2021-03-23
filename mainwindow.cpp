@@ -10,6 +10,8 @@
 #include "squareitem.h"
 #include "util.h"
 
+//#include <QDebug>
+
 MainWindow::MainWindow(QWidget *parent)
     : QMainWindow(parent), ui(new Ui::MainWindow), scene(new FortuneAvenueGraphicsScene(-1600 + 32, -1600 + 32, 3200, 3200, this))
 {
@@ -173,10 +175,14 @@ void MainWindow::loadFile(const BoardFile &file) {
         );
         if (response == QMessageBox::Yes) {
             ui->fileVersion->setText(QString::number(2));
-            auto items = scene->squareItems();
-            for (auto item: qAsConst(items)) {
-                auto touchingSquares = AutoPath::getTouchingSquares(item, items, ui->autopathRange->text().toInt(), ui->straightLineTolerance->text().toInt());
-                AutoPath::enumerateAutopathingRules(item, touchingSquares);
+
+            // VERSION 0 -> VERSION >= 1
+            if (file.boardInfo.versionFlag < 1) {
+                auto items = scene->squareItems();
+                for (auto item: qAsConst(items)) {
+                    auto touchingSquares = AutoPath::getTouchingSquares(item, items, ui->autopathRange->value(), ui->straightLineTolerance->value());
+                    AutoPath::enumerateAutopathingRules(item, touchingSquares);
+                }
             }
         }
     }
@@ -564,7 +570,7 @@ void MainWindow::verifyBoard() {
 void MainWindow::autoPath() {
     auto items = scene->squareItems();
     for (auto item: qAsConst(items)) {
-        QMap<AutoPath::Direction, SquareItem *> touchingSquares = AutoPath::getTouchingSquares(item, items, ui->autopathRange->text().toInt(), ui->straightLineTolerance->text().toInt());
+        QMap<AutoPath::Direction, SquareItem *> touchingSquares = AutoPath::getTouchingSquares(item, items, ui->autopathRange->value(), ui->straightLineTolerance->value());
         AutoPath::pathSquare(item, touchingSquares);
     }
     QMessageBox::information(this, "Auto-pathing", "Auto-pathed entire map");
