@@ -14,6 +14,7 @@ ScreenshotDialog::ScreenshotDialog(const QString &frbFilename, QWidget *parent) 
     scene(new FortuneAvenueGraphicsScene(-1600 + 32, -1600 + 32, 3200, 3200, this))
 {
     ui->setupUi(this);
+    this->setWindowTitle("Select the maps for which a screenshot shall be created.");
     scene->setAxesVisible(false);
     connect(ui->pushButton, &QPushButton::clicked, this, [&]() { browseFrb(ui->lineEdit, ui->checkBox); });
     connect(ui->pushButton_2, &QPushButton::clicked, this, [&]() { browseFrb(ui->lineEdit_2, ui->checkBox_2); });
