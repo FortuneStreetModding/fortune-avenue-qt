@@ -21,6 +21,7 @@ SOURCES += \
     fortunestreetdata.cpp \
     main.cpp \
     mainwindow.cpp \
+    screenshotdialog.cpp \
     squareitem.cpp
 
 HEADERS += \
@@ -31,12 +32,14 @@ HEADERS += \
     fortunestreetdata.h \
     mainwindow.h \
     orderedmap.h \
+    screenshotdialog.h \
     squareitem.h \
     static_block.hpp \
     util.h
 
 FORMS += \
-    mainwindow.ui
+    mainwindow.ui \
+    screenshotdialog.ui
 
 # Default rules for deployment.
 qnx: target.path = /tmp/$${TARGET}/bin

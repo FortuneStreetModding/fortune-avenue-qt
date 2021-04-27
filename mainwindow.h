@@ -40,6 +40,7 @@ private:
     void calcStockPrices();
     void verifyBoard();
     void autoPath();
+    void screenshot();
     void addSquare();
     void removeSquare();
     int calcSnapSizeFromInput();
