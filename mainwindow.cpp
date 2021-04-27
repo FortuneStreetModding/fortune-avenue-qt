@@ -9,6 +9,7 @@
 #include "darkdetect.h"
 #include "squareitem.h"
 #include "util.h"
+#include "screenshotdialog.h"
 
 //#include <QDebug>
 
@@ -54,6 +55,7 @@ MainWindow::MainWindow(QWidget *parent)
     connect(ui->actionCalculate_Stock_Prices, &QAction::triggered, this, &MainWindow::calcStockPrices);
     connect(ui->actionVerify_Board, &QAction::triggered, this, &MainWindow::verifyBoard);
     connect(ui->actionAuto_Path, &QAction::triggered, this, &MainWindow::autoPath);
+    connect(ui->actionScreenshot, &QAction::triggered, this, &MainWindow::screenshot);
 
     connect(ui->actionFortune_Avenue_Help, &QAction::triggered, this, [&]() {
         QDesktopServices::openUrl(QUrl("https://github.com/FortuneStreetModding/fortune-avenue-qt/wiki"));
@@ -575,6 +577,11 @@ void MainWindow::autoPath() {
     }
     QMessageBox::information(this, "Auto-pathing", "Auto-pathed entire map");
     updateSquareSidebar();
+}
+
+void MainWindow::screenshot() {
+    ScreenshotDialog dialog(windowFilePath(), this);
+    dialog.exec();
 }
 
 void MainWindow::updateDestinationUI() {
