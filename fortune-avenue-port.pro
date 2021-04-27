@@ -1,7 +1,15 @@
 TARGET="Fortune Avenue"
 
-# update this for release
-VERSION = 2.0.0.0
+#Application version
+VERSION_MAJOR = 2
+VERSION_MINOR = 0
+VERSION_BUILD = 3
+
+DEFINES += "VERSION_MAJOR=$$VERSION_MAJOR"\
+       "VERSION_MINOR=$$VERSION_MINOR"\
+       "VERSION_BUILD=$$VERSION_BUILD"
+
+VERSION = $${VERSION_MAJOR}.$${VERSION_MINOR}.$${VERSION_BUILD}
 
 QMAKE_TARGET_BUNDLE_PREFIX = com.fortunestreetmodding
 
