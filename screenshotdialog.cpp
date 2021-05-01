@@ -131,26 +131,34 @@ void ScreenshotDialog::accept() {
     BoardFile boardFile2;
     BoardFile boardFile3;
     BoardFile boardFile4;
-    QRectF rect;
+    QRectF rect(1600, 1600, -3200, -3200);
     QStringList filenames;
     if (ui->checkBox->isChecked()) {
         filename = ui->lineEdit->text();
-        filenames += filename;
+        QFileInfo info(filename);
+        QString screenshotFilename = info.path() + "/" + info.baseName() + ".webp";
+        filenames += screenshotFilename;
         readBoardFile(filename, boardFile, rect);
     }
     if (ui->checkBox_2->isChecked()) {
         filename2 = ui->lineEdit_2->text();
-        filenames += filename2;
+        QFileInfo info(filename2);
+        QString screenshotFilename = info.path() + "/" + info.baseName() + ".webp";
+        filenames += screenshotFilename;
         readBoardFile(filename2, boardFile2, rect);
     }
     if (ui->checkBox_3->isChecked()) {
         filename3 = ui->lineEdit_3->text();
-        filenames += filename3;
+        QFileInfo info(filename3);
+        QString screenshotFilename = info.path() + "/" + info.baseName() + ".webp";
+        filenames += screenshotFilename;
         readBoardFile(filename3, boardFile3, rect);
     }
     if (ui->checkBox_4->isChecked()) {
         filename4 = ui->lineEdit_4->text();
-        filenames += filename4;
+        QFileInfo info(filename4);
+        QString screenshotFilename = info.path() + "/" + info.baseName() + ".webp";
+        filenames += screenshotFilename;
         readBoardFile(filename4, boardFile4, rect);
     }
     if (ui->checkBox->isChecked()) {
