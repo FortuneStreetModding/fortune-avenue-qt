@@ -89,7 +89,10 @@ void SquareItem::paint(QPainter *painter, const QStyleOptionGraphicsItem *, QWid
     pen.setJoinStyle(Qt::MiterJoin);
     if (isSelected()) {
         pen.setColor(isDarkMode() ? QColor("#eeeeee") : QColor("#111111"));
-    } else if (data.squareType == Property || data.squareType == VacantPlot) {
+        painter->setPen(pen);
+        painter->drawRect(0 - 2/2, 0 - 2/2, 64 + 2, 64 + 2);
+    }
+    if (data.squareType == Property || data.squareType == VacantPlot) {
         pen.setColor(districtColors.value(data.districtDestinationId, Qt::transparent));
     }
     painter->setPen(pen);
