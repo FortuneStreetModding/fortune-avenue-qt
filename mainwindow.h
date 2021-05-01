@@ -32,7 +32,8 @@ private:
     BoardFile exportFile();
     void registerSquareSidebarEvents();
     void updateSquareSidebar();
-    void updateSquareData(bool calcValue = false, bool calcPrice = false);
+    template<typename Func> void updateSquare(Func func);
+    void updateWaypoints();
     void newFile();
     void openFile();
     void saveFile();

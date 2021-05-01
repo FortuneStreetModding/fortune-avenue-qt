@@ -218,7 +218,7 @@ BoardFile MainWindow::exportFile() {
 void MainWindow::updateSquareSidebar() {
     auto selectedItems = scene->selectedItems();
     if (selectedItems.size() == 1) {
-        ui->squareEdit->setEnabled(true);
+        ui->waypoints->setEnabled(true);
         SquareItem *item = (SquareItem *)selectedItems[0];
         ui->id->setText(QString::number(item->getData().id));
         ui->type->setCurrentText(squareTypeToText(item->getData().squareType));
@@ -240,30 +240,71 @@ void MainWindow::updateSquareSidebar() {
 
         updateDestinationUI();
     } else {
-        ui->squareEdit->setEnabled(false);
+        ui->waypoints->setEnabled(false);
         ui->id->setText("");
     }
 }
 
 void MainWindow::registerSquareSidebarEvents() {
-    connect(ui->type, &QComboBox::textActivated, this, [&](const QString &) { updateSquareData(); });
-    connect(ui->positionX, &QLineEdit::textEdited, this, [&](const QString &) { updateSquareData(); });
-    connect(ui->positionY, &QLineEdit::textEdited, this, [&](const QString &) { updateSquareData(); });
-    connect(ui->districtDestinationId, &QLineEdit::textEdited, this, [&](const QString &) { updateSquareData(); });
+    connect(ui->type, &QComboBox::textActivated, this, [&](const QString &) {
+        updateSquare([&](SquareItem *item) {
+            item->getData().squareType = textToSquareType(ui->type->currentText());
+        });
+    });
+    connect(ui->positionX, &QLineEdit::textEdited, this, [&](const QString &) {
+        updateSquare([&](SquareItem *item) {
+            // temporarily disable snapping for setting position
+            int oldSnapSize = scene->getSnapSize();
+            scene->setSnapSize(1);
+            item->setX(ui->positionX->text().toInt());
+            scene->setSnapSize(oldSnapSize);
+        });
+    });
+    connect(ui->positionY, &QLineEdit::textEdited, this, [&](const QString &) {
+        updateSquare([&](SquareItem *item) {
+            // temporarily disable snapping for setting position
+            int oldSnapSize = scene->getSnapSize();
+            scene->setSnapSize(1);
+            item->setY(ui->positionY->text().toInt());
+            scene->setSnapSize(oldSnapSize);
+        });
+    });
+    connect(ui->districtDestinationId, &QLineEdit::textEdited, this, [&](const QString &) {
+        updateSquare([&](SquareItem *item) {
+            item->getData().districtDestinationId = ui->districtDestinationId->text().toUInt();
+        });
+    });
     connect(ui->shopModel, &QComboBox::textActivated, this, [&](const QString &) {
-        updateSquareData(true, true);
+        updateSquare([&](SquareItem *item) {
+            item->getData().shopModel = textToShopType(ui->shopModel->currentText());
+            item->getData().updateValueFromShopModel();
+            item->getData().updatePriceFromValue();
+            updateSquareSidebar();
+        });
     });
     connect(ui->initialValue, &QLineEdit::textEdited, this, [&](const QString &) {
-        updateSquareData(false, true);
+        updateSquare([&](SquareItem *item) {
+            item->getData().value = ui->initialValue->text().toUShort();
+            item->getData().updatePriceFromValue();
+            updateSquareSidebar();
+        });
     });
-    connect(ui->initialPrice, &QLineEdit::textEdited, this, [&](const QString &) { updateSquareData(); });
-    connect(ui->isLift, &QCheckBox::clicked, this, [&](bool) { updateSquareData(); });
+    connect(ui->initialPrice, &QLineEdit::textEdited, this, [&](const QString &) {
+        updateSquare([&](SquareItem *item) {
+            item->getData().price = ui->initialPrice->text().toUShort();
+        });
+    });
+    connect(ui->isLift, &QCheckBox::clicked, this, [&](bool) {
+        updateSquare([&](SquareItem *item) {
+            item->getData().oneWayLift = ui->isLift->isChecked();
+        });
+    });
     for (auto &waypointStart: waypointStarts) {
-        connect(waypointStart, &QLineEdit::textEdited, this, [&](const QString &) { updateSquareData(); });
+        connect(waypointStart, &QLineEdit::textEdited, this, [&](const QString &) { updateWaypoints(); });
     }
     for (auto &waypointDest: waypointDests) {
         for (auto &child: waypointDest->findChildren<QLineEdit *>()) {
-            connect(child, &QLineEdit::textEdited, this, [&](const QString &) { updateSquareData(); });
+            connect(child, &QLineEdit::textEdited, this, [&](const QString &) { updateWaypoints(); });
         }
     }
 
@@ -307,20 +348,22 @@ void MainWindow::registerSquareSidebarEvents() {
     connect(ui->toButtons, &QButtonGroup::idClicked, this, [&](int toDir) {
         auto fromDir = ui->fromButtons->checkedId();
         auto selectedItems = scene->selectedItems();
-        if (fromDir >= 0 && selectedItems.size() == 1) {
-            SquareItem *item = (SquareItem *)selectedItems[0];
-            if (ui->toButtons->button(toDir)->isChecked()) {
-                item->getData().validDirections.insert((AutoPath::Direction)fromDir, (AutoPath::Direction)toDir);
-            } else {
-                item->getData().validDirections.remove((AutoPath::Direction)fromDir, (AutoPath::Direction)toDir);
+        if (fromDir >= 0) {
+            for(auto selectedItem : qAsConst(selectedItems)) {
+                SquareItem *item = (SquareItem *)selectedItem;
+                if (ui->toButtons->button(toDir)->isChecked()) {
+                    item->getData().validDirections.insert((AutoPath::Direction)fromDir, (AutoPath::Direction)toDir);
+                } else {
+                    item->getData().validDirections.remove((AutoPath::Direction)fromDir, (AutoPath::Direction)toDir);
+                }
             }
         }
     });
 
     connect(ui->resetPaths, &QPushButton::clicked, this, [&]() {
         auto selectedItems = scene->selectedItems();
-        if (selectedItems.size() == 1) {
-            SquareItem *item = (SquareItem *)selectedItems[0];
+            for(auto selectedItem : qAsConst(selectedItems)) {
+            SquareItem *item = (SquareItem *)selectedItem;
             for (auto from: AutoPath::DIRECTIONS) {
                 for (auto to: AutoPath::DIRECTIONS) {
                     item->getData().validDirections.insert(from, to);
@@ -333,60 +376,49 @@ void MainWindow::registerSquareSidebarEvents() {
     connect(ui->allowAll, &QPushButton::clicked, this, [&]() {
         auto fromDir = ui->fromButtons->checkedId();
         auto selectedItems = scene->selectedItems();
-        if (fromDir >= 0 && selectedItems.size() == 1) {
-            SquareItem *item = (SquareItem *)selectedItems[0];
-            for (auto to: AutoPath::DIRECTIONS) {
-                item->getData().validDirections.insert((AutoPath::Direction)fromDir, to);
+        if (fromDir >= 0) {
+            for(auto selectedItem : qAsConst(selectedItems)) {
+                SquareItem *item = (SquareItem *)selectedItem;
+                for (auto to: AutoPath::DIRECTIONS) {
+                    item->getData().validDirections.insert((AutoPath::Direction)fromDir, to);
+                }
+                updateDestinationUI();
             }
-            updateDestinationUI();
         }
     });
 
     connect(ui->disallowAll, &QPushButton::clicked, this, [&]() {
         auto fromDir = ui->fromButtons->checkedId();
         auto selectedItems = scene->selectedItems();
-        if (fromDir >= 0 && selectedItems.size() == 1) {
-            SquareItem *item = (SquareItem *)selectedItems[0];
-            item->getData().validDirections.remove((AutoPath::Direction)fromDir);
-            updateDestinationUI();
+        if (fromDir >= 0) {
+            for(auto selectedItem : qAsConst(selectedItems)) {
+                SquareItem *item = (SquareItem *)selectedItem;
+                item->getData().validDirections.remove((AutoPath::Direction)fromDir);
+                updateDestinationUI();
+            }
         }
     });
 }
 
-void MainWindow::updateSquareData(bool calcValue, bool calcPrice) {
+template<typename Func> void MainWindow::updateSquare(Func func) {
+    auto selectedItems = scene->selectedItems();
+    for(auto selectedItem : qAsConst(selectedItems)) {
+        SquareItem *item = (SquareItem *)selectedItem;
+        func(item);
+        item->update();
+    }
+}
+
+void MainWindow::updateWaypoints() {
     auto selectedItems = scene->selectedItems();
     if (selectedItems.size() == 1) {
         SquareItem *item = (SquareItem *)selectedItems[0];
-        item->getData().squareType = textToSquareType(ui->type->currentText());
-        item->getData().districtDestinationId = ui->districtDestinationId->text().toUInt();
-        item->getData().shopModel = textToShopType(ui->shopModel->currentText());
-        item->getData().value = ui->initialValue->text().toUShort();
-        item->getData().price = ui->initialPrice->text().toUShort();
-        item->getData().oneWayLift = ui->isLift->isChecked();
         for (int i=0; i<4; ++i) {
             item->getData().waypoints[i].entryId = waypointStarts[i]->text().toUInt();
             auto children = waypointDests[i]->findChildren<QLineEdit *>();
             for (int j=0; j<3; ++j) {
                 item->getData().waypoints[i].destinations[j] = children[j]->text().toUInt();
             }
-        }
-
-        // temporarily disable snapping for setting position
-        {
-            int oldSnapSize = scene->getSnapSize();
-            scene->setSnapSize(1);
-            item->setPos(ui->positionX->text().toInt(), ui->positionY->text().toInt());
-            scene->setSnapSize(oldSnapSize);
-        }
-
-        if (calcValue) {
-            item->getData().updateValueFromShopModel();
-        }
-        if (calcPrice) {
-            item->getData().updatePriceFromValue();
-        }
-        if (calcValue || calcPrice) {
-            updateSquareSidebar();
         }
         item->update();
     }
@@ -586,7 +618,7 @@ void MainWindow::screenshot() {
 
 void MainWindow::updateDestinationUI() {
     auto selectedItems = scene->selectedItems();
-    if (selectedItems.size() == 1) {
+    if (selectedItems.size() >= 1) {
         SquareItem *item = (SquareItem *)selectedItems[0];
         auto allButtons = ui->toButtons->buttons();
         for (auto toButton: qAsConst(allButtons)) {
