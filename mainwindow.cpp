@@ -241,7 +241,11 @@ void MainWindow::updateSquareSidebar() {
         updateDestinationUI();
     } else {
         ui->waypoints->setEnabled(false);
-        ui->id->setText("");
+        if(selectedItems.size() > 1) {
+            ui->id->setText(QString("%1 selected").arg(selectedItems.size()));
+        } else {
+            ui->id->setText("");
+        }
     }
 }
 
