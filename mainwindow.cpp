@@ -224,7 +224,13 @@ void MainWindow::updateSquareSidebar() {
         ui->id->setText(QString::number(item->getData().id));
         ui->type->setCurrentText(squareTypeToText(item->getData().squareType));
         ui->districtDestinationId->setText(QString::number(item->getData().districtDestinationId));
-        ui->shopModel->setCurrentText(shopTypeToText(item->getData().shopModel));
+        QString shopTypeStr = shopTypeToText(item->getData().shopModel);
+        // register the shop type if it doesn't already exist
+        if (shopTypeStr.isEmpty() && item->getData().shopModel != 0) {
+            shopTypeStr = registerShopType(item->getData().shopModel);
+            ui->shopModel->addItem(shopTypeStr);
+        }
+        ui->shopModel->setCurrentText(shopTypeStr);
         ui->initialValue->setText(QString::number(item->getData().value));
         ui->initialPrice->setText(QString::number(item->getData().price));
         ui->isLift->setChecked(item->getData().oneWayLift);
