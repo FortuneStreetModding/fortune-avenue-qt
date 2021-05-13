@@ -308,3 +308,8 @@ QString shopTypeToText(quint8 shopType) {
 }
 quint8 textToShopType(QString string) { return textToShopTypes.value(string, 0); }
 QList<QString> shopTexts() { return textToShopTypes.keys(); }
+QString registerShopType(quint8 shopType) {
+    QString typeStr = QString("[custom shop id %1]").arg(shopType);
+    textToShopTypes.insert(typeStr, shopType);
+    return typeStr;
+}

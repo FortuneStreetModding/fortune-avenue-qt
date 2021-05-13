@@ -3,6 +3,7 @@
 
 #include <QDesktopServices>
 #include <QFileDialog>
+#include <QInputDialog>
 #include <QMessageBox>
 #include <QSet>
 #include "autopath.h"
@@ -400,6 +401,14 @@ void MainWindow::registerSquareSidebarEvents() {
                 item->getData().validDirections.remove((AutoPath::Direction)fromDir);
                 updateDestinationUI();
             }
+        }
+    });
+
+    connect(ui->addShopType, &QPushButton::clicked, this, [&]() {
+        bool ok;
+        int res = QInputDialog::getInt(this, "Enter shop id", "Enter shop id to add to dropdowns", 0, 0, 255, 1, &ok);
+        if (ok) {
+            ui->shopModel->addItem(registerShopType(res));
         }
     });
 }

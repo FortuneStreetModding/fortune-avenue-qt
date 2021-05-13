@@ -193,5 +193,6 @@ private:
 QString shopTypeToText(quint8 shopType);
 quint8 textToShopType(QString string);
 QList<QString> shopTexts();
+QString registerShopType(quint8 shopType);
 
 #endif // FORTUNESTREETDATA_H
