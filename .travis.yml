@@ -1,3 +1,4 @@
+os: osx
 before_install:
 - brew install qt5
 script:
