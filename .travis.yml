@@ -1,0 +1,6 @@
+before_install:
+- brew install qt5
+script:
+- qmake -project
+- qmake fortune-avenue-port.yaml
+- make

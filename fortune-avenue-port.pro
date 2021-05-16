@@ -59,3 +59,6 @@ RESOURCES += \
 
 win32:RC_ICONS = AppIcon.ico
 macos:ICON=AppIcon.icns
+
+DISTFILES += \
+    .travis.yml
