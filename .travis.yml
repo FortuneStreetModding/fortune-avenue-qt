@@ -1,7 +1,9 @@
 os: osx
-before_install:
-- brew install qt5
-- brew link qt5 --force
+addons:
+  homebrew:
+    packages:
+    - qt@5
+    update: true
 script:
 - qmake -project
 - qmake fortune-avenue-port.pro
