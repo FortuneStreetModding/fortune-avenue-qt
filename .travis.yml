@@ -5,6 +5,6 @@ addons:
     packages:
     - qt@5
 script:
-- qmake -project
-- qmake fortune-avenue-port.pro
+- /usr/local/opt/qt/bin/qmake -project
+- /usr/local/opt/qt/bin/qmake fortune-avenue-port.pro
 - make
