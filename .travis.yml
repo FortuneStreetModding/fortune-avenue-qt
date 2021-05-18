@@ -4,5 +4,5 @@ before_install:
 - brew link qt5 --force
 script:
 - qmake -project
-- qmake fortune-avenue-port.yaml
+- qmake fortune-avenue-port.pro
 - make
