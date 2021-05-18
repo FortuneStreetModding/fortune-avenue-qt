@@ -4,7 +4,9 @@ addons:
   homebrew:
     packages:
     - qt@5
+before_script:
+  brew link qt@5 --force
 script:
-- /usr/local/opt/qt/bin/qmake -project
-- /usr/local/opt/qt/bin/qmake fortune-avenue-port.pro
+- qmake -project
+- qmake fortune-avenue-port.pro
 - make
