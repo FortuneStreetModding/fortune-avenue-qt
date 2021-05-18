@@ -1,9 +1,9 @@
 os: osx
+osx_image: xcode12.5
 addons:
   homebrew:
     packages:
     - qt@5
-    update: true
 script:
 - qmake -project
 - qmake fortune-avenue-port.pro
