@@ -4,9 +4,21 @@ addons:
   homebrew:
     packages:
     - qt@5
-before_script:
-  brew link qt@5 --force
+before_script: brew link qt@5 --force
 script:
 - qmake -project
 - qmake fortune-avenue-port.pro
 - make
+- ls
+- macdeployqt 'Fortune Avenue.app' -dmg
+deploy:
+  provider: releases
+  api_key:
+    secure: $ACCESS_TOKEN
+  file: 'Fortune Avenue.app'
+  skip_cleanup: true
+  on:
+    tags: true
+env:
+  global:
+  - secure: qwnde1LdPLTvo7nfqSZrh0hnvkq6Hk/NNbx0Fou2kIx6uhzr94av1opUhBspK5u7vdfsJE3etohqndA6vA7Qvkj53PaPM8JuBmswia7ZXNcvDL1TvVgCyyrw87d9fDE/rlQqjl4vMCohZdy3os3DR2mvfLK3oyYmm78kMkd0L3fT5Qk1ERWHpiSgpxtUW1/5TgQDq6xJdpuaCNsqPn3dZoEMkSswBH9d13wa8/LEKF0wy3qft9n/YVxea5uA3YKdfeWOkOQEEfbPvf+MhRlEHO7Ja7S0WP6iR1oMBcgXSKEk4UuBb+VNJVc5tuelIU5RjAoUEbtd42SWvVTF31uLEcyGCWsez0umtQJLy6Pu5/mOyVkPAJ3Qct2OpwehZGlZve1JIW+KsdFVf+hPhFo6wsjjHgWoyuA1ZcqjCfb3VITxdW7Uv7GAKBVfS/ZQckSfRI+UdZSyL05RE7xjM/R4vm2tkgJdZTbghUZeBjj1w8aH3k+MIzR9zhueRU9pU0nKblEIj3K+ZKF5G5f1L0FJ1FoA01Xt7TZ9/KIHmY+y9+s4ctSQ6ezsq5Kg9IsaQcSTt0l8liuSMuAvBDzpQsBjAgJaRVrcQFlcUEfJVnc+JvSzSM1Bb5OEWJVGgRPAWs8+d8WQpdCQp5oK84gpv2POnSUYwz2LpEfIC13x0cw6l0A=
