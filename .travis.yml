@@ -10,11 +10,12 @@ script:
 - qmake fortune-avenue-port.pro
 - make
 - macdeployqt 'Fortune Avenue.app' -dmg
+- mv 'Fortune Avenue.dmg' 'fortune-avenue.dmg'
 deploy:
   provider: releases
   api_key:
     secure: "jVP9pd7rZjp0LMb8LBMlcC3t1s1VW5Ww54BbN0V4vX2C8jDIbGpJO3z/5cmYbiNpdWx04sznuH3u5V2oUFcPCLKsJJbjg0NJgUkpK58T256w3635eSsBBFFdHHXFJHaWdDIP0S9/Rg2S2exOG6HdI2/XibMjkA3GBYynp7PnJcD5OYMrUQQAzUJjwwLCUl4NuZJTA5pfLw+r+7So1Vx4trTExBpfU1lMQ5bq0F05m1chM5sUQLMBi/fcTBv95sOEG3/IFYlPgq9jVuAbp6aX8bxTfvECYFZXLfCAL+svbAmV9A5X7kkp09UowjOo7ypTiAKP2+cDXgr8nh/A9vLOAhcmyD06uXfkGMhlKH6/UW08eCfldF893dgnhN40tVY65QounZFbyZlOnpf+JK9c4j4EQM7xzvPGQuN1BqcZYknYe1W6La1qeRHT3fzeNzbFrlXeRDlVCll19ir7X1yJwBYSq8OZ6DFHCIeSpL4ls8WKyUDraKYL8/cs1c0F5pRsxsvdEifGnMbI7YQxgGi5gKF3+nkBE+MANGbpPiMa7iXj4bnza/+bAXlmXXVpUl9VU0M1XIDqATqj2dcziWTX5AIm6tOwBCSm3h4swad0KnOJYSWXOspwUuw56m8A4c6IeQIDNHXoeNdB80SEhMMnDKs11JfiKyjXqFcXjJikPVY="
-  file: 'Fortune Avenue.dmg'
+  file: 'fortune-avenue.dmg'
   cleanup: false
   on:
     tags: true
