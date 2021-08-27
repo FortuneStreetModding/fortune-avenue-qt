@@ -97,6 +97,7 @@ void MainWindow::updateZoom() {
 }
 
 void MainWindow::newFile() {
+    setWindowFilePath("");
     loadFile(BoardFile(true));
 }
 
@@ -138,6 +139,9 @@ void MainWindow::saveFile() {
 
 void MainWindow::saveFileAs() {
     QString saveFileName = QFileDialog::getSaveFileName(this, "Save File", QString(), "Fortune Street Boards (*.frb)");
+    if (saveFileName.isEmpty()) {
+        return;
+    }
     QFile saveFile(saveFileName);
     if (saveFile.open(QIODevice::WriteOnly)) {
         QDataStream stream(&saveFile);
