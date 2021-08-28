@@ -121,7 +121,7 @@ struct Header {
     friend QDataStream &operator>>(QDataStream &stream, Header &data);
     friend QDataStream &operator<<(QDataStream &stream, const Header &data);
 private:
-    const QByteArray magicNumber;
+    QByteArray magicNumber;
 };
 
 enum LoopingMode : quint16 {
@@ -170,16 +170,19 @@ private:
 struct BoardFile {
     static constexpr size_t SIZE = Header::SIZE + BoardInfo::SIZE + BoardData::SIZE;
 
-    BoardFile(bool initialize = false) : header("I4DT") {
+    explicit BoardFile(bool initialize = false) : header("I4DT") {
         if (initialize) {
             SquareData bank(0);
             bank.squareType = Bank;
             boardData.squares.append(bank);
         }
     }
-    quint64 unknown;
+    quint64 unknown = 0;
     BoardInfo boardInfo;
     BoardData boardData;
+
+    bool operator==(const BoardFile &other) const;
+    bool operator!=(const BoardFile &other) const;
 
     friend QDataStream &operator>>(QDataStream &stream, BoardFile &data);
     friend QDataStream &operator<<(QDataStream &stream, const BoardFile &data);

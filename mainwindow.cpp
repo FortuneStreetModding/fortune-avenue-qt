@@ -1,10 +1,12 @@
 #include "mainwindow.h"
 #include "ui_mainwindow.h"
 
+#include <QCloseEvent>
 #include <QDesktopServices>
 #include <QFileDialog>
 #include <QInputDialog>
 #include <QMessageBox>
+#include <QSaveFile>
 #include <QSet>
 #include "autopath.h"
 #include "darkdetect.h"
@@ -82,6 +84,8 @@ MainWindow::MainWindow(QWidget *parent)
         scene->setSnapSize(oldSnapSize);
     });
 
+    initialFile = exportFile();
+
     registerSquareSidebarEvents();
 }
 
@@ -123,32 +127,48 @@ void MainWindow::openFile() {
     }
 }
 
-void MainWindow::saveFile() {
+bool MainWindow::saveFile() {
     if (windowFilePath().isEmpty()) {
-        saveFileAs();
+        return saveFileAs();
     } else {
-        QFile saveFile(windowFilePath());
+        QSaveFile saveFile(windowFilePath());
         if (saveFile.open(QIODevice::WriteOnly)) {
             QDataStream stream(&saveFile);
-            stream << exportFile();
+            auto fileContents = exportFile();
+            stream << fileContents;
+            if (!saveFile.commit()) {
+                goto fail;
+            }
+            initialFile = fileContents;
+            return true;
         } else {
+            fail:
             QMessageBox::critical(this, "Error saving file", "An error occurred while trying to save the file");
+            return false;
         }
     }
 }
 
-void MainWindow::saveFileAs() {
+bool MainWindow::saveFileAs() {
     QString saveFileName = QFileDialog::getSaveFileName(this, "Save File", QString(), "Fortune Street Boards (*.frb)");
     if (saveFileName.isEmpty()) {
-        return;
+        return false;
     }
-    QFile saveFile(saveFileName);
+    QSaveFile saveFile(saveFileName);
     if (saveFile.open(QIODevice::WriteOnly)) {
         QDataStream stream(&saveFile);
-        stream << exportFile();
+        auto fileContents = exportFile();
+        stream << fileContents;
+        if (!saveFile.commit()) {
+            goto fail;
+        }
+        initialFile = fileContents;
         setWindowFilePath(saveFileName);
+        return true;
     } else {
+        fail:
         QMessageBox::critical(this, "Error saving file", "An error occurred while trying to save the file");
+        return false;
     }
 }
 
@@ -193,6 +213,8 @@ void MainWindow::loadFile(const BoardFile &file) {
             }
         }
     }
+
+    initialFile = exportFile();
 
     QCoreApplication::processEvents();
 }
@@ -651,5 +673,28 @@ void MainWindow::updateDestinationUI() {
         for (auto it=allowedDirections.first; it!=allowedDirections.second; ++it) {
             ui->toButtons->button(it.value())->setChecked(true);
         }
+    }
+}
+
+void MainWindow::closeEvent(QCloseEvent *event) {
+    // if no unsaved changes just close without fanfare
+    if (exportFile() == initialFile) {
+        event->accept();
+        return;
+    }
+
+    auto button = QMessageBox::warning(this, "Unsaved Changes", "You have unsaved changes. Do you want to save them?",
+                                        QMessageBox::StandardButtons(QMessageBox::Save | QMessageBox::Discard | QMessageBox::Cancel));
+    //qDebug() << button;
+    if (button == QMessageBox::Cancel) {
+        event->ignore();
+    } else if (button == QMessageBox::Save) {
+        if (saveFile()) {
+            event->accept();
+        } else {
+            event->ignore();
+        }
+    } else {
+        event->accept();
     }
 }

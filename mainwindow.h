@@ -27,6 +27,7 @@ private:
     FortuneAvenueGraphicsScene *scene;
 
     int zoomPercent = 100;
+    BoardFile initialFile;
 
     void loadFile(const BoardFile &file);
     BoardFile exportFile();
@@ -36,8 +37,14 @@ private:
     void updateWaypoints();
     void newFile();
     void openFile();
-    void saveFile();
-    void saveFileAs();
+    /**
+     * @return whether file was saved
+     */
+    bool saveFile();
+    /**
+     * @return whether file was saved
+     */
+    bool saveFileAs();
     void calcStockPrices();
     void verifyBoard();
     void autoPath();
@@ -48,5 +55,7 @@ private:
     void updateSnapSize();
     void updateZoom();
     void updateDestinationUI();
+
+    void closeEvent(QCloseEvent *event) override;
 };
 #endif // MAINWINDOW_H

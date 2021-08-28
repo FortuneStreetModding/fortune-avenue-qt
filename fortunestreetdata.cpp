@@ -2,6 +2,8 @@
 #include "orderedmap.h"
 #include <QtMath>
 
+//#include <QDebug>
+
 QDataStream &operator>>(QDataStream &stream, WaypointData &data) {
     stream >> data.entryId;
     for (quint8 &dest: data.destinations) {
@@ -177,6 +179,18 @@ void BoardFile::writeAutopathData(QDataStream &stream) const {
         }
         stream << autopathFlags;
     }
+}
+
+bool BoardFile::operator==(const BoardFile &other) const {
+    QByteArray thisArr, otherArr;
+    QDataStream thisStream(&thisArr, QIODevice::WriteOnly), otherStream(&otherArr, QIODevice::WriteOnly);
+    thisStream << (*this);
+    otherStream << other;
+    return thisArr == otherArr;
+}
+
+bool BoardFile::operator!=(const BoardFile &other) const {
+    return !(*this == other);
 }
 
 OrderedMap<QString, SquareType> textToSquareTypes = {
