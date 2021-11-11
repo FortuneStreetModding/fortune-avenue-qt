@@ -554,7 +554,10 @@ void MainWindow::verifyBoard() {
         warnings << "There should be a bank at ID 0.";
     }
     if (file.boardData.squares.size() < 3) {
-        errors << "Board must have at least 3 spaces.";
+        errors << "Board must have at least 3 squares.";
+    }
+    if (file.boardData.squares.size() > 85) {
+        errors << "Board must have max 85 squares.";
     }
     if (file.boardInfo.maxDiceRoll < 1 || file.boardInfo.maxDiceRoll > 9) {
         errors << "Max. die roll must be between 1 and 9 inclusive.";
