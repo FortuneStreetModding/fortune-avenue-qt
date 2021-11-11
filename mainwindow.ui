@@ -325,10 +325,10 @@ No for Magmalice lift</string>
          <item row="2" column="1">
           <layout class="QHBoxLayout" name="horizontalLayout_7">
            <item>
-            <widget class="QLineEdit" name="positionY"/>
+            <widget class="QLineEdit" name="positionX"/>
            </item>
            <item>
-            <widget class="QLineEdit" name="positionX"/>
+            <widget class="QLineEdit" name="positionY"/>
            </item>
           </layout>
          </item>
@@ -1007,7 +1007,7 @@ No for Magmalice lift</string>
      <x>0</x>
      <y>0</y>
      <width>1280</width>
-     <height>24</height>
+     <height>20</height>
     </rect>
    </property>
    <widget class="QMenu" name="menuFile">
@@ -1166,11 +1166,11 @@ No for Magmalice lift</string>
  <connections/>
  <buttongroups>
   <buttongroup name="fromButtons"/>
-  <buttongroup name="loopingMode"/>
   <buttongroup name="toButtons">
    <property name="exclusive">
     <bool>false</bool>
    </property>
   </buttongroup>
+  <buttongroup name="loopingMode"/>
  </buttongroups>
 </ui>
