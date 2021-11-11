@@ -24,10 +24,14 @@ void SquareData::updateValueFromShopModel() {
     value = shopModel*10;
 }
 void SquareData::updatePriceFromValue() {
-    price = qRound(value * getYield() - 0.2);
+    price = qRound(value * getYieldFromValue() - 0.2);
+}
+qreal SquareData::getYieldFromValue() {
+    return -0.15 * qPow(0.2, 0.005 * value) + 0.2;
 }
 qreal SquareData::getYield() {
-    return -0.15 * qPow(0.2, 0.005 * value) + 0.2;
+    if(value == 0) return 0;
+    return (qreal) price / (qreal) value;
 }
 
 QDataStream &operator>>(QDataStream &stream, SquareData &data) {

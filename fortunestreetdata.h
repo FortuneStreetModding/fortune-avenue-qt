@@ -102,6 +102,7 @@ struct SquareData {
     void updateValueFromShopModel();
     void updatePriceFromValue();
     qreal getYield();
+    qreal getYieldFromValue();
 
     friend QDataStream &operator>>(QDataStream &stream, SquareData &data);
     friend QDataStream &operator<<(QDataStream &stream, const SquareData &data);
