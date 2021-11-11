@@ -42,7 +42,6 @@ QMap<SquareType, QString> typeToFile = {
     {MagmaliceSquare, ":/squares/GroundMagmalice.png"},
     {OneWayAlleySquare, ":/squares/GroundDoorMario.png"},
     {LiftSquareEnd, ":/squares/GroundLift.png"},
-    {EventSquare, ":/squares/EventSquare.png"},
     {VacantPlot, ":/squares/GroundVacant.png"}
 };
 
@@ -83,7 +82,12 @@ QRectF SquareItem::boundingRect() const {
 }
 
 void SquareItem::paint(QPainter *painter, const QStyleOptionGraphicsItem *, QWidget *) {
-    painter->drawImage(QPoint(0, 0), QImage(typeToFile.value(data.squareType, ":/squares/GroundDefault.png")));
+    if(data.squareType == EventSquare && 1 <= data.districtDestinationId && data.districtDestinationId <= 128) {
+        QString imageFile = QString(":/squares/EventSquare/eventsquare_%1.png").arg(data.districtDestinationId, 3, 10, QChar('0'));
+        painter->drawImage(QPoint(0, 0), QImage(imageFile));
+    } else {
+        painter->drawImage(QPoint(0, 0), QImage(typeToFile.value(data.squareType, ":/squares/GroundDefault.png")));
+    }
 
     QPen pen(Qt::transparent, 2, Qt::SolidLine);
     pen.setJoinStyle(Qt::MiterJoin);
