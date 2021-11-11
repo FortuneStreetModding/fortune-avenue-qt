@@ -626,8 +626,6 @@ void MainWindow::verifyBoard() {
     for (int i=0; i<=highestDistrict; ++i) {
         if (districtCount[i] == 0) {
             errors << QString("Did you skip District %1 when assigning districts?").arg(i);
-        } else if (districtCount[i] < 3) {
-            warnings << QString("District %1 has %2 shops which is less than the recommended minimum of 3").arg(i).arg(districtCount[i]);
         } else if (districtCount[i] > 6) {
             errors << QString("District %1 has %2 shops which is more than the maximum of 6").arg(i).arg(districtCount[i]);
         }
