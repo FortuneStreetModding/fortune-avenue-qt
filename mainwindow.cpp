@@ -63,6 +63,18 @@ MainWindow::MainWindow(QWidget *parent)
     connect(ui->actionFortune_Avenue_Help, &QAction::triggered, this, [&]() {
         QDesktopServices::openUrl(QUrl("https://github.com/FortuneStreetModding/fortune-avenue-qt/wiki"));
     });
+    connect(ui->actionFollowWaypoint1, &QAction::triggered, this, [&]() {
+        followWaypoint(0);
+    });
+    connect(ui->actionFollowWaypoint2, &QAction::triggered, this, [&]() {
+        followWaypoint(1);
+    });
+    connect(ui->actionFollowWaypoint3, &QAction::triggered, this, [&]() {
+        followWaypoint(2);
+    });
+    connect(ui->actionNext, &QAction::triggered, this, &MainWindow::selectNext);
+    connect(ui->actionPrevious, &QAction::triggered, this, &MainWindow::selectPrevious);
+    connect(ui->actionSelectAll, &QAction::triggered, this, &MainWindow::selectAll);
 
     connect(ui->addSquare, &QPushButton::clicked, this, &MainWindow::addSquare);
     connect(ui->removeSquare, &QPushButton::clicked, this, &MainWindow::removeSquare);
@@ -98,6 +110,110 @@ void MainWindow::updateZoom() {
     ui->graphicsView->resetTransform();
     ui->graphicsView->scale(zoomPercent / 100.0, zoomPercent / 100.0);
     ui->statusbar->showMessage(QString("Zoom: %1%").arg(zoomPercent));
+}
+
+void MainWindow::followWaypoint(int destinationId) {
+    auto selectedItems = scene->selectedItems();
+    if (selectedItems.size() == 2) {
+        SquareItem *previous = nullptr;
+        SquareItem *current = nullptr;
+        for(auto& item : scene->items()) {
+            SquareItem *squareItem = (SquareItem*) item;
+            if(squareItem->getData().id == previouslyVisitedSquareId) {
+                previous = squareItem;
+                for(auto& selectedItem : scene->selectedItems()) {
+                    SquareItem *selectedSquareItem = (SquareItem*) selectedItem;
+                    if(selectedSquareItem->getData().id != previouslyVisitedSquareId) {
+                        current = selectedSquareItem;
+                    }
+                }
+                break;
+            }
+        }
+        if(previous != nullptr && current != nullptr) {
+            previouslyVisitedSquareId = current->getData().id;
+            for(auto &waypoint : current->getData().waypoints) {
+                if(waypoint.entryId == previous->getData().id) {
+                    previous->setSelected(false);
+                    int nextSquareId = waypoint.destinations[destinationId];
+                    if(nextSquareId == 255) {
+                        nextSquareId = -1;
+                        for(auto &waypointDest : waypoint.destinations) {
+                            if(waypointDest != 255 && waypointDest > nextSquareId) {
+                                nextSquareId = waypointDest;
+                            }
+                        }
+                    }
+                    for(auto &item : scene->items()) {
+                        SquareItem *squareItem = (SquareItem *)item;
+                        if(squareItem->getData().id == nextSquareId) {
+                            squareItem->setSelected(true);
+                        }
+                    }
+                }
+            }
+        }
+    }
+}
+void MainWindow::selectNext() {
+    auto highestId = scene->squareItems().size() - 1;
+    auto selectedItems = scene->selectedItems();
+    if (selectedItems.size() == 0) {
+        for(auto &item : scene->items()) {
+            SquareItem *squareItem = (SquareItem *)item;
+            if(squareItem->getData().id == 0) {
+                squareItem->setSelected(true);
+            }
+        }
+    } else {
+        QList<int> toBeSelectedItems;
+        for(auto &item : scene->selectedItems()) {
+            SquareItem *squareItem = (SquareItem *)item;
+            if(squareItem->getData().id == highestId) {
+                toBeSelectedItems.append(0);
+            } else {
+                toBeSelectedItems.append(squareItem->getData().id + 1);
+            }
+        }
+        for(auto &item : scene->items()) {
+            SquareItem *squareItem = (SquareItem *)item;
+            squareItem->setSelected(toBeSelectedItems.contains(squareItem->getData().id));
+        }
+    }
+}
+void MainWindow::selectPrevious() {
+    if(auto highestId = scene->squareItems().size() <= 0) {
+        return;
+    }
+    auto highestId = scene->squareItems().size() - 1;
+    auto selectedItems = scene->selectedItems();
+    if (selectedItems.size() == 0) {
+        for(auto &item : scene->items()) {
+            SquareItem *squareItem = (SquareItem *)item;
+            if(squareItem->getData().id == highestId) {
+                squareItem->setSelected(true);
+            }
+        }
+    } else {
+        QList<int> toBeSelectedItems;
+        for(auto &item : scene->selectedItems()) {
+            SquareItem *squareItem = (SquareItem *)item;
+            if(squareItem->getData().id == 0) {
+                toBeSelectedItems.append(highestId);
+            } else {
+                toBeSelectedItems.append(squareItem->getData().id - 1);
+            }
+        }
+        for(auto &item : scene->items()) {
+            SquareItem *squareItem = (SquareItem *)item;
+            squareItem->setSelected(toBeSelectedItems.contains(squareItem->getData().id));
+        }
+    }
+}
+void MainWindow::selectAll() {
+    for(auto &item : scene->items()) {
+        item->setSelected(true);
+    }
 }
 
 void MainWindow::newFile() {
@@ -244,6 +360,9 @@ BoardFile MainWindow::exportFile() {
 
 void MainWindow::updateSquareSidebar() {
     auto selectedItems = scene->selectedItems();
+    ui->actionFollowWaypoint1->setEnabled(selectedItems.size() == 2);
+    ui->actionFollowWaypoint2->setEnabled(selectedItems.size() == 2);
+    ui->actionFollowWaypoint3->setEnabled(selectedItems.size() == 2);
     if (selectedItems.size() == 1) {
         ui->waypoint1Dests->setEnabled(true);
         ui->waypoint1Start->setEnabled(true);
@@ -279,6 +398,8 @@ void MainWindow::updateSquareSidebar() {
         ui->yield->setText(QString::number(item->getData().getYield()));
 
         updateDestinationUI();
+
+        previouslyVisitedSquareId = item->getData().id;
     } else {
         ui->waypoint1Dests->setEnabled(false);
         ui->waypoint1Start->setEnabled(false);

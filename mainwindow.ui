@@ -1100,7 +1100,20 @@ No for Magmalice lift</string>
     <addaction name="actionDraw_Axes"/>
     <addaction name="actionDrag_to_Pan"/>
    </widget>
+   <widget class="QMenu" name="menuSelect">
+    <property name="title">
+     <string>Select</string>
+    </property>
+    <addaction name="actionSelectAll"/>
+    <addaction name="actionPrevious"/>
+    <addaction name="actionNext"/>
+    <addaction name="separator"/>
+    <addaction name="actionFollowWaypoint1"/>
+    <addaction name="actionFollowWaypoint2"/>
+    <addaction name="actionFollowWaypoint3"/>
+   </widget>
    <addaction name="menuFile"/>
+   <addaction name="menuSelect"/>
    <addaction name="menuView"/>
    <addaction name="menuTools"/>
    <addaction name="menuHelp"/>
@@ -1208,6 +1221,54 @@ No for Magmalice lift</string>
   <action name="actionScreenshot">
    <property name="text">
     <string>Screenshot</string>
+   </property>
+  </action>
+  <action name="actionNext">
+   <property name="text">
+    <string>Next</string>
+   </property>
+   <property name="shortcut">
+    <string>PgUp</string>
+   </property>
+  </action>
+  <action name="actionPrevious">
+   <property name="text">
+    <string>Previous</string>
+   </property>
+   <property name="shortcut">
+    <string>PgDown</string>
+   </property>
+  </action>
+  <action name="actionSelectAll">
+   <property name="text">
+    <string>Select All</string>
+   </property>
+   <property name="shortcut">
+    <string>Ctrl+A</string>
+   </property>
+  </action>
+  <action name="actionFollowWaypoint1">
+   <property name="text">
+    <string>Follow Waypoint Destination 1</string>
+   </property>
+   <property name="shortcut">
+    <string>Ctrl+1</string>
+   </property>
+  </action>
+  <action name="actionFollowWaypoint2">
+   <property name="text">
+    <string>Follow Waypoint Destination 2</string>
+   </property>
+   <property name="shortcut">
+    <string>Ctrl+2</string>
+   </property>
+  </action>
+  <action name="actionFollowWaypoint3">
+   <property name="text">
+    <string>Follow Waypoint Destination 3</string>
+   </property>
+   <property name="shortcut">
+    <string>Ctrl+3</string>
    </property>
   </action>
  </widget>

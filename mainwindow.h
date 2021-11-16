@@ -28,6 +28,7 @@ private:
 
     int zoomPercent = 100;
     BoardFile initialFile;
+    int previouslyVisitedSquareId;
 
     void loadFile(const BoardFile &file);
     BoardFile exportFile();
@@ -55,6 +56,10 @@ private:
     void updateSnapSize();
     void updateZoom();
     void updateDestinationUI();
+    void followWaypoint(int destinationId);
+    void selectNext();
+    void selectPrevious();
+    void selectAll();
     void clearWaypoint(SquareItem *item, int waypointId);
 
     void closeEvent(QCloseEvent *event) override;
