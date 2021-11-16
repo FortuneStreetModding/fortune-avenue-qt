@@ -296,6 +296,14 @@ void MainWindow::updateSquareSidebar() {
     }
 }
 
+void MainWindow::clearWaypoint(SquareItem *item, int waypointId) {
+    auto &waypoint = item->getData().waypoints[waypointId];
+    waypoint.destinations[0] = 255;
+    waypoint.destinations[1] = 255;
+    waypoint.destinations[2] = 255;
+    waypoint.entryId = 255;
+}
+
 void MainWindow::registerSquareSidebarEvents() {
     connect(ui->type, &QComboBox::textActivated, this, [&](const QString &) {
         updateSquare([&](SquareItem *item) {
@@ -358,16 +366,18 @@ void MainWindow::registerSquareSidebarEvents() {
             connect(child, &QLineEdit::textEdited, this, [&](const QString &) { updateWaypoints(); });
         }
     }
-    connect(ui->clearWaypoints, &QPushButton::clicked, this, [&](bool) {
+    connect(ui->clearAllWaypoints, &QPushButton::clicked, this, [&](bool) {
         updateSquare([&](SquareItem *item) {
-            for(auto &waypoint : item->getData().waypoints) {
-                waypoint.destinations[0] = 255;
-                waypoint.destinations[1] = 255;
-                waypoint.destinations[2] = 255;
-                waypoint.entryId = 255;
-            }
+            clearWaypoint(item, 0);
+            clearWaypoint(item, 1);
+            clearWaypoint(item, 2);
+            clearWaypoint(item, 3);
         });
     });
+    connect(ui->clearWaypoint1, &QPushButton::clicked, this, [&](bool) { updateSquare([&](SquareItem *item) { clearWaypoint(item, 0); }); });
+    connect(ui->clearWaypoint2, &QPushButton::clicked, this, [&](bool) { updateSquare([&](SquareItem *item) { clearWaypoint(item, 1); }); });
+    connect(ui->clearWaypoint3, &QPushButton::clicked, this, [&](bool) { updateSquare([&](SquareItem *item) { clearWaypoint(item, 2); }); });
+    connect(ui->clearWaypoint4, &QPushButton::clicked, this, [&](bool) { updateSquare([&](SquareItem *item) { clearWaypoint(item, 3); }); });
 
     ui->fromButtons->setId(ui->from_northwest, AutoPath::Northwest);
     ui->fromButtons->setId(ui->from_north, AutoPath::North);

@@ -55,6 +55,7 @@ private:
     void updateSnapSize();
     void updateZoom();
     void updateDestinationUI();
+    void clearWaypoint(SquareItem *item, int waypointId);
 
     void closeEvent(QCloseEvent *event) override;
 };

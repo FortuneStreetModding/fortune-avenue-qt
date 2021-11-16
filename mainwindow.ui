@@ -806,11 +806,22 @@ No for Magmalice lift</string>
         </attribute>
         <layout class="QVBoxLayout" name="verticalLayout">
          <item>
-          <widget class="QLabel" name="label_4">
-           <property name="text">
-            <string>Waypoint 1 Start</string>
-           </property>
-          </widget>
+          <layout class="QHBoxLayout" name="horizontalLayout_8">
+           <item>
+            <widget class="QLabel" name="label_4">
+             <property name="text">
+              <string>Waypoint 1 Start</string>
+             </property>
+            </widget>
+           </item>
+           <item>
+            <widget class="QPushButton" name="clearWaypoint1">
+             <property name="text">
+              <string>Clear Waypoint 1</string>
+             </property>
+            </widget>
+           </item>
+          </layout>
          </item>
          <item>
           <widget class="QLineEdit" name="waypoint1Start"/>
@@ -850,11 +861,22 @@ No for Magmalice lift</string>
           </widget>
          </item>
          <item>
-          <widget class="QLabel" name="label_15">
-           <property name="text">
-            <string>Waypoint 2 Start</string>
-           </property>
-          </widget>
+          <layout class="QHBoxLayout" name="horizontalLayout_9">
+           <item>
+            <widget class="QLabel" name="label_15">
+             <property name="text">
+              <string>Waypoint 2 Start</string>
+             </property>
+            </widget>
+           </item>
+           <item>
+            <widget class="QPushButton" name="clearWaypoint2">
+             <property name="text">
+              <string>Clear Waypoint 2</string>
+             </property>
+            </widget>
+           </item>
+          </layout>
          </item>
          <item>
           <widget class="QLineEdit" name="waypoint2Start"/>
@@ -894,11 +916,22 @@ No for Magmalice lift</string>
           </widget>
          </item>
          <item>
-          <widget class="QLabel" name="label_17">
-           <property name="text">
-            <string>Waypoint 3 Start</string>
-           </property>
-          </widget>
+          <layout class="QHBoxLayout" name="horizontalLayout_10">
+           <item>
+            <widget class="QLabel" name="label_17">
+             <property name="text">
+              <string>Waypoint 3 Start</string>
+             </property>
+            </widget>
+           </item>
+           <item>
+            <widget class="QPushButton" name="clearWaypoint3">
+             <property name="text">
+              <string>Clear Waypoint 3</string>
+             </property>
+            </widget>
+           </item>
+          </layout>
          </item>
          <item>
           <widget class="QLineEdit" name="waypoint3Start"/>
@@ -938,11 +971,22 @@ No for Magmalice lift</string>
           </widget>
          </item>
          <item>
-          <widget class="QLabel" name="label_19">
-           <property name="text">
-            <string>Waypoint 4 Start</string>
-           </property>
-          </widget>
+          <layout class="QHBoxLayout" name="horizontalLayout_11">
+           <item>
+            <widget class="QLabel" name="label_19">
+             <property name="text">
+              <string>Waypoint 4 Start</string>
+             </property>
+            </widget>
+           </item>
+           <item>
+            <widget class="QPushButton" name="clearWaypoint4">
+             <property name="text">
+              <string>Clear Waypoint 4</string>
+             </property>
+            </widget>
+           </item>
+          </layout>
          </item>
          <item>
           <widget class="QLineEdit" name="waypoint4Start"/>
@@ -982,9 +1026,9 @@ No for Magmalice lift</string>
           </widget>
          </item>
          <item>
-          <widget class="QPushButton" name="clearWaypoints">
+          <widget class="QPushButton" name="clearAllWaypoints">
            <property name="text">
-            <string>Clear Waypoints</string>
+            <string>Clear All Waypoints</string>
            </property>
           </widget>
          </item>
@@ -1173,11 +1217,11 @@ No for Magmalice lift</string>
  <connections/>
  <buttongroups>
   <buttongroup name="fromButtons"/>
+  <buttongroup name="loopingMode"/>
   <buttongroup name="toButtons">
    <property name="exclusive">
     <bool>false</bool>
    </property>
   </buttongroup>
-  <buttongroup name="loopingMode"/>
  </buttongroups>
 </ui>
