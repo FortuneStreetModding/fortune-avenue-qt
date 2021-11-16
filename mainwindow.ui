@@ -982,6 +982,13 @@ No for Magmalice lift</string>
           </widget>
          </item>
          <item>
+          <widget class="QPushButton" name="clearWaypoints">
+           <property name="text">
+            <string>Clear Waypoints</string>
+           </property>
+          </widget>
+         </item>
+         <item>
           <spacer name="verticalSpacer_3">
            <property name="orientation">
             <enum>Qt::Vertical</enum>

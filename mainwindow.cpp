@@ -245,7 +245,14 @@ BoardFile MainWindow::exportFile() {
 void MainWindow::updateSquareSidebar() {
     auto selectedItems = scene->selectedItems();
     if (selectedItems.size() == 1) {
-        ui->waypoints->setEnabled(true);
+        ui->waypoint1Dests->setEnabled(true);
+        ui->waypoint1Start->setEnabled(true);
+        ui->waypoint2Dests->setEnabled(true);
+        ui->waypoint2Start->setEnabled(true);
+        ui->waypoint3Dests->setEnabled(true);
+        ui->waypoint3Start->setEnabled(true);
+        ui->waypoint4Dests->setEnabled(true);
+        ui->waypoint4Start->setEnabled(true);
         SquareItem *item = (SquareItem *)selectedItems[0];
         ui->id->setText(QString::number(item->getData().id));
         ui->type->setCurrentText(squareTypeToText(item->getData().squareType));
@@ -273,7 +280,14 @@ void MainWindow::updateSquareSidebar() {
 
         updateDestinationUI();
     } else {
-        ui->waypoints->setEnabled(false);
+        ui->waypoint1Dests->setEnabled(false);
+        ui->waypoint1Start->setEnabled(false);
+        ui->waypoint2Dests->setEnabled(false);
+        ui->waypoint2Start->setEnabled(false);
+        ui->waypoint3Dests->setEnabled(false);
+        ui->waypoint3Start->setEnabled(false);
+        ui->waypoint4Dests->setEnabled(false);
+        ui->waypoint4Start->setEnabled(false);
         if(selectedItems.size() > 1) {
             ui->id->setText(QString("%1 selected").arg(selectedItems.size()));
         } else {
@@ -344,6 +358,16 @@ void MainWindow::registerSquareSidebarEvents() {
             connect(child, &QLineEdit::textEdited, this, [&](const QString &) { updateWaypoints(); });
         }
     }
+    connect(ui->clearWaypoints, &QPushButton::clicked, this, [&](bool) {
+        updateSquare([&](SquareItem *item) {
+            for(auto &waypoint : item->getData().waypoints) {
+                waypoint.destinations[0] = 255;
+                waypoint.destinations[1] = 255;
+                waypoint.destinations[2] = 255;
+                waypoint.entryId = 255;
+            }
+        });
+    });
 
     ui->fromButtons->setId(ui->from_northwest, AutoPath::Northwest);
     ui->fromButtons->setId(ui->from_north, AutoPath::North);
@@ -613,6 +637,14 @@ void MainWindow::verifyBoard() {
                     if (qAbs(square.positionX - otherSquare.positionX) > 96
                             || qAbs(square.positionY - otherSquare.positionY) > 96) {
                         warnings << QString("Destination square #%4 of Waypoint %1 of Square %2 is Square %3 which is too far")
+                                  .arg(i+1).arg(square.id).arg(dest).arg(j+1);
+                    }
+                    if (otherSquare.squareType == OneWayAlleySquare &&
+                            square.squareType != OneWayAlleyDoorA &&
+                            square.squareType != OneWayAlleyDoorB &&
+                            square.squareType != OneWayAlleyDoorC &&
+                            square.squareType != OneWayAlleyDoorD) {
+                        warnings << QString("Destination square #%4 of Waypoint %1 of Square %2 is Square %3 which is a One Way Alley Square")
                                   .arg(i+1).arg(square.id).arg(dest).arg(j+1);
                     }
                 }
