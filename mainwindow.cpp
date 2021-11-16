@@ -499,6 +499,7 @@ void MainWindow::registerSquareSidebarEvents() {
     connect(ui->clearWaypoint2, &QPushButton::clicked, this, [&](bool) { updateSquare([&](SquareItem *item) { clearWaypoint(item, 1); }); });
     connect(ui->clearWaypoint3, &QPushButton::clicked, this, [&](bool) { updateSquare([&](SquareItem *item) { clearWaypoint(item, 2); }); });
     connect(ui->clearWaypoint4, &QPushButton::clicked, this, [&](bool) { updateSquare([&](SquareItem *item) { clearWaypoint(item, 3); }); });
+    connect(ui->sortAllWaypoints, &QPushButton::clicked, this, [&](bool) { updateSquare([&](SquareItem *item) { AutoPath::sortWaypoints(item); }); });
 
     ui->fromButtons->setId(ui->from_northwest, AutoPath::Northwest);
     ui->fromButtons->setId(ui->from_north, AutoPath::North);

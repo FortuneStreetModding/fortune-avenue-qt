@@ -1033,6 +1033,27 @@ No for Magmalice lift</string>
           </widget>
          </item>
          <item>
+          <widget class="QLabel" name="label_28">
+           <property name="text">
+            <string/>
+           </property>
+          </widget>
+         </item>
+         <item>
+          <widget class="QLabel" name="label_29">
+           <property name="text">
+            <string/>
+           </property>
+          </widget>
+         </item>
+         <item>
+          <widget class="QPushButton" name="sortAllWaypoints">
+           <property name="text">
+            <string>Sort All Waypoints</string>
+           </property>
+          </widget>
+         </item>
+         <item>
           <spacer name="verticalSpacer_3">
            <property name="orientation">
             <enum>Qt::Vertical</enum>

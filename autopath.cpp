@@ -83,8 +83,16 @@ bool pathSquare(SquareItem *square, const QMap<Direction, SquareItem *> &touchin
             ++i;
         }
     }
-    // sort the waypoints
-    QMap<int, QList<int>> waypointData;
+
+    sortWaypoints(square);
+
+    return true;
+}
+
+void sortWaypoints(SquareItem *square) {
+    auto &data = square->getData();
+
+    QMultiMap<int, QList<int>> waypointData;
     for (auto &waypoint : data.waypoints) {
         QList<int> destinations;
         for (auto &waypointDest : waypoint.destinations) {
@@ -98,18 +106,25 @@ bool pathSquare(SquareItem *square, const QMap<Direction, SquareItem *> &touchin
         entryIds.append(waypoint.entryId);
     }
     std::sort(entryIds.begin(), entryIds.end());
-    i=0;
+    int i=0;
     for(int entryId : entryIds) {
-        auto destinations = waypointData[entryId];
-        data.waypoints[i].entryId = entryId;
-        data.waypoints[i].destinations[0] = destinations.at(0);
-        data.waypoints[i].destinations[1] = destinations.at(1);
-        data.waypoints[i].destinations[2] = destinations.at(2);
-        i++;
+        QMultiMap<int, QList<int>> waypointListData;
+        auto destinationsLists = waypointData.values(entryId);
+        for(auto &destinations : destinationsLists) {
+            waypointListData.insert(destinations.first(), destinations);
+        }
+        for(auto &destinations : waypointListData.values()) {
+            if(i<4) {
+                data.waypoints[i].entryId = entryId;
+                data.waypoints[i].destinations[0] = destinations.at(0);
+                data.waypoints[i].destinations[1] = destinations.at(1);
+                data.waypoints[i].destinations[2] = destinations.at(2);
+            }
+            i++;
+        }
     }
-
-    return true;
 }
+
 
 static Direction idToDirection(const QMap<Direction, SquareItem *> &touchingSquares, int id) {
     for (auto it=touchingSquares.begin(); it!=touchingSquares.end(); ++it) {

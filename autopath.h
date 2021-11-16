@@ -10,6 +10,7 @@ SquareItem *getSquareInDirection(SquareItem *square, const QVector<SquareItem *>
 QMap<Direction, SquareItem *> getTouchingSquares(SquareItem *square, const QVector<SquareItem *> &squares, int directionCheckRange, int allowedVariance);
 bool pathSquare(SquareItem *square, const QMap<Direction, SquareItem *> &touchingSquares);
 void enumerateAutopathingRules(SquareItem *square, const QMap<Direction, SquareItem *> &touchingSquares);
+void sortWaypoints(SquareItem *square);
 
 }
 
