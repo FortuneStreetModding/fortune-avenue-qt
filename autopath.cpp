@@ -83,6 +83,31 @@ bool pathSquare(SquareItem *square, const QMap<Direction, SquareItem *> &touchin
             ++i;
         }
     }
+    // sort the waypoints
+    QMap<int, QList<int>> waypointData;
+    for (auto &waypoint : data.waypoints) {
+        QList<int> destinations;
+        for (auto &waypointDest : waypoint.destinations) {
+            destinations.append(waypointDest);
+        }
+        std::sort(destinations.begin(), destinations.end());
+        waypointData.insert(waypoint.entryId, destinations);
+    }
+    QList<int> entryIds;
+    for (auto &waypoint : data.waypoints) {
+        entryIds.append(waypoint.entryId);
+    }
+    std::sort(entryIds.begin(), entryIds.end());
+    i=0;
+    for(int entryId : entryIds) {
+        auto destinations = waypointData[entryId];
+        data.waypoints[i].entryId = entryId;
+        data.waypoints[i].destinations[0] = destinations.at(0);
+        data.waypoints[i].destinations[1] = destinations.at(1);
+        data.waypoints[i].destinations[2] = destinations.at(2);
+        i++;
+    }
+
     return true;
 }
 
