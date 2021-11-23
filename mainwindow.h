@@ -64,6 +64,6 @@ private:
 
     void closeEvent(QCloseEvent *event) override;
 protected:
-    bool eventFilter(QObject *obj, QEvent *event);
+    bool eventFilter(QObject *obj, QEvent *event) override;
 };
 #endif // MAINWINDOW_H
