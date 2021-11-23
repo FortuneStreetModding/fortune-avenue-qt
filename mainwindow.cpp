@@ -56,7 +56,6 @@ MainWindow::MainWindow(QApplication& app)
         ui->graphicsView->setDragMode(checked ? QGraphicsView::ScrollHandDrag : QGraphicsView::RubberBandDrag);
     });
 
-    connect(ui->actionCalculate_Stock_Prices, &QAction::triggered, this, &MainWindow::calcStockPrices);
     connect(ui->actionVerify_Board, &QAction::triggered, this, &MainWindow::verifyBoard);
     connect(ui->actionAuto_Path, &QAction::triggered, this, &MainWindow::autoPath);
     connect(ui->actionScreenshot, &QAction::triggered, this, &MainWindow::screenshot);
@@ -438,6 +437,7 @@ void MainWindow::updateSquareSidebar() {
             ui->id->setText("");
         }
     }
+    calcStockPrices();
 }
 
 void MainWindow::clearWaypoint(SquareItem *item, int waypointId) {
@@ -711,8 +711,9 @@ void MainWindow::calcStockPrices() {
         ++districtCount[square.districtDestinationId];
         highestDistrict = qMax(highestDistrict, (int)square.districtDestinationId);
     }
-    for (int i=0; i<=highestDistrict; ++i) {
-        if (districtCount[i] == 0) {
+    for (int i=0; i<=12; ++i) {
+        if (i>highestDistrict || districtCount[i] == 0) {
+            builder << QString();
             continue;
         }
         qint64 result = districtSum[i] / districtCount[i];
@@ -720,7 +721,7 @@ void MainWindow::calcStockPrices() {
         result >>= 16;
         builder << QString("District %1: %2g").arg(char('A' + i)).arg(result);
     }
-    QMessageBox::information(this, "District Stock Prices", builder.join("\n"));
+    ui->stockPricesLabel->setText(builder.join("\n"));
 }
 
 void MainWindow::verifyBoard() {
