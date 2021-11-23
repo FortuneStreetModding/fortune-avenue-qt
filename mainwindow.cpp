@@ -61,7 +61,7 @@ MainWindow::MainWindow(QWidget *parent)
     connect(ui->actionScreenshot, &QAction::triggered, this, &MainWindow::screenshot);
 
     connect(ui->actionFortune_Avenue_Help, &QAction::triggered, this, [&]() {
-        QDesktopServices::openUrl(QUrl("https://github.com/FortuneStreetModding/fortune-avenue-qt/wiki"));
+        QDesktopServices::openUrl(QUrl("https://github.com/FortuneStreetModding/fortunestreetmodding.github.io/wiki/Fortune-Avenue-User-Manual"));
     });
     connect(ui->actionFollowWaypoint1, &QAction::triggered, this, [&]() {
         followWaypoint(0);
