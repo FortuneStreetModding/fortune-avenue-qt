@@ -34,8 +34,8 @@ jobs:
       run: macdeployqt 'Fortune Avenue.app' -dmg
 
     - name: Rename
-      working-directory: $${{github.workspace}}
-      run: mv 'Fortune Avenue.dmg' 'fortune-avenue-${GITHUB_REF_NAME}-macos.dmg'
+      working-directory: ${{github.workspace}}
+      run: mv 'Fortune Avenue.dmg' 'fortune-avenue-$GITHUB_REF_NAME-macos.dmg'
 
     - name: Release
       uses: softprops/action-gh-release@v1
