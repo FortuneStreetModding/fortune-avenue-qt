@@ -418,7 +418,7 @@ void MainWindow::updateSquareSidebar() {
         }
         ui->positionX->setText(QString::number(item->getData().positionX));
         ui->positionY->setText(QString::number(item->getData().positionY));
-        ui->yield->setText(QString::number(item->getData().getYield()));
+        ui->yield->setText(QString::number(item->getData().getYield(), 'f', 3));
 
         updateDestinationUI();
 
