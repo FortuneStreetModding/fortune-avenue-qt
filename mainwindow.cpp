@@ -16,9 +16,10 @@
 
 //#include <QDebug>
 
-MainWindow::MainWindow(QWidget *parent)
-    : QMainWindow(parent), ui(new Ui::MainWindow), scene(new FortuneAvenueGraphicsScene(-1600 + 32, -1600 + 32, 3200, 3200, this))
+MainWindow::MainWindow(QApplication& app)
+    : QMainWindow(), ui(new Ui::MainWindow), scene(new FortuneAvenueGraphicsScene(-1600 + 32, -1600 + 32, 3200, 3200, this))
 {
+    app.installEventFilter(this);
     ui->setupUi(this);
     waypointStarts = {ui->waypoint1Start, ui->waypoint2Start, ui->waypoint3Start, ui->waypoint4Start};
     waypointDests = {ui->waypoint1Dests, ui->waypoint2Dests, ui->waypoint3Dests, ui->waypoint4Dests};
@@ -99,6 +100,28 @@ MainWindow::MainWindow(QWidget *parent)
     initialFile = exportFile();
 
     registerSquareSidebarEvents();
+}
+
+bool MainWindow::eventFilter(QObject *obj, QEvent *event)
+{
+    if(event->type() == QEvent::KeyPress) {
+        QKeyEvent *key = static_cast<QKeyEvent *>(event);
+        QString text;
+        QLineEdit *lineEdit = qobject_cast<QLineEdit*>(obj);
+        if (lineEdit) {
+            bool ok;
+            int number = lineEdit->text().toInt(&ok, 10);
+            if(ok && key->key() == Qt::Key_Up) {
+                lineEdit->setText(QString::number(number+1));
+                emit lineEdit->textEdited(lineEdit->text());
+            }
+            if(ok && key->key() == Qt::Key_Down) {
+                lineEdit->setText(QString::number(number-1));
+                emit lineEdit->textEdited(lineEdit->text());
+            }
+        }
+    }
+    return QObject::eventFilter(obj, event);
 }
 
 MainWindow::~MainWindow()

@@ -16,7 +16,7 @@ class MainWindow : public QMainWindow
     Q_OBJECT
 
 public:
-    MainWindow(QWidget *parent = nullptr);
+    MainWindow(QApplication& app);
     ~MainWindow();
 private:
     Ui::MainWindow *ui;
@@ -63,5 +63,7 @@ private:
     void clearWaypoint(SquareItem *item, int waypointId);
 
     void closeEvent(QCloseEvent *event) override;
+protected:
+    bool eventFilter(QObject *obj, QEvent *event);
 };
 #endif // MAINWINDOW_H
