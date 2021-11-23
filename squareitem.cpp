@@ -82,7 +82,7 @@ QRectF SquareItem::boundingRect() const {
 }
 
 void SquareItem::paint(QPainter *painter, const QStyleOptionGraphicsItem *, QWidget *) {
-    if(data.squareType == EventSquare && 1 <= data.districtDestinationId && data.districtDestinationId <= 128) {
+    if(data.squareType == EventSquare && 0 <= data.districtDestinationId && data.districtDestinationId <= 128) {
         QString imageFile = QString(":/squares/EventSquare/eventsquare_%1.png").arg(data.districtDestinationId, 3, 10, QChar('0'));
         painter->drawImage(QPoint(0, 0), QImage(imageFile));
     } else {
