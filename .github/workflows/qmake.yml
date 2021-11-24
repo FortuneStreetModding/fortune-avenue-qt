@@ -58,7 +58,6 @@ jobs:
         version: 5.15.2
         target: desktop
         arch: win64_mingw81
-        tools: tools_mingw
 
     - name: Install Jom
       run: choco install jom
@@ -77,7 +76,6 @@ jobs:
 
     - name: Archive
       uses: thedoctor0/zip-release@master
-      if: matrix.os == 'windows-latest'
       with:
         type: 'zip'
         directory: ${{github.workspace}}
