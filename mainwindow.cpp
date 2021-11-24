@@ -399,11 +399,6 @@ void MainWindow::updateSquareSidebar() {
         ui->type->setCurrentText(squareTypeToText(item->getData().squareType));
         ui->districtDestinationId->setText(QString::number(item->getData().districtDestinationId));
         QString shopTypeStr = shopTypeToText(item->getData().shopModel);
-        // register the shop type if it doesn't already exist
-        if (shopTypeStr.isEmpty() && item->getData().shopModel != 0) {
-            shopTypeStr = registerShopType(item->getData().shopModel);
-            ui->shopModel->addItem(shopTypeStr);
-        }
         ui->shopModel->setCurrentText(shopTypeStr);
         ui->initialValue->setText(QString::number(item->getData().value));
         ui->initialPrice->setText(QString::number(item->getData().price));
@@ -612,14 +607,6 @@ void MainWindow::registerSquareSidebarEvents() {
                 item->getData().validDirections.remove((AutoPath::Direction)fromDir);
                 updateDestinationUI();
             }
-        }
-    });
-
-    connect(ui->addShopType, &QPushButton::clicked, this, [&]() {
-        bool ok;
-        int res = QInputDialog::getInt(this, "Enter shop id", "Enter shop id to add to dropdowns", 0, 0, 255, 1, &ok);
-        if (ok) {
-            ui->shopModel->addItem(registerShopType(res));
         }
     });
 }

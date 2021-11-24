@@ -300,55 +300,34 @@
          <string>Info</string>
         </attribute>
         <layout class="QGridLayout" name="gridLayout_2">
-         <item row="15" column="1">
-          <widget class="QLineEdit" name="yield">
+         <item row="4" column="0">
+          <widget class="QLabel" name="label_9">
+           <property name="text">
+            <string>Type</string>
+           </property>
+          </widget>
+         </item>
+         <item row="0" column="0">
+          <widget class="QLabel" name="label_2">
+           <property name="text">
+            <string>ID</string>
+           </property>
+          </widget>
+         </item>
+         <item row="15" column="0">
+          <widget class="QLabel" name="label_22">
+           <property name="text">
+            <string>Yield</string>
+           </property>
+          </widget>
+         </item>
+         <item row="4" column="1">
+          <widget class="QComboBox" name="type"/>
+         </item>
+         <item row="0" column="1">
+          <widget class="QLineEdit" name="id">
            <property name="enabled">
             <bool>false</bool>
-           </property>
-          </widget>
-         </item>
-         <item row="11" column="0">
-          <widget class="QLabel" name="label_12">
-           <property name="text">
-            <string>Initial Value</string>
-           </property>
-          </widget>
-         </item>
-         <item row="17" column="0" colspan="2">
-          <widget class="QCheckBox" name="isLift">
-           <property name="toolTip">
-            <string>Lift/Magmalice Start:
-Yes for Yoshi-type lift
-No for Magmalice lift</string>
-           </property>
-           <property name="text">
-            <string>Is Yoshi-type Lift?</string>
-           </property>
-          </widget>
-         </item>
-         <item row="13" column="1">
-          <widget class="QLineEdit" name="initialPrice"/>
-         </item>
-         <item row="2" column="1">
-          <layout class="QHBoxLayout" name="horizontalLayout_7">
-           <item>
-            <widget class="QLineEdit" name="positionX"/>
-           </item>
-           <item>
-            <widget class="QLineEdit" name="positionY"/>
-           </item>
-          </layout>
-         </item>
-         <item row="11" column="1">
-          <widget class="QLineEdit" name="initialValue"/>
-         </item>
-         <item row="8" column="1">
-          <widget class="QComboBox" name="shopModel"/>
-         </item>
-         <item row="2" column="0">
-          <widget class="QLabel" name="label_21">
-           <property name="text">
-            <string>Position (x, y)</string>
            </property>
           </widget>
          </item>
@@ -730,19 +709,18 @@ No for Magmalice lift</string>
            </layout>
           </widget>
          </item>
-         <item row="4" column="0">
-          <widget class="QLabel" name="label_9">
+         <item row="13" column="1">
+          <widget class="QLineEdit" name="initialPrice"/>
+         </item>
+         <item row="2" column="0">
+          <widget class="QLabel" name="label_21">
            <property name="text">
-            <string>Type</string>
+            <string>Position (x, y)</string>
            </property>
           </widget>
          </item>
-         <item row="15" column="0">
-          <widget class="QLabel" name="label_22">
-           <property name="text">
-            <string>Yield</string>
-           </property>
-          </widget>
+         <item row="6" column="1">
+          <widget class="QLineEdit" name="districtDestinationId"/>
          </item>
          <item row="6" column="0">
           <widget class="QLabel" name="label_10">
@@ -751,22 +729,25 @@ No for Magmalice lift</string>
            </property>
           </widget>
          </item>
-         <item row="0" column="1">
-          <widget class="QLineEdit" name="id">
+         <item row="11" column="1">
+          <widget class="QLineEdit" name="initialValue"/>
+         </item>
+         <item row="15" column="1">
+          <widget class="QLineEdit" name="yield">
            <property name="enabled">
             <bool>false</bool>
            </property>
           </widget>
          </item>
-         <item row="0" column="0">
-          <widget class="QLabel" name="label_2">
-           <property name="text">
-            <string>ID</string>
-           </property>
-          </widget>
-         </item>
-         <item row="6" column="1">
-          <widget class="QLineEdit" name="districtDestinationId"/>
+         <item row="2" column="1">
+          <layout class="QHBoxLayout" name="horizontalLayout_7">
+           <item>
+            <widget class="QLineEdit" name="positionX"/>
+           </item>
+           <item>
+            <widget class="QLineEdit" name="positionY"/>
+           </item>
+          </layout>
          </item>
          <item row="20" column="0">
           <spacer name="verticalSpacer_2">
@@ -781,8 +762,31 @@ No for Magmalice lift</string>
            </property>
           </spacer>
          </item>
-         <item row="4" column="1">
-          <widget class="QComboBox" name="type"/>
+         <item row="9" column="0">
+          <widget class="QLabel" name="label_11">
+           <property name="text">
+            <string>Shop Model</string>
+           </property>
+          </widget>
+         </item>
+         <item row="17" column="0" colspan="2">
+          <widget class="QCheckBox" name="isLift">
+           <property name="toolTip">
+            <string>Lift/Magmalice Start:
+Yes for Yoshi-type lift
+No for Magmalice lift</string>
+           </property>
+           <property name="text">
+            <string>Is Yoshi-type Lift?</string>
+           </property>
+          </widget>
+         </item>
+         <item row="11" column="0">
+          <widget class="QLabel" name="label_12">
+           <property name="text">
+            <string>Initial Value</string>
+           </property>
+          </widget>
          </item>
          <item row="13" column="0">
           <widget class="QLabel" name="label_13">
@@ -791,19 +795,29 @@ No for Magmalice lift</string>
            </property>
           </widget>
          </item>
+         <item row="8" column="1">
+          <widget class="QComboBox" name="shopModel"/>
+         </item>
          <item row="8" column="0">
-          <widget class="QLabel" name="label_11">
+          <widget class="QLabel" name="label_30">
            <property name="text">
-            <string>Shop Model</string>
+            <string>Presets</string>
            </property>
           </widget>
          </item>
          <item row="9" column="1">
-          <widget class="QPushButton" name="addShopType">
-           <property name="text">
-            <string>Add Shop Type</string>
-           </property>
-          </widget>
+          <layout class="QHBoxLayout" name="horizontalLayout_6">
+           <item>
+            <widget class="QLineEdit" name="shopModelId"/>
+           </item>
+           <item>
+            <widget class="QLineEdit" name="shopModelName">
+             <property name="enabled">
+              <bool>false</bool>
+             </property>
+            </widget>
+           </item>
+          </layout>
          </item>
         </layout>
        </widget>
