@@ -33,7 +33,7 @@ MainWindow::MainWindow(QApplication& app)
     ui->loopingMode->setId(ui->loopingVerticalHorizontal, LoopingMode::Both);
     ui->type->addItem("");
     ui->type->addItems(squareTexts());
-    ui->shopModel->addItems(shopTexts());
+    ui->shopModel->addItems(shopTextsWithValues());
     addShortcutTextToButton(ui->addSquare);
     addShortcutTextToButton(ui->removeSquare);
 
@@ -421,12 +421,12 @@ void MainWindow::updateSquareSidebar() {
         ui->id->setText(QString::number(item->getData().id));
         ui->type->setCurrentText(squareTypeToText(item->getData().squareType));
         ui->districtDestinationId->setText(QString::number(item->getData().districtDestinationId));
-        QString shopTypeStr = shopTypeToText(item->getData().shopModel);
-        if(ui->shopModel->findText(shopTypeStr))
-            ui->shopModel->setCurrentText(shopTypeStr);
+        QString shopTypeStrWithValue = shopTypeToTextWithValue(item->getData().shopModel);
+        if(ui->shopModel->findText(shopTypeStrWithValue) != -1)
+            ui->shopModel->setCurrentText(shopTypeStrWithValue);
         else
-            ui->shopModel->setCurrentText("");
-        ui->shopModelName->setText(shopTypeStr);
+            ui->shopModel->setCurrentIndex(0);
+        ui->shopModelName->setText(shopTypeToText(item->getData().shopModel));
         ui->shopModelId->setText(QString::number(item->getData().shopModel));
         ui->initialValue->setText(QString::number(item->getData().value));
         ui->initialPrice->setText(QString::number(item->getData().price));
@@ -476,7 +476,10 @@ int MainWindow::calcShopPriceFromValue(QString function, int value) {
     mu::Parser p;
     p.DefineVar(QString("x").toStdWString(), &x);
     p.SetExpr(function.toStdWString());
-    return qRound(p.Eval());
+    int price = qRound(p.Eval());
+    if(price < 0)
+        return 0;
+    return price;
 }
 
 void MainWindow::registerSquareSidebarEvents() {
@@ -512,7 +515,7 @@ void MainWindow::registerSquareSidebarEvents() {
         updateSquare([&](SquareItem *item) {
             item->getData().shopModel = textToShopType(ui->shopModel->currentText());
             item->getData().updateValueFromShopModel();
-            if(ui->actionAuto_Calculate_Shop_Price_based_on_Shop_Value->isChecked()) {
+            if(ui->autoCalcPrice->isChecked()) {
                 try {
                     auto newPrice = calcShopPriceFromValue(priceFunction, item->getData().value);
                     item->getData().price = newPrice;
@@ -530,7 +533,7 @@ void MainWindow::registerSquareSidebarEvents() {
     connect(ui->initialValue, &QLineEdit::textEdited, this, [&](const QString &) {
         updateSquare([&](SquareItem *item) {
             item->getData().value = ui->initialValue->text().toUShort();
-            if(ui->actionAuto_Calculate_Shop_Price_based_on_Shop_Value->isChecked()) {
+            if(ui->autoCalcPrice->isChecked()) {
                 try {
                     auto newPrice = calcShopPriceFromValue(priceFunction, item->getData().value);
                     item->getData().price = newPrice;

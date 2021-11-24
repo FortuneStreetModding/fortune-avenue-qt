@@ -20,8 +20,12 @@ QDataStream &operator<<(QDataStream &stream, const WaypointData &data) {
     return stream;
 }
 
+int SquareData::getValueFromShopModel(int shopModel) {
+    return shopModel*10;
+}
+
 void SquareData::updateValueFromShopModel() {
-    value = shopModel*10;
+    value = getValueFromShopModel(shopModel);
 }
 
 qreal SquareData::getYield() {
@@ -229,75 +233,75 @@ OrderedMap<QString, SquareType> textToSquareTypes = {
     {"Vacant Plot", VacantPlot}
 };
 OrderedMap<QString, quint8> textToShopTypes = {
-    { "",0},
-    { "(50g) Scrap-paper shop",5},
-    { "(60g) Wool shop",6},
-    { "(70g) Bottle store",7},
-    { "(80g) Secondhand book shop",8},
-    { "(90g) Scrap-metal supplier",9},
-    {"(100g) Stationery shop",10},
-    {"(110g) General store",11},
-    {"(120g) Florist's",12},
-    {"(130g) Ice-cream shop",13},
-    {"(140g) Comic-book shop",14},
-    {"(150g) Dairy",15},
-    {"(160g) Doughnut shop",16},
-    {"(170g) Pizza shack",17},
-    {"(180g) Bakery",18},
-    {"(190g) Grocery store",19},
-    {"(200g) Pharmacy",20},
-    {"(210g) Fish market",21},
-    {"(220g) Toy shop",22},
-    {"(230g) Bookshop",23},
-    {"(240g) Cosmetics boutique",24},
-    {"(250g) T-shirt shop",25},
-    {"(260g) Fruit stall",26},
-    {"(270g) Photography studio",27},
-    {"(280g) Coffee shop",28},
-    {"(290g) Butcher shop",29},
-    {"(300g) Restaurant",30},
-    {"(310g) Barbershop",31},
-    {"(320g) Hat boutique",32},
-    {"(330g) Hardware store",33},
-    {"(340g) Gift shop",34},
-    {"(350g) Launderette",35},
-    {"(360g) Shoe shop",36},
-    {"(370g) Clothing store",37},
-    {"(380g) Optician's",38},
-    {"(390g) Clockmaker's",39},
-    {"(400g) Furniture shop",40},
-    {"(410g) Sports shop",41},
-    {"(420g) Locksmith's",42},
-    {"(430g) Glassmaker's",43},
-    {"(440g) Sushi restaurant",44},
-    {"(450g) Art gallery",45},
-    {"(460g) Leatherware boutique",46},
-    {"(470g) Pet shop",47},
-    {"(480g) Nail salon",48},
-    {"(490g) Spice shop",49},
-    {"(500g) Music shop",50},
-    {"(510g) Surf shop",51},
-    {"(520g) Boating shop",52},
-    {"(530g) Cartographer's",53},
-    {"(540g) Alloy rims shop",54},
-    {"(550g) Fashion boutique",55},
-    {"(560g) Waxworks",56},
-    {"(570g) Lens shop",57},
-    {"(580g) Kaleidoscope shop",58},
-    {"(590g) Crystal ball shop",59},
-    {"(610g) Gemstone supplier",61},
-    {"(620g) Taxidermy studio",62},
-    {"(650g) Antiques dealer's",65},
-    {"(680g) Goldsmith's",68},
-    {"(700g) Fossil shop",70},
-    {"(720g) Music-box shop",72},
-    {"(750g) Marionette workshop",75},
-    {"(760g) Health shop",76},
-    {"(800g) Organic food shop",80},
-    {"(810g) Bridal boutique",81},
-    {"(850g) Autograph shop",85},
-    {"(900g) Meteorite shop",90},
-    {"(980g) Department store",98}
+    {"",0},
+    {"Scrap-paper shop",5},
+    {"Wool shop",6},
+    {"Bottle store",7},
+    {"Secondhand book shop",8},
+    {"Scrap-metal supplier",9},
+    {"Stationery shop",10},
+    {"General store",11},
+    {"Florist's",12},
+    {"Ice-cream shop",13},
+    {"Comic-book shop",14},
+    {"Dairy",15},
+    {"Doughnut shop",16},
+    {"Pizza shack",17},
+    {"Bakery",18},
+    {"Grocery store",19},
+    {"Pharmacy",20},
+    {"Fish market",21},
+    {"Toy shop",22},
+    {"Bookshop",23},
+    {"Cosmetics boutique",24},
+    {"T-shirt shop",25},
+    {"Fruit stall",26},
+    {"Photography studio",27},
+    {"Coffee shop",28},
+    {"Butcher shop",29},
+    {"Restaurant",30},
+    {"Barbershop",31},
+    {"Hat boutique",32},
+    {"Hardware store",33},
+    {"Gift shop",34},
+    {"Launderette",35},
+    {"Shoe shop",36},
+    {"Clothing store",37},
+    {"Optician's",38},
+    {"Clockmaker's",39},
+    {"Furniture shop",40},
+    {"Sports shop",41},
+    {"Locksmith's",42},
+    {"Glassmaker's",43},
+    {"Sushi restaurant",44},
+    {"Art gallery",45},
+    {"Leatherware boutique",46},
+    {"Pet shop",47},
+    {"Nail salon",48},
+    {"Spice shop",49},
+    {"Music shop",50},
+    {"Surf shop",51},
+    {"Boating shop",52},
+    {"Cartographer's",53},
+    {"Alloy rims shop",54},
+    {"Fashion boutique",55},
+    {"Waxworks",56},
+    {"Lens shop",57},
+    {"Kaleidoscope shop",58},
+    {"Crystal ball shop",59},
+    {"Gemstone supplier",61},
+    {"Taxidermy studio",62},
+    {"Antiques dealer's",65},
+    {"Goldsmith's",68},
+    {"Fossil shop",70},
+    {"Music-box shop",72},
+    {"Marionette workshop",75},
+    {"Health shop",76},
+    {"Organic food shop",80},
+    {"Bridal boutique",81},
+    {"Autograph shop",85},
+    {"Meteorite shop",90},
+    {"Department store",98}
 };
 
 QString squareTypeToText(SquareType type) {
@@ -319,5 +323,34 @@ QString shopTypeToText(quint8 shopType) {
     }
     return "Unused";
 }
-quint8 textToShopType(QString string) { return textToShopTypes.value(string, 0); }
+QString shopTypeToTextWithValue(quint8 shopType) {
+    for (auto it = textToShopTypes.begin(); it != textToShopTypes.end(); ++it) {
+        if (it.value() == shopType) {
+            return QString("(%1 G) %2").arg(SquareData::getValueFromShopModel(shopType)).arg(it.key());;
+        }
+    }
+    return "Unused";
+}
+quint8 textToShopType(QString string) {
+    for (auto it = textToShopTypes.begin(); it != textToShopTypes.end(); ++it) {
+        auto shopName = it.key();
+        if(shopName.isEmpty())
+            continue;
+        auto shopType = it.value();
+        if(string.contains(shopName))
+            return shopType;
+    }
+    return 0;
+}
 QList<QString> shopTexts() { return textToShopTypes.keys(); }
+QList<QString> shopTextsWithValues() {
+    QList<QString> shopTexts;
+    for (auto it = textToShopTypes.begin(); it != textToShopTypes.end(); ++it) {
+        auto shopType = it.value();
+        if(it.key().isEmpty())
+            shopTexts << it.key();
+        else
+            shopTexts << QString("(%1 G) %2").arg(SquareData::getValueFromShopModel(shopType)).arg(it.key());
+    }
+    return shopTexts;
+}

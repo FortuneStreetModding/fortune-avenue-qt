@@ -99,6 +99,7 @@ struct SquareData {
     quint8 shopModel = 0;
     QMultiMap<AutoPath::Direction, AutoPath::Direction> validDirections;
 
+    static int getValueFromShopModel(int shopModel);
     void updateValueFromShopModel();
     qreal getYield();
 
@@ -193,7 +194,9 @@ private:
 };
 
 QString shopTypeToText(quint8 shopType);
+QString shopTypeToTextWithValue(quint8 shopType);
 quint8 textToShopType(QString string);
 QList<QString> shopTexts();
+QList<QString> shopTextsWithValues();
 
 #endif // FORTUNESTREETDATA_H
