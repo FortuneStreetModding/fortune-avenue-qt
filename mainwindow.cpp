@@ -1,6 +1,8 @@
 #include "mainwindow.h"
 #include "ui_mainwindow.h"
 
+#include <iostream>
+
 #include <QCloseEvent>
 #include <QDesktopServices>
 #include <QFileDialog>
@@ -8,13 +10,14 @@
 #include <QMessageBox>
 #include <QSaveFile>
 #include <QSet>
+#include <QDebug>
+
 #include "autopath.h"
 #include "darkdetect.h"
 #include "squareitem.h"
 #include "util.h"
 #include "screenshotdialog.h"
-
-//#include <QDebug>
+#include "muParser.h"
 
 MainWindow::MainWindow(QApplication& app)
     : QMainWindow(), ui(new Ui::MainWindow), scene(new FortuneAvenueGraphicsScene(-1600 + 32, -1600 + 32, 3200, 3200, this))
@@ -75,6 +78,26 @@ MainWindow::MainWindow(QApplication& app)
     connect(ui->actionNext, &QAction::triggered, this, &MainWindow::selectNext);
     connect(ui->actionPrevious, &QAction::triggered, this, &MainWindow::selectPrevious);
     connect(ui->actionSelectAll, &QAction::triggered, this, &MainWindow::selectAll);
+
+    connect(ui->actionAuto_Calc_Custom_Function, &QAction::triggered, this, [&]() {
+        bool ok;
+        QString newFunc = QInputDialog::getText(this, "Enter Function", "Enter the shop price based on shop value function (x = shop value).\nEnter empty string to restore default.", QLineEdit::Normal, priceFunction, &ok);
+        if (ok) {
+            if(newFunc.isEmpty()) {
+                priceFunction = defaultPriceFunction;
+            } else {
+                try
+                {
+                    calcShopPriceFromValue(newFunc, 1);
+                    priceFunction = newFunc;
+                }
+                catch (mu::Parser::exception_type &e)
+                {
+                    QMessageBox::critical(this, "Error Function", QString::fromStdWString(e.GetMsg()));
+                }
+            }
+        }
+    });
 
     connect(ui->addSquare, &QPushButton::clicked, this, &MainWindow::addSquare);
     connect(ui->removeSquare, &QPushButton::clicked, this, &MainWindow::removeSquare);
@@ -448,6 +471,14 @@ void MainWindow::clearWaypoint(SquareItem *item, int waypointId) {
     waypoint.entryId = 255;
 }
 
+int MainWindow::calcShopPriceFromValue(QString function, int value) {
+    double x = (qreal) value;
+    mu::Parser p;
+    p.DefineVar(QString("x").toStdWString(), &x);
+    p.SetExpr(function.toStdWString());
+    return qRound(p.Eval());
+}
+
 void MainWindow::registerSquareSidebarEvents() {
     connect(ui->type, &QComboBox::textActivated, this, [&](const QString &) {
         updateSquare([&](SquareItem *item) {
@@ -482,7 +513,10 @@ void MainWindow::registerSquareSidebarEvents() {
             item->getData().shopModel = textToShopType(ui->shopModel->currentText());
             item->getData().updateValueFromShopModel();
             if(ui->actionAuto_Calculate_Shop_Price_based_on_Shop_Value->isChecked()) {
-                item->getData().updatePriceFromValue();
+                try {
+                    auto newPrice = calcShopPriceFromValue(priceFunction, item->getData().value);
+                    item->getData().price = newPrice;
+                } catch (mu::Parser::exception_type &e) {}
             }
             updateSquareSidebar();
         });
@@ -497,7 +531,10 @@ void MainWindow::registerSquareSidebarEvents() {
         updateSquare([&](SquareItem *item) {
             item->getData().value = ui->initialValue->text().toUShort();
             if(ui->actionAuto_Calculate_Shop_Price_based_on_Shop_Value->isChecked()) {
-                item->getData().updatePriceFromValue();
+                try {
+                    auto newPrice = calcShopPriceFromValue(priceFunction, item->getData().value);
+                    item->getData().price = newPrice;
+                } catch (mu::Parser::exception_type &e) {}
             }
             updateSquareSidebar();
         });

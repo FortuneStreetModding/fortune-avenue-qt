@@ -1131,6 +1131,7 @@ No for Magmalice lift</string>
     <addaction name="actionScreenshot"/>
     <addaction name="separator"/>
     <addaction name="actionAuto_Calculate_Shop_Price_based_on_Shop_Value"/>
+    <addaction name="actionAuto_Calc_Custom_Function"/>
    </widget>
    <widget class="QMenu" name="menuHelp">
     <property name="title">
@@ -1330,6 +1331,11 @@ No for Magmalice lift</string>
    </property>
    <property name="text">
     <string>Auto-Calc Shop Price based on Value</string>
+   </property>
+  </action>
+  <action name="actionAuto_Calc_Custom_Function">
+   <property name="text">
+    <string>Auto-Calc Custom Function</string>
    </property>
   </action>
  </widget>

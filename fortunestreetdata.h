@@ -100,9 +100,7 @@ struct SquareData {
     QMultiMap<AutoPath::Direction, AutoPath::Direction> validDirections;
 
     void updateValueFromShopModel();
-    void updatePriceFromValue();
     qreal getYield();
-    qreal getYieldFromValue();
 
     friend QDataStream &operator>>(QDataStream &stream, SquareData &data);
     friend QDataStream &operator<<(QDataStream &stream, const SquareData &data);

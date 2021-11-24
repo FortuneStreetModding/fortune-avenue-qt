@@ -29,7 +29,10 @@ private:
     int zoomPercent = 100;
     BoardFile initialFile;
     int previouslyVisitedSquareId;
+    const QString defaultPriceFunction = QString("0.2 * x - 0.15 * x * 0.2^(x/200)");
+    QString priceFunction = defaultPriceFunction;
 
+    int calcShopPriceFromValue(QString function, int value);
     void loadFile(const BoardFile &file);
     BoardFile exportFile();
     void registerSquareSidebarEvents();
