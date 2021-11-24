@@ -75,13 +75,17 @@ jobs:
       working-directory: ${{github.workspace}}/release
       run: windeployqt 'Fortune Avenue.exe'
 
+    - name: Rename
+      working-directory: ${{github.workspace}}
+      run: mv release fortune-avenue-$env:VERSION_NAME
+
     - name: Archive
       uses: thedoctor0/zip-release@master
       with:
         type: 'zip'
         directory: ${{github.workspace}}
         filename: fortune-avenue-${{github.event.release.tag_name}}-windows.zip
-        path: ./release/
+        path: ./fortune-avenue-${{github.event.release.tag_name}}/
 
     - name: Release
       uses: softprops/action-gh-release@v1
