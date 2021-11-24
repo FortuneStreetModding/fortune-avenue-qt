@@ -286,12 +286,6 @@
          <verstretch>0</verstretch>
         </sizepolicy>
        </property>
-       <property name="maximumSize">
-        <size>
-         <width>16777215</width>
-         <height>16777215</height>
-        </size>
-       </property>
        <property name="currentIndex">
         <number>0</number>
        </property>
@@ -808,12 +802,25 @@ No for Magmalice lift</string>
          <item row="9" column="1">
           <layout class="QHBoxLayout" name="horizontalLayout_6">
            <item>
-            <widget class="QLineEdit" name="shopModelId"/>
+            <widget class="QLineEdit" name="shopModelId">
+             <property name="maximumSize">
+              <size>
+               <width>50</width>
+               <height>16777215</height>
+              </size>
+             </property>
+            </widget>
            </item>
            <item>
             <widget class="QLineEdit" name="shopModelName">
              <property name="enabled">
               <bool>false</bool>
+             </property>
+             <property name="minimumSize">
+              <size>
+               <width>150</width>
+               <height>0</height>
+              </size>
              </property>
             </widget>
            </item>
@@ -1122,6 +1129,8 @@ No for Magmalice lift</string>
     <addaction name="actionVerify_Board"/>
     <addaction name="actionAuto_Path"/>
     <addaction name="actionScreenshot"/>
+    <addaction name="separator"/>
+    <addaction name="actionAuto_Calculate_Shop_Price_based_on_Shop_Value"/>
    </widget>
    <widget class="QMenu" name="menuHelp">
     <property name="title">
@@ -1305,6 +1314,22 @@ No for Magmalice lift</string>
    </property>
    <property name="shortcut">
     <string>Ctrl+3</string>
+   </property>
+  </action>
+  <action name="actionSupply_Custom_Yield_Function">
+   <property name="text">
+    <string>Supply Auto-Calc Custom Function</string>
+   </property>
+  </action>
+  <action name="actionAuto_Calculate_Shop_Price_based_on_Shop_Value">
+   <property name="checkable">
+    <bool>true</bool>
+   </property>
+   <property name="checked">
+    <bool>true</bool>
+   </property>
+   <property name="text">
+    <string>Auto-Calc Shop Price based on Value</string>
    </property>
   </action>
  </widget>

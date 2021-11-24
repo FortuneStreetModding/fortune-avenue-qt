@@ -399,7 +399,12 @@ void MainWindow::updateSquareSidebar() {
         ui->type->setCurrentText(squareTypeToText(item->getData().squareType));
         ui->districtDestinationId->setText(QString::number(item->getData().districtDestinationId));
         QString shopTypeStr = shopTypeToText(item->getData().shopModel);
-        ui->shopModel->setCurrentText(shopTypeStr);
+        if(ui->shopModel->findText(shopTypeStr))
+            ui->shopModel->setCurrentText(shopTypeStr);
+        else
+            ui->shopModel->setCurrentText("");
+        ui->shopModelName->setText(shopTypeStr);
+        ui->shopModelId->setText(QString::number(item->getData().shopModel));
         ui->initialValue->setText(QString::number(item->getData().value));
         ui->initialPrice->setText(QString::number(item->getData().price));
         ui->isLift->setChecked(item->getData().oneWayLift);
@@ -476,14 +481,24 @@ void MainWindow::registerSquareSidebarEvents() {
         updateSquare([&](SquareItem *item) {
             item->getData().shopModel = textToShopType(ui->shopModel->currentText());
             item->getData().updateValueFromShopModel();
-            item->getData().updatePriceFromValue();
+            if(ui->actionAuto_Calculate_Shop_Price_based_on_Shop_Value->isChecked()) {
+                item->getData().updatePriceFromValue();
+            }
+            updateSquareSidebar();
+        });
+    });
+    connect(ui->shopModelId, &QLineEdit::textEdited, this, [&](const QString &) {
+        updateSquare([&](SquareItem *item) {
+            item->getData().shopModel = ui->shopModelId->text().toUShort();
             updateSquareSidebar();
         });
     });
     connect(ui->initialValue, &QLineEdit::textEdited, this, [&](const QString &) {
         updateSquare([&](SquareItem *item) {
             item->getData().value = ui->initialValue->text().toUShort();
-            item->getData().updatePriceFromValue();
+            if(ui->actionAuto_Calculate_Shop_Price_based_on_Shop_Value->isChecked()) {
+                item->getData().updatePriceFromValue();
+            }
             updateSquareSidebar();
         });
     });

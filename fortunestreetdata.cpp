@@ -322,7 +322,7 @@ QString shopTypeToText(quint8 shopType) {
             return it.key();
         }
     }
-    return "";
+    return "Unused";
 }
 quint8 textToShopType(QString string) { return textToShopTypes.value(string, 0); }
 QList<QString> shopTexts() { return textToShopTypes.keys(); }
