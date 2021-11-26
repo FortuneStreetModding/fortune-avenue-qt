@@ -60,9 +60,6 @@ jobs:
         target: desktop
         arch: win64_mingw81
 
-    - name: Install Jom
-      run: choco install jom
-
     - name: Configure QMake
       working-directory: ${{github.workspace}}
       run: qmake fortune-avenue-port.pro
@@ -71,13 +68,17 @@ jobs:
       working-directory: ${{github.workspace}}
       run: mingw32-make
 
-    - name: Deploy
-      working-directory: ${{github.workspace}}/release
-      run: windeployqt 'Fortune Avenue.exe'
-
     - name: Rename
       working-directory: ${{github.workspace}}
-      run: mv release fortune-avenue-$env:VERSION_NAME
+      shell: bash
+      run: |
+        mkdir "fortune-avenue-$VERSION_NAME"
+        mv "release/Fortune Avenue.exe" "fortune-avenue-$VERSION_NAME/Fortune Avenue.exe"
+
+    - name: Deploy
+      working-directory: ${{github.workspace}}
+      shell: bash
+      run: windeployqt "fortune-avenue-$VERSION_NAME/Fortune Avenue.exe"
 
     - name: Archive
       uses: thedoctor0/zip-release@master
