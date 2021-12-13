@@ -32,7 +32,8 @@ private:
     const QString defaultPriceFunction = QString("x * ( -0.15 * 0.2^(x/200) + 0.2 )");
     QString priceFunction = defaultPriceFunction;
 
-    int calcShopPriceFromValue(QString function, int value);
+    int calcShopPriceFromValue(const QString &function, int value);
+    void loadFile(const QString &fname);
     void loadFile(const BoardFile &file);
     BoardFile exportFile();
     void registerSquareSidebarEvents();
@@ -65,9 +66,9 @@ private:
     void selectAll();
     void clearWaypoint(SquareItem *item, int waypointId);
 
+protected:
     void closeEvent(QCloseEvent *event) override;
     bool event(QEvent *event) override;
-protected:
     bool eventFilter(QObject *obj, QEvent *event) override;
 };
 #endif // MAINWINDOW_H

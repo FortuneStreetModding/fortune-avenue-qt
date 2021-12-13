@@ -128,7 +128,7 @@ bool MainWindow::eventFilter(QObject *obj, QEvent *event)
 {
     if(event->type() == QEvent::KeyPress) {
         QKeyEvent *key = static_cast<QKeyEvent *>(event);
-        QString text;
+        //QString text;
         QLineEdit *lineEdit = qobject_cast<QLineEdit*>(obj);
         if (lineEdit) {
             bool ok;
@@ -271,21 +271,7 @@ void MainWindow::openFile() {
     if (filename.isEmpty()) {
         return;
     }
-    QFile file(filename);
-    if (file.open(QIODevice::ReadOnly)) {
-        QDataStream stream(&file);
-        BoardFile boardFile;
-        stream >> boardFile;
-        if (stream.status() != QDataStream::Status::ReadCorruptData) {
-            setWindowFilePath(filename);
-            loadFile(boardFile);
-        } else {
-            goto badFile;
-        }
-    } else {
-        badFile:
-        QMessageBox::critical(this, "Error opening file", "An error occurred while trying to open the file");
-    }
+    loadFile(filename);
 }
 
 bool MainWindow::saveFile() {
@@ -330,6 +316,24 @@ bool MainWindow::saveFileAs() {
         fail:
         QMessageBox::critical(this, "Error saving file", "An error occurred while trying to save the file");
         return false;
+    }
+}
+
+void MainWindow::loadFile(const QString &fname) {
+    QFile file(fname);
+    if (file.open(QIODevice::ReadOnly)) {
+        QDataStream stream(&file);
+        BoardFile boardFile;
+        stream >> boardFile;
+        if (stream.status() != QDataStream::Status::ReadCorruptData) {
+            setWindowFilePath(fname);
+            loadFile(boardFile);
+        } else {
+            goto badFile;
+        }
+    } else {
+        badFile:
+        QMessageBox::critical(this, "Error opening file", "An error occurred while trying to open the file");
     }
 }
 
@@ -471,7 +475,7 @@ void MainWindow::clearWaypoint(SquareItem *item, int waypointId) {
     waypoint.entryId = 255;
 }
 
-int MainWindow::calcShopPriceFromValue(QString function, int value) {
+int MainWindow::calcShopPriceFromValue(const QString &function, int value) {
     double x = (qreal) value;
     mu::Parser p;
     p.DefineVar(QString("x").toStdWString(), &x);
@@ -933,21 +937,7 @@ void MainWindow::closeEvent(QCloseEvent *event) {
 bool MainWindow::event(QEvent *event) {
     if (event && event->type() == QEvent::FileOpen) {
         QFileOpenEvent *fo = static_cast<QFileOpenEvent *>(event);
-        QFile file(fo->file());
-        if (file.open(QIODevice::ReadOnly)) {
-            QDataStream stream(&file);
-            BoardFile boardFile;
-            stream >> boardFile;
-            if (stream.status() != QDataStream::Status::ReadCorruptData) {
-                setWindowFilePath(fo->file());
-                loadFile(boardFile);
-            } else {
-                goto badFile;
-            }
-        } else {
-            badFile:
-            QMessageBox::critical(this, "Error opening file", "An error occurred while trying to open the file");
-        }
+        loadFile(fo->file());
     }
     return QMainWindow::event(event);
 };
