@@ -30,6 +30,7 @@ DEFINES += _UNICODE
 
 SOURCES += \
     autopath.cpp \
+    fortuneavenueapp.cpp \
     fortuneavenuegraphicsscene.cpp \
     fortunestreetdata.cpp \
     main.cpp \
@@ -47,6 +48,7 @@ HEADERS += \
     autopath.h \
     darkdetect.h \
     directions.h \
+    fortuneavenueapp.h \
     fortuneavenuegraphicsscene.h \
     fortunestreetdata.h \
     mainwindow.h \
@@ -71,5 +73,7 @@ RESOURCES += \
 win32:RC_ICONS = AppIcon.ico
 macos:ICON=AppIcon.icns
 
+QMAKE_INFO_PLIST = Info.plist
+
 DISTFILES += \
-    .travis.yml
+    Info.plist

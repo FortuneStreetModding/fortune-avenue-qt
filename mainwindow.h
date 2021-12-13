@@ -66,6 +66,7 @@ private:
     void clearWaypoint(SquareItem *item, int waypointId);
 
     void closeEvent(QCloseEvent *event) override;
+    bool event(QEvent *event) override;
 protected:
     bool eventFilter(QObject *obj, QEvent *event) override;
 };

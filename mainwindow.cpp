@@ -929,3 +929,25 @@ void MainWindow::closeEvent(QCloseEvent *event) {
         event->accept();
     }
 }
+
+bool MainWindow::event(QEvent *event) {
+    if (event && event->type() == QEvent::FileOpen) {
+        QFileOpenEvent *fo = static_cast<QFileOpenEvent *>(event);
+        QFile file(fo->file());
+        if (file.open(QIODevice::ReadOnly)) {
+            QDataStream stream(&file);
+            BoardFile boardFile;
+            stream >> boardFile;
+            if (stream.status() != QDataStream::Status::ReadCorruptData) {
+                setWindowFilePath(fo->file());
+                loadFile(boardFile);
+            } else {
+                goto badFile;
+            }
+        } else {
+            badFile:
+            QMessageBox::critical(this, "Error opening file", "An error occurred while trying to open the file");
+        }
+    }
+    return QMainWindow::event(event);
+};
