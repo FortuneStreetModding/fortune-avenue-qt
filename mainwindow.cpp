@@ -126,7 +126,7 @@ MainWindow::MainWindow(QApplication& app)
 
 bool MainWindow::eventFilter(QObject *obj, QEvent *event)
 {
-    if(event->type() == QEvent::KeyPress) {
+    if (event->type() == QEvent::KeyPress) {
         QKeyEvent *key = static_cast<QKeyEvent *>(event);
         //QString text;
         QLineEdit *lineEdit = qobject_cast<QLineEdit*>(obj);
@@ -142,6 +142,9 @@ bool MainWindow::eventFilter(QObject *obj, QEvent *event)
                 emit lineEdit->textEdited(lineEdit->text());
             }
         }
+    } else if (event->type() == QEvent::FileOpen) {
+        QFileOpenEvent *fo = static_cast<QFileOpenEvent *>(event);
+        loadFile(fo->file());
     }
     return QObject::eventFilter(obj, event);
 }
@@ -933,11 +936,3 @@ void MainWindow::closeEvent(QCloseEvent *event) {
         event->accept();
     }
 }
-
-bool MainWindow::event(QEvent *event) {
-    if (event && event->type() == QEvent::FileOpen) {
-        QFileOpenEvent *fo = static_cast<QFileOpenEvent *>(event);
-        loadFile(fo->file());
-    }
-    return QMainWindow::event(event);
-};

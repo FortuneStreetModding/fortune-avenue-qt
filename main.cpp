@@ -5,10 +5,9 @@
 #include <QFontDatabase>
 #include <QWindow>
 #include "darkdetect.h"
-#include "fortuneavenueapp.h"
 
 int main(int argc, char *argv[]) {
-    FortuneAvenueApp a(argc, argv);
+    QApplication a(argc, argv);
     a.setAttribute(Qt::AA_UseHighDpiPixmaps);
     QFontDatabase::addApplicationFont(":/fonts/Lato-Regular.ttf");
     initDarkThemeSettings();

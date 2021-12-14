@@ -30,7 +30,6 @@ DEFINES += _UNICODE
 
 SOURCES += \
     autopath.cpp \
-    fortuneavenueapp.cpp \
     fortuneavenuegraphicsscene.cpp \
     fortunestreetdata.cpp \
     main.cpp \
@@ -48,7 +47,6 @@ HEADERS += \
     autopath.h \
     darkdetect.h \
     directions.h \
-    fortuneavenueapp.h \
     fortuneavenuegraphicsscene.h \
     fortunestreetdata.h \
     mainwindow.h \
