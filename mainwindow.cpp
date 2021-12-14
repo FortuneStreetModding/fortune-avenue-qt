@@ -122,6 +122,11 @@ MainWindow::MainWindow(QApplication& app)
     initialFile = exportFile();
 
     registerSquareSidebarEvents();
+
+    auto args = app.arguments();
+    if (args.size() >= 2) {
+        loadFile(args[1]);
+    }
 }
 
 bool MainWindow::eventFilter(QObject *obj, QEvent *event)
