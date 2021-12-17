@@ -112,7 +112,8 @@ void ScreenshotDialog::makeScreenshot(const QString &filename, BoardFile &boardF
         scene->addItem(new SquareItem(square));
     }
     QFileInfo info(filename);
-    QString screenshotFilename = info.path() + "/" + info.baseName() + ".webp";
+    QString ext = "." + ui->format->text();
+    QString screenshotFilename = info.path() + "/" + info.baseName() + ext;
     scene->clearSelection();
     scene->setSceneRect(rect);
     QImage image(scene->sceneRect().size().toSize(), QImage::Format_ARGB32);
@@ -133,31 +134,32 @@ void ScreenshotDialog::accept() {
     BoardFile boardFile4;
     QRectF rect(1600, 1600, -3200, -3200);
     QStringList filenames;
+    QString ext = "." + ui->format->text();
     if (ui->checkBox->isChecked()) {
         filename = ui->lineEdit->text();
         QFileInfo info(filename);
-        QString screenshotFilename = info.path() + "/" + info.baseName() + ".webp";
+        QString screenshotFilename = info.path() + "/" + info.baseName() + ext;
         filenames += screenshotFilename;
         readBoardFile(filename, boardFile, rect);
     }
     if (ui->checkBox_2->isChecked()) {
         filename2 = ui->lineEdit_2->text();
         QFileInfo info(filename2);
-        QString screenshotFilename = info.path() + "/" + info.baseName() + ".webp";
+        QString screenshotFilename = info.path() + "/" + info.baseName() + ext;
         filenames += screenshotFilename;
         readBoardFile(filename2, boardFile2, rect);
     }
     if (ui->checkBox_3->isChecked()) {
         filename3 = ui->lineEdit_3->text();
         QFileInfo info(filename3);
-        QString screenshotFilename = info.path() + "/" + info.baseName() + ".webp";
+        QString screenshotFilename = info.path() + "/" + info.baseName() + ext;
         filenames += screenshotFilename;
         readBoardFile(filename3, boardFile3, rect);
     }
     if (ui->checkBox_4->isChecked()) {
         filename4 = ui->lineEdit_4->text();
         QFileInfo info(filename4);
-        QString screenshotFilename = info.path() + "/" + info.baseName() + ".webp";
+        QString screenshotFilename = info.path() + "/" + info.baseName() + ext;
         filenames += screenshotFilename;
         readBoardFile(filename4, boardFile4, rect);
     }
