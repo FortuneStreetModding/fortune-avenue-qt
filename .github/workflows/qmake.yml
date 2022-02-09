@@ -85,7 +85,8 @@ jobs:
       run: |
         Copy-Item -Path "C:\Program Files\Git\mingw64\bin\libgcc_s_seh-1.dll"  -Destination ${{github.workspace}}/fortune-avenue-$env:VERSION_NAME
         Copy-Item -Path "C:\Program Files\Git\mingw64\bin\libstdc++-6.dll"     -Destination ${{github.workspace}}/fortune-avenue-$env:VERSION_NAME
-
+        Copy-Item -Path "C:\Program Files\Git\mingw64\bin\libwinpthread-1.dll" -Destination ${{github.workspace}}/fortune-avenue-$env:VERSION_NAME
+        
     - name: Archive
       uses: thedoctor0/zip-release@master
       with:
