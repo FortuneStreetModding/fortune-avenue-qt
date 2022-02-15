@@ -7,7 +7,7 @@
     <x>0</x>
     <y>0</y>
     <width>1280</width>
-    <height>739</height>
+    <height>768</height>
    </rect>
   </property>
   <property name="windowTitle">
@@ -1121,7 +1121,7 @@ No for Magmalice lift</string>
      <x>0</x>
      <y>0</y>
      <width>1280</width>
-     <height>20</height>
+     <height>24</height>
     </rect>
    </property>
    <widget class="QMenu" name="menuFile">
@@ -1150,6 +1150,7 @@ No for Magmalice lift</string>
      <string>Help</string>
     </property>
     <addaction name="actionFortune_Avenue_Help"/>
+    <addaction name="actionDistrict_Simulator"/>
    </widget>
    <widget class="QMenu" name="menuView">
     <property name="enabled">
@@ -1334,6 +1335,11 @@ No for Magmalice lift</string>
     <string>Shop Price Auto-Calc Function</string>
    </property>
   </action>
+  <action name="actionDistrict_Simulator">
+   <property name="text">
+    <string>District Simulator</string>
+   </property>
+  </action>
  </widget>
  <resources>
   <include location="fortune-avenue-port.qrc"/>
@@ -1345,7 +1351,7 @@ No for Magmalice lift</string>
     <bool>false</bool>
    </property>
   </buttongroup>
-  <buttongroup name="fromButtons"/>
   <buttongroup name="loopingMode"/>
+  <buttongroup name="fromButtons"/>
  </buttongroups>
 </ui>

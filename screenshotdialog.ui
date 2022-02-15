@@ -124,7 +124,7 @@
         <item>
          <widget class="QLineEdit" name="format">
           <property name="text">
-           <string>png</string>
+           <string>webp</string>
           </property>
          </widget>
         </item>

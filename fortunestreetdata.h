@@ -184,6 +184,8 @@ struct BoardFile {
     bool operator==(const BoardFile &other) const;
     bool operator!=(const BoardFile &other) const;
 
+    void verify(QStringList &errors, QStringList &warnings);
+
     friend QDataStream &operator>>(QDataStream &stream, BoardFile &data);
     friend QDataStream &operator<<(QDataStream &stream, const BoardFile &data);
 private:

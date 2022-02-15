@@ -1,6 +1,8 @@
 #include "fortunestreetdata.h"
 #include "orderedmap.h"
 #include <QtMath>
+#include <QSet>
+#include <QIODevice>
 
 //#include <QDebug>
 
@@ -194,6 +196,103 @@ bool BoardFile::operator==(const BoardFile &other) const {
 
 bool BoardFile::operator!=(const BoardFile &other) const {
     return !(*this == other);
+}
+
+void BoardFile::verify(QStringList &errors, QStringList &warnings) {
+    QVector<int> districtCount(12);
+    int highestDistrict = -1;
+
+    if (boardData.squares.size() > 0 && boardData.squares[0].squareType != Bank) {
+        warnings << "There should be a bank at ID 0.";
+    }
+    if (boardData.squares.size() < 3) {
+        errors << "Board must have at least 3 squares.";
+    }
+    if (boardData.squares.size() > 85) {
+        errors << "Board must have max 85 squares.";
+    }
+    if (boardInfo.maxDiceRoll < 1 || boardInfo.maxDiceRoll > 9) {
+        errors << "Max. die roll must be between 1 and 9 inclusive.";
+    }
+    for (auto &square: boardData.squares) {
+        if (square.squareType == Property || square.squareType == VacantPlot) {
+            if (square.districtDestinationId >= 12) {
+                warnings << QString("Square %1 has district value %2. Maximum is 11.").arg(square.id).arg(square.districtDestinationId);
+            } else {
+                ++districtCount[square.districtDestinationId];
+                highestDistrict = qMax(highestDistrict, (int)square.districtDestinationId);
+            }
+        }
+        // ignore waypoints for one-way alleys
+        if (square.squareType == OneWayAlleyDoorA
+                || square.squareType == OneWayAlleyDoorB
+                || square.squareType == OneWayAlleyDoorC
+                || square.squareType == OneWayAlleyDoorD
+                || square.squareType == OneWayAlleySquare) {
+            continue;
+        }
+
+        QSet<quint8> destinations;
+        for (int i=0; i<4; ++i) {
+            if (square.waypoints[i].entryId > boardData.squares.size()) {
+                if (square.waypoints[i].entryId != 255) {
+                    errors << QString("Starting square of Waypoint %1 of Square %2 is Square %3 which does not exist")
+                              .arg(i+1).arg(square.id).arg(square.waypoints[i].entryId);
+                } else {
+                    // Since this waypoint has an entry point of 255,
+                    // we ignore it entirely.
+                    continue;
+                }
+            } else {
+                auto &otherSquare = boardData.squares[square.waypoints[i].entryId];
+                if (qAbs(square.positionX - otherSquare.positionX) > 96
+                        || qAbs(square.positionY - otherSquare.positionY) > 96) {
+                    warnings << QString("Starting square of Waypoint %1 of Square %2 is Square %3 which is too far")
+                              .arg(i+1).arg(square.id).arg(square.waypoints[i].entryId);
+                }
+            }
+            for (int j=0; j<3; ++j) {
+                auto dest = square.waypoints[i].destinations[j];
+                destinations.insert(dest);
+
+                if (dest > boardData.squares.size()) {
+                    if (dest != 255) {
+                        errors << QString("Destination square #%4 of Waypoint %1 of Square %2 is Square %3 which does not exist")
+                                  .arg(i+1).arg(square.id).arg(dest).arg(j+1);
+                    }
+                } else {
+                    auto &otherSquare = boardData.squares[dest];
+                    if (qAbs(square.positionX - otherSquare.positionX) > 96
+                            || qAbs(square.positionY - otherSquare.positionY) > 96) {
+                        warnings << QString("Destination square #%4 of Waypoint %1 of Square %2 is Square %3 which is too far")
+                                  .arg(i+1).arg(square.id).arg(dest).arg(j+1);
+                    }
+                    if (otherSquare.squareType == OneWayAlleySquare &&
+                            square.squareType != OneWayAlleyDoorA &&
+                            square.squareType != OneWayAlleyDoorB &&
+                            square.squareType != OneWayAlleyDoorC &&
+                            square.squareType != OneWayAlleyDoorD) {
+                        warnings << QString("Destination square #%4 of Waypoint %1 of Square %2 is Square %3 which is a One Way Alley Square")
+                                  .arg(i+1).arg(square.id).arg(dest).arg(j+1);
+                    }
+                }
+            }
+        }
+
+        destinations.remove(255);
+        if (destinations.size() > 4) {
+            errors << QString("Square %1 has %2 destinations, which is more than the maximum of 4.")
+                      .arg(square.id).arg(destinations.size());
+        }
+    }
+
+    for (int i=0; i<=highestDistrict; ++i) {
+        if (districtCount[i] == 0) {
+            errors << QString("Did you skip District %1 when assigning districts?").arg(i);
+        } else if (districtCount[i] > 6) {
+            errors << QString("District %1 has %2 shops which is more than the maximum of 6").arg(i).arg(districtCount[i]);
+        }
+    }
 }
 
 OrderedMap<QString, SquareType> textToSquareTypes = {

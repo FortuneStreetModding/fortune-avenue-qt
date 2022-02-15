@@ -4,6 +4,7 @@
 #include <QGraphicsScene>
 #include <QLineEdit>
 #include <QMainWindow>
+#include <QUndoStack>
 #include "fortuneavenuegraphicsscene.h"
 #include "fortunestreetdata.h"
 
@@ -25,6 +26,8 @@ private:
     QVector<QWidget *> waypointDests;
 
     FortuneAvenueGraphicsScene *scene;
+
+    QUndoStack *undoStack;
 
     int zoomPercent = 100;
     BoardFile initialFile;
