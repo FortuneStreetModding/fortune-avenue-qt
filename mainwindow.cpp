@@ -360,7 +360,6 @@ void MainWindow::loadFile(const BoardFile &file) {
     ui->menuView->setEnabled(true);
 
     ui->initialCash->setText(QString::number(file.boardInfo.initialCash));
-    ui->targetAmount->setText(QString::number(file.boardInfo.targetAmount));
     ui->baseSalary->setText(QString::number(file.boardInfo.baseSalary));
     ui->salaryIncrement->setText(QString::number(file.boardInfo.salaryIncrement));
     ui->maxDiceRoll->setText(QString::number(file.boardInfo.maxDiceRoll));
@@ -402,7 +401,6 @@ void MainWindow::loadFile(const BoardFile &file) {
 BoardFile MainWindow::exportFile() {
     BoardFile file;
     file.boardInfo.initialCash = ui->initialCash->text().toUShort();
-    file.boardInfo.targetAmount = ui->targetAmount->text().toUShort();
     file.boardInfo.baseSalary = ui->baseSalary->text().toUShort();
     file.boardInfo.salaryIncrement = ui->salaryIncrement->text().toUShort();
     file.boardInfo.maxDiceRoll = ui->maxDiceRoll->text().toUShort();
