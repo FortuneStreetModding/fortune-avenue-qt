@@ -198,6 +198,66 @@ bool BoardFile::operator!=(const BoardFile &other) const {
     return !(*this == other);
 }
 
+QSet<quint8> BoardFile::getDestinations(quint8 squareId) {
+    return getDestinations(255, squareId);
+}
+
+QSet<quint8> BoardFile::getDestinations(quint8 previousSquareId, quint8 squareId) {
+    QSet<quint8> destinations;
+    if(squareId >= 0 && squareId < boardData.squares.size() && previousSquareId >= 0 && (previousSquareId < boardData.squares.size() || previousSquareId == 255)) {
+        auto &square = boardData.squares.at(squareId);
+        for (int i=0; i<4; ++i) {
+            for (int j=0; j<3; ++j) {
+                if(square.waypoints[i].entryId == previousSquareId || previousSquareId == 255) {
+                    auto dest = square.waypoints[i].destinations[j];
+                    if (dest != 255) {
+                        destinations.insert(dest);
+                    }
+                }
+            }
+        }
+    }
+    return destinations;
+}
+
+int BoardFile::getPathsCount(quint8 previousSquareId, quint8 squareId, quint8 dice) {
+    if(dice == 0)
+        return 1;
+    auto destinations = getDestinations(previousSquareId, squareId);
+    int pathsCount = 0;
+    for(auto &dest : qAsConst(destinations)) {
+        if(dest < boardData.squares.size()) {
+             pathsCount += getPathsCount(squareId, dest, dice - 1);
+        }
+    }
+    return pathsCount;
+}
+
+int BoardFile::getPathsCount(quint8 squareId, quint8 dice) {
+    return getPathsCount(255, squareId, dice);
+}
+
+quint8 BoardFile::getSquareIdWithMaxPathsCount(quint8 dice) {
+    int maxPathsCount = 0;
+    quint8 squareIdWithMaxPathsCount = 255;
+    for (auto &square: qAsConst(boardData.squares)) {
+        int pathsCount = getPathsCount(square.id, dice);
+        if (pathsCount > maxPathsCount) {
+            maxPathsCount = pathsCount;
+            squareIdWithMaxPathsCount = square.id;
+        }
+    }
+    return squareIdWithMaxPathsCount;
+}
+
+int BoardFile::getTotalPathsCount(quint8 dice) {
+    int totalPathsCount = 0;
+    for (auto &square: qAsConst(boardData.squares)) {
+        totalPathsCount += getPathsCount(square.id, dice);
+    }
+    return totalPathsCount;
+}
+
 void BoardFile::verify(QStringList &errors, QStringList &warnings) {
     QVector<int> districtCount(12);
     int highestDistrict = -1;

@@ -780,6 +780,16 @@ void MainWindow::calcStockPrices() {
         result >>= 16;
         builder << QString("District %1: %2g").arg(char('A' + i)).arg(result);
     }
+    auto boardFile = exportFile();
+    int searchDepth = boardFile.boardData.squares.size() / 3;
+    if (searchDepth < 16)
+        searchDepth = 16;
+    if (searchDepth > 28)
+        searchDepth = 28;
+    auto maxPathSquareId = boardFile.getSquareIdWithMaxPathsCount(searchDepth);
+    auto maxPathCount = boardFile.getPathsCount(maxPathSquareId, searchDepth);
+    builder << QString("Max Path Count %1 in Square %2 with Search Depth of %3").arg(maxPathCount).arg(maxPathSquareId).arg(searchDepth);
+
     ui->stockPricesLabel->setText(builder.join("\n"));
 }
 
