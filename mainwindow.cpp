@@ -884,6 +884,7 @@ void MainWindow::calcStockPrices() {
         result >>= 16;
         builder << QString("District %1: %2g").arg(char('A' + i)).arg(result);
     }
+    builder << QString();
     int limit = 300;
     auto boardFile = exportFile();
     int searchDepth = maxPathSearchDepth;

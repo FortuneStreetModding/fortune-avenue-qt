@@ -7,7 +7,7 @@
     <x>0</x>
     <y>0</y>
     <width>1280</width>
-    <height>786</height>
+    <height>795</height>
    </rect>
   </property>
   <property name="windowTitle">
@@ -56,13 +56,6 @@
           </property>
          </spacer>
         </item>
-        <item row="26" column="0">
-         <widget class="QLabel" name="stockPricesLabel">
-          <property name="text">
-           <string/>
-          </property>
-         </widget>
-        </item>
         <item row="0" column="0" colspan="2">
          <widget class="QWidget" name="subBoardEdit" native="true">
           <property name="enabled">
@@ -81,48 +74,60 @@
            <property name="bottomMargin">
             <number>0</number>
            </property>
-           <item row="1" column="1">
-            <widget class="QLineEdit" name="baseSalary"/>
+           <item row="4" column="1">
+            <widget class="QLineEdit" name="maxDiceRoll"/>
            </item>
-           <item row="12" column="0">
-            <widget class="QLabel" name="label_25">
-             <property name="text">
-              <string>File Version</string>
-             </property>
-            </widget>
-           </item>
-           <item row="1" column="0">
-            <widget class="QLabel" name="label_5">
-             <property name="text">
-              <string>Base Salary</string>
-             </property>
-            </widget>
+           <item row="3" column="1">
+            <widget class="QLineEdit" name="salaryIncrement"/>
            </item>
            <item row="6" column="0" colspan="2">
-            <widget class="QRadioButton" name="loopingVertical">
+            <widget class="QRadioButton" name="loopingNone">
              <property name="text">
-              <string>Vertical</string>
+              <string>None</string>
              </property>
              <attribute name="buttonGroup">
               <string notr="true">loopingMode</string>
              </attribute>
             </widget>
            </item>
-           <item row="4" column="0" colspan="2">
-            <widget class="QLabel" name="label_8">
+           <item row="2" column="1">
+            <widget class="QLineEdit" name="baseSalary"/>
+           </item>
+           <item row="9" column="0" colspan="2">
+            <widget class="QPushButton" name="addSquare">
              <property name="text">
-              <string>Looping Mode</string>
+              <string>Add Square</string>
+             </property>
+             <property name="shortcut">
+              <string>Ctrl+E</string>
              </property>
             </widget>
            </item>
            <item row="3" column="0">
+            <widget class="QLabel" name="label_6">
+             <property name="text">
+              <string>Salary Increment</string>
+             </property>
+            </widget>
+           </item>
+           <item row="4" column="0">
             <widget class="QLabel" name="label_7">
              <property name="text">
               <string>Max. Dice Roll</string>
              </property>
             </widget>
            </item>
-           <item row="10" column="0">
+           <item row="1" column="1">
+            <widget class="QLineEdit" name="initialCash"/>
+           </item>
+           <item row="1" column="0">
+            <widget class="QLabel" name="label">
+             <property name="text">
+              <string>Initial Cash</string>
+             </property>
+            </widget>
+           </item>
+           <item row="11" column="0">
             <widget class="QCheckBox" name="snapToCheck">
              <property name="text">
               <string>Snap To:</string>
@@ -135,44 +140,21 @@
              </property>
             </widget>
            </item>
-           <item row="8" column="0" colspan="2">
-            <widget class="QPushButton" name="addSquare">
+           <item row="2" column="0">
+            <widget class="QLabel" name="label_5">
              <property name="text">
-              <string>Add Square</string>
-             </property>
-             <property name="shortcut">
-              <string>Ctrl+E</string>
+              <string>Base Salary</string>
              </property>
             </widget>
            </item>
-           <item row="0" column="1">
-            <widget class="QLineEdit" name="initialCash"/>
-           </item>
-           <item row="0" column="0">
-            <widget class="QLabel" name="label">
-             <property name="text">
-              <string>Initial Cash</string>
-             </property>
-            </widget>
-           </item>
-           <item row="3" column="1">
-            <widget class="QLineEdit" name="maxDiceRoll"/>
-           </item>
-           <item row="11" column="0" colspan="2">
+           <item row="12" column="0" colspan="2">
             <widget class="QPushButton" name="snapAll">
              <property name="text">
               <string>Snap All</string>
              </property>
             </widget>
            </item>
-           <item row="10" column="1">
-            <widget class="QLineEdit" name="snapTo">
-             <property name="text">
-              <string>16</string>
-             </property>
-            </widget>
-           </item>
-           <item row="7" column="0" colspan="2">
+           <item row="8" column="0" colspan="2">
             <widget class="QRadioButton" name="loopingVerticalHorizontal">
              <property name="text">
               <string>Vertical + Horizontal</string>
@@ -182,17 +164,31 @@
              </attribute>
             </widget>
            </item>
-           <item row="2" column="1">
-            <widget class="QLineEdit" name="salaryIncrement"/>
-           </item>
-           <item row="12" column="1">
-            <widget class="QLineEdit" name="fileVersion">
-             <property name="enabled">
-              <bool>false</bool>
+           <item row="5" column="0" colspan="2">
+            <widget class="QLabel" name="label_8">
+             <property name="text">
+              <string>Looping Mode</string>
              </property>
             </widget>
            </item>
-           <item row="9" column="0" colspan="2">
+           <item row="11" column="1">
+            <widget class="QLineEdit" name="snapTo">
+             <property name="text">
+              <string>16</string>
+             </property>
+            </widget>
+           </item>
+           <item row="7" column="0" colspan="2">
+            <widget class="QRadioButton" name="loopingVertical">
+             <property name="text">
+              <string>Vertical</string>
+             </property>
+             <attribute name="buttonGroup">
+              <string notr="true">loopingMode</string>
+             </attribute>
+            </widget>
+           </item>
+           <item row="10" column="0" colspan="2">
             <widget class="QPushButton" name="removeSquare">
              <property name="text">
               <string>Remove Square(s)</string>
@@ -202,58 +198,74 @@
              </property>
             </widget>
            </item>
-           <item row="5" column="0" colspan="2">
-            <widget class="QRadioButton" name="loopingNone">
-             <property name="text">
-              <string>None</string>
-             </property>
-             <attribute name="buttonGroup">
-              <string notr="true">loopingMode</string>
-             </attribute>
+           <item row="14" column="0" colspan="2">
+            <widget class="QWidget" name="autoPathCfg" native="true">
+             <layout class="QGridLayout" name="gridLayout_4">
+              <property name="leftMargin">
+               <number>0</number>
+              </property>
+              <property name="topMargin">
+               <number>0</number>
+              </property>
+              <property name="rightMargin">
+               <number>0</number>
+              </property>
+              <property name="bottomMargin">
+               <number>0</number>
+              </property>
+              <item row="1" column="0">
+               <widget class="QLabel" name="label_26">
+                <property name="text">
+                 <string>Autopath Range</string>
+                </property>
+               </widget>
+              </item>
+              <item row="2" column="1">
+               <widget class="QSpinBox" name="straightLineTolerance">
+                <property name="value">
+                 <number>20</number>
+                </property>
+               </widget>
+              </item>
+              <item row="2" column="0">
+               <widget class="QLabel" name="label_27">
+                <property name="text">
+                 <string>Straight-Line Tolerance</string>
+                </property>
+               </widget>
+              </item>
+              <item row="1" column="1">
+               <widget class="QSpinBox" name="autopathRange">
+                <property name="value">
+                 <number>64</number>
+                </property>
+               </widget>
+              </item>
+             </layout>
             </widget>
            </item>
-           <item row="2" column="0">
-            <widget class="QLabel" name="label_6">
+           <item row="13" column="0">
+            <widget class="QLabel" name="label_25">
              <property name="text">
-              <string>Salary Increment</string>
+              <string>File Version</string>
+             </property>
+            </widget>
+           </item>
+           <item row="13" column="1">
+            <widget class="QLineEdit" name="fileVersion">
+             <property name="enabled">
+              <bool>false</bool>
              </property>
             </widget>
            </item>
           </layout>
          </widget>
         </item>
-        <item row="1" column="0">
-         <widget class="QWidget" name="autoPathCfg" native="true">
-          <layout class="QFormLayout" name="autopathSettingsWidget">
-           <item row="0" column="0">
-            <widget class="QLabel" name="label_26">
-             <property name="text">
-              <string>Autopath Range</string>
-             </property>
-            </widget>
-           </item>
-           <item row="0" column="1">
-            <widget class="QSpinBox" name="autopathRange">
-             <property name="value">
-              <number>64</number>
-             </property>
-            </widget>
-           </item>
-           <item row="1" column="0">
-            <widget class="QLabel" name="label_27">
-             <property name="text">
-              <string>Straight-Line Tolerance</string>
-             </property>
-            </widget>
-           </item>
-           <item row="1" column="1">
-            <widget class="QSpinBox" name="straightLineTolerance">
-             <property name="value">
-              <number>20</number>
-             </property>
-            </widget>
-           </item>
-          </layout>
+        <item row="26" column="0">
+         <widget class="QLabel" name="stockPricesLabel">
+          <property name="text">
+           <string/>
+          </property>
          </widget>
         </item>
        </layout>
@@ -274,7 +286,7 @@
         </sizepolicy>
        </property>
        <property name="currentIndex">
-        <number>0</number>
+        <number>1</number>
        </property>
        <widget class="QWidget" name="info">
         <attribute name="title">
@@ -1076,9 +1088,16 @@ No for Magmalice lift</string>
           </widget>
          </item>
          <item>
+          <widget class="QLabel" name="label_29">
+           <property name="text">
+            <string/>
+           </property>
+          </widget>
+         </item>
+         <item alignment="Qt::AlignHCenter">
           <widget class="QLabel" name="label_3">
            <property name="text">
-            <string>Connect with previously selected square</string>
+            <string>Connect selected squares</string>
            </property>
           </widget>
          </item>
@@ -1100,7 +1119,7 @@ No for Magmalice lift</string>
                   </sizepolicy>
                  </property>
                  <property name="text">
-                  <string>Connect --&gt;</string>
+                  <string>-- Connect --&gt;</string>
                  </property>
                 </widget>
                </item>
@@ -1113,7 +1132,7 @@ No for Magmalice lift</string>
                   </sizepolicy>
                  </property>
                  <property name="text">
-                  <string>&lt;-- Connect</string>
+                  <string>&lt;-- Connect --</string>
                  </property>
                 </widget>
                </item>
