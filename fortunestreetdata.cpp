@@ -142,6 +142,9 @@ QDataStream &operator>>(QDataStream &stream, BoardFile &data) {
     if (data.boardInfo.versionFlag >= 2) {
         stream >> data.boardInfo.autopathRange >> data.boardInfo.straightLineTolerance;
     }
+    if (data.boardInfo.versionFlag >= 3) {
+        stream >> data.boardInfo.useAdvancedAutoPath;
+    }
     return stream;
 }
 
@@ -155,6 +158,9 @@ QDataStream &operator<<(QDataStream &stream, const BoardFile &data) {
     }
     if (data.boardInfo.versionFlag >= 2) {
         stream << data.boardInfo.autopathRange << data.boardInfo.straightLineTolerance;
+    }
+    if (data.boardInfo.versionFlag >= 3) {
+        stream << data.boardInfo.useAdvancedAutoPath;
     }
     return stream;
 }

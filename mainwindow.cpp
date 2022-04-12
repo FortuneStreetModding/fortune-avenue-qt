@@ -84,6 +84,7 @@ MainWindow::MainWindow(QApplication& app)
     connect(ui->actionNext, &QAction::triggered, this, &MainWindow::selectNext);
     connect(ui->actionPrevious, &QAction::triggered, this, &MainWindow::selectPrevious);
     connect(ui->actionSelectAll, &QAction::triggered, this, &MainWindow::selectAll);
+    connect(ui->actionUse_Advanced_Auto_Path, &QAction::triggered, this, &MainWindow::toggleAdvancedAutoPath);
 
     connect(ui->actionAuto_Calc_Custom_Function, &QAction::triggered, this, [&]() {
         bool ok;
@@ -276,6 +277,12 @@ void MainWindow::selectAll() {
     }
 }
 
+void MainWindow::toggleAdvancedAutoPath() {
+    bool visible = ui->actionUse_Advanced_Auto_Path->isChecked();
+    ui->autoPathCfg->setVisible(visible);
+    ui->autopathArrowsWidget->setVisible(visible);
+}
+
 void MainWindow::newFile() {
     setWindowFilePath("");
     loadFile(BoardFile(true));
@@ -371,16 +378,24 @@ void MainWindow::loadFile(const BoardFile &file) {
     for (auto &square: file.boardData.squares) {
         scene->addItem(new SquareItem(square));
     }
+    if(file.boardInfo.versionFlag >= 3) {
+        ui->actionUse_Advanced_Auto_Path->setChecked(file.boardInfo.useAdvancedAutoPath);
+    } else if (file.boardInfo.versionFlag > 0) {
+        ui->actionUse_Advanced_Auto_Path->setChecked(true);
+    } else if (file.boardInfo.versionFlag == 0) {
+        ui->actionUse_Advanced_Auto_Path->setChecked(false);
+    }
+    toggleAdvancedAutoPath();
 
-    if (file.boardInfo.versionFlag < 2) {
+    if (file.boardInfo.versionFlag < 3) {
         auto response = QMessageBox::question(
             this,
             "Open File",
-            QString("This file is version %1, but the latest version is version 2. Would you like to upgrade the file to the latest version?")
+            QString("This file is version %1, but the latest version is version 3. Would you like to upgrade the file to the latest version?")
                 .arg(file.boardInfo.versionFlag)
         );
         if (response == QMessageBox::Yes) {
-            ui->fileVersion->setText(QString::number(2));
+            ui->fileVersion->setText(QString::number(3));
 
             // VERSION 0 -> VERSION >= 1
             if (file.boardInfo.versionFlag < 1) {
@@ -416,6 +431,9 @@ BoardFile MainWindow::exportFile() {
     // VERSION 2
     file.boardInfo.autopathRange = ui->autopathRange->value();
     file.boardInfo.straightLineTolerance = ui->straightLineTolerance->value();
+
+    // VERSION 3
+    file.boardInfo.useAdvancedAutoPath = ui->actionUse_Advanced_Auto_Path->isChecked();
 
     return file;
 }
@@ -645,7 +663,7 @@ void MainWindow::registerSquareSidebarEvents() {
 
     connect(ui->resetPaths, &QPushButton::clicked, this, [&]() {
         auto selectedItems = scene->selectedItems();
-            for(auto selectedItem : qAsConst(selectedItems)) {
+        for(auto selectedItem : qAsConst(selectedItems)) {
             SquareItem *item = (SquareItem *)selectedItem;
             for (auto from: AutoPath::DIRECTIONS) {
                 for (auto to: AutoPath::DIRECTIONS) {
@@ -813,9 +831,13 @@ void MainWindow::verifyBoard() {
 
 void MainWindow::autoPath() {
     auto items = scene->squareItems();
-    for (auto item: qAsConst(items)) {
-        QMap<AutoPath::Direction, SquareItem *> touchingSquares = AutoPath::getTouchingSquares(item, items, ui->autopathRange->value(), ui->straightLineTolerance->value());
-        AutoPath::pathSquare(item, touchingSquares);
+    if(ui->actionUse_Advanced_Auto_Path->isChecked()) {
+        for (auto item: qAsConst(items)) {
+            QMap<AutoPath::Direction, SquareItem *> touchingSquares = AutoPath::getTouchingSquares(item, items, ui->autopathRange->value(), ui->straightLineTolerance->value());
+            AutoPath::pathSquare(item, touchingSquares);
+        }
+    } else {
+        AutoPath::kruskalDfsAutoPathAlgorithm(qAsConst(items));
     }
     QMessageBox::information(this, "Auto-pathing", "Auto-pathed entire map");
     updateSquareSidebar();

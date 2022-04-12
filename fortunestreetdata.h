@@ -145,9 +145,10 @@ struct BoardInfo {
     quint16 salaryIncrement = 100;
     quint16 maxDiceRoll = 6;
     LoopingMode galaxyStatus = None;
-    quint32 versionFlag = 2;
+    quint32 versionFlag = 3;
     quint16 autopathRange = 64;
     quint16 straightLineTolerance = 20;
+    bool useAdvancedAutoPath = false;
 
     friend QDataStream &operator>>(QDataStream &stream, BoardInfo &data);
     friend QDataStream &operator<<(QDataStream &stream, const BoardInfo &data);

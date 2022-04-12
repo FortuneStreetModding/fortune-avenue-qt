@@ -67,6 +67,7 @@ private:
     void selectNext();
     void selectPrevious();
     void selectAll();
+    void toggleAdvancedAutoPath();
     void clearWaypoint(SquareItem *item, int waypointId);
 
 protected:
