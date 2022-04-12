@@ -26,15 +26,19 @@ private:
     QVector<QWidget *> waypointDests;
 
     FortuneAvenueGraphicsScene *scene;
+    FortuneAvenueGraphicsScene *square1Scene;
+    FortuneAvenueGraphicsScene *square2Scene;
 
     QUndoStack *undoStack;
 
     int zoomPercent = 100;
     BoardFile initialFile;
-    int previouslyVisitedSquareId;
+    int previouslyVisitedSquareId = -1;
     const QString defaultPriceFunction = QString("x * ( -0.15 * 0.2^(x/200) + 0.2 )");
     QString priceFunction = defaultPriceFunction;
 
+    void connectSquares(bool previousToCurrent, bool currentToPrevious);
+    QPair<SquareItem*,SquareItem*> getPreviousAndCurrentSquare();
     int calcShopPriceFromValue(const QString &function, int value);
     void loadFile(const QString &fname);
     void loadFile(const BoardFile &file);

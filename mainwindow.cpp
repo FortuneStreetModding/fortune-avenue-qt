@@ -23,6 +23,8 @@
 MainWindow::MainWindow(QApplication& app)
     : QMainWindow(), ui(new Ui::MainWindow),
       scene(new FortuneAvenueGraphicsScene(-1600 + 32, -1600 + 32, 3200, 3200, this)),
+      square1Scene(new FortuneAvenueGraphicsScene(0,0,64,64,this)),
+      square2Scene(new FortuneAvenueGraphicsScene(0,0,64,64,this)),
       undoStack(new QUndoStack(this))
 {
     app.installEventFilter(this);
@@ -31,6 +33,9 @@ MainWindow::MainWindow(QApplication& app)
     waypointDests = {ui->waypoint1Dests, ui->waypoint2Dests, ui->waypoint3Dests, ui->waypoint4Dests};
     ui->graphicsView->setScene(scene);
     ui->graphicsView->centerOn(32, 32);
+    ui->squareItemView1->setScene(square1Scene);
+    ui->squareItemView2->setScene(square2Scene);
+
     ui->loopingMode->setId(ui->loopingNone, LoopingMode::None);
     ui->loopingMode->setId(ui->loopingVertical, LoopingMode::Vertical);
     ui->loopingMode->setId(ui->loopingVerticalHorizontal, LoopingMode::Both);
@@ -174,24 +179,32 @@ void MainWindow::updateZoom() {
     ui->statusbar->showMessage(QString("Zoom: %1%").arg(zoomPercent));
 }
 
+QPair<SquareItem*,SquareItem*> MainWindow::getPreviousAndCurrentSquare() {
+    SquareItem *previous = nullptr;
+    SquareItem *current = nullptr;
+    for(auto& item : scene->items()) {
+        SquareItem *squareItem = (SquareItem*) item;
+        if(squareItem->getData().id == previouslyVisitedSquareId) {
+            previous = squareItem;
+            for(auto& selectedItem : scene->selectedItems()) {
+                SquareItem *selectedSquareItem = (SquareItem*) selectedItem;
+                if(selectedSquareItem->getData().id != previouslyVisitedSquareId) {
+                    current = selectedSquareItem;
+                }
+            }
+            break;
+        }
+    }
+    return QPair<SquareItem*,SquareItem*>(previous, current);
+}
+
+
 void MainWindow::followWaypoint(int destinationId) {
     auto selectedItems = scene->selectedItems();
     if (selectedItems.size() == 2) {
-        SquareItem *previous = nullptr;
-        SquareItem *current = nullptr;
-        for(auto& item : scene->items()) {
-            SquareItem *squareItem = (SquareItem*) item;
-            if(squareItem->getData().id == previouslyVisitedSquareId) {
-                previous = squareItem;
-                for(auto& selectedItem : scene->selectedItems()) {
-                    SquareItem *selectedSquareItem = (SquareItem*) selectedItem;
-                    if(selectedSquareItem->getData().id != previouslyVisitedSquareId) {
-                        current = selectedSquareItem;
-                    }
-                }
-                break;
-            }
-        }
+        auto previousAndCurrentSquare = getPreviousAndCurrentSquare();
+        SquareItem *previous = previousAndCurrentSquare.first;
+        SquareItem *current = previousAndCurrentSquare.second;
         if(previous != nullptr && current != nullptr) {
             previouslyVisitedSquareId = current->getData().id;
             for(auto &waypoint : current->getData().waypoints) {
@@ -496,6 +509,39 @@ void MainWindow::updateSquareSidebar() {
             ui->id->setText("");
         }
     }
+    square1Scene->clear();
+    square2Scene->clear();
+    if((selectedItems.size() == 1 || selectedItems.size() == 2) && previouslyVisitedSquareId != -1 && previouslyVisitedSquareId < scene->squareItems().size()) {
+        ui->connectSquares->setEnabled(true);
+        auto previousAndCurrentSquare = getPreviousAndCurrentSquare();
+        SquareItem *previous = previousAndCurrentSquare.first;
+        SquareItem *current = previousAndCurrentSquare.second;
+        if(selectedItems.size() == 2) {
+            SquareItem *item0 = (SquareItem *)selectedItems[0];
+            SquareItem *item1 = (SquareItem *)selectedItems[1];
+            if(current == item0) {
+                previous = item1;
+            } else if(current == item1) {
+                previous = item0;
+            } else {
+                current = item1;
+                previous = item0;
+            }
+        }
+        if(previous != nullptr) {
+            SquareData &p = previous->getData();
+            square1Scene->addItem(new SquareItem(SquareData(p.id, p.squareType, p.districtDestinationId, p.value, p.price)));
+        }
+        if(current != nullptr) {
+            SquareData &c = current->getData();
+            square2Scene->addItem(new SquareItem(SquareData(c.id, c.squareType, c.districtDestinationId, c.value, c.price)));
+        }
+        if(previous != nullptr && current != nullptr) {
+            qDebug() << QString("Selected: %1 and %2").arg(QString::number(previous->getData().id)).arg(QString::number(current->getData().id));
+        }
+    } else {
+        ui->connectSquares->setEnabled(false);
+    }
     calcStockPrices();
 }
 
@@ -516,6 +562,32 @@ int MainWindow::calcShopPriceFromValue(const QString &function, int value) {
     if(price < 0)
         return 0;
     return price;
+}
+
+void MainWindow::connectSquares(bool previousToCurrent, bool currentToPrevious) {
+    auto items1 = ui->squareItemView1->items();
+    auto items2 = ui->squareItemView2->items();
+    if(items1.size() > 0 && items2.size() > 0) {
+        SquareItem *previous = (SquareItem *)items1.first();
+        SquareItem *current = (SquareItem *)items2.first();
+        int previousId = previous->getData().id;
+        int currentId = current->getData().id;
+        for(auto &item : scene->items()) {
+            SquareItem *squareItem = (SquareItem *)item;
+            if(squareItem->getData().id == previousId) {
+                previous = squareItem;
+            }
+            if(squareItem->getData().id == currentId) {
+                current = squareItem;
+            }
+        }
+        if(previousToCurrent)
+            AutoPath::connect(previous->getData(), current->getData());
+        if(currentToPrevious)
+            AutoPath::connect(current->getData(), previous->getData());
+        previous->update();
+        current->update();
+    }
 }
 
 void MainWindow::registerSquareSidebarEvents() {
@@ -609,6 +681,9 @@ void MainWindow::registerSquareSidebarEvents() {
     connect(ui->clearWaypoint3, &QPushButton::clicked, this, [&](bool) { updateSquare([&](SquareItem *item) { clearWaypoint(item, 2); }); });
     connect(ui->clearWaypoint4, &QPushButton::clicked, this, [&](bool) { updateSquare([&](SquareItem *item) { clearWaypoint(item, 3); }); });
     connect(ui->sortAllWaypoints, &QPushButton::clicked, this, [&](bool) { updateSquare([&](SquareItem *item) { AutoPath::sortWaypoints(item); }); });
+    connect(ui->connectSquareItem1_2, &QPushButton::clicked, this, [&](bool) { connectSquares(true, false); });
+    connect(ui->connectSquareItem2_1, &QPushButton::clicked, this, [&](bool) { connectSquares(false, true); });
+    connect(ui->connectSquareItemBi, &QPushButton::clicked, this, [&](bool) { connectSquares(true, true); });
 
     ui->fromButtons->setId(ui->from_northwest, AutoPath::Northwest);
     ui->fromButtons->setId(ui->from_north, AutoPath::North);
@@ -815,7 +890,10 @@ void MainWindow::calcStockPrices() {
     } else {
         maxPathCountStr = QString::number(maxPathCount);
     }
-    builder << QString("Max Path Count %1 in Square %2 with Search Depth of %3").arg(maxPathCountStr).arg(maxPathSquareId).arg(searchDepth);
+    if(maxPathSquareId != 255)
+        builder << QString("Max Path Count %1 in Square %2 with Search Depth of %3").arg(maxPathCountStr).arg(maxPathSquareId).arg(searchDepth);
+    else
+        builder << QString();
 
     searchDepth = boardFile.boardInfo.maxDiceRoll;
     result = AutoPath::getSquareIdWithMaxPathsCount(qAsConst(items), searchDepth, limit);
@@ -826,7 +904,10 @@ void MainWindow::calcStockPrices() {
     } else {
         maxPathCountStr = QString::number(maxPathCount);
     }
-    builder << QString("Max Path Count %1 in Square %2 with Search Depth of %3").arg(maxPathCountStr).arg(maxPathSquareId).arg(searchDepth);
+    if(maxPathSquareId != 255)
+        builder << QString("Max Path Count %1 in Square %2 with Search Depth of %3").arg(maxPathCountStr).arg(maxPathSquareId).arg(searchDepth);
+    else
+        builder << QString();
 
     ui->stockPricesLabel->setText(builder.join("\n"));
 }

@@ -85,6 +85,13 @@ struct SquareData {
         }
     }
 
+    SquareData(quint8 id, SquareType squareType, quint8 districtDestinationId, quint16 value, quint16 price) : id(id) {
+        this->squareType = squareType;
+        this->districtDestinationId = districtDestinationId;
+        this->value = value;
+        this->price = price;
+    }
+
     quint8 id;
     SquareType squareType = Property;
     qint16 positionX = 0;
