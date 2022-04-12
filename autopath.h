@@ -15,7 +15,7 @@ bool hasCycle_(QVector<QPair<double, QPair<int, int>>> &edges, QVector<bool> mar
 bool hasCycle(QVector<QPair<double, QPair<int, int>>> edges, int nodeCount, int maxCycleLength);
 bool canConnectSquareTypes(SquareType squareType1, SquareType squareType2);
 bool isTransportingSquareType(SquareType squareType);
-void kruskalDfsAutoPathAlgorithm(const QVector<SquareItem *> &squares, int manhattanDistance);
+void kruskalDfsAutoPathAlgorithm(const QVector<SquareItem *> &squares);
 }
 
 #endif // AUTOPATH_H

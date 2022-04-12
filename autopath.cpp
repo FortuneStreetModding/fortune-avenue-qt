@@ -323,7 +323,8 @@ void connect(SquareData &square1, SquareData &square2) {
     }
 }
 
-void kruskalDfsAutoPathAlgorithm(const QVector<SquareItem *> &squares, int maxManhattanDistance) {
+void kruskalDfsAutoPathAlgorithm(const QVector<SquareItem *> &squares) {
+    int maxManhattanDistance = 80;
     // Construct edges first
     QVector<QPair<double, QPair<int, int>>> edges;
     for (int i=0; i<squares.size(); ++i) {
