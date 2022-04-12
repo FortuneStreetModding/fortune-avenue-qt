@@ -17,6 +17,7 @@
 #include "squareitem.h"
 #include "util.h"
 #include "screenshotdialog.h"
+#include "autoassignshopmodelsdialog.h"
 #include "muParser.h"
 
 MainWindow::MainWindow(QApplication& app)
@@ -864,6 +865,12 @@ void MainWindow::autoPath() {
 
 void MainWindow::screenshot() {
     ScreenshotDialog dialog(windowFilePath(), this);
+    dialog.exec();
+}
+
+void MainWindow::autoAssignShopModels() {
+    auto items = scene->squareItems();
+    AutoAssignShopModelsDialog dialog(this, &items);
     dialog.exec();
 }
 

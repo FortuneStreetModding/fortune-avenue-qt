@@ -29,6 +29,7 @@ DEFINES += _UNICODE
 #DEFINES += QT_DISABLE_DEPRECATED_BEFORE=0x060000    # disables all the APIs deprecated before Qt 6.0.0
 
 SOURCES += \
+    autoassignshopmodelsdialog.cpp \
     autopath.cpp \
     fortuneavenuegraphicsscene.cpp \
     fortunestreetdata.cpp \
@@ -44,6 +45,7 @@ SOURCES += \
     squareitem.cpp
 
 HEADERS += \
+    autoassignshopmodelsdialog.h \
     autopath.h \
     darkdetect.h \
     directions.h \
@@ -57,6 +59,7 @@ HEADERS += \
     util.h
 
 FORMS += \
+    autoassignshopmodelsdialog.ui \
     mainwindow.ui \
     screenshotdialog.ui
 

@@ -68,6 +68,7 @@ private:
     void selectPrevious();
     void selectAll();
     void toggleAdvancedAutoPath();
+    void autoAssignShopModels();
     void clearWaypoint(SquareItem *item, int waypointId);
 
 protected:
