@@ -156,9 +156,7 @@ void enumerateAutopathingRules(SquareItem *square, const QMap<Direction, SquareI
 bool hasCycle_(QVector<QPair<double, QPair<int, int>>> &edges, QVector<bool> marked, int currentPathLength, int currentNode, int startNode, int maxCycleLength) {
     marked[currentNode] = true;
 
-    if (currentPathLength > 1 && currentPathLength <= maxCycleLength) {
-        marked[currentNode] = false;
-
+    if (currentPathLength + 1 >= maxCycleLength) {
         // check if we can reach the start node again
         for(auto edge : edges) {
             int u = edge.second.first;
@@ -173,6 +171,7 @@ bool hasCycle_(QVector<QPair<double, QPair<int, int>>> &edges, QVector<bool> mar
         return false;
     }
 
+    // check with all possible neighbors of currentNode
     for(auto edge : edges) {
         int u = edge.second.first;
         int v = edge.second.second;
@@ -191,6 +190,7 @@ bool hasCycle_(QVector<QPair<double, QPair<int, int>>> &edges, QVector<bool> mar
 }
 
 bool hasCycle(QVector<QPair<double, QPair<int, int>>> edges, int nodeCount, int maxCycleLength) {
+    // marked nodes we do not need to check again
     QVector<bool> marked(nodeCount);
 
     for (int i = 0; i < nodeCount - (maxCycleLength - 1); i++) {
@@ -225,7 +225,29 @@ bool isConnected(SquareData &square1, SquareData &square2) {
     return false;
 }
 
+bool canConnectSquareTypes(SquareType squareType1, SquareType squareType2) {
+    switch(squareType1) {
+    case OneWayAlleyDoorA:
+    case OneWayAlleyDoorB:
+    case OneWayAlleyDoorC:
+    case OneWayAlleyDoorD:
+        return squareType2 != LiftMagmaliceSquareStart && squareType2 != MagmaliceSquare && squareType2 != LiftSquareEnd;
+    case LiftMagmaliceSquareStart:
+        return squareType2 == MagmaliceSquare || squareType2 == LiftSquareEnd || !isTransportingSquareType(squareType2);
+    case MagmaliceSquare:
+        return squareType2 == LiftMagmaliceSquareStart || !isTransportingSquareType(squareType2);
+    case OneWayAlleySquare:
+    case LiftSquareEnd:
+        return !isTransportingSquareType(squareType2);
+    default:
+        return squareType2 != OneWayAlleySquare && squareType2 != LiftSquareEnd;
+    }
+}
+
 void connect(SquareData &square1, SquareData &square2) {
+    if(!canConnectSquareTypes(square1.squareType, square2.squareType)) {
+        return;
+    }
     // Find a free entry id in square 2
     int square2FreeEntryId = -1;
     for (int i=0; i<4; ++i) {
@@ -267,7 +289,9 @@ void connect(SquareData &square1, SquareData &square2) {
             // do not add the destination if it already exists
             auto waypoint = square1.waypoints[i];
             bool square2IdInDestinations = std::any_of(std::begin(waypoint.destinations), std::end(waypoint.destinations), [&](int i) { return i == square2.id; });
-            if(!square2IdInDestinations) {
+            if(square2IdInDestinations) {
+                 hasAdded = true;
+            } else {
                 for(int j=0; j<3; j++) {
                     int destination = square1.waypoints[i].destinations[j];
                     if(destination == 255) {
@@ -299,7 +323,7 @@ void connect(SquareData &square1, SquareData &square2) {
     }
 }
 
-void kruskalDfsAutoPathAlgorithm(const QVector<SquareItem *> &squares, int manhattanDistance) {
+void kruskalDfsAutoPathAlgorithm(const QVector<SquareItem *> &squares, int maxManhattanDistance) {
     // Construct edges first
     QVector<QPair<double, QPair<int, int>>> edges;
     for (int i=0; i<squares.size(); ++i) {
@@ -312,12 +336,11 @@ void kruskalDfsAutoPathAlgorithm(const QVector<SquareItem *> &squares, int manha
                     && isTransportingSquareType(square.squareType)
                     && isTransportingSquareType(otherSquare.squareType);
 
-            if (isTransportingEdge || (qAbs(square.positionX - otherSquare.positionX) <= manhattanDistance
-                    && qAbs(square.positionY - otherSquare.positionY) <= manhattanDistance)) {
+            if (isTransportingEdge || (qAbs(square.positionX - otherSquare.positionX) <= maxManhattanDistance
+                    && qAbs(square.positionY - otherSquare.positionY) <= maxManhattanDistance)) {
                 auto xDistance = square.positionX - otherSquare.positionX;
                 auto yDistance = square.positionY - otherSquare.positionY;
                 auto euclideanDistance = qSqrt(xDistance*xDistance + yDistance*yDistance);
-
                 edges.append({euclideanDistance, {square.id, otherSquare.id}});
             }
         }
@@ -334,7 +357,7 @@ void kruskalDfsAutoPathAlgorithm(const QVector<SquareItem *> &squares, int manha
         // path longer than 4
         auto autoPathCandidate(autoPathEdges);
         autoPathCandidate.append(edge);
-        if (!hasCycle(autoPathCandidate, squares.size(), 4))
+        if (!hasCycle(autoPathCandidate, squares.size(), 3))
         {
             autoPathEdges = autoPathCandidate;
         }
@@ -359,6 +382,18 @@ void kruskalDfsAutoPathAlgorithm(const QVector<SquareItem *> &squares, int manha
         auto& otherSquare = ((SquareItem *)squares[v])->getData();
         connect(square, otherSquare);
         connect(otherSquare, square);
+    }
+
+    // Cleanup waypoints (set all destinations to 255 if entry id is still 255)
+    for (int i=0; i<squares.size(); ++i) {
+        auto &square = ((SquareItem *)squares[i])->getData();
+        for (auto &waypoint: square.waypoints) {
+            if (waypoint.entryId == 255) {
+                for (auto &dest: waypoint.destinations) {
+                    dest = 255;
+                }
+            }
+        }
     }
 
     // Sort waypoints

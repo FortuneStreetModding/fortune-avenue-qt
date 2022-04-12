@@ -13,6 +13,7 @@ void enumerateAutopathingRules(SquareItem *square, const QMap<Direction, SquareI
 void sortWaypoints(SquareItem *square);
 bool hasCycle_(QVector<QPair<double, QPair<int, int>>> &edges, QVector<bool> marked, int currentCycleLength, int currentNode, int startNode, int maxCycleLength);
 bool hasCycle(QVector<QPair<double, QPair<int, int>>> edges, int nodeCount, int maxCycleLength);
+bool canConnectSquareTypes(SquareType squareType1, SquareType squareType2);
 bool isTransportingSquareType(SquareType squareType);
 void kruskalDfsAutoPathAlgorithm(const QVector<SquareItem *> &squares, int manhattanDistance);
 }
