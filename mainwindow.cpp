@@ -92,6 +92,7 @@ MainWindow::MainWindow(QApplication& app)
     connect(ui->actionPrevious, &QAction::triggered, this, &MainWindow::selectPrevious);
     connect(ui->actionSelectAll, &QAction::triggered, this, &MainWindow::selectAll);
     connect(ui->actionUse_Advanced_Auto_Path, &QAction::triggered, this, &MainWindow::toggleAdvancedAutoPath);
+    toggleAdvancedAutoPath();
 
     connect(ui->actionAuto_Calc_Custom_Function, &QAction::triggered, this, [&]() {
         bool ok;
@@ -548,9 +549,6 @@ void MainWindow::updateSquareSidebar() {
             SquareData &c = current->getData();
             square2Scene->addItem(new SquareItem(SquareData(c.id, c.squareType, c.districtDestinationId, c.value, c.price)));
         }
-        if(previous != nullptr && current != nullptr) {
-            qDebug() << QString("Selected: %1 and %2").arg(QString::number(previous->getData().id)).arg(QString::number(current->getData().id));
-        }
     } else {
         ui->connectSquares->setEnabled(false);
     }
@@ -906,9 +904,9 @@ void MainWindow::calcStockPrices() {
         maxPathCountStr = QString::number(maxPathCount);
     }
     if(maxPathSquareId != 255) {
-        builder << QString("Max Path Count: %1").arg(maxPathCountStr);
-        builder << QString("Max Path Square: %1").arg(maxPathSquareId);
         builder << QString("Search Depth: %1").arg(searchDepth);
+        builder << QString("Max Paths Square ID: %1").arg(maxPathSquareId);
+        builder << QString("Possible Paths: %1").arg(maxPathCountStr);
         if(maxPathCount > 150) {
             builder << QString("Crash inevitable!");
         } else if(maxPathCount > 100) {
