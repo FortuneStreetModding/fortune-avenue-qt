@@ -16,6 +16,11 @@ bool hasCycle(QVector<QPair<double, QPair<int, int>>> edges, int nodeCount, int 
 bool canConnectSquareTypes(SquareType squareType1, SquareType squareType2);
 bool isTransportingSquareType(SquareType squareType);
 void kruskalDfsAutoPathAlgorithm(const QVector<SquareItem *> &squares);
-}
+QSet<quint8> getDestinations(const QVector<SquareItem *> &squares, quint8 squareId);
+QSet<quint8> getDestinations(const QVector<SquareItem *> &squares, quint8 previousSquareId, quint8 squareId);
+void getPathsCount(quint8 previousSquareId, quint8 squareId, quint8 dice, int &pathsCount, int limit);
+int getPathsCount(const QVector<SquareItem *> &squares, quint8 squareId, quint8 dice, int limit);
+QPair<int, int> getSquareIdWithMaxPathsCount(const QVector<SquareItem *> &squares, quint8 dice, int limit);
 
+}
 #endif // AUTOPATH_H

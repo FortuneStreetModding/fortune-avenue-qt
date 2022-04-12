@@ -415,4 +415,61 @@ void kruskalDfsAutoPathAlgorithm(const QVector<SquareItem *> &squares) {
     }
 }
 
+QSet<quint8> getDestinations(const QVector<SquareItem *> &squares, quint8 squareId) {
+    return getDestinations(squares, 255, squareId);
+}
+
+QSet<quint8> getDestinations(const QVector<SquareItem *> &squares, quint8 previousSquareId, quint8 squareId) {
+    QSet<quint8> destinations;
+    if(squareId < squares.size() && (previousSquareId < squares.size() || previousSquareId == 255)) {
+        auto &square = ((SquareItem *)squares[squareId])->getData();
+        for (int i=0; i<4; ++i) {
+            for (int j=0; j<3; ++j) {
+                if(square.waypoints[i].entryId == previousSquareId || previousSquareId == 255) {
+                    auto dest = square.waypoints[i].destinations[j];
+                    if (dest != 255) {
+                        destinations.insert(dest);
+                    }
+                }
+            }
+        }
+    }
+    return destinations;
+}
+
+void getPathsCount(const QVector<SquareItem *> &squares, quint8 previousSquareId, quint8 squareId, quint8 dice, int &pathsCount, int limit) {
+    if(dice == 0) {
+        pathsCount++;
+        return;
+    }
+    if(pathsCount > limit)
+        return;
+    auto destinations = getDestinations(squares, previousSquareId, squareId);
+    for(auto &dest : qAsConst(destinations)) {
+        if(dest < squares.size()) {
+             getPathsCount(squares, squareId, dest, dice - 1, pathsCount, limit);
+        }
+    }
+}
+
+int getPathsCount(const QVector<SquareItem *> &squares, quint8 squareId, quint8 dice, int limit) {
+    int pathsCount = 0;
+    getPathsCount(squares, 255, squareId, dice, pathsCount, limit);
+    return pathsCount;
+}
+
+QPair<int, int> getSquareIdWithMaxPathsCount(const QVector<SquareItem *> &squares, quint8 dice, int limit) {
+    int maxPathsCount = 0;
+    quint8 squareIdWithMaxPathsCount = 255;
+    for (int i=0; i<squares.size(); ++i) {
+        auto &square = ((SquareItem *)squares[i])->getData();
+        int pathsCount = getPathsCount(squares, square.id, dice, limit);
+        if (pathsCount > maxPathsCount) {
+            maxPathsCount = pathsCount;
+            squareIdWithMaxPathsCount = square.id;
+        }
+    }
+    return QPair<int, int>(squareIdWithMaxPathsCount, maxPathsCount);
+}
+
 }

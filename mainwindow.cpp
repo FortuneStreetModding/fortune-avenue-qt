@@ -798,15 +798,34 @@ void MainWindow::calcStockPrices() {
         result >>= 16;
         builder << QString("District %1: %2g").arg(char('A' + i)).arg(result);
     }
+    int limit = 300;
     auto boardFile = exportFile();
     int searchDepth = boardFile.boardData.squares.size() / 3;
     if (searchDepth < 16)
         searchDepth = 16;
     if (searchDepth > 28)
         searchDepth = 28;
-    auto maxPathSquareId = boardFile.getSquareIdWithMaxPathsCount(searchDepth);
-    auto maxPathCount = boardFile.getPathsCount(maxPathSquareId, searchDepth);
-    builder << QString("Max Path Count %1 in Square %2 with Search Depth of %3").arg(maxPathCount).arg(maxPathSquareId).arg(searchDepth);
+    auto result = AutoPath::getSquareIdWithMaxPathsCount(qAsConst(items), searchDepth, limit);
+    auto maxPathSquareId = result.first;
+    auto maxPathCount = result.second;
+    QString maxPathCountStr;
+    if(maxPathCount>limit) {
+        maxPathCountStr = QString(">%1").arg(QString::number(limit));
+    } else {
+        maxPathCountStr = QString::number(maxPathCount);
+    }
+    builder << QString("Max Path Count %1 in Square %2 with Search Depth of %3").arg(maxPathCountStr).arg(maxPathSquareId).arg(searchDepth);
+
+    searchDepth = boardFile.boardInfo.maxDiceRoll;
+    result = AutoPath::getSquareIdWithMaxPathsCount(qAsConst(items), searchDepth, limit);
+    maxPathSquareId = result.first;
+    maxPathCount = result.second;
+    if(maxPathCount>limit) {
+        maxPathCountStr = QString(">%1").arg(QString::number(limit));
+    } else {
+        maxPathCountStr = QString::number(maxPathCount);
+    }
+    builder << QString("Max Path Count %1 in Square %2 with Search Depth of %3").arg(maxPathCountStr).arg(maxPathSquareId).arg(searchDepth);
 
     ui->stockPricesLabel->setText(builder.join("\n"));
 }

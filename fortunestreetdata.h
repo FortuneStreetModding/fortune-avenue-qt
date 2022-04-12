@@ -186,13 +186,6 @@ struct BoardFile {
     bool operator!=(const BoardFile &other) const;
 
     void verify(QStringList &errors, QStringList &warnings);
-    QSet<quint8> getDestinations(quint8 squareId);
-    QSet<quint8> getDestinations(quint8 previousSquareId, quint8 squareId);
-    int getPathsCount(quint8 previousSquareId, quint8 squareId, quint8 dice);
-    int getPathsCount(quint8 squareId, quint8 dice);
-    int getTotalPathsCount(quint8 dice);
-    quint8 getSquareIdWithMaxPathsCount(quint8 dice);
-
 
     friend QDataStream &operator>>(QDataStream &stream, BoardFile &data);
     friend QDataStream &operator<<(QDataStream &stream, const BoardFile &data);
