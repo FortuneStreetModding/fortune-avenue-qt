@@ -368,14 +368,17 @@ bool MainWindow::saveFileAs() {
     }
 }
 
-void MainWindow::loadFile(const QString &fname) {
-    QFile file(fname);
+void MainWindow::loadFile(const QString &fpath) {
+    QFile file(fpath);
     if (file.open(QIODevice::ReadOnly)) {
         QDataStream stream(&file);
         BoardFile boardFile;
         stream >> boardFile;
         if (stream.status() != QDataStream::Status::ReadCorruptData) {
-            setWindowFilePath(fname);
+            setWindowFilePath(fpath);
+            QFileInfo fileInfo(file);
+            QString filename(fileInfo.fileName());
+            setWindowTitle(QString("Fortune Avenue %1.%2.%3 - %4").arg(VERSION_MAJOR).arg(VERSION_MINOR).arg(VERSION_BUILD).arg(filename));
             loadFile(boardFile);
         } else {
             goto badFile;
