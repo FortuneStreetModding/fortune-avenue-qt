@@ -33,6 +33,7 @@ SOURCES += \
     autopath.cpp \
     fortuneavenuegraphicsscene.cpp \
     fortunestreetdata.cpp \
+    hungarian.cpp \
     main.cpp \
     mainwindow.cpp \
     muparser/src/muParser.cpp \
@@ -51,6 +52,7 @@ HEADERS += \
     directions.h \
     fortuneavenuegraphicsscene.h \
     fortunestreetdata.h \
+    hungarian.h \
     mainwindow.h \
     orderedmap.h \
     screenshotdialog.h \

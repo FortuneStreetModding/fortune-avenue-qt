@@ -14,13 +14,15 @@ class AutoAssignShopModelsDialog : public QDialog
     Q_OBJECT
 
 public:
-    AutoAssignShopModelsDialog(QWidget *parent = nullptr, const QVector<SquareItem *> *squares = nullptr);
+    AutoAssignShopModelsDialog(QWidget *parent = nullptr, QVector<SquareItem *> *squares = nullptr, QString autoCalcFunction = "");
     ~AutoAssignShopModelsDialog();
     void accept();
 
 private:
     Ui::AutoAssignShopModelsDialog *ui;
-    const QVector<SquareItem *> *squares;
+    QVector<SquareItem *> *squares;
+    QString autoCalcFunction;
+    int calcShopPriceFromValue(int value);
 };
 
 #endif // AUTOASSIGNSHOPMODELSDIALOG_H

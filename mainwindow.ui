@@ -1273,7 +1273,7 @@ No for Magmalice lift</string>
    </widget>
    <widget class="QMenu" name="menuTools">
     <property name="enabled">
-     <bool>false</bool>
+     <bool>true</bool>
     </property>
     <property name="title">
      <string>Tools</string>
@@ -1281,6 +1281,7 @@ No for Magmalice lift</string>
     <addaction name="actionVerify_Board"/>
     <addaction name="actionScreenshot"/>
     <addaction name="actionAuto_Calc_Custom_Function"/>
+    <addaction name="actionAuto_Assign_Shop_Models"/>
     <addaction name="separator"/>
     <addaction name="actionAuto_Path"/>
     <addaction name="actionUse_Advanced_Auto_Path"/>
@@ -1497,6 +1498,11 @@ No for Magmalice lift</string>
    </property>
    <property name="text">
     <string>Use Advanced Auto-Path</string>
+   </property>
+  </action>
+  <action name="actionAuto_Assign_Shop_Models">
+   <property name="text">
+    <string>Auto-Assign Shop Models</string>
    </property>
   </action>
  </widget>

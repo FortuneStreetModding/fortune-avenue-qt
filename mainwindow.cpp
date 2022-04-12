@@ -70,6 +70,7 @@ MainWindow::MainWindow(QApplication& app)
     connect(ui->actionVerify_Board, &QAction::triggered, this, &MainWindow::verifyBoard);
     connect(ui->actionAuto_Path, &QAction::triggered, this, &MainWindow::autoPath);
     connect(ui->actionScreenshot, &QAction::triggered, this, &MainWindow::screenshot);
+    connect(ui->actionAuto_Assign_Shop_Models, &QAction::triggered, this, &MainWindow::autoAssignShopModels);
 
     connect(ui->actionFortune_Avenue_Help, &QAction::triggered, this, [&]() {
         QDesktopServices::openUrl(QUrl("https://github.com/FortuneStreetModding/fortunestreetmodding.github.io/wiki/Fortune-Avenue-User-Manual"));
@@ -257,7 +258,7 @@ void MainWindow::selectNext() {
     }
 }
 void MainWindow::selectPrevious() {
-    if(auto highestId = scene->squareItems().size() <= 0) {
+    if(scene->squareItems().size() <= 0) {
         return;
     }
     auto highestId = scene->squareItems().size() - 1;
@@ -951,8 +952,10 @@ void MainWindow::screenshot() {
 
 void MainWindow::autoAssignShopModels() {
     auto items = scene->squareItems();
-    AutoAssignShopModelsDialog dialog(this, &items);
+    AutoAssignShopModelsDialog dialog(this, &items, priceFunction);
     dialog.exec();
+    scene->update();
+    QCoreApplication::processEvents();
 }
 
 void MainWindow::updateDestinationUI() {
