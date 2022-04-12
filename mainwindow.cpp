@@ -908,17 +908,25 @@ void MainWindow::calcStockPrices() {
         maxPathCountStr = QString::number(maxPathCount);
     }
     if(maxPathSquareId != 255) {
-        builder << QString("Search Depth: %1").arg(searchDepth);
+        if(maxPathSearchDepth == 0) {
+            builder << QString("Search Depth: %1").arg(searchDepth);
+        } else {
+            builder << QString("Using Fixed Depth: %1").arg(searchDepth);
+        }
         builder << QString("Max Paths Square ID: %1").arg(maxPathSquareId);
         builder << QString("Possible Paths: %1").arg(maxPathCountStr);
-        if(maxPathCount > 150) {
-            builder << QString("Crash inevitable!");
-        } else if(maxPathCount > 100) {
-            builder << QString("Crash possible!");
-        } else if(maxPathCount > 70) {
-            builder << QString("Stuttering likely!");
+        if(maxPathSearchDepth == 0) {
+            if(maxPathCount > 150) {
+                builder << QString("Crash inevitable!");
+            } else if(maxPathCount > 90) {
+                builder << QString("Crash possible!");
+            } else if(maxPathCount > 70) {
+                builder << QString("Stuttering likely!");
+            } else {
+                builder << QString("Ok");
+            }
         } else {
-            builder << QString("Ok");
+            builder << QString("");
         }
     } else {
         builder << QString();
