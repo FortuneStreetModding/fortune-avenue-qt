@@ -225,27 +225,6 @@
         <item row="1" column="0">
          <widget class="QWidget" name="autoPathCfg" native="true">
           <layout class="QFormLayout" name="autopathSettingsWidget">
-           <property name="fieldGrowthPolicy">
-            <enum>QFormLayout::ExpandingFieldsGrow</enum>
-           </property>
-           <property name="rowWrapPolicy">
-            <enum>QFormLayout::DontWrapRows</enum>
-           </property>
-           <property name="labelAlignment">
-            <set>Qt::AlignLeading|Qt::AlignLeft|Qt::AlignVCenter</set>
-           </property>
-           <property name="formAlignment">
-            <set>Qt::AlignLeading|Qt::AlignLeft|Qt::AlignTop</set>
-           </property>
-           <property name="horizontalSpacing">
-            <number>8</number>
-           </property>
-           <property name="verticalSpacing">
-            <number>2</number>
-           </property>
-           <property name="topMargin">
-            <number>22</number>
-           </property>
            <item row="0" column="0">
             <widget class="QLabel" name="label_26">
              <property name="text">
@@ -1273,13 +1252,14 @@ No for Magmalice lift</string>
    </widget>
    <widget class="QMenu" name="menuTools">
     <property name="enabled">
-     <bool>true</bool>
+     <bool>false</bool>
     </property>
     <property name="title">
      <string>Tools</string>
     </property>
     <addaction name="actionVerify_Board"/>
     <addaction name="actionScreenshot"/>
+    <addaction name="actionSet_Max_Path_Search_Depth"/>
     <addaction name="actionAuto_Calc_Custom_Function"/>
     <addaction name="actionAuto_Assign_Shop_Models"/>
     <addaction name="separator"/>
@@ -1503,6 +1483,11 @@ No for Magmalice lift</string>
   <action name="actionAuto_Assign_Shop_Models">
    <property name="text">
     <string>Auto-Assign Shop Models</string>
+   </property>
+  </action>
+  <action name="actionSet_Max_Path_Search_Depth">
+   <property name="text">
+    <string>Set Max Path Search Depth</string>
    </property>
   </action>
  </widget>

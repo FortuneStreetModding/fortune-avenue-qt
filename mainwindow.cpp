@@ -113,6 +113,17 @@ MainWindow::MainWindow(QApplication& app)
         }
     });
 
+    connect(ui->actionSet_Max_Path_Search_Depth, &QAction::triggered, this, [&]() {
+        bool ok;
+        int newMaxPathSearchDepth = QInputDialog::getInt(this, "Enter Search Depth", "Enter the max path search depth.\n\n"
+                                                                                     "This is only for demonstration purposes and does not have any ingame effect.\n"
+                                                                                     "Sensible values are between 16 (small boards) and 28 (huge boards).\n\n"
+                                                                                     "Enter 0 to restore game default behavior which is max(squareCount/3,16)", maxPathSearchDepth, 0, 50, 1, &ok);
+        if (ok) {
+            maxPathSearchDepth = newMaxPathSearchDepth;
+        }
+    });
+
     connect(ui->addSquare, &QPushButton::clicked, this, &MainWindow::addSquare);
     connect(ui->removeSquare, &QPushButton::clicked, this, &MainWindow::removeSquare);
     connect(scene, &QGraphicsScene::changed, this, [&](const QList<QRectF> &) { updateSquareSidebar(); });
@@ -877,11 +888,14 @@ void MainWindow::calcStockPrices() {
     }
     int limit = 300;
     auto boardFile = exportFile();
-    int searchDepth = boardFile.boardData.squares.size() / 3;
-    if (searchDepth < 16)
-        searchDepth = 16;
-    if (searchDepth > 28)
-        searchDepth = 28;
+    int searchDepth = maxPathSearchDepth;
+    if(searchDepth == 0) {
+        searchDepth = boardFile.boardData.squares.size() / 3;
+        if (searchDepth < 16)
+            searchDepth = 16;
+        if (searchDepth > 28)
+            searchDepth = 28;
+    }
     auto result = AutoPath::getSquareIdWithMaxPathsCount(qAsConst(items), searchDepth, limit);
     auto maxPathSquareId = result.first;
     auto maxPathCount = result.second;
@@ -891,25 +905,25 @@ void MainWindow::calcStockPrices() {
     } else {
         maxPathCountStr = QString::number(maxPathCount);
     }
-    if(maxPathSquareId != 255)
-        builder << QString("Max Path Count %1 in Square %2 with Search Depth of %3").arg(maxPathCountStr).arg(maxPathSquareId).arg(searchDepth);
-    else
-        builder << QString();
-
-    searchDepth = boardFile.boardInfo.maxDiceRoll;
-    result = AutoPath::getSquareIdWithMaxPathsCount(qAsConst(items), searchDepth, limit);
-    maxPathSquareId = result.first;
-    maxPathCount = result.second;
-    if(maxPathCount>limit) {
-        maxPathCountStr = QString(">%1").arg(QString::number(limit));
+    if(maxPathSquareId != 255) {
+        builder << QString("Max Path Count: %1").arg(maxPathCountStr);
+        builder << QString("Max Path Square: %1").arg(maxPathSquareId);
+        builder << QString("Search Depth: %1").arg(searchDepth);
+        if(maxPathCount > 150) {
+            builder << QString("Crash inevitable!");
+        } else if(maxPathCount > 100) {
+            builder << QString("Crash possible!");
+        } else if(maxPathCount > 70) {
+            builder << QString("Stuttering likely!");
+        } else {
+            builder << QString("Ok");
+        }
     } else {
-        maxPathCountStr = QString::number(maxPathCount);
-    }
-    if(maxPathSquareId != 255)
-        builder << QString("Max Path Count %1 in Square %2 with Search Depth of %3").arg(maxPathCountStr).arg(maxPathSquareId).arg(searchDepth);
-    else
         builder << QString();
-
+        builder << QString();
+        builder << QString();
+        builder << QString();
+    }
     ui->stockPricesLabel->setText(builder.join("\n"));
 }
 

@@ -36,6 +36,7 @@ private:
     int previouslyVisitedSquareId = -1;
     const QString defaultPriceFunction = QString("x * ( -0.15 * 0.2^(x/200) + 0.2 )");
     QString priceFunction = defaultPriceFunction;
+    int maxPathSearchDepth = 0;
 
     void connectSquares(bool previousToCurrent, bool currentToPrevious);
     QPair<SquareItem*,SquareItem*> getPreviousAndCurrentSquare();
