@@ -1,5 +1,7 @@
 #include "autopath.h"
 //#include <QDebug>
+#include <QtMath>
+#include <QSet>
 
 namespace AutoPath {
 
@@ -148,6 +150,220 @@ void enumerateAutopathingRules(SquareItem *square, const QMap<Direction, SquareI
                 }
             }
         }
+    }
+}
+
+bool hasCycle_(QVector<QPair<double, QPair<int, int>>> &edges, QVector<bool> marked, int currentPathLength, int currentNode, int startNode, int maxCycleLength) {
+    marked[currentNode] = true;
+
+    if (currentPathLength > 1 && currentPathLength <= maxCycleLength) {
+        marked[currentNode] = false;
+
+        // check if we can reach the start node again
+        for(auto edge : edges) {
+            int u = edge.second.first;
+            int v = edge.second.second;
+            if(currentNode == u && startNode == v) {
+                return true;
+            }
+            if(currentNode == v && startNode == u) {
+                return true;
+            }
+        }
+        return false;
+    }
+
+    for(auto edge : edges) {
+        int u = edge.second.first;
+        int v = edge.second.second;
+        if(currentNode == u && !marked[v]) {
+            if(hasCycle_(edges, marked, currentPathLength + 1, v, startNode, maxCycleLength))
+                return true;
+        }
+        if(currentNode == v && !marked[u]) {
+            if(hasCycle_(edges, marked, currentPathLength + 1, u, startNode, maxCycleLength))
+                return true;
+        }
+    }
+
+    marked[currentNode] = false;
+    return false;
+}
+
+bool hasCycle(QVector<QPair<double, QPair<int, int>>> edges, int nodeCount, int maxCycleLength) {
+    QVector<bool> marked(nodeCount);
+
+    for (int i = 0; i < nodeCount - (maxCycleLength - 1); i++) {
+        if(hasCycle_(edges, marked, 0, i, i, maxCycleLength))
+            return true;
+        marked[i] = true;
+    }
+
+    return false;
+}
+
+bool isTransportingSquareType(SquareType squareType) {
+    return squareType == OneWayAlleyDoorA
+            || squareType == OneWayAlleyDoorB
+            || squareType == OneWayAlleyDoorC
+            || squareType == OneWayAlleyDoorD
+            || squareType == LiftMagmaliceSquareStart
+            || squareType == MagmaliceSquare
+            || squareType == OneWayAlleySquare
+            || squareType == LiftSquareEnd;
+}
+
+bool isConnected(SquareData &square1, SquareData &square2) {
+    for(auto waypoint : square1.waypoints) {
+        if(std::any_of(std::begin(waypoint.destinations), std::end(waypoint.destinations), [&](int i) { return i == square2.id; }))
+            return true;
+    }
+    for(auto waypoint : square2.waypoints) {
+        if(std::any_of(std::begin(waypoint.destinations), std::end(waypoint.destinations), [&](int i) { return i == square1.id; }))
+            return true;
+    }
+    return false;
+}
+
+void connect(SquareData &square1, SquareData &square2) {
+    // Find a free entry id in square 2
+    int square2FreeEntryId = -1;
+    for (int i=0; i<4; ++i) {
+        bool square1IdInDestinations = std::any_of(std::begin(square2.waypoints[i].destinations), std::end(square2.waypoints[i].destinations), [&](int i) { return i == square1.id; });
+        if(square2.waypoints[i].entryId == 255 && square2FreeEntryId == -1 && !square1IdInDestinations) {
+            square2FreeEntryId = i;
+        }
+        if(square2.waypoints[i].entryId == square1.id) {
+            square2FreeEntryId = i;
+            break;
+        }
+    }
+    if(square2FreeEntryId != -1) {
+        QSet<int> destinations;
+        // Collect all other destinations in square2
+        for (int i=0; i<4; ++i) {
+            for(int j=0; j<3; j++) {
+                int destination = square2.waypoints[i].destinations[j];
+                if(destination != 255 && destination != square1.id) {
+                    destinations.insert(destination);
+                }
+            }
+        }
+        // add the square1 id as entry
+        square2.waypoints[square2FreeEntryId].entryId = square1.id;
+        // add the other destinations to it
+        int destinationIndex = 0;
+        for(int destination : destinations) {
+            if(destination != square1.id && destinationIndex < 3) {
+                square2.waypoints[square2FreeEntryId].destinations[destinationIndex] = destination;
+                destinationIndex++;
+            }
+        }
+    }
+    // add the square2 id to all destinations in square1
+    bool hasAdded = false;
+    for (int i=0; i<4; ++i) {
+        if(square1.waypoints[i].entryId != 255 && square1.waypoints[i].entryId != square2.id) {
+            // do not add the destination if it already exists
+            auto waypoint = square1.waypoints[i];
+            bool square2IdInDestinations = std::any_of(std::begin(waypoint.destinations), std::end(waypoint.destinations), [&](int i) { return i == square2.id; });
+            if(!square2IdInDestinations) {
+                for(int j=0; j<3; j++) {
+                    int destination = square1.waypoints[i].destinations[j];
+                    if(destination == 255) {
+                        square1.waypoints[i].destinations[j] = square2.id;
+                        hasAdded = true;
+                        break;
+                    }
+                }
+            }
+        }
+    }
+    // if it was not possible to add the square2 id as destination in square1, then there is no entry ids defined yet.
+    // -> lets force add it somewhere
+    if(!hasAdded) {
+        for (int i=0; i<4; ++i) {
+            if(square1.waypoints[i].entryId == 255) {
+                for(int j=0; j<3; j++) {
+                    int destination = square1.waypoints[i].destinations[j];
+                    if(destination == 255) {
+                        square1.waypoints[i].destinations[j] = square2.id;
+                        hasAdded = true;
+                        break;
+                    }
+                }
+            }
+            if(hasAdded)
+                break;
+        }
+    }
+}
+
+void kruskalDfsAutoPathAlgorithm(const QVector<SquareItem *> &squares, int manhattanDistance) {
+    // Construct edges first
+    QVector<QPair<double, QPair<int, int>>> edges;
+    for (int i=0; i<squares.size(); ++i) {
+        auto &square = ((SquareItem *)squares[i])->getData();
+        for (int j=i+1; j<squares.size(); ++j) {
+            auto &otherSquare = ((SquareItem *)squares[j])->getData();
+
+            // Special case handling for transporting squares
+            bool isTransportingEdge = isConnected(square, otherSquare)
+                    && isTransportingSquareType(square.squareType)
+                    && isTransportingSquareType(otherSquare.squareType);
+
+            if (isTransportingEdge || (qAbs(square.positionX - otherSquare.positionX) <= manhattanDistance
+                    && qAbs(square.positionY - otherSquare.positionY) <= manhattanDistance)) {
+                auto xDistance = square.positionX - otherSquare.positionX;
+                auto yDistance = square.positionY - otherSquare.positionY;
+                auto euclideanDistance = qSqrt(xDistance*xDistance + yDistance*yDistance);
+
+                edges.append({euclideanDistance, {square.id, otherSquare.id}});
+            }
+        }
+    }
+
+    // Sort edges
+    std::sort(edges.begin(), edges.end());
+
+    // Run modified Kruskal algorithm
+    QVector<QPair<double, QPair<int, int>>> autoPathEdges;
+    for(auto& edge : edges) {
+        // Normally with Kruskals algorithm we do not create cycles.
+        // In this modified variant, we will allow cycles which have a
+        // path longer than 4
+        auto autoPathCandidate(autoPathEdges);
+        autoPathCandidate.append(edge);
+        if (!hasCycle(autoPathCandidate, squares.size(), 4))
+        {
+            autoPathEdges = autoPathCandidate;
+        }
+    }
+
+    // Clear waypoints
+    for (int i=0; i<squares.size(); ++i) {
+        auto &square = ((SquareItem *)squares[i])->getData();
+        for (auto &waypoint: square.waypoints) {
+            waypoint.entryId = 255;
+            for (auto &dest: waypoint.destinations) {
+                dest = 255;
+            }
+        }
+    }
+
+    // Apply pathing
+    for(auto& edge : autoPathEdges) {
+        int u = edge.second.first;
+        int v = edge.second.second;
+        auto& square = ((SquareItem *)squares[u])->getData();
+        auto& otherSquare = ((SquareItem *)squares[v])->getData();
+        connect(square, otherSquare);
+        connect(otherSquare, square);
+    }
+
+    // Sort waypoints
+    for (int i=0; i<squares.size(); ++i) {
+        sortWaypoints(squares[i]);
     }
 }
 

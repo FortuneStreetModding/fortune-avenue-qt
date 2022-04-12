@@ -11,7 +11,10 @@ QMap<Direction, SquareItem *> getTouchingSquares(SquareItem *square, const QVect
 bool pathSquare(SquareItem *square, const QMap<Direction, SquareItem *> &touchingSquares);
 void enumerateAutopathingRules(SquareItem *square, const QMap<Direction, SquareItem *> &touchingSquares);
 void sortWaypoints(SquareItem *square);
-
+bool hasCycle_(QVector<QPair<double, QPair<int, int>>> &edges, QVector<bool> marked, int currentCycleLength, int currentNode, int startNode, int maxCycleLength);
+bool hasCycle(QVector<QPair<double, QPair<int, int>>> edges, int nodeCount, int maxCycleLength);
+bool isTransportingSquareType(SquareType squareType);
+void kruskalDfsAutoPathAlgorithm(const QVector<SquareItem *> &squares, int manhattanDistance);
 }
 
 #endif // AUTOPATH_H
