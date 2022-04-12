@@ -309,12 +309,18 @@ void connect(SquareData &square1, SquareData &square2) {
     if(!hasAdded) {
         for (int i=0; i<4; ++i) {
             if(square1.waypoints[i].entryId == 255) {
-                for(int j=0; j<3; j++) {
-                    int destination = square1.waypoints[i].destinations[j];
-                    if(destination == 255) {
-                        square1.waypoints[i].destinations[j] = square2.id;
-                        hasAdded = true;
-                        break;
+                auto waypoint = square1.waypoints[i];
+                bool square2IdInDestinations = std::any_of(std::begin(waypoint.destinations), std::end(waypoint.destinations), [&](int i) { return i == square2.id; });
+                if(square2IdInDestinations) {
+                     hasAdded = true;
+                } else {
+                    for(int j=0; j<3; j++) {
+                        int destination = square1.waypoints[i].destinations[j];
+                        if(destination == 255) {
+                            square1.waypoints[i].destinations[j] = square2.id;
+                            hasAdded = true;
+                            break;
+                        }
                     }
                 }
             }
