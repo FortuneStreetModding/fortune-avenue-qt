@@ -104,9 +104,21 @@ void AutoAssignShopModelsDialog::accept() {
                         squareItem->getData().shopModel = QRandomGenerator::global()->bounded(1, maxShopModel+1)*10;
                     } while(!allowNonVanilla && !isVanillaShopModel(squareItem->getData().shopModel));
                 } else {
-                    do {
-                        squareItem->getData().shopModel = qRound(squareItem->getData().value/10.0);
-                    } while(!allowNonVanilla && !isVanillaShopModel(squareItem->getData().shopModel));
+                    int shopValue = squareItem->getData().value;
+                    int newShopModel = qRound(shopValue/10.0);
+                    for(int i=0;i<1000;i++) {
+                        if(!allowNonVanilla && !isVanillaShopModel(newShopModel)) {
+                            newShopModel = qRound((shopValue+i)/10.0);
+                        } else {
+                            break;
+                        }
+                        if(!allowNonVanilla && !isVanillaShopModel(newShopModel)) {
+                            newShopModel = qRound((shopValue-i)/10.0);
+                        } else {
+                            break;
+                        }
+                    }
+                    squareItem->getData().shopModel = newShopModel;
                 }
             }
         }
