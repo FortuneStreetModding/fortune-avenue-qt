@@ -153,6 +153,7 @@ void enumerateAutopathingRules(SquareItem *square, const QMap<Direction, SquareI
     }
 }
 
+
 bool hasCycle_(QVector<QPair<double, QPair<int, int>>> &edges, QVector<bool> marked, int currentPathLength, int currentNode, int startNode, int maxCycleLength) {
     marked[currentNode] = true;
 
@@ -323,6 +324,17 @@ void connect(SquareData &square1, SquareData &square2) {
     }
 }
 
+/**
+ * This is the entry point for the simple auto path algorithm
+ *
+ * The idea is to connect naively all squares in a small manhattan distance, first.
+ * Then we run Kruskal algorithm to find a Minimal Spanning Tree on the graph, but with
+ * a twist: We allow cycles in the Minimal Spanning Tree where the path is longer than 3
+ * squares.
+ *
+ * @brief kruskalDfsAutoPathAlgorithm
+ * @param squares
+ */
 void kruskalDfsAutoPathAlgorithm(const QVector<SquareItem *> &squares) {
     int maxManhattanDistance = 80;
     // Construct edges first
@@ -355,7 +367,7 @@ void kruskalDfsAutoPathAlgorithm(const QVector<SquareItem *> &squares) {
     for(auto& edge : edges) {
         // Normally with Kruskals algorithm we do not create cycles.
         // In this modified variant, we will allow cycles which have a
-        // path longer than 4
+        // path longer than 3
         auto autoPathCandidate(autoPathEdges);
         autoPathCandidate.append(edge);
         if (!hasCycle(autoPathCandidate, squares.size(), 3))
