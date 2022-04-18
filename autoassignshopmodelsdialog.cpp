@@ -7,6 +7,7 @@
 #include <QRegularExpression>
 #include <QPushButton>
 #include <QQueue>
+#include <QSet>
 #include <QRandomGenerator>
 #include "fortunestreetdata.h"
 #include "squareitem.h"
@@ -62,10 +63,23 @@ void AutoAssignShopModelsDialog::accept() {
     if (allowNonVanilla) {
         maxShopModel = ui->maxShopModelSpinBox->value();
     }
+    bool modifyOnlyUnsetShopModels = ui->modifyOnlyNonSetShopModels->isChecked();
     bool allowReadjustShopValues = ui->allowReadjustingShopValues->isChecked();
     bool allowReadjustShopPrices = allowReadjustShopValues && ui->allowReadjustingShopPrices->isChecked();
 
     double cost = 0;
+
+    QSet<int> usedShopModels;
+    for(int i=0;i<squares->size();i++) {
+        SquareItem *squareItem = (SquareItem *)squares->at(i);
+        if(squareItem->getData().shopModel > 0) {
+            usedShopModels.insert(squareItem->getData().shopModel);
+        }
+    }
+
+    QSet<SquareItem *> updatedSquareItems;
+    QSet<SquareItem *> modifiedSquareItems;
+
     if (preventDuplicates) {
         // we need to use Hungarian algorithm for weighted bipartite matching where the weight is modeled as cost
         // to avoid duplicates
@@ -75,13 +89,16 @@ void AutoAssignShopModelsDialog::accept() {
         for(int i=0;i<squares->size();i++) {
             costMatrix[i].resize(maxShopModel + 1);
             SquareItem *squareItem = (SquareItem *)squares->at(i);
-            if(squareItem->getData().squareType == Property) {
+            if(squareItem->getData().squareType == Property && (!modifyOnlyUnsetShopModels || !usedShopModels.contains(squareItem->getData().shopModel))) {
                 for(int j=0;j<=maxShopModel;j++) {
                     cost = qAbs(squareItem->getData().value - j*10);
                     if(randomizedAssign) {
                         cost = QRandomGenerator::global()->bounded(10, (maxShopModel+1)*10);
                     }
                     if((!allowNonVanilla && !isVanillaShopModel(j)) || j == 0) {
+                        cost = 99999999999;
+                    }
+                    if(modifyOnlyUnsetShopModels && usedShopModels.contains(j)) {
                         cost = 99999999999;
                     }
                     costMatrix[i][j] = cost;
@@ -93,39 +110,60 @@ void AutoAssignShopModelsDialog::accept() {
         cost = HungAlgo.Solve(costMatrix, assignment);
         for (unsigned int i = 0; i < costMatrix.size(); i++) {
             SquareItem *squareItem = (SquareItem *)squares->at(i);
-            squareItem->getData().shopModel = assignment[i];
+            if(squareItem->getData().squareType == Property && (!modifyOnlyUnsetShopModels || !usedShopModels.contains(squareItem->getData().shopModel))) {
+                if(squareItem->getData().shopModel != assignment[i])
+                    modifiedSquareItems.insert(squareItem);
+                updatedSquareItems.insert(squareItem);
+                squareItem->getData().shopModel = assignment[i];
+            }
         }
     } else {
         for(int i=0;i<squares->size();i++) {
             SquareItem *squareItem = (SquareItem *)squares->at(i);
-            if(squareItem->getData().squareType == Property) {
+            if(squareItem->getData().squareType == Property && (!modifyOnlyUnsetShopModels || !usedShopModels.contains(squareItem->getData().shopModel))) {
                 if(randomizedAssign) {
-                    do {
-                        squareItem->getData().shopModel = QRandomGenerator::global()->bounded(1, maxShopModel+1)*10;
-                    } while(!allowNonVanilla && !isVanillaShopModel(squareItem->getData().shopModel));
+                    int newShopModel=0;
+                    for(int i=0;i<5000;i++) {
+                        if(!allowNonVanilla && !isVanillaShopModel(newShopModel)) {
+                            newShopModel = QRandomGenerator::global()->bounded(1, maxShopModel+1)*10;
+                        } else {
+                            break;
+                        }
+                    }
+                    if(squareItem->getData().shopModel != newShopModel)
+                        modifiedSquareItems.insert(squareItem);
+                    updatedSquareItems.insert(squareItem);
+                    squareItem->getData().shopModel = newShopModel;
                 } else {
                     int shopValue = squareItem->getData().value;
+                    if(shopValue > (maxShopModel+1)*10) {
+                        shopValue = (maxShopModel+1)*10;
+                    }
                     int newShopModel = qRound(shopValue/10.0);
-                    for(int i=0;i<1000;i++) {
+                    for(int i=0;i<5000;i++) {
+                        // look at +i
                         if(!allowNonVanilla && !isVanillaShopModel(newShopModel)) {
                             newShopModel = qRound((shopValue+i)/10.0);
                         } else {
                             break;
                         }
+                        // look at -i
                         if(!allowNonVanilla && !isVanillaShopModel(newShopModel)) {
                             newShopModel = qRound((shopValue-i)/10.0);
                         } else {
                             break;
                         }
                     }
+                    if(squareItem->getData().shopModel != newShopModel)
+                        modifiedSquareItems.insert(squareItem);
+                    updatedSquareItems.insert(squareItem);
                     squareItem->getData().shopModel = newShopModel;
                 }
             }
         }
     }
 
-    for(int i=0;i<squares->size();i++) {
-        SquareItem *squareItem = (SquareItem *)squares->at(i);
+    for(auto squareItem : updatedSquareItems) {
         if(allowReadjustShopValues) {
             squareItem->getData().updateValueFromShopModel();
             if(allowReadjustShopPrices) {
@@ -140,9 +178,23 @@ void AutoAssignShopModelsDialog::accept() {
     }
 
     QStringList builder;
-    builder << "Shop Models have been assigned.";
-    if(preventDuplicates && !randomizedAssign) {
-        builder << QString("Absolute Error: %1").arg(QString::number(cost));
+    if(updatedSquareItems.size() != modifiedSquareItems.size()) {
+        if(updatedSquareItems.size() == 1) {
+            builder << QString("The shop model of %1 square has been assigned. %2 shop models remain the same.").arg(updatedSquareItems.size()).arg(modifiedSquareItems.size());
+        } else {
+            builder << QString("The shop models of %1 squares have been assigned. %2 shop models remain the same.").arg(updatedSquareItems.size()).arg(modifiedSquareItems.size());
+        }
+    } else {
+        if(updatedSquareItems.size() == 0) {
+            builder << QString("No shop models have been assigned.").arg(updatedSquareItems.size());
+        } else if(updatedSquareItems.size() == 1) {
+            builder << QString("The shop model of %1 square has been assigned.").arg(updatedSquareItems.size());
+        } else {
+            builder << QString("The shop models of %1 squares have been assigned.").arg(updatedSquareItems.size());
+        }
+    }
+    if(preventDuplicates && !randomizedAssign && updatedSquareItems.size() > 0) {
+        builder << QString("Total deviation from previous shop values: %1").arg(QString::number(cost));
     }
     QMessageBox::information(this, "Auto Shop Model Assignment", builder.join("\n"));
     close();
