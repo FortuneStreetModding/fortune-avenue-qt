@@ -11,6 +11,7 @@
 #include <QSaveFile>
 #include <QSet>
 #include <QDebug>
+#include <QTimer>
 
 #include "autopath.h"
 #include "darkdetect.h"
@@ -25,7 +26,8 @@ MainWindow::MainWindow(QApplication& app)
       scene(new FortuneAvenueGraphicsScene(-1600 + 32, -1600 + 32, 3200, 3200, this)),
       square1Scene(new FortuneAvenueGraphicsScene(0,0,64,64,this)),
       square2Scene(new FortuneAvenueGraphicsScene(0,0,64,64,this)),
-      undoStack(new QUndoStack(this))
+      undoStack(new QUndoStack(this)),
+      checkDirty(nullptr)
 {
     app.installEventFilter(this);
     ui->setupUi(this);
@@ -378,7 +380,7 @@ void MainWindow::loadFile(const QString &fpath) {
             setWindowFilePath(fpath);
             QFileInfo fileInfo(file);
             QString filename(fileInfo.fileName());
-            setWindowTitle(QString("Fortune Avenue %1.%2.%3 - %4").arg(VERSION_MAJOR).arg(VERSION_MINOR).arg(VERSION_BUILD).arg(filename));
+            setWindowTitle(QString("Fortune Avenue %1.%2.%3 - %4[*]").arg(VERSION_MAJOR).arg(VERSION_MINOR).arg(VERSION_BUILD).arg(filename));
             loadFile(boardFile);
         } else {
             goto badFile;
@@ -439,6 +441,15 @@ void MainWindow::loadFile(const BoardFile &file) {
     }
 
     initialFile = exportFile();
+
+    if (!checkDirty) {
+        checkDirty = new QTimer(this);
+        connect(checkDirty, &QTimer::timeout, this, [&]() {
+            setWindowModified(initialFile != exportFile());
+        });
+        checkDirty->setInterval(50);
+        checkDirty->start();
+    }
 
     QCoreApplication::processEvents();
 }

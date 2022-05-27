@@ -31,6 +31,8 @@ private:
 
     QUndoStack *undoStack;
 
+    QTimer *checkDirty;
+
     int zoomPercent = 100;
     BoardFile initialFile;
     int previouslyVisitedSquareId = -1;
