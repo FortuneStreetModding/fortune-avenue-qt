@@ -18,11 +18,15 @@ int FortuneAvenueGraphicsScene::getSnapSize() const { return snapSize; }
 void FortuneAvenueGraphicsScene::setSnapSize(int value) { snapSize = value; }
 
 QVector<SquareItem *> FortuneAvenueGraphicsScene::squareItems() {
-    auto itemsList = items(Qt::AscendingOrder);
+    auto itemsList = items();
     QVector<SquareItem *> result;
-    for (int i=axesItems.size(); i<itemsList.size(); ++i) {
-        result.append((SquareItem *) itemsList[i]);
+    for (int i=0; i<itemsList.size(); ++i) {
+        auto sqItem = dynamic_cast<SquareItem *>(itemsList[i]);
+        if (sqItem) result.append(sqItem);
     }
+    std::sort(result.begin(), result.end(), [](const SquareItem *A, const SquareItem *B) {
+        return A->getData().id < B->getData().id;
+    });
     return result;
 }
 
@@ -31,6 +35,7 @@ void FortuneAvenueGraphicsScene::initAxesItems() {
     QColor color = isDarkMode() ? Qt::white : Qt::black;
     axesItems.append(addLine(sceneRectVal.left(), 32, sceneRectVal.right(), 32, QPen(color)));
     axesItems.append(addLine(32, sceneRectVal.top(), 32, sceneRectVal.bottom(), QPen(color)));
+    for (auto &item: axesItems) item->setZValue(-1000000);
     setAxesVisible(true);
 }
 

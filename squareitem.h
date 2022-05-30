@@ -10,7 +10,12 @@ public:
     QRectF boundingRect() const override;
     void paint(QPainter *painter, const QStyleOptionGraphicsItem *option, QWidget *widget) override;
     SquareData &getData();
+    const SquareData &getData() const;
     QPointF getSnapLocation(const QPointF &loc);
+    /**
+     * This should be called after the ID is changed
+     */
+    void updateZValueFromData();
 protected:
     QVariant itemChange(GraphicsItemChange change, const QVariant &value) override;
 private:

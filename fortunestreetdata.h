@@ -4,6 +4,7 @@
 #include <QDataStream>
 #include <QMultiMap>
 #include <QVector>
+#include <array>
 #include "directions.h"
 
 struct WaypointData {
@@ -97,7 +98,7 @@ struct SquareData {
     qint16 positionX = 0;
     qint16 positionY = 0;
     quint16 unknown1 = 0;
-    WaypointData waypoints[4];
+    std::array<WaypointData, 4> waypoints;
     quint8 districtDestinationId = 0;
     quint8 oneWayLift = 0;
     quint16 value = 0;

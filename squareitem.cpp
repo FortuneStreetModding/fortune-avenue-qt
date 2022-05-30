@@ -75,6 +75,7 @@ SquareItem::SquareItem(const SquareData &dataValue, QGraphicsItem *parent) : QGr
     setFlag(ItemIsSelectable);
     setPos(data.positionX, data.positionY);
     setFlag(ItemSendsGeometryChanges);
+    updateZValueFromData();
 }
 
 QRectF SquareItem::boundingRect() const {
@@ -122,6 +123,10 @@ SquareData &SquareItem::getData() {
     return data;
 }
 
+const SquareData &SquareItem::getData() const {
+    return data;
+}
+
 void SquareItem::drawBackgroundedTextCentered(QPainter *painter, int x, int y, const QString &text, const QBrush &bgBrush) {
     auto boundingRect = painter->fontMetrics().boundingRect(text);
     drawBackgroundedText(painter, x - boundingRect.width()/2, y, text, bgBrush);
@@ -162,4 +167,9 @@ QPointF SquareItem::getSnapLocation(const QPointF &loc) {
         return QPointF(xV, yV);
     }
     return loc;
+}
+
+void SquareItem::updateZValueFromData()
+{
+    setZValue(-data.id);
 }

@@ -43,7 +43,10 @@ SOURCES += \
     muparser/src/muParserError.cpp \
     muparser/src/muParserTokenReader.cpp \
     screenshotdialog.cpp \
-    squareitem.cpp
+    squareaddcmd.cpp \
+    squareitem.cpp \
+    squaremovecmd.cpp \
+    squareremovecmd.cpp
 
 HEADERS += \
     autoassignshopmodelsdialog.h \
@@ -56,7 +59,10 @@ HEADERS += \
     mainwindow.h \
     orderedmap.h \
     screenshotdialog.h \
+    squareaddcmd.h \
     squareitem.h \
+    squaremovecmd.h \
+    squareremovecmd.h \
     static_block.hpp \
     util.h
 

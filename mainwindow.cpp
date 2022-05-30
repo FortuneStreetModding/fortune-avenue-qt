@@ -20,6 +20,8 @@
 #include "screenshotdialog.h"
 #include "autoassignshopmodelsdialog.h"
 #include "muParser.h"
+#include "squareaddcmd.h"
+#include "squareremovecmd.h"
 
 MainWindow::MainWindow(QApplication& app)
     : QMainWindow(), ui(new Ui::MainWindow),
@@ -126,6 +128,13 @@ MainWindow::MainWindow(QApplication& app)
             maxPathSearchDepth = newMaxPathSearchDepth;
         }
     });
+
+    auto undoAction = undoStack->createUndoAction(ui->menuEdit);
+    undoAction->setShortcut(QKeySequence::Undo);
+    ui->menuEdit->addAction(undoAction);
+    auto redoAction = undoStack->createRedoAction(ui->menuEdit);
+    redoAction->setShortcut(QKeySequence::Redo);
+    ui->menuEdit->addAction(redoAction);
 
     connect(ui->addSquare, &QPushButton::clicked, this, &MainWindow::addSquare);
     connect(ui->removeSquare, &QPushButton::clicked, this, &MainWindow::removeSquare);
@@ -392,6 +401,8 @@ void MainWindow::loadFile(const QString &fpath) {
 }
 
 void MainWindow::loadFile(const BoardFile &file) {
+    undoStack->clear();
+
     ui->subBoardEdit->setEnabled(true);
     ui->actionSave->setEnabled(true);
     ui->actionSave_As->setEnabled(true);
@@ -826,36 +837,12 @@ void MainWindow::updateWaypoints() {
 }
 
 void MainWindow::addSquare() {
-    scene->addItem(new SquareItem(SquareData(scene->squareItems().size() /* add next index */)));
+    undoStack->push(new SquareAddCmd(scene));
+    //scene->addItem(new SquareItem(SquareData(scene->squareItems().size() /* add next index */)));
 }
 
 void MainWindow::removeSquare() {
-    auto selectedItems = scene->selectedItems();
-    scene->clearSelection();
-    for (auto selectedItem: qAsConst(selectedItems)) {
-        scene->removeItem(selectedItem);
-        delete selectedItem;
-    }
-
-    // fix square ids
-    QMap<quint8, quint8> oldToNewIDs;
-    auto items = scene->squareItems();
-    for (int i=0; i<items.size(); ++i) {
-        oldToNewIDs[items[i]->getData().id] = i;
-        items[i]->getData().id = i;
-    }
-
-    // and waypoints
-    for (auto item: qAsConst(items)) {
-        for (auto &waypoint: item->getData().waypoints) {
-            waypoint.entryId = oldToNewIDs.value(waypoint.entryId, 255);
-            for (auto &dest: waypoint.destinations) {
-                dest = oldToNewIDs.value(dest, 255);
-            }
-        }
-    }
-
-    scene->update();
+    undoStack->push(new SquareRemoveCmd(scene));
 }
 
 int MainWindow::calcSnapSizeFromInput() {

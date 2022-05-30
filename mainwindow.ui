@@ -1292,7 +1292,13 @@ No for Magmalice lift</string>
     <addaction name="actionFollowWaypoint2"/>
     <addaction name="actionFollowWaypoint3"/>
    </widget>
+   <widget class="QMenu" name="menuEdit">
+    <property name="title">
+     <string>Edit</string>
+    </property>
+   </widget>
    <addaction name="menuFile"/>
+   <addaction name="menuEdit"/>
    <addaction name="menuSelect"/>
    <addaction name="menuView"/>
    <addaction name="menuTools"/>
