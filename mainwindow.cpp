@@ -22,6 +22,7 @@
 #include "muParser.h"
 #include "squareaddcmd.h"
 #include "squareremovecmd.h"
+#include "squaremovecmd.h"
 
 MainWindow::MainWindow(QApplication& app)
     : QMainWindow(), ui(new Ui::MainWindow),
@@ -32,6 +33,7 @@ MainWindow::MainWindow(QApplication& app)
       checkDirty(nullptr)
 {
     app.installEventFilter(this);
+    scene->installEventFilter(this);
     ui->setupUi(this);
     waypointStarts = {ui->waypoint1Start, ui->waypoint2Start, ui->waypoint3Start, ui->waypoint4Start};
     waypointDests = {ui->waypoint1Dests, ui->waypoint2Dests, ui->waypoint3Dests, ui->waypoint4Dests};
@@ -188,6 +190,10 @@ bool MainWindow::eventFilter(QObject *obj, QEvent *event)
     } else if (event->type() == QEvent::FileOpen) {
         QFileOpenEvent *fo = static_cast<QFileOpenEvent *>(event);
         loadFile(fo->file());
+    } else if (event->type() == FASceneSquareMoveEvent::TYPE) {
+        FASceneSquareMoveEvent *sme = static_cast<FASceneSquareMoveEvent *>(event);
+        undoStack->push(new SquareMoveCmd(scene, sme->getOldPositions(), sme->getNewPositions()));
+        return true;
     }
     return QObject::eventFilter(obj, event);
 }

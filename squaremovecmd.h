@@ -8,14 +8,13 @@
 class SquareMoveCmd : public QUndoCommand
 {
 public:
-    SquareMoveCmd(FortuneAvenueGraphicsScene *scene, int squareId, const QPointF &oldLoc, const QPointF &newLoc);
+    SquareMoveCmd(FortuneAvenueGraphicsScene *scene, const QMap<int, QPointF> &oldPositions, const QMap<int, QPointF> &newPositions);
     void undo() override;
     void redo() override;
 private:
     FortuneAvenueGraphicsScene *scene;
-    int squareId;
-    QPointF oldLoc;
-    QPointF newLoc;
+    QMap<int, QPointF> oldPositions;
+    QMap<int, QPointF> newPositions;
 };
 
 #endif // SQUAREMOVECMD_H

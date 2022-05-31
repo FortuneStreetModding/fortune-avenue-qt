@@ -2,6 +2,8 @@
 
 #include "darkdetect.h"
 
+#include <QGraphicsSceneMouseEvent>
+
 FortuneAvenueGraphicsScene::FortuneAvenueGraphicsScene(qreal x, qreal y, qreal w, qreal h, QObject *parent)
     : QGraphicsScene(x, y, w, h, parent) { initAxesItems(); }
 FortuneAvenueGraphicsScene::FortuneAvenueGraphicsScene(const QRectF &rect, QObject *parent)
@@ -51,4 +53,57 @@ void FortuneAvenueGraphicsScene::clearSquares() {
         removeItem(squareItem);
         delete squareItem;
     }
+}
+
+
+void FortuneAvenueGraphicsScene::mousePressEvent(QGraphicsSceneMouseEvent *event)
+{
+    QGraphicsScene::mousePressEvent(event);
+    if (event->isAccepted()) {
+        auto selItems = selectedItems();
+        if (!selItems.empty()) {
+            oldPositions.clear();
+            for (auto &item: selItems) {
+                SquareItem *sqItem = (SquareItem *)item;
+                oldPositions[sqItem->getData().id] = sqItem->pos();
+            }
+        }
+    }
+}
+
+void FortuneAvenueGraphicsScene::mouseReleaseEvent(QGraphicsSceneMouseEvent *event)
+{
+    QGraphicsScene::mouseReleaseEvent(event);
+    if (event->isAccepted()) {
+        auto selItems = selectedItems();
+        if (!selItems.empty()) {
+            QMap<int, QPointF> newPositions;
+            for (auto &item: selItems) {
+                SquareItem *sqItem = (SquareItem *)item;
+                newPositions[sqItem->getData().id] = sqItem->pos();
+            }
+            // we are only moving if selected items remain the same and positions are different
+            if (oldPositions.keys() == newPositions.keys() && oldPositions != newPositions) {
+                FASceneSquareMoveEvent evt(oldPositions, newPositions);
+                QApplication::sendEvent(this, &evt);
+            }
+        }
+    }
+}
+
+const QEvent::Type FASceneSquareMoveEvent::TYPE = (QEvent::Type)QEvent::registerEventType();
+
+FASceneSquareMoveEvent::FASceneSquareMoveEvent(const QMap<int, QPointF> &oldPositions, QMap<int, QPointF> &newPositions)
+    : QEvent(TYPE), oldPositions(oldPositions), newPositions(newPositions)
+{
+}
+
+const QMap<int, QPointF> &FASceneSquareMoveEvent::getOldPositions() const
+{
+    return oldPositions;
+}
+
+const QMap<int, QPointF> &FASceneSquareMoveEvent::getNewPositions() const
+{
+    return newPositions;
 }

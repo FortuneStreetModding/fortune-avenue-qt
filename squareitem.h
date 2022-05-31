@@ -2,6 +2,7 @@
 #define SQUAREITEM_H
 
 #include "fortunestreetdata.h"
+#include <QEvent>
 #include <QGraphicsItem>
 
 class SquareItem : public QGraphicsItem {
@@ -20,9 +21,25 @@ protected:
     QVariant itemChange(GraphicsItemChange change, const QVariant &value) override;
 private:
     SquareData data;
+    QPointF oldPoint;
     static void drawBackgroundedTextCentered(QPainter *painter, int x, int y, const QString &text, const QBrush &bgBrush);
     static void drawBackgroundedTextRightAligned(QPainter *painter, int x, int y, const QString &text, const QBrush &bgBrush);
     static void drawBackgroundedText(QPainter *painter, int x, int y, const QString &text, const QBrush &bgBrush);
 };
+
+/*
+class SquareMouseMoveEvent : public QEvent {
+public:
+    static Type TYPE;
+    SquareMouseMoveEvent(SquareItem *item, const QPointF &oldPoint, const QPointF &newPoint);
+    QPointF getOldPoint() const;
+    QPointF getNewPoint() const;
+    SquareItem *getItem() const;
+
+private:
+    SquareItem *item;
+    QPointF oldPoint, newPoint;
+};
+*/
 
 #endif // SQUAREITEM_H
