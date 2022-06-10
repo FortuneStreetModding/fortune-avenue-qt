@@ -8,7 +8,10 @@
 class SquareRemoveCmd : public QUndoCommand
 {
 public:
-    SquareRemoveCmd(FortuneAvenueGraphicsScene *scene);
+    /**
+     * removed squares and isRedo passed to updateFn
+     */
+    SquareRemoveCmd(FortuneAvenueGraphicsScene *scene, const std::function<void(const QVector<SquareData> &, bool)> &updateFn);
     void undo() override;
     void redo() override;
 private:
@@ -17,6 +20,7 @@ private:
     QMap<int, int> oldToNewIDs;
     QMap<int, int> newToOldIDs;
     QMap<int, std::array<WaypointData, 4>> oldIDToWaypoints;
+    std::function<void(const QVector<SquareData> &, bool)> updateFn;
 };
 
 #endif // SQUAREREMOVECMD_H

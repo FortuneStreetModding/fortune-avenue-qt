@@ -27,19 +27,4 @@ private:
     static void drawBackgroundedText(QPainter *painter, int x, int y, const QString &text, const QBrush &bgBrush);
 };
 
-/*
-class SquareMouseMoveEvent : public QEvent {
-public:
-    static Type TYPE;
-    SquareMouseMoveEvent(SquareItem *item, const QPointF &oldPoint, const QPointF &newPoint);
-    QPointF getOldPoint() const;
-    QPointF getNewPoint() const;
-    SquareItem *getItem() const;
-
-private:
-    SquareItem *item;
-    QPointF oldPoint, newPoint;
-};
-*/
-
 #endif // SQUAREITEM_H

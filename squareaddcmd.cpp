@@ -2,8 +2,9 @@
 
 
 
-SquareAddCmd::SquareAddCmd(FortuneAvenueGraphicsScene *scene) : scene(scene)
+SquareAddCmd::SquareAddCmd(FortuneAvenueGraphicsScene *scene, const std::function<void (SquareItem *)> &updateFn) : scene(scene), updateFn(updateFn)
 {
+    setText("Add Square");
 }
 
 void SquareAddCmd::undo()
@@ -12,10 +13,13 @@ void SquareAddCmd::undo()
     scene->removeItem(sqItems.back());
     delete sqItems.back();
     scene->update();
+    updateFn(nullptr);
 }
 
 void SquareAddCmd::redo()
 {
-    scene->addItem(new SquareItem(SquareData(scene->squareItems().size() /* add next index */)));
+    auto item = new SquareItem(SquareData(scene->squareItems().size() /* add next index */));
+    scene->addItem(item);
     scene->update();
+    updateFn(item);
 }

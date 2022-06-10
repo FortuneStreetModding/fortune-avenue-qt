@@ -2,7 +2,7 @@
 
 #include <QSet>
 
-SquareRemoveCmd::SquareRemoveCmd(FortuneAvenueGraphicsScene *scene) : scene(scene)
+SquareRemoveCmd::SquareRemoveCmd(FortuneAvenueGraphicsScene *scene, const std::function<void (const QVector<SquareData> &, bool)> &updateFn) : scene(scene), updateFn(updateFn)
 {
     auto sel = scene->selectedItems();
     for (auto &elem: sel) {
@@ -11,6 +11,7 @@ SquareRemoveCmd::SquareRemoveCmd(FortuneAvenueGraphicsScene *scene) : scene(scen
     std::sort(removedItems.begin(), removedItems.end(), [](const SquareData &A, const SquareData &B) {
         return A.id < B.id;
     });
+    setText("Remove Squares");
 }
 
 void SquareRemoveCmd::undo()
@@ -25,6 +26,7 @@ void SquareRemoveCmd::undo()
         scene->addItem(new SquareItem(elem));
     }
     scene->update();
+    updateFn(removedItems, false);
 }
 
 void SquareRemoveCmd::redo()
@@ -62,4 +64,5 @@ void SquareRemoveCmd::redo()
         }
     }
     scene->update();
+    updateFn(removedItems, true);
 }

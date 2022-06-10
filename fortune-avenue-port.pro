@@ -44,6 +44,7 @@ SOURCES += \
     muparser/src/muParserTokenReader.cpp \
     screenshotdialog.cpp \
     squareaddcmd.cpp \
+    squarechangecmd.cpp \
     squareitem.cpp \
     squaremovecmd.cpp \
     squareremovecmd.cpp
@@ -60,6 +61,7 @@ HEADERS += \
     orderedmap.h \
     screenshotdialog.h \
     squareaddcmd.h \
+    squarechangecmd.h \
     squareitem.h \
     squaremovecmd.h \
     squareremovecmd.h \

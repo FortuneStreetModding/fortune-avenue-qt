@@ -23,6 +23,7 @@
 #include "squareaddcmd.h"
 #include "squareremovecmd.h"
 #include "squaremovecmd.h"
+#include "squarechangecmd.h"
 
 MainWindow::MainWindow(QApplication& app)
     : QMainWindow(), ui(new Ui::MainWindow),
@@ -192,7 +193,13 @@ bool MainWindow::eventFilter(QObject *obj, QEvent *event)
         loadFile(fo->file());
     } else if (event->type() == FASceneSquareMoveEvent::TYPE) {
         FASceneSquareMoveEvent *sme = static_cast<FASceneSquareMoveEvent *>(event);
-        undoStack->push(new SquareMoveCmd(scene, sme->getOldPositions(), sme->getNewPositions()));
+        undoStack->push(new SquareMoveCmd(scene, sme->getOldPositions(), sme->getNewPositions(), true, [this](const QMap<int, QPointF> &positions) {
+            for (auto it=positions.begin(); it!=positions.end(); ++it) {
+                auto &data = oldSquaresData[it.key()];
+                data.positionX = it.value().x();
+                data.positionY = it.value().y();
+            }
+        }));
         return true;
     }
     return QObject::eventFilter(obj, event);
@@ -201,6 +208,23 @@ bool MainWindow::eventFilter(QObject *obj, QEvent *event)
 MainWindow::~MainWindow()
 {
     delete ui;
+}
+
+void MainWindow::addChangeSquaresAction(const QVector<int> &squareIdsToUpdate)
+{
+    auto sqItems = scene->squareItems();
+    QMap<int, SquareData> oldData, newData;
+    for (int sqId: squareIdsToUpdate) {
+        oldData[sqId] = oldSquaresData[sqId];
+        newData[sqId] = sqItems[sqId]->getData();
+    }
+    undoStack->push(new SquareChangeCmd(scene, oldData, newData, [=]() {
+        auto sqItems = scene->squareItems();
+        for (int sqId: squareIdsToUpdate) {
+            oldSquaresData[sqId] = sqItems[sqId]->getData();
+        }
+        updateSquareSidebar();
+    }));
 }
 
 void MainWindow::updateZoom() {
@@ -344,6 +368,10 @@ bool MainWindow::saveFile() {
     if (windowFilePath().isEmpty()) {
         return saveFileAs();
     } else {
+        // apply any changes to text boxes when saving
+        auto focusWidget = QApplication::focusWidget();
+        if (focusWidget) focusWidget->clearFocus();
+
         QSaveFile saveFile(windowFilePath());
         if (saveFile.open(QIODevice::WriteOnly)) {
             QDataStream stream(&saveFile);
@@ -459,6 +487,8 @@ void MainWindow::loadFile(const BoardFile &file) {
 
     initialFile = exportFile();
 
+    oldSquaresData = initialFile.boardData.squares;
+
     if (!checkDirty) {
         checkDirty = new QTimer(this);
         connect(checkDirty, &QTimer::timeout, this, [&]() {
@@ -498,6 +528,7 @@ BoardFile MainWindow::exportFile() {
 
 void MainWindow::updateSquareSidebar() {
     auto selectedItems = scene->selectedItems();
+    ui->squareEdit->setEnabled(!selectedItems.empty());
     ui->actionFollowWaypoint1->setEnabled(selectedItems.size() == 2);
     ui->actionFollowWaypoint2->setEnabled(selectedItems.size() == 2);
     ui->actionFollowWaypoint3->setEnabled(selectedItems.size() == 2);
@@ -637,7 +668,7 @@ void MainWindow::registerSquareSidebarEvents() {
             item->getData().squareType = textToSquareType(ui->type->currentText());
         });
     });
-    connect(ui->positionX, &QLineEdit::textEdited, this, [&](const QString &) {
+    connect(ui->positionX, &QLineEdit::editingFinished, this, [&]() {
         updateSquare([&](SquareItem *item) {
             // temporarily disable snapping for setting position
             int oldSnapSize = scene->getSnapSize();
@@ -646,7 +677,7 @@ void MainWindow::registerSquareSidebarEvents() {
             scene->setSnapSize(oldSnapSize);
         });
     });
-    connect(ui->positionY, &QLineEdit::textEdited, this, [&](const QString &) {
+    connect(ui->positionY, &QLineEdit::editingFinished, this, [&]() {
         updateSquare([&](SquareItem *item) {
             // temporarily disable snapping for setting position
             int oldSnapSize = scene->getSnapSize();
@@ -655,7 +686,7 @@ void MainWindow::registerSquareSidebarEvents() {
             scene->setSnapSize(oldSnapSize);
         });
     });
-    connect(ui->districtDestinationId, &QLineEdit::textEdited, this, [&](const QString &) {
+    connect(ui->districtDestinationId, &QLineEdit::editingFinished, this, [&]() {
         updateSquare([&](SquareItem *item) {
             item->getData().districtDestinationId = ui->districtDestinationId->text().toUInt();
         });
@@ -670,16 +701,14 @@ void MainWindow::registerSquareSidebarEvents() {
                     item->getData().price = newPrice;
                 } catch (mu::Parser::exception_type &e) {}
             }
-            updateSquareSidebar();
         });
     });
-    connect(ui->shopModelId, &QLineEdit::textEdited, this, [&](const QString &) {
+    connect(ui->shopModelId, &QLineEdit::editingFinished, this, [&]() {
         updateSquare([&](SquareItem *item) {
             item->getData().shopModel = ui->shopModelId->text().toUShort();
-            updateSquareSidebar();
         });
     });
-    connect(ui->initialValue, &QLineEdit::textEdited, this, [&](const QString &) {
+    connect(ui->initialValue, &QLineEdit::editingFinished, this, [&]() {
         updateSquare([&](SquareItem *item) {
             item->getData().value = ui->initialValue->text().toUShort();
             if(ui->autoCalcPrice->isChecked()) {
@@ -688,10 +717,9 @@ void MainWindow::registerSquareSidebarEvents() {
                     item->getData().price = newPrice;
                 } catch (mu::Parser::exception_type &e) {}
             }
-            updateSquareSidebar();
         });
     });
-    connect(ui->initialPrice, &QLineEdit::textEdited, this, [&](const QString &) {
+    connect(ui->initialPrice, &QLineEdit::editingFinished, this, [&]() {
         updateSquare([&](SquareItem *item) {
             item->getData().price = ui->initialPrice->text().toUShort();
         });
@@ -702,11 +730,11 @@ void MainWindow::registerSquareSidebarEvents() {
         });
     });
     for (auto &waypointStart: waypointStarts) {
-        connect(waypointStart, &QLineEdit::textEdited, this, [&](const QString &) { updateWaypoints(); });
+        connect(waypointStart, &QLineEdit::editingFinished, this, [&]() { updateWaypoints(); });
     }
     for (auto &waypointDest: waypointDests) {
         for (auto &child: waypointDest->findChildren<QLineEdit *>()) {
-            connect(child, &QLineEdit::textEdited, this, [&](const QString &) { updateWaypoints(); });
+            connect(child, &QLineEdit::editingFinished, this, [&]() { updateWaypoints(); });
         }
     }
     connect(ui->clearAllWaypoints, &QPushButton::clicked, this, [&](bool) {
@@ -820,11 +848,13 @@ void MainWindow::registerSquareSidebarEvents() {
 
 template<typename Func> void MainWindow::updateSquare(Func func) {
     auto selectedItems = scene->selectedItems();
+    QVector<int> idsToUpdate;
     for(auto selectedItem : qAsConst(selectedItems)) {
         SquareItem *item = (SquareItem *)selectedItem;
         func(item);
-        item->update();
+        idsToUpdate.push_back(item->getData().id);
     }
+    addChangeSquaresAction(idsToUpdate);
 }
 
 void MainWindow::updateWaypoints() {
@@ -843,12 +873,25 @@ void MainWindow::updateWaypoints() {
 }
 
 void MainWindow::addSquare() {
-    undoStack->push(new SquareAddCmd(scene));
-    //scene->addItem(new SquareItem(SquareData(scene->squareItems().size() /* add next index */)));
+    undoStack->push(new SquareAddCmd(scene, [this](SquareItem *item) {
+                        if (item) {
+                            oldSquaresData.push_back(item->getData());
+                        } else {
+                            oldSquaresData.pop_back();
+                        }
+                    }));
 }
 
 void MainWindow::removeSquare() {
-    undoStack->push(new SquareRemoveCmd(scene));
+    if (!scene->selectedItems().empty()) {
+        undoStack->push(new SquareRemoveCmd(scene, [this](const QVector<SquareData> &squares, bool isRedo) {
+            (void)squares;
+            (void)isRedo;
+            oldSquaresData.clear();
+            auto sqItems = scene->squareItems();
+            for (auto &item: sqItems) oldSquaresData.push_back(item->getData());
+        }));
+    }
 }
 
 int MainWindow::calcSnapSizeFromInput() {
