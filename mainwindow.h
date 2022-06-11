@@ -35,10 +35,7 @@ private:
 
     std::function<void(const QMap<int, QPointF> &)> updateOnSquareMove;
 
-    QTimer *checkDirty;
-
     int zoomPercent = 100;
-    BoardFile initialFile;
     int previouslyVisitedSquareId = -1;
     const QString defaultPriceFunction = QString("x * ( -0.15 * 0.2^(x/200) + 0.2 )");
     QString priceFunction = defaultPriceFunction;

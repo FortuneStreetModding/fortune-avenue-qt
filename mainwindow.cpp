@@ -38,8 +38,7 @@ MainWindow::MainWindow(QApplication& app)
                 data.positionX = it.value().x();
                 data.positionY = it.value().y();
             }
-        }),
-      checkDirty(nullptr)
+        })
 {
     app.installEventFilter(this);
     scene->installEventFilter(this);
@@ -193,9 +192,11 @@ MainWindow::MainWindow(QApplication& app)
         scene->setSnapSize(oldSnapSize);
     });
 
-    initialFile = exportFile();
-
     registerSquareSidebarEvents();
+
+    connect(undoStack, &QUndoStack::cleanChanged, this, [this](bool clean) {
+        setWindowModified(!clean);
+    });
 
     // for windows auto open
     auto args = app.arguments();
@@ -227,7 +228,7 @@ bool MainWindow::eventFilter(QObject *obj, QEvent *event)
         loadFile(fo->file());
     } else if (event->type() == FASceneSquareMoveEvent::TYPE) {
         FASceneSquareMoveEvent *sme = static_cast<FASceneSquareMoveEvent *>(event);
-        undoStack->push(new SquareMoveCmd(scene, sme->getOldPositions(), sme->getNewPositions(), true, updateOnSquareMove));
+        undoStack->push(new SquareMoveCmd(scene, sme->getOldPositions(), sme->getNewPositions(), updateOnSquareMove));
         return true;
     }
     return QObject::eventFilter(obj, event);
@@ -414,7 +415,7 @@ bool MainWindow::saveFile() {
     if (windowFilePath().isEmpty()) {
         return saveFileAs();
     } else {
-        // apply any changes to text boxes when saving
+        // apply any changes from text boxes when saving
         auto focusWidget = QApplication::focusWidget();
         if (focusWidget) focusWidget->clearFocus();
 
@@ -426,7 +427,7 @@ bool MainWindow::saveFile() {
             if (!saveFile.commit()) {
                 goto fail;
             }
-            initialFile = fileContents;
+            undoStack->setClean();
             return true;
         } else {
             fail:
@@ -449,8 +450,8 @@ bool MainWindow::saveFileAs() {
         if (!saveFile.commit()) {
             goto fail;
         }
-        initialFile = fileContents;
         setWindowFilePath(saveFileName);
+        undoStack->setClean();
         return true;
     } else {
         fail:
@@ -531,45 +532,13 @@ void MainWindow::loadFile(const BoardFile &file) {
         }
     }
 
-    initialFile = exportFile();
-
-    oldBoardFile = initialFile;
-
-    if (!checkDirty) {
-        checkDirty = new QTimer(this);
-        connect(checkDirty, &QTimer::timeout, this, [&]() {
-            setWindowModified(initialFile != exportFile());
-        });
-        checkDirty->setInterval(50);
-        checkDirty->start();
-    }
+    oldBoardFile = file;
 
     QCoreApplication::processEvents();
 }
 
 BoardFile MainWindow::exportFile() {
-    BoardFile file;
-    file.boardInfo.initialCash = ui->initialCash->text().toUShort();
-    file.boardInfo.baseSalary = ui->baseSalary->text().toUShort();
-    file.boardInfo.salaryIncrement = ui->salaryIncrement->text().toUShort();
-    file.boardInfo.maxDiceRoll = ui->maxDiceRoll->text().toUShort();
-    file.boardInfo.galaxyStatus = (LoopingMode)ui->loopingMode->checkedId();
-    file.boardInfo.versionFlag = ui->fileVersion->text().toUInt();
-
-    // VERSION 1
-    auto items = scene->squareItems();
-    for (auto item: qAsConst(items)) {
-        file.boardData.squares.append(item->getData());
-    }
-
-    // VERSION 2
-    file.boardInfo.autopathRange = ui->autopathRange->value();
-    file.boardInfo.straightLineTolerance = ui->straightLineTolerance->value();
-
-    // VERSION 3
-    file.boardInfo.useAdvancedAutoPath = ui->actionUse_Advanced_Auto_Path->isChecked();
-
-    return file;
+    return oldBoardFile;
 }
 
 void MainWindow::updateBoardInfoSidebar()
@@ -732,7 +701,7 @@ void MainWindow::registerSquareSidebarEvents() {
             pos.setX(ui->positionX->text().toInt());
             newPos[item->getData().id] = pos;
         }
-        if (oldPos != newPos) undoStack->push(new SquareMoveCmd(scene, oldPos, newPos, false, updateOnSquareMove));
+        if (oldPos != newPos) undoStack->push(new SquareMoveCmd(scene, oldPos, newPos, updateOnSquareMove));
     });
     connect(ui->positionY, &QLineEdit::editingFinished, this, [&]() {
         auto selItems = scene->selectedItems();
@@ -744,7 +713,7 @@ void MainWindow::registerSquareSidebarEvents() {
             pos.setY(ui->positionY->text().toInt());
             newPos[item->getData().id] = pos;
         }
-        if (oldPos != newPos) undoStack->push(new SquareMoveCmd(scene, oldPos, newPos, false, updateOnSquareMove));
+        if (oldPos != newPos) undoStack->push(new SquareMoveCmd(scene, oldPos, newPos, updateOnSquareMove));
     });
     connect(ui->districtDestinationId, &QLineEdit::editingFinished, this, [&]() {
         updateSquare([&](SquareItem *item) {
@@ -1096,7 +1065,7 @@ void MainWindow::updateDestinationUI() {
 
 void MainWindow::closeEvent(QCloseEvent *event) {
     // if no unsaved changes just close without fanfare
-    if (exportFile() == initialFile) {
+    if (!isWindowModified()) {
         event->accept();
         return;
     }
