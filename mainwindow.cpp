@@ -31,6 +31,13 @@ MainWindow::MainWindow(QApplication& app)
       square1Scene(new FortuneAvenueGraphicsScene(0,0,64,64,this)),
       square2Scene(new FortuneAvenueGraphicsScene(0,0,64,64,this)),
       undoStack(new QUndoStack(this)),
+      updateOnSquareMove([this](const QMap<int, QPointF> &positions) {
+            for (auto it=positions.begin(); it!=positions.end(); ++it) {
+                auto &data = oldSquaresData[it.key()];
+                data.positionX = it.value().x();
+                data.positionY = it.value().y();
+            }
+        }),
       checkDirty(nullptr)
 {
     app.installEventFilter(this);
@@ -193,13 +200,7 @@ bool MainWindow::eventFilter(QObject *obj, QEvent *event)
         loadFile(fo->file());
     } else if (event->type() == FASceneSquareMoveEvent::TYPE) {
         FASceneSquareMoveEvent *sme = static_cast<FASceneSquareMoveEvent *>(event);
-        undoStack->push(new SquareMoveCmd(scene, sme->getOldPositions(), sme->getNewPositions(), true, [this](const QMap<int, QPointF> &positions) {
-            for (auto it=positions.begin(); it!=positions.end(); ++it) {
-                auto &data = oldSquaresData[it.key()];
-                data.positionX = it.value().x();
-                data.positionY = it.value().y();
-            }
-        }));
+        undoStack->push(new SquareMoveCmd(scene, sme->getOldPositions(), sme->getNewPositions(), true, updateOnSquareMove));
         return true;
     }
     return QObject::eventFilter(obj, event);
@@ -670,22 +671,28 @@ void MainWindow::registerSquareSidebarEvents() {
         });
     });
     connect(ui->positionX, &QLineEdit::editingFinished, this, [&]() {
-        updateSquare([&](SquareItem *item) {
-            // temporarily disable snapping for setting position
-            int oldSnapSize = scene->getSnapSize();
-            scene->setSnapSize(1);
-            item->setX(ui->positionX->text().toInt());
-            scene->setSnapSize(oldSnapSize);
-        });
+        auto selItems = scene->selectedItems();
+        QMap<int, QPointF> oldPos, newPos;
+        for (auto &elem: selItems) {
+            SquareItem *item = (SquareItem *)elem;
+            auto pos = item->pos();
+            oldPos[item->getData().id] = pos;
+            pos.setX(ui->positionX->text().toInt());
+            newPos[item->getData().id] = pos;
+        }
+        if (oldPos != newPos) undoStack->push(new SquareMoveCmd(scene, oldPos, newPos, false, updateOnSquareMove));
     });
     connect(ui->positionY, &QLineEdit::editingFinished, this, [&]() {
-        updateSquare([&](SquareItem *item) {
-            // temporarily disable snapping for setting position
-            int oldSnapSize = scene->getSnapSize();
-            scene->setSnapSize(1);
-            item->setY(ui->positionY->text().toInt());
-            scene->setSnapSize(oldSnapSize);
-        });
+        auto selItems = scene->selectedItems();
+        QMap<int, QPointF> oldPos, newPos;
+        for (auto &elem: selItems) {
+            SquareItem *item = (SquareItem *)elem;
+            auto pos = item->pos();
+            oldPos[item->getData().id] = pos;
+            pos.setY(ui->positionY->text().toInt());
+            newPos[item->getData().id] = pos;
+        }
+        if (oldPos != newPos) undoStack->push(new SquareMoveCmd(scene, oldPos, newPos, false, updateOnSquareMove));
     });
     connect(ui->districtDestinationId, &QLineEdit::editingFinished, this, [&]() {
         updateSquare([&](SquareItem *item) {

@@ -32,6 +32,8 @@ private:
     QUndoStack *undoStack;
     QVector<SquareData> oldSquaresData;
 
+    std::function<void(const QMap<int, QPointF> &)> updateOnSquareMove;
+
     QTimer *checkDirty;
 
     int zoomPercent = 100;
