@@ -24,6 +24,7 @@
 #include "squareremovecmd.h"
 #include "squaremovecmd.h"
 #include "squarechangecmd.h"
+#include "updateboardmetacmd.h"
 
 MainWindow::MainWindow(QApplication& app)
     : QMainWindow(), ui(new Ui::MainWindow),
@@ -33,7 +34,7 @@ MainWindow::MainWindow(QApplication& app)
       undoStack(new QUndoStack(this)),
       updateOnSquareMove([this](const QMap<int, QPointF> &positions) {
             for (auto it=positions.begin(); it!=positions.end(); ++it) {
-                auto &data = oldSquaresData[it.key()];
+                auto &data = oldSquaresData()[it.key()];
                 data.positionX = it.value().x();
                 data.positionY = it.value().y();
             }
@@ -146,6 +147,32 @@ MainWindow::MainWindow(QApplication& app)
     redoAction->setShortcut(QKeySequence::Redo);
     ui->menuEdit->addAction(redoAction);
 
+    connect(ui->initialCash, &QLineEdit::editingFinished, this, [this]() {
+        addUpdateBoardMetaAction([this](BoardInfo &info) {
+            info.initialCash = ui->initialCash->text().toInt();
+        });
+    });
+    connect(ui->baseSalary, &QLineEdit::editingFinished, this, [this]() {
+        addUpdateBoardMetaAction([this](BoardInfo &info) {
+            info.baseSalary = ui->baseSalary->text().toInt();
+        });
+    });
+    connect(ui->salaryIncrement, &QLineEdit::editingFinished, this, [this]() {
+        addUpdateBoardMetaAction([this](BoardInfo &info) {
+            info.salaryIncrement = ui->salaryIncrement->text().toInt();
+        });
+    });
+    connect(ui->maxDiceRoll, &QLineEdit::editingFinished, this, [this]() {
+        addUpdateBoardMetaAction([this](BoardInfo &info) {
+            info.maxDiceRoll = ui->maxDiceRoll->text().toInt();
+        });
+    });
+    connect(ui->loopingMode, &QButtonGroup::idClicked, this, [this](int buttonId) {
+        addUpdateBoardMetaAction([=](BoardInfo &info) {
+            info.galaxyStatus = (LoopingMode)buttonId;
+        });
+    });
+
     connect(ui->addSquare, &QPushButton::clicked, this, &MainWindow::addSquare);
     connect(ui->removeSquare, &QPushButton::clicked, this, &MainWindow::removeSquare);
     connect(scene, &QGraphicsScene::changed, this, [&](const QList<QRectF> &) { updateSquareSidebar(); });
@@ -211,23 +238,39 @@ MainWindow::~MainWindow()
     delete ui;
 }
 
+QVector<SquareData> &MainWindow::oldSquaresData()
+{
+    return oldBoardFile.boardData.squares;
+}
+
 void MainWindow::addChangeSquaresAction(const QVector<int> &squareIdsToUpdate)
 {
     auto sqItems = scene->squareItems();
     QMap<int, SquareData> oldData, newData;
     for (int sqId: squareIdsToUpdate) {
-        oldData[sqId] = oldSquaresData[sqId];
+        oldData[sqId] = oldSquaresData()[sqId];
         newData[sqId] = sqItems[sqId]->getData();
     }
     if (oldData != newData) {
         undoStack->push(new SquareChangeCmd(scene, oldData, newData, [=]() {
             auto sqItems = scene->squareItems();
             for (int sqId: squareIdsToUpdate) {
-                oldSquaresData[sqId] = sqItems[sqId]->getData();
+                oldSquaresData()[sqId] = sqItems[sqId]->getData();
             }
             updateSquareSidebar();
         }));
     }
+}
+
+template<class Func>
+void MainWindow::addUpdateBoardMetaAction(Func &&func)
+{
+    auto oldBoardInfo = oldBoardFile.boardInfo;
+    func(oldBoardFile.boardInfo);
+    undoStack->push(new UpdateBoardMetaCmd(oldBoardInfo, oldBoardFile.boardInfo, [this](const BoardInfo &info) {
+        oldBoardFile.boardInfo = info;
+        updateBoardInfoSidebar();
+    }));
 }
 
 void MainWindow::updateZoom() {
@@ -490,7 +533,7 @@ void MainWindow::loadFile(const BoardFile &file) {
 
     initialFile = exportFile();
 
-    oldSquaresData = initialFile.boardData.squares;
+    oldBoardFile = initialFile;
 
     if (!checkDirty) {
         checkDirty = new QTimer(this);
@@ -527,6 +570,15 @@ BoardFile MainWindow::exportFile() {
     file.boardInfo.useAdvancedAutoPath = ui->actionUse_Advanced_Auto_Path->isChecked();
 
     return file;
+}
+
+void MainWindow::updateBoardInfoSidebar()
+{
+    ui->initialCash->setText(QString::number(oldBoardFile.boardInfo.initialCash));
+    ui->baseSalary->setText(QString::number(oldBoardFile.boardInfo.baseSalary));
+    ui->salaryIncrement->setText(QString::number(oldBoardFile.boardInfo.salaryIncrement));
+    ui->maxDiceRoll->setText(QString::number(oldBoardFile.boardInfo.maxDiceRoll));
+    ui->loopingMode->button(oldBoardFile.boardInfo.galaxyStatus)->setChecked(true);
 }
 
 void MainWindow::updateSquareSidebar() {
@@ -844,7 +896,7 @@ void MainWindow::registerSquareSidebarEvents() {
     });
 }
 
-template<typename Func> void MainWindow::updateSquare(Func func) {
+template<typename Func> void MainWindow::updateSquare(Func &&func) {
     auto selectedItems = scene->selectedItems();
     QVector<int> idsToUpdate;
     for(auto selectedItem : qAsConst(selectedItems)) {
@@ -873,9 +925,9 @@ void MainWindow::updateWaypoints() {
 void MainWindow::addSquare() {
     undoStack->push(new SquareAddCmd(scene, [this](SquareItem *item) {
                         if (item) {
-                            oldSquaresData.push_back(item->getData());
+                            oldSquaresData().push_back(item->getData());
                         } else {
-                            oldSquaresData.pop_back();
+                            oldSquaresData().pop_back();
                         }
                     }));
 }
@@ -885,9 +937,9 @@ void MainWindow::removeSquare() {
         undoStack->push(new SquareRemoveCmd(scene, [this](const QVector<SquareData> &squares, bool isRedo) {
             (void)squares;
             (void)isRedo;
-            oldSquaresData.clear();
+            oldSquaresData().clear();
             auto sqItems = scene->squareItems();
-            for (auto &item: sqItems) oldSquaresData.push_back(item->getData());
+            for (auto &item: sqItems) oldSquaresData().push_back(item->getData());
         }));
     }
 }

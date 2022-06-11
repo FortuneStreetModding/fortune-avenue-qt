@@ -2,8 +2,8 @@ TARGET="Fortune Avenue"
 
 #Application version
 VERSION_MAJOR = 2
-VERSION_MINOR = 3
-VERSION_BUILD = 1
+VERSION_MINOR = 4
+VERSION_BUILD = 0
 
 DEFINES += "VERSION_MAJOR=$$VERSION_MAJOR"\
        "VERSION_MINOR=$$VERSION_MINOR"\
@@ -47,7 +47,8 @@ SOURCES += \
     squarechangecmd.cpp \
     squareitem.cpp \
     squaremovecmd.cpp \
-    squareremovecmd.cpp
+    squareremovecmd.cpp \
+    updateboardmetacmd.cpp
 
 HEADERS += \
     autoassignshopmodelsdialog.h \
@@ -66,6 +67,7 @@ HEADERS += \
     squaremovecmd.h \
     squareremovecmd.h \
     static_block.hpp \
+    updateboardmetacmd.h \
     util.h
 
 FORMS += \
