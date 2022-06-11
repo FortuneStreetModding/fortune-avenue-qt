@@ -10,8 +10,9 @@ SquareChangeCmd::SquareChangeCmd(FortuneAvenueGraphicsScene *scene, const QMap<i
 void SquareChangeCmd::undo()
 {
     auto sqItems = scene->squareItems();
-    for (auto &item: sqItems) {
-        item->getData() = oldData[item->getData().id];
+    for (auto it = oldData.begin(); it != oldData.end(); ++it) {
+        auto item = sqItems[it.key()];
+        item->getData() = it.value();
         item->update();
     }
     updateFn();
@@ -20,8 +21,9 @@ void SquareChangeCmd::undo()
 void SquareChangeCmd::redo()
 {
     auto sqItems = scene->squareItems();
-    for (auto &item: sqItems) {
-        item->getData() = newData[item->getData().id];
+    for (auto it = newData.begin(); it != newData.end(); ++it) {
+        auto item = sqItems[it.key()];
+        item->getData() = it.value();
         item->update();
     }
     updateFn();

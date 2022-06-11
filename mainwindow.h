@@ -72,6 +72,9 @@ private:
     int calcSnapSizeFromInput();
     void updateSnapSize();
     void updateZoom();
+    /**
+     * updates allowed directions for autopathing
+     */
     void updateDestinationUI();
     void followWaypoint(int destinationId);
     void selectNext();

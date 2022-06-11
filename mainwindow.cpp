@@ -218,13 +218,15 @@ void MainWindow::addChangeSquaresAction(const QVector<int> &squareIdsToUpdate)
         oldData[sqId] = oldSquaresData[sqId];
         newData[sqId] = sqItems[sqId]->getData();
     }
-    undoStack->push(new SquareChangeCmd(scene, oldData, newData, [=]() {
-        auto sqItems = scene->squareItems();
-        for (int sqId: squareIdsToUpdate) {
-            oldSquaresData[sqId] = sqItems[sqId]->getData();
-        }
-        updateSquareSidebar();
-    }));
+    if (oldData != newData) {
+        undoStack->push(new SquareChangeCmd(scene, oldData, newData, [=]() {
+            auto sqItems = scene->squareItems();
+            for (int sqId: squareIdsToUpdate) {
+                oldSquaresData[sqId] = sqItems[sqId]->getData();
+            }
+            updateSquareSidebar();
+        }));
+    }
 }
 
 void MainWindow::updateZoom() {
@@ -657,8 +659,7 @@ void MainWindow::connectSquares(bool previousToCurrent, bool currentToPrevious) 
             AutoPath::connect(previous->getData(), current->getData());
         if(currentToPrevious)
             AutoPath::connect(current->getData(), previous->getData());
-        previous->update();
-        current->update();
+        addChangeSquaresAction({previous->getData().id, current->getData().id});
     }
 }
 
@@ -763,6 +764,7 @@ void MainWindow::registerSquareSidebarEvents() {
     ui->fromButtons->setId(ui->from_south, AutoPath::South);
     ui->fromButtons->setId(ui->from_southeast, AutoPath::Southeast);
 
+    // add dark mode icons
     auto fromButtons = ui->fromButtons->buttons();
     for (auto button: qAsConst(fromButtons)) {
         if (isDarkMode()) {
@@ -793,55 +795,44 @@ void MainWindow::registerSquareSidebarEvents() {
     });
     connect(ui->toButtons, &QButtonGroup::idClicked, this, [&](int toDir) {
         auto fromDir = ui->fromButtons->checkedId();
-        auto selectedItems = scene->selectedItems();
         if (fromDir >= 0) {
-            for(auto selectedItem : qAsConst(selectedItems)) {
-                SquareItem *item = (SquareItem *)selectedItem;
+            updateSquare([=](SquareItem *item) {
                 if (ui->toButtons->button(toDir)->isChecked()) {
                     item->getData().validDirections.insert((AutoPath::Direction)fromDir, (AutoPath::Direction)toDir);
                 } else {
                     item->getData().validDirections.remove((AutoPath::Direction)fromDir, (AutoPath::Direction)toDir);
                 }
-            }
+            });
         }
     });
 
     connect(ui->resetPaths, &QPushButton::clicked, this, [&]() {
-        auto selectedItems = scene->selectedItems();
-        for(auto selectedItem : qAsConst(selectedItems)) {
-            SquareItem *item = (SquareItem *)selectedItem;
+        updateSquare([=](SquareItem *item) {
             for (auto from: AutoPath::DIRECTIONS) {
                 for (auto to: AutoPath::DIRECTIONS) {
                     item->getData().validDirections.insert(from, to);
                 }
             }
-            updateDestinationUI();
-        }
+        });
     });
 
     connect(ui->allowAll, &QPushButton::clicked, this, [&]() {
         auto fromDir = ui->fromButtons->checkedId();
-        auto selectedItems = scene->selectedItems();
         if (fromDir >= 0) {
-            for(auto selectedItem : qAsConst(selectedItems)) {
-                SquareItem *item = (SquareItem *)selectedItem;
+            updateSquare([=](SquareItem *item) {
                 for (auto to: AutoPath::DIRECTIONS) {
                     item->getData().validDirections.insert((AutoPath::Direction)fromDir, to);
                 }
-                updateDestinationUI();
-            }
+            });
         }
     });
 
     connect(ui->disallowAll, &QPushButton::clicked, this, [&]() {
         auto fromDir = ui->fromButtons->checkedId();
-        auto selectedItems = scene->selectedItems();
         if (fromDir >= 0) {
-            for(auto selectedItem : qAsConst(selectedItems)) {
-                SquareItem *item = (SquareItem *)selectedItem;
+            updateSquare([=](SquareItem *item) {
                 item->getData().validDirections.remove((AutoPath::Direction)fromDir);
-                updateDestinationUI();
-            }
+            });
         }
     });
 }
@@ -1031,7 +1022,7 @@ void MainWindow::autoAssignShopModels() {
 
 void MainWindow::updateDestinationUI() {
     auto selectedItems = scene->selectedItems();
-    if (selectedItems.size() >= 1) {
+    if (!selectedItems.empty()) {
         SquareItem *item = (SquareItem *)selectedItems[0];
         auto allButtons = ui->toButtons->buttons();
         for (auto toButton: qAsConst(allButtons)) {
