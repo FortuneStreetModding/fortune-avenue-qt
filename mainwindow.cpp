@@ -484,7 +484,7 @@ void MainWindow::loadFile(const QString &fpath) {
 void MainWindow::loadFile(const BoardFile &file) {
     undoStack->clear();
 
-    ui->subBoardEdit->setEnabled(true);
+    ui->boardEdit->setEnabled(true);
     ui->actionSave->setEnabled(true);
     ui->actionSave_As->setEnabled(true);
     ui->menuTools->setEnabled(true);
@@ -511,6 +511,8 @@ void MainWindow::loadFile(const BoardFile &file) {
     }
     toggleAdvancedAutoPath();
 
+    oldBoardFile = file;
+
     if (file.boardInfo.versionFlag < 3) {
         auto response = QMessageBox::question(
             this,
@@ -520,19 +522,21 @@ void MainWindow::loadFile(const BoardFile &file) {
         );
         if (response == QMessageBox::Yes) {
             ui->fileVersion->setText(QString::number(3));
+            oldBoardFile.boardInfo.versionFlag = 3;
 
             // VERSION 0 -> VERSION >= 1
             if (file.boardInfo.versionFlag < 1) {
                 auto items = scene->squareItems();
-                for (auto item: qAsConst(items)) {
-                    auto touchingSquares = AutoPath::getTouchingSquares(item, items, ui->autopathRange->value(), ui->straightLineTolerance->value());
-                    AutoPath::enumerateAutopathingRules(item, touchingSquares);
+                for (int i=0; i<items.size(); ++i) {
+                    auto touchingSquares = AutoPath::getTouchingSquares(items[i], items, ui->autopathRange->value(), ui->straightLineTolerance->value());
+                    AutoPath::enumerateAutopathingRules(items[i], touchingSquares);
+                    oldBoardFile.boardData.squares[i] = items[i]->getData();
                 }
             }
+
+            undoStack->resetClean();
         }
     }
-
-    oldBoardFile = file;
 
     QCoreApplication::processEvents();
 }
@@ -1044,7 +1048,10 @@ void MainWindow::autoAssignShopModels() {
     auto items = scene->squareItems();
     AutoAssignShopModelsDialog dialog(this, &items, priceFunction);
     dialog.exec();
-    scene->update();
+    // mark all square ids as dirty
+    QVector<int> squareIds(items.size());
+    std::iota(squareIds.begin(), squareIds.end(), 0);
+    addChangeSquaresAction(squareIds);
     QCoreApplication::processEvents();
 }
 
