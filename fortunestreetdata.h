@@ -161,6 +161,9 @@ struct BoardInfo {
     quint16 straightLineTolerance = 20;
     bool useAdvancedAutoPath = false;
 
+    bool operator==(const BoardInfo &other) const;
+    bool operator!=(const BoardInfo &other) const;
+
     friend QDataStream &operator>>(QDataStream &stream, BoardInfo &data);
     friend QDataStream &operator<<(QDataStream &stream, const BoardInfo &data);
 private:

@@ -472,3 +472,21 @@ QList<QString> shopTextsWithValues() {
     }
     return shopTexts;
 }
+
+bool BoardInfo::operator==(const BoardInfo &other) const
+{
+    return initialCash == other.initialCash
+            && baseSalary == other.baseSalary
+            && targetAmount == other.targetAmount
+            && salaryIncrement == other.salaryIncrement
+            && maxDiceRoll == other.maxDiceRoll
+            && galaxyStatus == other.galaxyStatus
+            && versionFlag == other.versionFlag
+            && autopathRange == other.autopathRange
+            && straightLineTolerance == other.straightLineTolerance
+            && useAdvancedAutoPath == other.useAdvancedAutoPath;
+}
+
+bool BoardInfo::operator!=(const BoardInfo &other) const {
+    return !(*this == other);
+}

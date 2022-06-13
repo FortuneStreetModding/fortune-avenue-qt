@@ -282,11 +282,13 @@ void MainWindow::addUpdateBoardMetaAction(Func &&func, const QString &text)
 {
     auto oldBoardInfo = curBoardFile.boardInfo;
     func(curBoardFile.boardInfo);
-    undoStack->push(new UpdateBoardMetaCmd(oldBoardInfo, curBoardFile.boardInfo, text, [this](const BoardInfo &info) {
-        curBoardFile.boardInfo = info;
-        updateBoardInfoSidebar();
-        toggleAdvancedAutoPath();
-    }));
+    if (oldBoardInfo != curBoardFile.boardInfo) {
+        undoStack->push(new UpdateBoardMetaCmd(oldBoardInfo, curBoardFile.boardInfo, text, [this](const BoardInfo &info) {
+            curBoardFile.boardInfo = info;
+            updateBoardInfoSidebar();
+            toggleAdvancedAutoPath();
+        }));
+    }
 }
 
 void MainWindow::updateZoom() {
