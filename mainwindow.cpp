@@ -902,7 +902,7 @@ void MainWindow::updateWaypoints() {
                 item->getData().waypoints[i].destinations[j] = children[j]->text().toUInt();
             }
         }
-        item->update();
+        addChangeSquaresAction({item->getData().id});
     }
 }
 
