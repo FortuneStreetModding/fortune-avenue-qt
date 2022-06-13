@@ -35,6 +35,19 @@ qreal SquareData::getYield() {
     return (qreal) price / (qreal) value;
 }
 
+bool SquareData::operator==(const SquareData &other) const
+{
+    QByteArray arr0, arr1;
+    QDataStream ds0(&arr0, QIODevice::WriteOnly), ds1(&arr1, QIODevice::WriteOnly);
+    ds0 << *this;
+    ds1 << other;
+    return arr0 == arr1 && validDirections == other.validDirections;
+}
+
+bool SquareData::operator!=(const SquareData &other) const {
+    return !(*this == other);
+}
+
 QDataStream &operator>>(QDataStream &stream, SquareData &data) {
     stream >> data.squareType;
     stream >> data.positionX >> data.positionY;

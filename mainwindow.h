@@ -30,15 +30,20 @@ private:
     FortuneAvenueGraphicsScene *square2Scene;
 
     QUndoStack *undoStack;
+    BoardFile curBoardFile;
+    QVector<SquareData> &squaresData();
 
-    QTimer *checkDirty;
+    std::function<void(const QMap<int, QPointF> &)> updateOnSquareMove;
 
     int zoomPercent = 100;
-    BoardFile initialFile;
     int previouslyVisitedSquareId = -1;
     const QString defaultPriceFunction = QString("x * ( -0.15 * 0.2^(x/200) + 0.2 )");
     QString priceFunction = defaultPriceFunction;
     int maxPathSearchDepth = 0;
+
+    void addChangeSquaresAction(const QVector<int> &squareIdsToUpdate, const QString &text);
+    template<class Func>
+    void addUpdateBoardMetaAction(Func &&func, const QString &text);
 
     void connectSquares(bool previousToCurrent, bool currentToPrevious);
     QPair<SquareItem*,SquareItem*> getPreviousAndCurrentSquare();
@@ -46,9 +51,10 @@ private:
     void loadFile(const QString &fname);
     void loadFile(const BoardFile &file);
     BoardFile exportFile();
+    void updateBoardInfoSidebar();
     void registerSquareSidebarEvents();
     void updateSquareSidebar();
-    template<typename Func> void updateSquare(Func func);
+    template<typename Func> void updateSquare(Func &&func, const QString &text);
     void updateWaypoints();
     void newFile();
     void openFile();
@@ -69,6 +75,9 @@ private:
     int calcSnapSizeFromInput();
     void updateSnapSize();
     void updateZoom();
+    /**
+     * updates allowed directions for autopathing
+     */
     void updateDestinationUI();
     void followWaypoint(int destinationId);
     void selectNext();

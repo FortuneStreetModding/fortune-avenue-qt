@@ -5,6 +5,8 @@
 #include <QMap>
 #include <QtMath>
 #include <QVector>
+#include <QGraphicsSceneMouseEvent>
+//#include <QDebug>
 #include "darkdetect.h"
 #include "fortuneavenuegraphicsscene.h"
 #include "static_block.hpp"
@@ -75,6 +77,7 @@ SquareItem::SquareItem(const SquareData &dataValue, QGraphicsItem *parent) : QGr
     setFlag(ItemIsSelectable);
     setPos(data.positionX, data.positionY);
     setFlag(ItemSendsGeometryChanges);
+    updateZValueFromData();
 }
 
 QRectF SquareItem::boundingRect() const {
@@ -122,6 +125,10 @@ SquareData &SquareItem::getData() {
     return data;
 }
 
+const SquareData &SquareItem::getData() const {
+    return data;
+}
+
 void SquareItem::drawBackgroundedTextCentered(QPainter *painter, int x, int y, const QString &text, const QBrush &bgBrush) {
     auto boundingRect = painter->fontMetrics().boundingRect(text);
     drawBackgroundedText(painter, x - boundingRect.width()/2, y, text, bgBrush);
@@ -163,3 +170,47 @@ QPointF SquareItem::getSnapLocation(const QPointF &loc) {
     }
     return loc;
 }
+
+void SquareItem::updateZValueFromData()
+{
+    setZValue(data.id);
+}
+
+/*
+void SquareItem::mousePressEvent(QGraphicsSceneMouseEvent *event)
+{
+    //qDebug() << "mouse press";
+    QGraphicsItem::mousePressEvent(event);
+    oldPoint = pos();
+}
+
+void SquareItem::mouseReleaseEvent(QGraphicsSceneMouseEvent *event)
+{
+    //qDebug() << "mouse release";
+    QGraphicsItem::mouseReleaseEvent(event);
+    SquareMouseMoveEvent ev(this, oldPoint, pos());
+    QApplication::sendEvent(scene(), &ev);
+}
+
+QEvent::Type SquareMouseMoveEvent::TYPE = (QEvent::Type)QEvent::registerEventType();
+
+SquareMouseMoveEvent::SquareMouseMoveEvent(SquareItem *item, const QPointF &oldPoint, const QPointF &newPoint)
+    : QEvent(TYPE), item(item), oldPoint(oldPoint), newPoint(newPoint)
+{
+}
+
+QPointF SquareMouseMoveEvent::getOldPoint() const
+{
+    return oldPoint;
+}
+
+QPointF SquareMouseMoveEvent::getNewPoint() const
+{
+    return newPoint;
+}
+
+SquareItem *SquareMouseMoveEvent::getItem() const
+{
+    return item;
+}
+*/

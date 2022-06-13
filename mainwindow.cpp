@@ -20,6 +20,11 @@
 #include "screenshotdialog.h"
 #include "autoassignshopmodelsdialog.h"
 #include "muParser.h"
+#include "squareaddcmd.h"
+#include "squareremovecmd.h"
+#include "squaremovecmd.h"
+#include "squarechangecmd.h"
+#include "updateboardmetacmd.h"
 
 MainWindow::MainWindow(QApplication& app)
     : QMainWindow(), ui(new Ui::MainWindow),
@@ -27,9 +32,16 @@ MainWindow::MainWindow(QApplication& app)
       square1Scene(new FortuneAvenueGraphicsScene(0,0,64,64,this)),
       square2Scene(new FortuneAvenueGraphicsScene(0,0,64,64,this)),
       undoStack(new QUndoStack(this)),
-      checkDirty(nullptr)
+      updateOnSquareMove([this](const QMap<int, QPointF> &positions) {
+            for (auto it=positions.begin(); it!=positions.end(); ++it) {
+                auto &data = squaresData()[it.key()];
+                data.positionX = it.value().x();
+                data.positionY = it.value().y();
+            }
+        })
 {
     app.installEventFilter(this);
+    scene->installEventFilter(this);
     ui->setupUi(this);
     waypointStarts = {ui->waypoint1Start, ui->waypoint2Start, ui->waypoint3Start, ui->waypoint4Start};
     waypointDests = {ui->waypoint1Dests, ui->waypoint2Dests, ui->waypoint3Dests, ui->waypoint4Dests};
@@ -93,7 +105,11 @@ MainWindow::MainWindow(QApplication& app)
     connect(ui->actionNext, &QAction::triggered, this, &MainWindow::selectNext);
     connect(ui->actionPrevious, &QAction::triggered, this, &MainWindow::selectPrevious);
     connect(ui->actionSelectAll, &QAction::triggered, this, &MainWindow::selectAll);
-    connect(ui->actionUse_Advanced_Auto_Path, &QAction::triggered, this, &MainWindow::toggleAdvancedAutoPath);
+    connect(ui->actionUse_Advanced_Auto_Path, &QAction::triggered, this, [this]() {
+        addUpdateBoardMetaAction([this](BoardInfo &info) {
+            info.useAdvancedAutoPath = ui->actionUse_Advanced_Auto_Path->isChecked();
+        }, "Toggle Advanced Auto Path");
+    });
     toggleAdvancedAutoPath();
 
     connect(ui->actionAuto_Calc_Custom_Function, &QAction::triggered, this, [&]() {
@@ -127,6 +143,49 @@ MainWindow::MainWindow(QApplication& app)
         }
     });
 
+    auto undoAction = undoStack->createUndoAction(ui->menuEdit);
+    undoAction->setShortcut(QKeySequence::Undo);
+    ui->menuEdit->addAction(undoAction);
+    auto redoAction = undoStack->createRedoAction(ui->menuEdit);
+    redoAction->setShortcut(QKeySequence::Redo);
+    ui->menuEdit->addAction(redoAction);
+
+    connect(ui->initialCash, &QLineEdit::editingFinished, this, [this]() {
+        addUpdateBoardMetaAction([this](BoardInfo &info) {
+            info.initialCash = ui->initialCash->text().toInt();
+        }, "Update Initial Cash");
+    });
+    connect(ui->baseSalary, &QLineEdit::editingFinished, this, [this]() {
+        addUpdateBoardMetaAction([this](BoardInfo &info) {
+            info.baseSalary = ui->baseSalary->text().toInt();
+        }, "Update Base Salary");
+    });
+    connect(ui->salaryIncrement, &QLineEdit::editingFinished, this, [this]() {
+        addUpdateBoardMetaAction([this](BoardInfo &info) {
+            info.salaryIncrement = ui->salaryIncrement->text().toInt();
+        }, "Update Salary Increment");
+    });
+    connect(ui->maxDiceRoll, &QLineEdit::editingFinished, this, [this]() {
+        addUpdateBoardMetaAction([this](BoardInfo &info) {
+            info.maxDiceRoll = ui->maxDiceRoll->text().toInt();
+        }, "Update Max Dice Roll");
+    });
+    connect(ui->loopingMode, &QButtonGroup::idClicked, this, [this](int buttonId) {
+        addUpdateBoardMetaAction([=](BoardInfo &info) {
+            info.galaxyStatus = (LoopingMode)buttonId;
+        }, "Update Looping Mode");
+    });
+    connect(ui->autopathRange, &QSpinBox::editingFinished, this, [this]() {
+        addUpdateBoardMetaAction([this](BoardInfo &info) {
+            info.autopathRange = ui->autopathRange->value();
+        }, "Update Autopath Range");
+    });
+    connect(ui->straightLineTolerance, &QSpinBox::editingFinished, this, [this]() {
+        addUpdateBoardMetaAction([this](BoardInfo &info) {
+            info.straightLineTolerance = ui->straightLineTolerance->value();
+        }, "Update Straight Line Tolerance");
+    });
+
     connect(ui->addSquare, &QPushButton::clicked, this, &MainWindow::addSquare);
     connect(ui->removeSquare, &QPushButton::clicked, this, &MainWindow::removeSquare);
     connect(scene, &QGraphicsScene::changed, this, [&](const QList<QRectF> &) { updateSquareSidebar(); });
@@ -147,9 +206,11 @@ MainWindow::MainWindow(QApplication& app)
         scene->setSnapSize(oldSnapSize);
     });
 
-    initialFile = exportFile();
-
     registerSquareSidebarEvents();
+
+    connect(undoStack, &QUndoStack::cleanChanged, this, [this](bool clean) {
+        setWindowModified(!clean);
+    });
 
     // for windows auto open
     auto args = app.arguments();
@@ -179,6 +240,10 @@ bool MainWindow::eventFilter(QObject *obj, QEvent *event)
     } else if (event->type() == QEvent::FileOpen) {
         QFileOpenEvent *fo = static_cast<QFileOpenEvent *>(event);
         loadFile(fo->file());
+    } else if (event->type() == FASceneSquareMoveEvent::TYPE) {
+        FASceneSquareMoveEvent *sme = static_cast<FASceneSquareMoveEvent *>(event);
+        undoStack->push(new SquareMoveCmd(scene, sme->getOldPositions(), sme->getNewPositions(), updateOnSquareMove));
+        return true;
     }
     return QObject::eventFilter(obj, event);
 }
@@ -186,6 +251,42 @@ bool MainWindow::eventFilter(QObject *obj, QEvent *event)
 MainWindow::~MainWindow()
 {
     delete ui;
+}
+
+QVector<SquareData> &MainWindow::squaresData()
+{
+    return curBoardFile.boardData.squares;
+}
+
+void MainWindow::addChangeSquaresAction(const QVector<int> &squareIdsToUpdate, const QString &text)
+{
+    auto sqItems = scene->squareItems();
+    QMap<int, SquareData> oldData, newData;
+    for (int sqId: squareIdsToUpdate) {
+        oldData[sqId] = squaresData()[sqId];
+        newData[sqId] = sqItems[sqId]->getData();
+    }
+    if (oldData != newData) {
+        undoStack->push(new SquareChangeCmd(scene, oldData, newData, text, [=]() {
+            auto sqItems = scene->squareItems();
+            for (int sqId: squareIdsToUpdate) {
+                squaresData()[sqId] = sqItems[sqId]->getData();
+            }
+            updateSquareSidebar();
+        }));
+    }
+}
+
+template<class Func>
+void MainWindow::addUpdateBoardMetaAction(Func &&func, const QString &text)
+{
+    auto oldBoardInfo = curBoardFile.boardInfo;
+    func(curBoardFile.boardInfo);
+    undoStack->push(new UpdateBoardMetaCmd(oldBoardInfo, curBoardFile.boardInfo, text, [this](const BoardInfo &info) {
+        curBoardFile.boardInfo = info;
+        updateBoardInfoSidebar();
+        toggleAdvancedAutoPath();
+    }));
 }
 
 void MainWindow::updateZoom() {
@@ -307,7 +408,8 @@ void MainWindow::selectAll() {
 }
 
 void MainWindow::toggleAdvancedAutoPath() {
-    bool visible = ui->actionUse_Advanced_Auto_Path->isChecked();
+    bool visible = curBoardFile.boardInfo.useAdvancedAutoPath;
+    ui->actionUse_Advanced_Auto_Path->setChecked(visible);
     ui->autoPathCfg->setVisible(visible);
     ui->autopathArrowsWidget->setVisible(visible);
 }
@@ -329,6 +431,10 @@ bool MainWindow::saveFile() {
     if (windowFilePath().isEmpty()) {
         return saveFileAs();
     } else {
+        // apply any changes from text boxes when saving
+        auto focusWidget = QApplication::focusWidget();
+        if (focusWidget) focusWidget->clearFocus();
+
         QSaveFile saveFile(windowFilePath());
         if (saveFile.open(QIODevice::WriteOnly)) {
             QDataStream stream(&saveFile);
@@ -337,7 +443,7 @@ bool MainWindow::saveFile() {
             if (!saveFile.commit()) {
                 goto fail;
             }
-            initialFile = fileContents;
+            undoStack->setClean();
             return true;
         } else {
             fail:
@@ -360,8 +466,8 @@ bool MainWindow::saveFileAs() {
         if (!saveFile.commit()) {
             goto fail;
         }
-        initialFile = fileContents;
         setWindowFilePath(saveFileName);
+        undoStack->setClean();
         return true;
     } else {
         fail:
@@ -392,30 +498,25 @@ void MainWindow::loadFile(const QString &fpath) {
 }
 
 void MainWindow::loadFile(const BoardFile &file) {
-    ui->subBoardEdit->setEnabled(true);
+    undoStack->clear();
+
+    curBoardFile = file;
+
+    ui->boardEdit->setEnabled(true);
     ui->actionSave->setEnabled(true);
     ui->actionSave_As->setEnabled(true);
     ui->menuTools->setEnabled(true);
     ui->menuView->setEnabled(true);
 
-    ui->initialCash->setText(QString::number(file.boardInfo.initialCash));
-    ui->baseSalary->setText(QString::number(file.boardInfo.baseSalary));
-    ui->salaryIncrement->setText(QString::number(file.boardInfo.salaryIncrement));
-    ui->maxDiceRoll->setText(QString::number(file.boardInfo.maxDiceRoll));
-    ui->loopingMode->button(file.boardInfo.galaxyStatus)->setChecked(true);
-    ui->fileVersion->setText(QString::number(file.boardInfo.versionFlag));
-    ui->autopathRange->setValue(file.boardInfo.autopathRange);
-    ui->straightLineTolerance->setValue(file.boardInfo.straightLineTolerance);
+    if (file.boardInfo.versionFlag < 3) {
+        curBoardFile.boardInfo.useAdvancedAutoPath = (file.boardInfo.versionFlag != 0);
+    }
+
+    updateBoardInfoSidebar();
+
     scene->clearSquares();
     for (auto &square: file.boardData.squares) {
         scene->addItem(new SquareItem(square));
-    }
-    if(file.boardInfo.versionFlag >= 3) {
-        ui->actionUse_Advanced_Auto_Path->setChecked(file.boardInfo.useAdvancedAutoPath);
-    } else if (file.boardInfo.versionFlag > 0) {
-        ui->actionUse_Advanced_Auto_Path->setChecked(true);
-    } else if (file.boardInfo.versionFlag == 0) {
-        ui->actionUse_Advanced_Auto_Path->setChecked(false);
     }
     toggleAdvancedAutoPath();
 
@@ -428,59 +529,45 @@ void MainWindow::loadFile(const BoardFile &file) {
         );
         if (response == QMessageBox::Yes) {
             ui->fileVersion->setText(QString::number(3));
+            curBoardFile.boardInfo.versionFlag = 3;
 
             // VERSION 0 -> VERSION >= 1
             if (file.boardInfo.versionFlag < 1) {
                 auto items = scene->squareItems();
-                for (auto item: qAsConst(items)) {
-                    auto touchingSquares = AutoPath::getTouchingSquares(item, items, ui->autopathRange->value(), ui->straightLineTolerance->value());
-                    AutoPath::enumerateAutopathingRules(item, touchingSquares);
+                for (int i=0; i<items.size(); ++i) {
+                    auto touchingSquares = AutoPath::getTouchingSquares(items[i], items, ui->autopathRange->value(), ui->straightLineTolerance->value());
+                    AutoPath::enumerateAutopathingRules(items[i], touchingSquares);
+                    curBoardFile.boardData.squares[i] = items[i]->getData();
                 }
             }
+
+            undoStack->resetClean();
+            updateBoardInfoSidebar();
         }
-    }
-
-    initialFile = exportFile();
-
-    if (!checkDirty) {
-        checkDirty = new QTimer(this);
-        connect(checkDirty, &QTimer::timeout, this, [&]() {
-            setWindowModified(initialFile != exportFile());
-        });
-        checkDirty->setInterval(50);
-        checkDirty->start();
     }
 
     QCoreApplication::processEvents();
 }
 
 BoardFile MainWindow::exportFile() {
-    BoardFile file;
-    file.boardInfo.initialCash = ui->initialCash->text().toUShort();
-    file.boardInfo.baseSalary = ui->baseSalary->text().toUShort();
-    file.boardInfo.salaryIncrement = ui->salaryIncrement->text().toUShort();
-    file.boardInfo.maxDiceRoll = ui->maxDiceRoll->text().toUShort();
-    file.boardInfo.galaxyStatus = (LoopingMode)ui->loopingMode->checkedId();
-    file.boardInfo.versionFlag = ui->fileVersion->text().toUInt();
+    return curBoardFile;
+}
 
-    // VERSION 1
-    auto items = scene->squareItems();
-    for (auto item: qAsConst(items)) {
-        file.boardData.squares.append(item->getData());
-    }
-
-    // VERSION 2
-    file.boardInfo.autopathRange = ui->autopathRange->value();
-    file.boardInfo.straightLineTolerance = ui->straightLineTolerance->value();
-
-    // VERSION 3
-    file.boardInfo.useAdvancedAutoPath = ui->actionUse_Advanced_Auto_Path->isChecked();
-
-    return file;
+void MainWindow::updateBoardInfoSidebar()
+{
+    ui->initialCash->setText(QString::number(curBoardFile.boardInfo.initialCash));
+    ui->baseSalary->setText(QString::number(curBoardFile.boardInfo.baseSalary));
+    ui->salaryIncrement->setText(QString::number(curBoardFile.boardInfo.salaryIncrement));
+    ui->maxDiceRoll->setText(QString::number(curBoardFile.boardInfo.maxDiceRoll));
+    ui->fileVersion->setText(QString::number(curBoardFile.boardInfo.versionFlag));
+    ui->autopathRange->setValue(curBoardFile.boardInfo.autopathRange);
+    ui->straightLineTolerance->setValue(curBoardFile.boardInfo.straightLineTolerance);
+    ui->loopingMode->button(curBoardFile.boardInfo.galaxyStatus)->setChecked(true);
 }
 
 void MainWindow::updateSquareSidebar() {
     auto selectedItems = scene->selectedItems();
+    ui->squareEdit->setEnabled(!selectedItems.empty());
     ui->actionFollowWaypoint1->setEnabled(selectedItems.size() == 2);
     ui->actionFollowWaypoint2->setEnabled(selectedItems.size() == 2);
     ui->actionFollowWaypoint3->setEnabled(selectedItems.size() == 2);
@@ -609,8 +696,7 @@ void MainWindow::connectSquares(bool previousToCurrent, bool currentToPrevious) 
             AutoPath::connect(previous->getData(), current->getData());
         if(currentToPrevious)
             AutoPath::connect(current->getData(), previous->getData());
-        previous->update();
-        current->update();
+        addChangeSquaresAction({previous->getData().id, current->getData().id}, "Connect Squares");
     }
 }
 
@@ -618,30 +704,36 @@ void MainWindow::registerSquareSidebarEvents() {
     connect(ui->type, &QComboBox::textActivated, this, [&](const QString &) {
         updateSquare([&](SquareItem *item) {
             item->getData().squareType = textToSquareType(ui->type->currentText());
-        });
+        }, "Change Square Type");
     });
-    connect(ui->positionX, &QLineEdit::textEdited, this, [&](const QString &) {
-        updateSquare([&](SquareItem *item) {
-            // temporarily disable snapping for setting position
-            int oldSnapSize = scene->getSnapSize();
-            scene->setSnapSize(1);
-            item->setX(ui->positionX->text().toInt());
-            scene->setSnapSize(oldSnapSize);
-        });
+    connect(ui->positionX, &QLineEdit::editingFinished, this, [&]() {
+        auto selItems = scene->selectedItems();
+        QMap<int, QPointF> oldPos, newPos;
+        for (auto &elem: selItems) {
+            SquareItem *item = (SquareItem *)elem;
+            auto pos = item->pos();
+            oldPos[item->getData().id] = pos;
+            pos.setX(ui->positionX->text().toInt());
+            newPos[item->getData().id] = pos;
+        }
+        if (oldPos != newPos) undoStack->push(new SquareMoveCmd(scene, oldPos, newPos, updateOnSquareMove));
     });
-    connect(ui->positionY, &QLineEdit::textEdited, this, [&](const QString &) {
-        updateSquare([&](SquareItem *item) {
-            // temporarily disable snapping for setting position
-            int oldSnapSize = scene->getSnapSize();
-            scene->setSnapSize(1);
-            item->setY(ui->positionY->text().toInt());
-            scene->setSnapSize(oldSnapSize);
-        });
+    connect(ui->positionY, &QLineEdit::editingFinished, this, [&]() {
+        auto selItems = scene->selectedItems();
+        QMap<int, QPointF> oldPos, newPos;
+        for (auto &elem: selItems) {
+            SquareItem *item = (SquareItem *)elem;
+            auto pos = item->pos();
+            oldPos[item->getData().id] = pos;
+            pos.setY(ui->positionY->text().toInt());
+            newPos[item->getData().id] = pos;
+        }
+        if (oldPos != newPos) undoStack->push(new SquareMoveCmd(scene, oldPos, newPos, updateOnSquareMove));
     });
-    connect(ui->districtDestinationId, &QLineEdit::textEdited, this, [&](const QString &) {
+    connect(ui->districtDestinationId, &QLineEdit::editingFinished, this, [&]() {
         updateSquare([&](SquareItem *item) {
             item->getData().districtDestinationId = ui->districtDestinationId->text().toUInt();
-        });
+        }, "Change Distrct/Destination ID");
     });
     connect(ui->shopModel, &QComboBox::textActivated, this, [&](const QString &) {
         updateSquare([&](SquareItem *item) {
@@ -653,16 +745,14 @@ void MainWindow::registerSquareSidebarEvents() {
                     item->getData().price = newPrice;
                 } catch (mu::Parser::exception_type &e) {}
             }
-            updateSquareSidebar();
-        });
+        }, "Chnage Shop Model");
     });
-    connect(ui->shopModelId, &QLineEdit::textEdited, this, [&](const QString &) {
+    connect(ui->shopModelId, &QLineEdit::editingFinished, this, [&]() {
         updateSquare([&](SquareItem *item) {
             item->getData().shopModel = ui->shopModelId->text().toUShort();
-            updateSquareSidebar();
-        });
+        }, "Change Shop Model ID");
     });
-    connect(ui->initialValue, &QLineEdit::textEdited, this, [&](const QString &) {
+    connect(ui->initialValue, &QLineEdit::editingFinished, this, [&]() {
         updateSquare([&](SquareItem *item) {
             item->getData().value = ui->initialValue->text().toUShort();
             if(ui->autoCalcPrice->isChecked()) {
@@ -671,25 +761,24 @@ void MainWindow::registerSquareSidebarEvents() {
                     item->getData().price = newPrice;
                 } catch (mu::Parser::exception_type &e) {}
             }
-            updateSquareSidebar();
-        });
+        }, "Change Initial Shop Value");
     });
-    connect(ui->initialPrice, &QLineEdit::textEdited, this, [&](const QString &) {
+    connect(ui->initialPrice, &QLineEdit::editingFinished, this, [&]() {
         updateSquare([&](SquareItem *item) {
             item->getData().price = ui->initialPrice->text().toUShort();
-        });
+        }, "Change Initial Shop Price");
     });
     connect(ui->isLift, &QCheckBox::clicked, this, [&](bool) {
         updateSquare([&](SquareItem *item) {
             item->getData().oneWayLift = ui->isLift->isChecked();
-        });
+        }, "Change Is Lift");
     });
     for (auto &waypointStart: waypointStarts) {
-        connect(waypointStart, &QLineEdit::textEdited, this, [&](const QString &) { updateWaypoints(); });
+        connect(waypointStart, &QLineEdit::editingFinished, this, [&]() { updateWaypoints(); });
     }
     for (auto &waypointDest: waypointDests) {
         for (auto &child: waypointDest->findChildren<QLineEdit *>()) {
-            connect(child, &QLineEdit::textEdited, this, [&](const QString &) { updateWaypoints(); });
+            connect(child, &QLineEdit::editingFinished, this, [&]() { updateWaypoints(); });
         }
     }
     connect(ui->clearAllWaypoints, &QPushButton::clicked, this, [&](bool) {
@@ -698,13 +787,13 @@ void MainWindow::registerSquareSidebarEvents() {
             clearWaypoint(item, 1);
             clearWaypoint(item, 2);
             clearWaypoint(item, 3);
-        });
+        }, "Clear All Waypoints");
     });
-    connect(ui->clearWaypoint1, &QPushButton::clicked, this, [&](bool) { updateSquare([&](SquareItem *item) { clearWaypoint(item, 0); }); });
-    connect(ui->clearWaypoint2, &QPushButton::clicked, this, [&](bool) { updateSquare([&](SquareItem *item) { clearWaypoint(item, 1); }); });
-    connect(ui->clearWaypoint3, &QPushButton::clicked, this, [&](bool) { updateSquare([&](SquareItem *item) { clearWaypoint(item, 2); }); });
-    connect(ui->clearWaypoint4, &QPushButton::clicked, this, [&](bool) { updateSquare([&](SquareItem *item) { clearWaypoint(item, 3); }); });
-    connect(ui->sortAllWaypoints, &QPushButton::clicked, this, [&](bool) { updateSquare([&](SquareItem *item) { AutoPath::sortWaypoints(item); }); });
+    connect(ui->clearWaypoint1, &QPushButton::clicked, this, [&](bool) { updateSquare([&](SquareItem *item) { clearWaypoint(item, 0); }, "Clear Waypoint 1"); });
+    connect(ui->clearWaypoint2, &QPushButton::clicked, this, [&](bool) { updateSquare([&](SquareItem *item) { clearWaypoint(item, 1); }, "Clear Waypoint 2"); });
+    connect(ui->clearWaypoint3, &QPushButton::clicked, this, [&](bool) { updateSquare([&](SquareItem *item) { clearWaypoint(item, 2); }, "Clear Waypoint 3"); });
+    connect(ui->clearWaypoint4, &QPushButton::clicked, this, [&](bool) { updateSquare([&](SquareItem *item) { clearWaypoint(item, 3); }, "Clear Waypoint 4"); });
+    connect(ui->sortAllWaypoints, &QPushButton::clicked, this, [&](bool) { updateSquare([&](SquareItem *item) { AutoPath::sortWaypoints(item); }, "Sort Waypoints"); });
     connect(ui->connectSquareItem1_2, &QPushButton::clicked, this, [&](bool) { connectSquares(true, false); });
     connect(ui->connectSquareItem2_1, &QPushButton::clicked, this, [&](bool) { connectSquares(false, true); });
     connect(ui->connectSquareItemBi, &QPushButton::clicked, this, [&](bool) { connectSquares(true, true); });
@@ -718,6 +807,7 @@ void MainWindow::registerSquareSidebarEvents() {
     ui->fromButtons->setId(ui->from_south, AutoPath::South);
     ui->fromButtons->setId(ui->from_southeast, AutoPath::Southeast);
 
+    // add dark mode icons
     auto fromButtons = ui->fromButtons->buttons();
     for (auto button: qAsConst(fromButtons)) {
         if (isDarkMode()) {
@@ -748,66 +838,57 @@ void MainWindow::registerSquareSidebarEvents() {
     });
     connect(ui->toButtons, &QButtonGroup::idClicked, this, [&](int toDir) {
         auto fromDir = ui->fromButtons->checkedId();
-        auto selectedItems = scene->selectedItems();
         if (fromDir >= 0) {
-            for(auto selectedItem : qAsConst(selectedItems)) {
-                SquareItem *item = (SquareItem *)selectedItem;
+            updateSquare([=](SquareItem *item) {
                 if (ui->toButtons->button(toDir)->isChecked()) {
                     item->getData().validDirections.insert((AutoPath::Direction)fromDir, (AutoPath::Direction)toDir);
                 } else {
                     item->getData().validDirections.remove((AutoPath::Direction)fromDir, (AutoPath::Direction)toDir);
                 }
-            }
+            }, "Toggle (Dis)allowed Direction");
         }
     });
 
     connect(ui->resetPaths, &QPushButton::clicked, this, [&]() {
-        auto selectedItems = scene->selectedItems();
-        for(auto selectedItem : qAsConst(selectedItems)) {
-            SquareItem *item = (SquareItem *)selectedItem;
+        updateSquare([=](SquareItem *item) {
             for (auto from: AutoPath::DIRECTIONS) {
                 for (auto to: AutoPath::DIRECTIONS) {
                     item->getData().validDirections.insert(from, to);
                 }
             }
-            updateDestinationUI();
-        }
+        }, "Rest Autopath Directions");
     });
 
     connect(ui->allowAll, &QPushButton::clicked, this, [&]() {
         auto fromDir = ui->fromButtons->checkedId();
-        auto selectedItems = scene->selectedItems();
         if (fromDir >= 0) {
-            for(auto selectedItem : qAsConst(selectedItems)) {
-                SquareItem *item = (SquareItem *)selectedItem;
+            updateSquare([=](SquareItem *item) {
                 for (auto to: AutoPath::DIRECTIONS) {
                     item->getData().validDirections.insert((AutoPath::Direction)fromDir, to);
                 }
-                updateDestinationUI();
-            }
+            }, "Allow All Directions");
         }
     });
 
     connect(ui->disallowAll, &QPushButton::clicked, this, [&]() {
         auto fromDir = ui->fromButtons->checkedId();
-        auto selectedItems = scene->selectedItems();
         if (fromDir >= 0) {
-            for(auto selectedItem : qAsConst(selectedItems)) {
-                SquareItem *item = (SquareItem *)selectedItem;
+            updateSquare([=](SquareItem *item) {
                 item->getData().validDirections.remove((AutoPath::Direction)fromDir);
-                updateDestinationUI();
-            }
+            }, "Disallow All Directions");
         }
     });
 }
 
-template<typename Func> void MainWindow::updateSquare(Func func) {
+template<typename Func> void MainWindow::updateSquare(Func &&func, const QString &text) {
     auto selectedItems = scene->selectedItems();
+    QVector<int> idsToUpdate;
     for(auto selectedItem : qAsConst(selectedItems)) {
         SquareItem *item = (SquareItem *)selectedItem;
         func(item);
-        item->update();
+        idsToUpdate.push_back(item->getData().id);
     }
+    addChangeSquaresAction(idsToUpdate, text);
 }
 
 void MainWindow::updateWaypoints() {
@@ -821,41 +902,30 @@ void MainWindow::updateWaypoints() {
                 item->getData().waypoints[i].destinations[j] = children[j]->text().toUInt();
             }
         }
-        item->update();
+        addChangeSquaresAction({item->getData().id}, "Update Waypoint");
     }
 }
 
 void MainWindow::addSquare() {
-    scene->addItem(new SquareItem(SquareData(scene->squareItems().size() /* add next index */)));
+    undoStack->push(new SquareAddCmd(scene, [this](SquareItem *item) {
+                        if (item) {
+                            squaresData().push_back(item->getData());
+                        } else {
+                            squaresData().pop_back();
+                        }
+                    }));
 }
 
 void MainWindow::removeSquare() {
-    auto selectedItems = scene->selectedItems();
-    scene->clearSelection();
-    for (auto selectedItem: qAsConst(selectedItems)) {
-        scene->removeItem(selectedItem);
-        delete selectedItem;
+    if (!scene->selectedItems().empty()) {
+        undoStack->push(new SquareRemoveCmd(scene, [this](const QVector<SquareData> &squares, bool isRedo) {
+            (void)squares;
+            (void)isRedo;
+            squaresData().clear();
+            auto sqItems = scene->squareItems();
+            for (auto &item: sqItems) squaresData().push_back(item->getData());
+        }));
     }
-
-    // fix square ids
-    QMap<quint8, quint8> oldToNewIDs;
-    auto items = scene->squareItems();
-    for (int i=0; i<items.size(); ++i) {
-        oldToNewIDs[items[i]->getData().id] = i;
-        items[i]->getData().id = i;
-    }
-
-    // and waypoints
-    for (auto item: qAsConst(items)) {
-        for (auto &waypoint: item->getData().waypoints) {
-            waypoint.entryId = oldToNewIDs.value(waypoint.entryId, 255);
-            for (auto &dest: waypoint.destinations) {
-                dest = oldToNewIDs.value(dest, 255);
-            }
-        }
-    }
-
-    scene->update();
 }
 
 int MainWindow::calcSnapSizeFromInput() {
@@ -977,7 +1047,9 @@ void MainWindow::autoPath() {
         AutoPath::kruskalDfsAutoPathAlgorithm(qAsConst(items));
     }
     QMessageBox::information(this, "Auto-pathing", "Auto-pathed entire map");
-    updateSquareSidebar();
+    QVector<int> squareIds(items.size());
+    std::iota(squareIds.begin(), squareIds.end(), 0);
+    addChangeSquaresAction(squareIds, "Autopath");
 }
 
 void MainWindow::screenshot() {
@@ -989,13 +1061,16 @@ void MainWindow::autoAssignShopModels() {
     auto items = scene->squareItems();
     AutoAssignShopModelsDialog dialog(this, &items, priceFunction);
     dialog.exec();
-    scene->update();
+    // mark all square ids as dirty
+    QVector<int> squareIds(items.size());
+    std::iota(squareIds.begin(), squareIds.end(), 0);
+    addChangeSquaresAction(squareIds, "Assign Shop Models");
     QCoreApplication::processEvents();
 }
 
 void MainWindow::updateDestinationUI() {
     auto selectedItems = scene->selectedItems();
-    if (selectedItems.size() >= 1) {
+    if (!selectedItems.empty()) {
         SquareItem *item = (SquareItem *)selectedItems[0];
         auto allButtons = ui->toButtons->buttons();
         for (auto toButton: qAsConst(allButtons)) {
@@ -1010,7 +1085,7 @@ void MainWindow::updateDestinationUI() {
 
 void MainWindow::closeEvent(QCloseEvent *event) {
     // if no unsaved changes just close without fanfare
-    if (exportFile() == initialFile) {
+    if (!isWindowModified()) {
         event->accept();
         return;
     }
