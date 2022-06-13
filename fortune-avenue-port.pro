@@ -66,7 +66,6 @@ HEADERS += \
     squareitem.h \
     squaremovecmd.h \
     squareremovecmd.h \
-    static_block.hpp \
     updateboardmetacmd.h \
     util.h
 

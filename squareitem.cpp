@@ -9,9 +9,8 @@
 //#include <QDebug>
 #include "darkdetect.h"
 #include "fortuneavenuegraphicsscene.h"
-#include "static_block.hpp"
 
-QMap<SquareType, QString> typeToFile = {
+static QMap<SquareType, QString> typeToFile = {
     {Property, ":/squares/GroundProperty.png"},
     {Bank, ":/squares/GroundBank.png"},
     {VentureSquare, ":/squares/GroundVenture.png"},
@@ -47,7 +46,7 @@ QMap<SquareType, QString> typeToFile = {
     {VacantPlot, ":/squares/GroundVacant.png"}
 };
 
-QVector<QColor> districtColors = {
+static QVector<QColor> districtColors = {
     QColor("#FF0000"),
     QColor("#00C0FF"),
     QColor("#FFBB00"),
@@ -62,17 +61,18 @@ QVector<QColor> districtColors = {
     QColor("#FF50A0")
 };
 
-QFont valueFont("Lato");
-QFont idFont("Lato");
-QFont rentFont("Lato");
-
-static_block {
-    valueFont.setPixelSize(18);
-    idFont.setPixelSize(10);
-    rentFont.setPixelSize(12);
-}
+static QFont valueFont("Lato");
+static QFont idFont("Lato");
+static QFont rentFont("Lato");
+static bool staticsInitialized = false;
 
 SquareItem::SquareItem(const SquareData &dataValue, QGraphicsItem *parent) : QGraphicsItem(parent), data(dataValue) {
+    if (!staticsInitialized) {
+        staticsInitialized = true;
+        valueFont.setPixelSize(18);
+        idFont.setPixelSize(10);
+        rentFont.setPixelSize(12);
+    }
     setFlag(ItemIsMovable);
     setFlag(ItemIsSelectable);
     setPos(data.positionX, data.positionY);
@@ -175,42 +175,3 @@ void SquareItem::updateZValueFromData()
 {
     setZValue(data.id);
 }
-
-/*
-void SquareItem::mousePressEvent(QGraphicsSceneMouseEvent *event)
-{
-    //qDebug() << "mouse press";
-    QGraphicsItem::mousePressEvent(event);
-    oldPoint = pos();
-}
-
-void SquareItem::mouseReleaseEvent(QGraphicsSceneMouseEvent *event)
-{
-    //qDebug() << "mouse release";
-    QGraphicsItem::mouseReleaseEvent(event);
-    SquareMouseMoveEvent ev(this, oldPoint, pos());
-    QApplication::sendEvent(scene(), &ev);
-}
-
-QEvent::Type SquareMouseMoveEvent::TYPE = (QEvent::Type)QEvent::registerEventType();
-
-SquareMouseMoveEvent::SquareMouseMoveEvent(SquareItem *item, const QPointF &oldPoint, const QPointF &newPoint)
-    : QEvent(TYPE), item(item), oldPoint(oldPoint), newPoint(newPoint)
-{
-}
-
-QPointF SquareMouseMoveEvent::getOldPoint() const
-{
-    return oldPoint;
-}
-
-QPointF SquareMouseMoveEvent::getNewPoint() const
-{
-    return newPoint;
-}
-
-SquareItem *SquareMouseMoveEvent::getItem() const
-{
-    return item;
-}
-*/
