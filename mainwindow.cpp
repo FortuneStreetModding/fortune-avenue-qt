@@ -105,7 +105,11 @@ MainWindow::MainWindow(QApplication& app)
     connect(ui->actionNext, &QAction::triggered, this, &MainWindow::selectNext);
     connect(ui->actionPrevious, &QAction::triggered, this, &MainWindow::selectPrevious);
     connect(ui->actionSelectAll, &QAction::triggered, this, &MainWindow::selectAll);
-    connect(ui->actionUse_Advanced_Auto_Path, &QAction::triggered, this, &MainWindow::toggleAdvancedAutoPath);
+    connect(ui->actionUse_Advanced_Auto_Path, &QAction::triggered, this, [this]() {
+        addUpdateBoardMetaAction([this](BoardInfo &info) {
+            info.useAdvancedAutoPath = ui->actionUse_Advanced_Auto_Path->isChecked();
+        });
+    });
     toggleAdvancedAutoPath();
 
     connect(ui->actionAuto_Calc_Custom_Function, &QAction::triggered, this, [&]() {
@@ -169,6 +173,16 @@ MainWindow::MainWindow(QApplication& app)
     connect(ui->loopingMode, &QButtonGroup::idClicked, this, [this](int buttonId) {
         addUpdateBoardMetaAction([=](BoardInfo &info) {
             info.galaxyStatus = (LoopingMode)buttonId;
+        });
+    });
+    connect(ui->autopathRange, &QSpinBox::editingFinished, this, [this]() {
+        addUpdateBoardMetaAction([this](BoardInfo &info) {
+            info.autopathRange = ui->autopathRange->value();
+        });
+    });
+    connect(ui->straightLineTolerance, &QSpinBox::editingFinished, this, [this]() {
+        addUpdateBoardMetaAction([this](BoardInfo &info) {
+            info.straightLineTolerance = ui->straightLineTolerance->value();
         });
     });
 
@@ -271,6 +285,7 @@ void MainWindow::addUpdateBoardMetaAction(Func &&func)
     undoStack->push(new UpdateBoardMetaCmd(oldBoardInfo, oldBoardFile.boardInfo, [this](const BoardInfo &info) {
         oldBoardFile.boardInfo = info;
         updateBoardInfoSidebar();
+        toggleAdvancedAutoPath();
     }));
 }
 
@@ -393,7 +408,8 @@ void MainWindow::selectAll() {
 }
 
 void MainWindow::toggleAdvancedAutoPath() {
-    bool visible = ui->actionUse_Advanced_Auto_Path->isChecked();
+    bool visible = oldBoardFile.boardInfo.useAdvancedAutoPath;
+    ui->actionUse_Advanced_Auto_Path->setChecked(visible);
     ui->autoPathCfg->setVisible(visible);
     ui->autopathArrowsWidget->setVisible(visible);
 }
@@ -484,34 +500,25 @@ void MainWindow::loadFile(const QString &fpath) {
 void MainWindow::loadFile(const BoardFile &file) {
     undoStack->clear();
 
+    oldBoardFile = file;
+
     ui->boardEdit->setEnabled(true);
     ui->actionSave->setEnabled(true);
     ui->actionSave_As->setEnabled(true);
     ui->menuTools->setEnabled(true);
     ui->menuView->setEnabled(true);
 
-    ui->initialCash->setText(QString::number(file.boardInfo.initialCash));
-    ui->baseSalary->setText(QString::number(file.boardInfo.baseSalary));
-    ui->salaryIncrement->setText(QString::number(file.boardInfo.salaryIncrement));
-    ui->maxDiceRoll->setText(QString::number(file.boardInfo.maxDiceRoll));
-    ui->loopingMode->button(file.boardInfo.galaxyStatus)->setChecked(true);
-    ui->fileVersion->setText(QString::number(file.boardInfo.versionFlag));
-    ui->autopathRange->setValue(file.boardInfo.autopathRange);
-    ui->straightLineTolerance->setValue(file.boardInfo.straightLineTolerance);
+    if (file.boardInfo.versionFlag < 3) {
+        oldBoardFile.boardInfo.useAdvancedAutoPath = (file.boardInfo.versionFlag != 0);
+    }
+
+    updateBoardInfoSidebar();
+
     scene->clearSquares();
     for (auto &square: file.boardData.squares) {
         scene->addItem(new SquareItem(square));
     }
-    if(file.boardInfo.versionFlag >= 3) {
-        ui->actionUse_Advanced_Auto_Path->setChecked(file.boardInfo.useAdvancedAutoPath);
-    } else if (file.boardInfo.versionFlag > 0) {
-        ui->actionUse_Advanced_Auto_Path->setChecked(true);
-    } else if (file.boardInfo.versionFlag == 0) {
-        ui->actionUse_Advanced_Auto_Path->setChecked(false);
-    }
     toggleAdvancedAutoPath();
-
-    oldBoardFile = file;
 
     if (file.boardInfo.versionFlag < 3) {
         auto response = QMessageBox::question(
@@ -535,6 +542,7 @@ void MainWindow::loadFile(const BoardFile &file) {
             }
 
             undoStack->resetClean();
+            updateBoardInfoSidebar();
         }
     }
 
@@ -551,6 +559,9 @@ void MainWindow::updateBoardInfoSidebar()
     ui->baseSalary->setText(QString::number(oldBoardFile.boardInfo.baseSalary));
     ui->salaryIncrement->setText(QString::number(oldBoardFile.boardInfo.salaryIncrement));
     ui->maxDiceRoll->setText(QString::number(oldBoardFile.boardInfo.maxDiceRoll));
+    ui->fileVersion->setText(QString::number(oldBoardFile.boardInfo.versionFlag));
+    ui->autopathRange->setValue(oldBoardFile.boardInfo.autopathRange);
+    ui->straightLineTolerance->setValue(oldBoardFile.boardInfo.straightLineTolerance);
     ui->loopingMode->button(oldBoardFile.boardInfo.galaxyStatus)->setChecked(true);
 }
 
