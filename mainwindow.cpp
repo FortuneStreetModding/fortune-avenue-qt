@@ -1047,7 +1047,9 @@ void MainWindow::autoPath() {
         AutoPath::kruskalDfsAutoPathAlgorithm(qAsConst(items));
     }
     QMessageBox::information(this, "Auto-pathing", "Auto-pathed entire map");
-    updateSquareSidebar();
+    QVector<int> squareIds(items.size());
+    std::iota(squareIds.begin(), squareIds.end(), 0);
+    addChangeSquaresAction(squareIds);
 }
 
 void MainWindow::screenshot() {
