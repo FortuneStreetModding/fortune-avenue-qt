@@ -7,7 +7,7 @@
 class UpdateBoardMetaCmd : public QUndoCommand
 {
 public:
-    UpdateBoardMetaCmd(const BoardInfo &oldBoardInfo, const BoardInfo &newBoardInfo, const std::function<void(const BoardInfo &)> &updateFn);
+    UpdateBoardMetaCmd(const BoardInfo &oldBoardInfo, const BoardInfo &newBoardInfo, const QString &text, const std::function<void(const BoardInfo &)> &updateFn);
     void undo() override;
     void redo() override;
 private:

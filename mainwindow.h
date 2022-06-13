@@ -30,8 +30,8 @@ private:
     FortuneAvenueGraphicsScene *square2Scene;
 
     QUndoStack *undoStack;
-    BoardFile oldBoardFile;
-    QVector<SquareData> &oldSquaresData();
+    BoardFile curBoardFile;
+    QVector<SquareData> &squaresData();
 
     std::function<void(const QMap<int, QPointF> &)> updateOnSquareMove;
 
@@ -41,9 +41,9 @@ private:
     QString priceFunction = defaultPriceFunction;
     int maxPathSearchDepth = 0;
 
-    void addChangeSquaresAction(const QVector<int> &squareIdsToUpdate);
+    void addChangeSquaresAction(const QVector<int> &squareIdsToUpdate, const QString &text);
     template<class Func>
-    void addUpdateBoardMetaAction(Func &&func);
+    void addUpdateBoardMetaAction(Func &&func, const QString &text);
 
     void connectSquares(bool previousToCurrent, bool currentToPrevious);
     QPair<SquareItem*,SquareItem*> getPreviousAndCurrentSquare();
@@ -54,7 +54,7 @@ private:
     void updateBoardInfoSidebar();
     void registerSquareSidebarEvents();
     void updateSquareSidebar();
-    template<typename Func> void updateSquare(Func &&func);
+    template<typename Func> void updateSquare(Func &&func, const QString &text);
     void updateWaypoints();
     void newFile();
     void openFile();

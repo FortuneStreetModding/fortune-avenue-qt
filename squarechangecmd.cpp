@@ -1,10 +1,10 @@
 #include "squarechangecmd.h"
 
 
-SquareChangeCmd::SquareChangeCmd(FortuneAvenueGraphicsScene *scene, const QMap<int, SquareData> &oldData, const QMap<int, SquareData> &newData, const std::function<void ()> &updateFn)
+SquareChangeCmd::SquareChangeCmd(FortuneAvenueGraphicsScene *scene, const QMap<int, SquareData> &oldData, const QMap<int, SquareData> &newData, const QString &text, const std::function<void ()> &updateFn)
     : scene(scene), oldData(oldData), newData(newData), updateFn(updateFn)
 {
-    setText("Change Square Data");
+    setText(text);
 }
 
 void SquareChangeCmd::undo()

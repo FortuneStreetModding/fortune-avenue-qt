@@ -8,7 +8,7 @@
 class SquareChangeCmd : public QUndoCommand
 {
 public:
-    SquareChangeCmd(FortuneAvenueGraphicsScene *scene, const QMap<int, SquareData> &oldData, const QMap<int, SquareData> &newData, const std::function<void()> &updateFn);
+    SquareChangeCmd(FortuneAvenueGraphicsScene *scene, const QMap<int, SquareData> &oldData, const QMap<int, SquareData> &newData, const QString &text, const std::function<void()> &updateFn);
     void undo() override;
     void redo() override;
 private:
