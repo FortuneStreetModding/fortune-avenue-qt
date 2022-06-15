@@ -1265,7 +1265,7 @@ No for Magmalice lift</string>
      <x>0</x>
      <y>0</y>
      <width>1280</width>
-     <height>24</height>
+     <height>22</height>
     </rect>
    </property>
    <widget class="QMenu" name="menuFile">
@@ -1279,7 +1279,7 @@ No for Magmalice lift</string>
    </widget>
    <widget class="QMenu" name="menuTools">
     <property name="enabled">
-     <bool>false</bool>
+     <bool>true</bool>
     </property>
     <property name="title">
      <string>Tools</string>
@@ -1292,6 +1292,9 @@ No for Magmalice lift</string>
     <addaction name="separator"/>
     <addaction name="actionAuto_Path"/>
     <addaction name="actionUse_Advanced_Auto_Path"/>
+    <addaction name="separator"/>
+    <addaction name="actionSync_From_Board"/>
+    <addaction name="actionSync_To_Board"/>
    </widget>
    <widget class="QMenu" name="menuHelp">
     <property name="title">
@@ -1523,6 +1526,16 @@ No for Magmalice lift</string>
     <string>Set Max Path Search Depth</string>
    </property>
   </action>
+  <action name="actionSync_From_Board">
+   <property name="text">
+    <string>Sync from Other Board for Switch State</string>
+   </property>
+  </action>
+  <action name="actionSync_To_Board">
+   <property name="text">
+    <string>Sync to Other Board for Switch State</string>
+   </property>
+  </action>
  </widget>
  <resources>
   <include location="fortune-avenue-port.qrc"/>
@@ -1534,7 +1547,7 @@ No for Magmalice lift</string>
     <bool>false</bool>
    </property>
   </buttongroup>
-  <buttongroup name="fromButtons"/>
   <buttongroup name="loopingMode"/>
+  <buttongroup name="fromButtons"/>
  </buttongroups>
 </ui>

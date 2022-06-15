@@ -110,6 +110,7 @@ struct SquareData {
     static int getValueFromShopModel(int shopModel);
     void updateValueFromShopModel();
     qreal getYield();
+    SquareData &syncForMultiState(const SquareData &other);
 
     bool operator==(const SquareData &other) const;
     bool operator!=(const SquareData &other) const;

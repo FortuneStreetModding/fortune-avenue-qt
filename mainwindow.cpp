@@ -111,6 +111,12 @@ MainWindow::MainWindow(QApplication& app)
         }, "Toggle Advanced Auto Path");
     });
     toggleAdvancedAutoPath();
+    connect(ui->actionSync_From_Board, &QAction::triggered, this, [this]() {
+        syncForSwitch(false);
+    });
+    connect(ui->actionSync_To_Board, &QAction::triggered, this, [this]() {
+        syncForSwitch(true);
+    });
 
     connect(ui->actionAuto_Calc_Custom_Function, &QAction::triggered, this, [&]() {
         bool ok;
@@ -664,6 +670,58 @@ void MainWindow::clearWaypoint(SquareItem *item, int waypointId) {
     waypoint.destinations[1] = 255;
     waypoint.destinations[2] = 255;
     waypoint.entryId = 255;
+}
+
+void MainWindow::syncForSwitch(bool isTo)
+{
+    QString filename = QFileDialog::getOpenFileName(this, "Choose File to Sync With", QString(), "Fortune Street Boards (*.frb)");
+    if (filename.isEmpty()) {
+        return;
+    }
+    BoardFile otherBoardFile;
+    {
+        QFile otherFile(filename);
+        if (!otherFile.open(QFile::ReadOnly)) {
+            QMessageBox::critical(this, "Error opening file for sync", "Could not open file for sync");
+            return;
+        }
+        QDataStream stream(&otherFile);
+        stream >> otherBoardFile;
+        if (stream.status() == QDataStream::Status::ReadCorruptData) {
+            QMessageBox::critical(this, "Error processing file for sync", "Corrupt .frb file");
+            return;
+        }
+        auto sqItems = scene->squareItems();
+        auto &otherSquares = otherBoardFile.boardData.squares;
+        if (sqItems.size() != otherSquares.size()) {
+            QMessageBox::critical(this, "Error processing file for sync", "Number of squares in other file is not the same as this one");
+            return;
+        }
+        for (int i=0; i<sqItems.size(); ++i) {
+            if (isTo) {
+                otherSquares[i].syncForMultiState(sqItems[i]->getData());
+            } else {
+                sqItems[i]->getData().syncForMultiState(otherSquares[i]);
+            }
+        }
+    }
+    if (isTo) {
+        QSaveFile outOtherFile(filename);
+        if (!outOtherFile.open(QFile::WriteOnly)) {
+            QMessageBox::critical(this, "Error saving file", "Could not open other file for saving");
+            return;
+        }
+        QDataStream outStream(&outOtherFile);
+        outStream << otherBoardFile;
+        if (!outOtherFile.commit()) {
+            QMessageBox::critical(this, "Error saving file", "Could not save other file");
+            return;
+        }
+    } else {
+        QVector<int> sqsToChange(scene->squareItems().size());
+        std::iota(sqsToChange.begin(), sqsToChange.end(), 0);
+        addChangeSquaresAction(sqsToChange, "Sync from Other File for Switch");
+    }
 }
 
 int MainWindow::calcShopPriceFromValue(const QString &function, int value) {

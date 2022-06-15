@@ -35,6 +35,19 @@ qreal SquareData::getYield() {
     return (qreal) price / (qreal) value;
 }
 
+SquareData &SquareData::syncForMultiState(const SquareData &other)
+{
+    squareType = other.squareType;
+    if (squareType == Property) {
+        districtDestinationId = other.districtDestinationId;
+    }
+    oneWayLift = other.oneWayLift;
+    value = other.value;
+    price = other.price;
+    shopModel = other.shopModel;
+    return *this;
+}
+
 bool SquareData::operator==(const SquareData &other) const
 {
     QByteArray arr0, arr1;
