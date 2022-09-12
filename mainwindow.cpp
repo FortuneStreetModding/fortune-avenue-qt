@@ -25,6 +25,8 @@
 #include "squaremovecmd.h"
 #include "squarechangecmd.h"
 #include "updateboardmetacmd.h"
+#include "squareshiftidscommand.h"
+#include "squareswapidscommand.h"
 
 MainWindow::MainWindow(QApplication& app)
     : QMainWindow(), ui(new Ui::MainWindow),
@@ -424,6 +426,7 @@ void MainWindow::toggleAdvancedAutoPath() {
 
 void MainWindow::newFile() {
     setWindowFilePath("");
+    setWindowTitle(QString("Fortune Avenue %1.%2.%3[*]").arg(VERSION_MAJOR).arg(VERSION_MINOR).arg(VERSION_BUILD));
     loadFile(BoardFile(true));
 }
 
@@ -589,6 +592,7 @@ void MainWindow::updateSquareSidebar() {
         ui->waypoint4Dests->setEnabled(true);
         ui->waypoint4Start->setEnabled(true);
         SquareItem *item = (SquareItem *)selectedItems[0];
+        ui->id->setEnabled(true);
         ui->id->setText(QString::number(item->getData().id));
         ui->type->setCurrentText(squareTypeToText(item->getData().squareType));
         ui->districtDestinationId->setText(QString::number(item->getData().districtDestinationId));
@@ -625,6 +629,7 @@ void MainWindow::updateSquareSidebar() {
         ui->waypoint3Start->setEnabled(false);
         ui->waypoint4Dests->setEnabled(false);
         ui->waypoint4Start->setEnabled(false);
+        ui->id->setEnabled(false);
         if(selectedItems.size() > 1) {
             ui->id->setText(QString("%1 selected").arg(selectedItems.size()));
         } else {
@@ -761,6 +766,30 @@ void MainWindow::connectSquares(bool previousToCurrent, bool currentToPrevious) 
 }
 
 void MainWindow::registerSquareSidebarEvents() {
+    connect(ui->id, &QLineEdit::editingFinished, this, [&]() {
+        bool intConversionOk;
+        int newId = ui->id->text().toInt(&intConversionOk);
+        if (!intConversionOk || newId < 0 || newId >= squaresData().size()) {
+            updateSquareSidebar();
+            return;
+        }
+        auto selItems = scene->selectedItems();
+        if (selItems.size() != 1) {
+            return;
+        }
+        int oldId = ((SquareItem *)selItems.front())->getData().id;
+        if (oldId == newId) {
+            return;
+        }
+        auto idChangeMode = ui->onIDChange->checkedButton();
+        if (idChangeMode == ui->swapIDs) {
+            undoStack->push(new SquareSwapIDsCommand(scene, oldId, newId, [this] { updateSquareSidebar(); }));
+        } else if (idChangeMode == ui->shiftIDs) {
+            undoStack->push(new SquareShiftIDsCommand(scene, oldId, newId, [this] { updateSquareSidebar(); }));
+        } else {
+            updateSquareSidebar();
+        }
+    });
     connect(ui->type, &QComboBox::textActivated, this, [&](const QString &) {
         updateSquare([&](SquareItem *item) {
             item->getData().squareType = textToSquareType(ui->type->currentText());
@@ -803,7 +832,7 @@ void MainWindow::registerSquareSidebarEvents() {
                 try {
                     auto newPrice = calcShopPriceFromValue(priceFunction, item->getData().value);
                     item->getData().price = newPrice;
-                } catch (mu::Parser::exception_type &e) {}
+                } catch (mu::Parser::exception_type &) {}
             }
         }, "Chnage Shop Model");
     });
@@ -819,7 +848,7 @@ void MainWindow::registerSquareSidebarEvents() {
                 try {
                     auto newPrice = calcShopPriceFromValue(priceFunction, item->getData().value);
                     item->getData().price = newPrice;
-                } catch (mu::Parser::exception_type &e) {}
+                } catch (mu::Parser::exception_type &) {}
             }
         }, "Change Initial Shop Value");
     });

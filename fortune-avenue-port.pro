@@ -48,6 +48,8 @@ SOURCES += \
     squareitem.cpp \
     squaremovecmd.cpp \
     squareremovecmd.cpp \
+    squareshiftidscommand.cpp \
+    squareswapidscommand.cpp \
     updateboardmetacmd.cpp
 
 HEADERS += \
@@ -66,6 +68,8 @@ HEADERS += \
     squareitem.h \
     squaremovecmd.h \
     squareremovecmd.h \
+    squareshiftidscommand.h \
+    squareswapidscommand.h \
     updateboardmetacmd.h \
     util.h
 

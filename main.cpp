@@ -23,7 +23,7 @@ int main(int argc, char *argv[]) {
     s.setValue("customstreet.fortuneavenue/DefaultIcon/.", path);
     s.setValue(".frb/.","customstreet.fortuneavenue");
     s.setValue("customstreet.fortuneavenue/shell/open/command/.", QStringLiteral("\"%1\"").arg(path) + " \"%1\"");
-    SHChangeNotify(SHCNE_ASSOCCHANGED, SHCNF_IDLIST, NULL, NULL);
+    SHChangeNotify(SHCNE_ASSOCCHANGED, SHCNF_IDLIST, nullptr, nullptr);
 #endif
 
     MainWindow w(a);
