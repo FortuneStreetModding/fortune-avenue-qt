@@ -28,6 +28,12 @@ int main(int argc, char *argv[]) {
 #endif
 
     MainWindow w(a);
+#ifdef Q_OS_LINUX
+    auto iconPath = QDir(QApplication::applicationDirPath()).filePath("../../AppIcon.png");
+    if (QFile::exists(iconPath)) {
+        w.setWindowIcon(QIcon(iconPath));
+    }
+#endif
     w.setWindowTitle(QString("Fortune Avenue %1.%2.%3").arg(VERSION_MAJOR).arg(VERSION_MINOR).arg(VERSION_BUILD));
     w.show();
     return a.exec();
