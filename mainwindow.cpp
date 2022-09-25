@@ -220,7 +220,7 @@ MainWindow::MainWindow(QApplication& app)
         setWindowModified(!clean);
     });
 
-    // for windows auto open
+    // for windows/linux auto open
     auto args = app.arguments();
     if (args.size() >= 2) {
         loadFile(args[1]);

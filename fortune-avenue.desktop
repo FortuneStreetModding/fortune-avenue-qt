@@ -1,0 +1,7 @@
+[Desktop Entry]
+Name=FortuneAvenue
+Type=Application
+Exec=FortuneAvenue %f
+Icon=AppIcon
+Categories=Game
+

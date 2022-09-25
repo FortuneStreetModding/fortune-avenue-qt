@@ -1,4 +1,4 @@
-TARGET="Fortune Avenue"
+TARGET="FortuneAvenue"
 
 #Application version
 VERSION_MAJOR = 2

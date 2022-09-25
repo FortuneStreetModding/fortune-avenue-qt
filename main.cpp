@@ -12,6 +12,7 @@
 
 int main(int argc, char *argv[]) {
     QApplication a(argc, argv);
+    QCoreApplication::setApplicationName("FortuneAvenue");
     a.setAttribute(Qt::AA_UseHighDpiPixmaps);
     QFontDatabase::addApplicationFont(":/fonts/Lato-Regular.ttf");
     initDarkThemeSettings();
