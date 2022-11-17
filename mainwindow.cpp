@@ -223,7 +223,7 @@ MainWindow::MainWindow(QApplication& app)
     // for windows/linux auto open
     auto args = app.arguments();
     if (args.size() >= 2) {
-        loadFile(args[1]);
+        QTimer::singleShot(0, this, [=] { loadFile(args[1]); });
     }
 }
 
@@ -425,8 +425,8 @@ void MainWindow::toggleAdvancedAutoPath() {
 }
 
 void MainWindow::newFile() {
-    setWindowFilePath("");
     setWindowTitle(QString("Fortune Avenue %1.%2.%3[*]").arg(VERSION_MAJOR).arg(VERSION_MINOR).arg(VERSION_BUILD));
+    setWindowFilePath("");
     loadFile(BoardFile(true));
 }
 
@@ -494,10 +494,11 @@ void MainWindow::loadFile(const QString &fpath) {
         BoardFile boardFile;
         stream >> boardFile;
         if (stream.status() != QDataStream::Status::ReadCorruptData) {
-            setWindowFilePath(fpath);
             QFileInfo fileInfo(file);
             QString filename(fileInfo.fileName());
-            setWindowTitle(QString("Fortune Avenue %1.%2.%3 - %4[*]").arg(VERSION_MAJOR).arg(VERSION_MINOR).arg(VERSION_BUILD).arg(filename));
+            setWindowTitle(QString("Fortune Avenue %1.%2.%3 - %4[*]")
+                           .arg(VERSION_MAJOR).arg(VERSION_MINOR).arg(VERSION_BUILD).arg(filename));
+            setWindowFilePath(fpath);
             loadFile(boardFile);
         } else {
             goto badFile;
