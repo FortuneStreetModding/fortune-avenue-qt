@@ -477,6 +477,10 @@ bool MainWindow::saveFileAs() {
         if (!saveFile.commit()) {
             goto fail;
         }
+        QFileInfo fileInfo(saveFileName);
+        QString filename(fileInfo.fileName());
+        setWindowTitle(QString("Fortune Avenue %1.%2.%3 - %4[*]")
+                       .arg(VERSION_MAJOR).arg(VERSION_MINOR).arg(VERSION_BUILD).arg(filename));
         setWindowFilePath(saveFileName);
         undoStack->setClean();
         return true;
