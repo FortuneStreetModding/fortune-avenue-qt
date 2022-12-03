@@ -787,10 +787,17 @@ void MainWindow::registerSquareSidebarEvents() {
             return;
         }
         auto idChangeMode = ui->onIDChange->checkedButton();
+        auto idChangeUpdateCallback = [=] {
+            auto sqItems = scene->squareItems();
+            for (int sqId = qMin(oldId, newId); sqId <= qMax(oldId, newId); ++sqId) {
+                squaresData()[sqId] = sqItems[sqId]->getData();
+            }
+            updateSquareSidebar();
+        };
         if (idChangeMode == ui->swapIDs) {
-            undoStack->push(new SquareSwapIDsCommand(scene, oldId, newId, [this] { updateSquareSidebar(); }));
+            undoStack->push(new SquareSwapIDsCommand(scene, oldId, newId, idChangeUpdateCallback));
         } else if (idChangeMode == ui->shiftIDs) {
-            undoStack->push(new SquareShiftIDsCommand(scene, oldId, newId, [this] { updateSquareSidebar(); }));
+            undoStack->push(new SquareShiftIDsCommand(scene, oldId, newId, idChangeUpdateCallback));
         } else {
             updateSquareSidebar();
         }
