@@ -137,8 +137,10 @@ jobs:
         path: ./fortune-avenue-${{github.event.release.tag_name}}/
     
     - name: Release
-      uses: ncipollo/release-action@v1
+      uses: svenstaro/upload-release-action@v2
       if: startsWith(github.ref, 'refs/tags/')
       with:
-        artifacts: ${{github.workspace}}/fortune-avenue-${{github.event.release.tag_name}}-windows.zip
-
+        repo_token: ${{ secrets.GITHUB_TOKEN }}
+        file: ${{github.workspace}}/fortune-avenue-${{github.event.release.tag_name}}-windows.zip
+        tag: ${{ github.ref }}
+        overwrite: true
