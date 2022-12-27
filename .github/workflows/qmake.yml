@@ -129,13 +129,16 @@ jobs:
         Copy-Item -Path "C:\Program Files\Git\mingw64\bin\libwinpthread-1.dll" -Destination ${{github.workspace}}/fortune-avenue-$env:VERSION_NAME
         
     - name: Archive
-      uses: thedoctor0/zip-release@master
+      uses: thedoctor0/zip-release@main
       with:
         type: 'zip'
         directory: ${{github.workspace}}
         filename: fortune-avenue-${{github.event.release.tag_name}}-windows.zip
         path: ./fortune-avenue-${{github.event.release.tag_name}}/
-
+    
+    - name: testing shit
+      run: ls ${{github.workspace}}
+    
     - name: Release
       uses: softprops/action-gh-release@v1
       if: startsWith(github.ref, 'refs/tags/')
