@@ -23,7 +23,7 @@ private:
     Ui::MainWindow *ui;
 
     QVector<QLineEdit *> waypointStarts;
-    QVector<QWidget *> waypointDests;
+    QMap<int, QVector<QLineEdit *>> waypointDests;
 
     FortuneAvenueGraphicsScene *scene;
     FortuneAvenueGraphicsScene *square1Scene;

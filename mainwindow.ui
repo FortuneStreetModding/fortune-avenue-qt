@@ -32,7 +32,7 @@
        </property>
        <property name="minimumSize">
         <size>
-         <width>200</width>
+         <width>170</width>
          <height>0</height>
         </size>
        </property>
@@ -898,32 +898,43 @@ No for Magmalice lift</string>
         </attribute>
         <layout class="QVBoxLayout" name="verticalLayout">
          <item>
-          <layout class="QHBoxLayout" name="horizontalLayout_8">
-           <item>
-            <widget class="QLabel" name="label_4">
+          <layout class="QGridLayout" name="gridLayout_6">
+           <item row="2" column="2">
+            <widget class="QLineEdit" name="waypoint1Dest3"/>
+           </item>
+           <item row="2" column="1">
+            <widget class="QLineEdit" name="waypoint1Dest2"/>
+           </item>
+           <item row="2" column="0">
+            <widget class="QLineEdit" name="waypoint1Dest1"/>
+           </item>
+           <item row="1" column="0" colspan="3">
+            <widget class="QLineEdit" name="waypoint1Start"/>
+           </item>
+           <item row="1" column="3" rowspan="2">
+            <widget class="QPushButton" name="clearWaypoint1">
+             <property name="sizePolicy">
+              <sizepolicy hsizetype="Minimum" vsizetype="MinimumExpanding">
+               <horstretch>0</horstretch>
+               <verstretch>0</verstretch>
+              </sizepolicy>
+             </property>
+             <property name="autoFillBackground">
+              <bool>false</bool>
+             </property>
              <property name="text">
-              <string>Waypoint 1 Start</string>
+              <string>Clear</string>
              </property>
             </widget>
            </item>
-           <item>
-            <widget class="QLineEdit" name="waypoint1Start"/>
-           </item>
-           <item>
-            <widget class="QPushButton" name="clearWaypoint1">
+           <item row="0" column="0" colspan="4">
+            <widget class="QLabel" name="label_4">
              <property name="text">
-              <string>Clear Waypoint 1</string>
+              <string>Waypoint 1</string>
              </property>
             </widget>
            </item>
           </layout>
-         </item>
-         <item>
-          <widget class="QLabel" name="label_14">
-           <property name="text">
-            <string>Waypoint 1 Destinations</string>
-           </property>
-          </widget>
          </item>
          <item>
           <widget class="QWidget" name="waypoint1Dests" native="true">
@@ -940,45 +951,44 @@ No for Magmalice lift</string>
             <property name="bottomMargin">
              <number>0</number>
             </property>
-            <item>
-             <widget class="QLineEdit" name="lineEdit_3"/>
-            </item>
-            <item>
-             <widget class="QLineEdit" name="lineEdit_2"/>
-            </item>
-            <item>
-             <widget class="QLineEdit" name="lineEdit"/>
-            </item>
            </layout>
           </widget>
          </item>
          <item>
-          <layout class="QHBoxLayout" name="horizontalLayout_9">
-           <item>
-            <widget class="QLabel" name="label_15">
+          <layout class="QGridLayout" name="gridLayout_9">
+           <item row="2" column="1">
+            <widget class="QLineEdit" name="waypoint2Dest2"/>
+           </item>
+           <item row="2" column="2">
+            <widget class="QLineEdit" name="waypoint2Dest3"/>
+           </item>
+           <item row="2" column="0">
+            <widget class="QLineEdit" name="waypoint2Dest1"/>
+           </item>
+           <item row="1" column="3" rowspan="2">
+            <widget class="QPushButton" name="clearWaypoint2">
+             <property name="sizePolicy">
+              <sizepolicy hsizetype="Minimum" vsizetype="MinimumExpanding">
+               <horstretch>0</horstretch>
+               <verstretch>0</verstretch>
+              </sizepolicy>
+             </property>
              <property name="text">
-              <string>Waypoint 2 Start</string>
+              <string>Clear</string>
              </property>
             </widget>
            </item>
-           <item>
+           <item row="1" column="0" colspan="3">
             <widget class="QLineEdit" name="waypoint2Start"/>
            </item>
-           <item>
-            <widget class="QPushButton" name="clearWaypoint2">
+           <item row="0" column="0" colspan="4">
+            <widget class="QLabel" name="label_15">
              <property name="text">
-              <string>Clear Waypoint 2</string>
+              <string>Waypoint 2</string>
              </property>
             </widget>
            </item>
           </layout>
-         </item>
-         <item>
-          <widget class="QLabel" name="label_16">
-           <property name="text">
-            <string>Waypoint 2 Destinations</string>
-           </property>
-          </widget>
          </item>
          <item>
           <widget class="QWidget" name="waypoint2Dests" native="true">
@@ -995,45 +1005,44 @@ No for Magmalice lift</string>
             <property name="bottomMargin">
              <number>0</number>
             </property>
-            <item>
-             <widget class="QLineEdit" name="lineEdit_4"/>
-            </item>
-            <item>
-             <widget class="QLineEdit" name="lineEdit_5"/>
-            </item>
-            <item>
-             <widget class="QLineEdit" name="lineEdit_6"/>
-            </item>
            </layout>
           </widget>
          </item>
          <item>
-          <layout class="QHBoxLayout" name="horizontalLayout_10">
-           <item>
+          <layout class="QGridLayout" name="gridLayout_7">
+           <item row="2" column="1">
+            <widget class="QLineEdit" name="waypoint3Dest2"/>
+           </item>
+           <item row="1" column="0" colspan="3">
+            <widget class="QLineEdit" name="waypoint3Start"/>
+           </item>
+           <item row="2" column="2">
+            <widget class="QLineEdit" name="waypoint3Dest3"/>
+           </item>
+           <item row="2" column="0">
+            <widget class="QLineEdit" name="waypoint3Dest1"/>
+           </item>
+           <item row="0" column="0" colspan="4">
             <widget class="QLabel" name="label_17">
              <property name="text">
-              <string>Waypoint 3 Start</string>
+              <string>Waypoint 3</string>
              </property>
             </widget>
            </item>
-           <item>
-            <widget class="QLineEdit" name="waypoint3Start"/>
-           </item>
-           <item>
+           <item row="1" column="3" rowspan="2">
             <widget class="QPushButton" name="clearWaypoint3">
+             <property name="sizePolicy">
+              <sizepolicy hsizetype="Minimum" vsizetype="MinimumExpanding">
+               <horstretch>0</horstretch>
+               <verstretch>0</verstretch>
+              </sizepolicy>
+             </property>
              <property name="text">
-              <string>Clear Waypoint 3</string>
+              <string>Clear</string>
              </property>
             </widget>
            </item>
           </layout>
-         </item>
-         <item>
-          <widget class="QLabel" name="label_18">
-           <property name="text">
-            <string>Waypoint 3 Destinations</string>
-           </property>
-          </widget>
          </item>
          <item>
           <widget class="QWidget" name="waypoint3Dests" native="true">
@@ -1050,45 +1059,44 @@ No for Magmalice lift</string>
             <property name="bottomMargin">
              <number>0</number>
             </property>
-            <item>
-             <widget class="QLineEdit" name="lineEdit_7"/>
-            </item>
-            <item>
-             <widget class="QLineEdit" name="lineEdit_8"/>
-            </item>
-            <item>
-             <widget class="QLineEdit" name="lineEdit_9"/>
-            </item>
            </layout>
           </widget>
          </item>
          <item>
-          <layout class="QHBoxLayout" name="horizontalLayout_11">
-           <item>
+          <layout class="QGridLayout" name="gridLayout_8">
+           <item row="2" column="2">
+            <widget class="QLineEdit" name="waypoint4Dest3"/>
+           </item>
+           <item row="2" column="0">
+            <widget class="QLineEdit" name="waypoint4Dest1"/>
+           </item>
+           <item row="2" column="1">
+            <widget class="QLineEdit" name="waypoint4Dest2"/>
+           </item>
+           <item row="0" column="0" colspan="4">
             <widget class="QLabel" name="label_19">
              <property name="text">
-              <string>Waypoint 4 Start</string>
+              <string>Waypoint 4</string>
              </property>
             </widget>
            </item>
-           <item>
+           <item row="1" column="0" colspan="3">
             <widget class="QLineEdit" name="waypoint4Start"/>
            </item>
-           <item>
+           <item row="1" column="3" rowspan="2">
             <widget class="QPushButton" name="clearWaypoint4">
+             <property name="sizePolicy">
+              <sizepolicy hsizetype="Minimum" vsizetype="MinimumExpanding">
+               <horstretch>0</horstretch>
+               <verstretch>0</verstretch>
+              </sizepolicy>
+             </property>
              <property name="text">
-              <string>Clear Waypoint 4</string>
+              <string>Clear</string>
              </property>
             </widget>
            </item>
           </layout>
-         </item>
-         <item>
-          <widget class="QLabel" name="label_20">
-           <property name="text">
-            <string>Waypoint 4 Destinations</string>
-           </property>
-          </widget>
          </item>
          <item>
           <widget class="QWidget" name="waypoint4Dests" native="true">
@@ -1105,15 +1113,6 @@ No for Magmalice lift</string>
             <property name="bottomMargin">
              <number>0</number>
             </property>
-            <item>
-             <widget class="QLineEdit" name="lineEdit_10"/>
-            </item>
-            <item>
-             <widget class="QLineEdit" name="lineEdit_11"/>
-            </item>
-            <item>
-             <widget class="QLineEdit" name="lineEdit_12"/>
-            </item>
            </layout>
           </widget>
          </item>

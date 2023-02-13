@@ -46,7 +46,10 @@ MainWindow::MainWindow(QApplication& app)
     scene->installEventFilter(this);
     ui->setupUi(this);
     waypointStarts = {ui->waypoint1Start, ui->waypoint2Start, ui->waypoint3Start, ui->waypoint4Start};
-    waypointDests = {ui->waypoint1Dests, ui->waypoint2Dests, ui->waypoint3Dests, ui->waypoint4Dests};
+    waypointDests.insert(0, {ui->waypoint1Dest1, ui->waypoint1Dest2, ui->waypoint1Dest3});
+    waypointDests.insert(1, {ui->waypoint2Dest1, ui->waypoint2Dest2, ui->waypoint2Dest3});
+    waypointDests.insert(2, {ui->waypoint3Dest1, ui->waypoint3Dest2, ui->waypoint3Dest3});
+    waypointDests.insert(3, {ui->waypoint4Dest1, ui->waypoint4Dest2, ui->waypoint4Dest3});
     ui->graphicsView->setScene(scene);
     ui->graphicsView->centerOn(32, 32);
     ui->squareItemView1->setScene(square1Scene);
@@ -588,14 +591,14 @@ void MainWindow::updateSquareSidebar() {
     ui->actionFollowWaypoint2->setEnabled(selectedItems.size() == 2);
     ui->actionFollowWaypoint3->setEnabled(selectedItems.size() == 2);
     if (selectedItems.size() == 1) {
-        ui->waypoint1Dests->setEnabled(true);
-        ui->waypoint1Start->setEnabled(true);
-        ui->waypoint2Dests->setEnabled(true);
-        ui->waypoint2Start->setEnabled(true);
-        ui->waypoint3Dests->setEnabled(true);
-        ui->waypoint3Start->setEnabled(true);
-        ui->waypoint4Dests->setEnabled(true);
-        ui->waypoint4Start->setEnabled(true);
+        for (auto &waypointDest: waypointDests) {
+            for (auto &child: waypointDest) {
+                child->setEnabled(true);
+            }
+        }
+        for (auto &waypointStart: waypointStarts) {
+            waypointStart->setEnabled(true);
+        }
         SquareItem *item = (SquareItem *)selectedItems[0];
         ui->id->setEnabled(true);
         ui->id->setText(QString::number(item->getData().id));
@@ -612,10 +615,21 @@ void MainWindow::updateSquareSidebar() {
         ui->initialPrice->setText(QString::number(item->getData().price));
         ui->isLift->setChecked(item->getData().oneWayLift);
         for (int i=0; i<4; ++i) {
-            waypointStarts[i]->setText(QString::number(item->getData().waypoints[i].entryId));
-            auto children = waypointDests[i]->findChildren<QLineEdit *>();
+            uint id = item->getData().waypoints[i].entryId;
+            if(id == 255) {
+                waypointStarts[i]->clear();
+            } else {
+                waypointStarts[i]->setText(QString::number(id));
+            }
+            auto children = waypointDests.value(i);
             for (int j=0; j<3; ++j) {
-                children[j]->setText(QString::number(item->getData().waypoints[i].destinations[j]));
+                id = item->getData().waypoints[i].destinations[j];
+                if(id == 255) {
+                    children[j]->clear();
+                } else {
+                    children[j]->setText(QString::number(id));
+                }
+
             }
         }
         ui->positionX->setText(QString::number(item->getData().positionX));
@@ -626,14 +640,14 @@ void MainWindow::updateSquareSidebar() {
 
         previouslyVisitedSquareId = item->getData().id;
     } else {
-        ui->waypoint1Dests->setEnabled(false);
-        ui->waypoint1Start->setEnabled(false);
-        ui->waypoint2Dests->setEnabled(false);
-        ui->waypoint2Start->setEnabled(false);
-        ui->waypoint3Dests->setEnabled(false);
-        ui->waypoint3Start->setEnabled(false);
-        ui->waypoint4Dests->setEnabled(false);
-        ui->waypoint4Start->setEnabled(false);
+        for (auto &waypointDest: waypointDests) {
+            for (auto &child: waypointDest) {
+                child->setEnabled(false);
+            }
+        }
+        for (auto &waypointStart: waypointStarts) {
+            waypointStart->setEnabled(false);
+        }
         ui->id->setEnabled(false);
         if(selectedItems.size() > 1) {
             ui->id->setText(QString("%1 selected").arg(selectedItems.size()));
@@ -878,7 +892,7 @@ void MainWindow::registerSquareSidebarEvents() {
         connect(waypointStart, &QLineEdit::editingFinished, this, [&]() { updateWaypoints(); });
     }
     for (auto &waypointDest: waypointDests) {
-        for (auto &child: waypointDest->findChildren<QLineEdit *>()) {
+        for (auto &child: waypointDest) {
             connect(child, &QLineEdit::editingFinished, this, [&]() { updateWaypoints(); });
         }
     }
@@ -997,10 +1011,21 @@ void MainWindow::updateWaypoints() {
     if (selectedItems.size() == 1) {
         SquareItem *item = (SquareItem *)selectedItems[0];
         for (int i=0; i<4; ++i) {
-            item->getData().waypoints[i].entryId = waypointStarts[i]->text().toUInt();
-            auto children = waypointDests[i]->findChildren<QLineEdit *>();
+            bool ok = false;
+            uint id = waypointStarts[i]->text().toUInt(&ok);
+            if(!ok || id == 255) {
+                id = 255;
+                waypointStarts[i]->clear();
+            }
+            item->getData().waypoints[i].entryId = id;
+            auto children = waypointDests.value(i);
             for (int j=0; j<3; ++j) {
-                item->getData().waypoints[i].destinations[j] = children[j]->text().toUInt();
+                id = children[j]->text().toUInt(&ok);
+                if(!ok || id == 255) {
+                    id = 255;
+                    children[j]->clear();
+                }
+                item->getData().waypoints[i].destinations[j] = id;
             }
         }
         addChangeSquaresAction({item->getData().id}, "Update Waypoint");
