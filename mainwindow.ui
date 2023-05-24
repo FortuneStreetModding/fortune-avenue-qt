@@ -349,7 +349,7 @@
         </attribute>
         <layout class="QGridLayout" name="gridLayout_2">
          <item row="6" column="0">
-          <widget class="QLabel" name="label_10">
+          <widget class="QLabel" name="districtDestinationIdLabel">
            <property name="text">
             <string>District/Destination ID</string>
            </property>
@@ -1296,7 +1296,7 @@ No for Magmalice lift</string>
      <x>0</x>
      <y>0</y>
      <width>1280</width>
-     <height>21</height>
+     <height>22</height>
     </rect>
    </property>
    <widget class="QMenu" name="menuFile">
@@ -1573,13 +1573,13 @@ No for Magmalice lift</string>
  </resources>
  <connections/>
  <buttongroups>
+  <buttongroup name="fromButtons"/>
+  <buttongroup name="loopingMode"/>
   <buttongroup name="toButtons">
    <property name="exclusive">
     <bool>false</bool>
    </property>
   </buttongroup>
   <buttongroup name="onIDChange"/>
-  <buttongroup name="loopingMode"/>
-  <buttongroup name="fromButtons"/>
  </buttongroups>
 </ui>

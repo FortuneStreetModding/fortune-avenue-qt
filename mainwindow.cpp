@@ -603,6 +603,27 @@ void MainWindow::updateSquareSidebar() {
         ui->id->setEnabled(true);
         ui->id->setText(QString::number(item->getData().id));
         ui->type->setCurrentText(squareTypeToText(item->getData().squareType));
+        switch (item->getData().squareType) {
+        case Property:
+        case VacantPlot:
+            ui->districtDestinationIdLabel->setText("District ID");
+            break;
+        case BackStreetSquareA:
+        case BackStreetSquareB:
+        case BackStreetSquareC:
+        case BackStreetSquareD:
+        case BackStreetSquareE:
+        case LiftMagmaliceSquareStart:
+        case MagmaliceSquare:
+            ui->districtDestinationIdLabel->setText("Destination ID");
+            break;
+        case EventSquare:
+            ui->districtDestinationIdLabel->setText("Venture Card Number");
+            break;
+        default:
+            ui->districtDestinationIdLabel->setText("District/Destination ID");
+            break;
+        }
         ui->districtDestinationId->setText(QString::number(item->getData().districtDestinationId));
         QString shopTypeStrWithValue = shopTypeToTextWithValue(item->getData().shopModel);
         if(ui->shopModel->findText(shopTypeStrWithValue) != -1)
@@ -640,6 +661,7 @@ void MainWindow::updateSquareSidebar() {
 
         previouslyVisitedSquareId = item->getData().id;
     } else {
+        ui->districtDestinationIdLabel->setText("District/Destination ID");
         for (auto &waypointDest: waypointDests) {
             for (auto &child: waypointDest) {
                 child->setEnabled(false);
