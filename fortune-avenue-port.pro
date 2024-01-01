@@ -2,8 +2,8 @@ TARGET="FortuneAvenue"
 
 #Application version
 VERSION_MAJOR = 2
-VERSION_MINOR = 6
-VERSION_BUILD = 5
+VERSION_MINOR = 7
+VERSION_BUILD = 0
 
 DEFINES += "VERSION_MAJOR=$$VERSION_MAJOR"\
        "VERSION_MINOR=$$VERSION_MINOR"\
@@ -13,11 +13,9 @@ VERSION = $${VERSION_MAJOR}.$${VERSION_MINOR}.$${VERSION_BUILD}
 
 QMAKE_TARGET_BUNDLE_PREFIX = com.fortunestreetmodding
 
-QT       += core gui
+QT += core gui widgets
 
-greaterThan(QT_MAJOR_VERSION, 4): QT += widgets
-
-CONFIG += c++11
+CONFIG += c++17
 
 INCLUDEPATH += muparser/include
 
