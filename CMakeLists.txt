@@ -50,9 +50,9 @@ target_compile_definitions(FortuneAvenue PRIVATE
 )
 
 target_link_libraries(FortuneAvenue PRIVATE
-    Qt::Core
-    Qt::Gui
-    Qt::Widgets
+    Qt6::Core
+    Qt6::Gui
+    Qt6::Widgets
 )
 
 
