@@ -52,8 +52,8 @@ MainWindow::MainWindow(QApplication& app)
     waypointDests.insert(3, {ui->waypoint4Dest1, ui->waypoint4Dest2, ui->waypoint4Dest3});
     ui->graphicsView->setScene(scene);
     ui->graphicsView->centerOn(32, 32);
-    ui->squareItemView1->setScene(square1Scene);
-    ui->squareItemView2->setScene(square2Scene);
+    ui->squareItemView_left->setScene(square1Scene);
+    ui->squareItemView_right->setScene(square2Scene);
 
     ui->loopingMode->setId(ui->loopingNone, LoopingMode::None);
     ui->loopingMode->setId(ui->loopingVertical, LoopingMode::Vertical);
@@ -782,8 +782,8 @@ int MainWindow::calcShopPriceFromValue(const QString &function, int value) {
 }
 
 void MainWindow::connectSquares(bool previousToCurrent, bool currentToPrevious) {
-    auto items1 = ui->squareItemView1->items();
-    auto items2 = ui->squareItemView2->items();
+    auto items1 = ui->squareItemView_left->items();
+    auto items2 = ui->squareItemView_right->items();
     if(items1.size() > 0 && items2.size() > 0) {
         SquareItem *previous = (SquareItem *)items1.first();
         SquareItem *current = (SquareItem *)items2.first();
@@ -1253,3 +1253,74 @@ void MainWindow::closeEvent(QCloseEvent *event) {
         event->accept();
     }
 }
+
+void MainWindow::on_actionClassic_Light_triggered()
+{
+    setTheme(Theme::classic_light);
+}
+
+
+void MainWindow::on_actionClassic_Dark_triggered()
+{
+    setTheme(Theme::classic_dark);
+}
+
+
+void MainWindow::on_actionAmethyst_triggered()
+{
+    setTheme(Theme::amethyst);
+}
+
+void MainWindow::on_actionForest_triggered()
+{
+    setTheme(Theme::forest);
+}
+
+
+void MainWindow::on_actionRuby_triggered()
+{
+    setTheme(Theme::ruby);
+}
+
+
+void MainWindow::on_actionSnowfall_triggered()
+{
+    setTheme(Theme::snowfall);
+}
+
+
+void MainWindow::on_actionDesert_triggered()
+{
+    setTheme(Theme::desert);
+}
+
+
+void MainWindow::on_actionChocolate_triggered()
+{
+    setTheme(Theme::chocolate);
+}
+
+
+void MainWindow::on_actionMidnight_triggered()
+{
+    setTheme(Theme::midnight);
+}
+
+
+void MainWindow::on_actionStrawberry_triggered()
+{
+    setTheme(Theme::strawberry);
+}
+
+
+void MainWindow::on_actionCitrine_triggered()
+{
+    setTheme(Theme::citrine);
+}
+
+
+void MainWindow::on_actionKiwi_triggered()
+{
+    setTheme(Theme::kiwi);
+}
+
