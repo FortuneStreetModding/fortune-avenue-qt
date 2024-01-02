@@ -103,5 +103,6 @@ private slots:
     void on_actionStrawberry_triggered();
     void on_actionCitrine_triggered();
     void on_actionKiwi_triggered();
+    void on_actionExit_triggered();
 };
 #endif // MAINWINDOW_H

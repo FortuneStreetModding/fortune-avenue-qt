@@ -1324,3 +1324,9 @@ void MainWindow::on_actionKiwi_triggered()
     setTheme(Theme::kiwi);
 }
 
+
+void MainWindow::on_actionExit_triggered()
+{
+    QApplication::quit();
+}
+

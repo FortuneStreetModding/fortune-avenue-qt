@@ -120,11 +120,11 @@ inline void setTheme(Theme style) {
         QColor outside_color = QColor("#c3c6c8");
         QColor canvas_color = QColor("#9598a6");
         QColor accent_highlight_color = QColor("#172b89");
-        QColor alternate_base_color = QColor(18,18,18);
-        QColor disabled_color = QColor(30,0,0);
-        QColor main_text_color = Qt::black;
-        QColor accent_text_color = Qt::black;
-        QColor highlighted_text_color = Qt::white;
+        QColor alternate_base_color = QColor("#111111");
+        QColor disabled_color = QColor("#eeeeee");
+        QColor main_text_color = QColor("#111111");
+        QColor accent_text_color = QColor("#111111");
+        QColor highlighted_text_color = QColor("#eeeeee");
         palette.setColor(QPalette::Window, outside_color);
         palette.setColor(QPalette::WindowText, main_text_color);
         palette.setColor(QPalette::Base, canvas_color);
@@ -150,11 +150,11 @@ inline void setTheme(Theme style) {
         QColor outside_color = QColor("#2d2d2d");
         QColor canvas_color = QColor("#121212");
         QColor accent_highlight_color = QColor("#d31779");
-        QColor alternate_base_color = QColor(18,18,18);
-        QColor disabled_color = QColor(30,0,0);
-        QColor main_text_color = Qt::white;
-        QColor accent_text_color = Qt::white;
-        QColor highlighted_text_color = Qt::white;
+        QColor alternate_base_color = QColor("#111111");;
+        QColor disabled_color = QColor("#111111");
+        QColor main_text_color = QColor("#eeeeee");
+        QColor accent_text_color = QColor("#eeeeee");
+        QColor highlighted_text_color = QColor("#eeeeee");
 
         palette.setColor(QPalette::Window, outside_color);
         palette.setColor(QPalette::WindowText, main_text_color);
