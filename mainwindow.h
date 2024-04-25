@@ -70,6 +70,7 @@ private:
     void verifyBoard();
     void autoPath();
     void screenshot();
+    void preferences();
     void addSquare();
     void removeSquare();
     int calcSnapSizeFromInput();

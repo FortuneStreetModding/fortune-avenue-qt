@@ -28,6 +28,7 @@ qt_add_executable(FortuneAvenue WIN32 MACOSX_BUNDLE
     muparser/src/muParserError.cpp
     muparser/src/muParserTokenReader.cpp
     orderedmap.h
+    preferencesdialog.h preferencesdialog.cpp preferencesdialog.ui
     screenshotdialog.cpp screenshotdialog.h screenshotdialog.ui
     squareaddcmd.cpp squareaddcmd.h
     squarechangecmd.cpp squarechangecmd.h

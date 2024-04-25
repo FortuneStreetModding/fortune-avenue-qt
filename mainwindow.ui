@@ -1425,6 +1425,7 @@ No for Magmalice lift</string>
     <addaction name="actionSync_To_Board"/>
     <addaction name="separator"/>
     <addaction name="menuTheme"/>
+    <addaction name="actionSettings"/>
    </widget>
    <widget class="QMenu" name="menuHelp">
     <property name="title">
@@ -1736,19 +1737,29 @@ No for Magmalice lift</string>
     <string>Exit</string>
    </property>
   </action>
+  <action name="actionPreferences_2">
+   <property name="text">
+    <string>Preferences...</string>
+   </property>
+  </action>
+  <action name="actionSettings">
+   <property name="text">
+    <string>Preferences...</string>
+   </property>
+  </action>
  </widget>
  <resources>
   <include location="fortune-avenue.qrc"/>
  </resources>
  <connections/>
  <buttongroups>
+  <buttongroup name="fromButtons"/>
+  <buttongroup name="onIDChange"/>
   <buttongroup name="loopingMode"/>
   <buttongroup name="toButtons">
    <property name="exclusive">
     <bool>false</bool>
    </property>
   </buttongroup>
-  <buttongroup name="fromButtons"/>
-  <buttongroup name="onIDChange"/>
  </buttongroups>
 </ui>
