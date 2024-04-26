@@ -451,7 +451,7 @@ void getPathsCount(const QVector<SquareItem *> &squares, quint8 previousSquareId
     if(pathsCount > limit)
         return;
     auto destinations = getDestinations(squares, previousSquareId, squareId);
-    for(auto &dest : qAsConst(destinations)) {
+    for(auto &dest : std::as_const(destinations)) {
         if(dest < squares.size()) {
              getPathsCount(squares, squareId, dest, dice - 1, pathsCount, limit);
         }

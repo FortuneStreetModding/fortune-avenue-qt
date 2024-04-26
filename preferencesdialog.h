@@ -17,6 +17,10 @@ public:
 
 private:
     Ui::PreferencesDialog *ui;
+
+private slots:
+    void buildPaletteMenu();
+    void paletteActionTriggered();
 };
 
 #endif // PREFERENCESDIALOG_H

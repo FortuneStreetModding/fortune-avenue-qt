@@ -55,7 +55,7 @@ void SquareRemoveCmd::redo()
     }
 
     // and waypoints
-    for (auto item: qAsConst(items)) {
+    for (auto item: std::as_const(items)) {
         for (auto &waypoint: item->getData().waypoints) {
             waypoint.entryId = oldToNewIDs.value(waypoint.entryId, 255);
             for (auto &dest: waypoint.destinations) {

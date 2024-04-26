@@ -57,7 +57,13 @@
       <item>
        <widget class="QToolButton" name="windowPaletteToolButton">
         <property name="text">
-         <string>Choose...</string>
+         <string>Change</string>
+        </property>
+        <property name="popupMode">
+         <enum>QToolButton::DelayedPopup</enum>
+        </property>
+        <property name="arrowType">
+         <enum>Qt::NoArrow</enum>
         </property>
        </widget>
       </item>
