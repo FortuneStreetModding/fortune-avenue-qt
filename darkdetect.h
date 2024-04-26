@@ -21,7 +21,7 @@ enum Theme {
     strawberry
 };
 
-inline void applyTheme(QPalette palette){
+inline void applyPalette(QPalette palette){
     qApp->setStyle(QStyleFactory::create("Fusion"));
     qApp->setPalette(palette);
     qApp->setStyleSheet("QToolTip { color: #ffffff; background-color: #2a82da; border: 1px solid white; }");
@@ -54,7 +54,7 @@ inline void setTheme(Theme style) {
         palette.setColor(QPalette::Highlight, highlight_color);
         palette.setColor(QPalette::HighlightedText, highlighted_text_color);
         palette.setColor(QPalette::Disabled, QPalette::HighlightedText, disabled_color);
-        applyTheme(palette);
+        applyPalette(palette);
         break;
     }
     case chocolate:
@@ -83,7 +83,7 @@ inline void setTheme(Theme style) {
         palette.setColor(QPalette::Highlight, highlight_color);
         palette.setColor(QPalette::HighlightedText, highlighted_text_color);
         palette.setColor(QPalette::Disabled, QPalette::HighlightedText, disabled_color);
-        applyTheme(palette);
+        applyPalette(palette);
         break;
     }
     case citrine:
@@ -112,7 +112,7 @@ inline void setTheme(Theme style) {
         palette.setColor(QPalette::Highlight, highlight_color);
         palette.setColor(QPalette::HighlightedText, highlighted_text_color);
         palette.setColor(QPalette::Disabled, QPalette::HighlightedText, disabled_color);
-        applyTheme(palette);
+        applyPalette(palette);
         break;
     }
     case classic_light: {
@@ -141,7 +141,7 @@ inline void setTheme(Theme style) {
         palette.setColor(QPalette::Highlight, accent_highlight_color);
         palette.setColor(QPalette::HighlightedText, highlighted_text_color);
         palette.setColor(QPalette::Disabled, QPalette::HighlightedText, disabled_color);
-        applyTheme(palette);
+        applyPalette(palette);
         break;
     }
     case classic_dark:
@@ -172,7 +172,7 @@ inline void setTheme(Theme style) {
         palette.setColor(QPalette::Highlight, accent_highlight_color);
         palette.setColor(QPalette::HighlightedText, highlighted_text_color);
         palette.setColor(QPalette::Disabled, QPalette::HighlightedText, disabled_color);
-        applyTheme(palette);
+        applyPalette(palette);
         break;
     }
     case desert:
@@ -201,7 +201,7 @@ inline void setTheme(Theme style) {
         palette.setColor(QPalette::Highlight, highlight_color);
         palette.setColor(QPalette::HighlightedText, highlighted_text_color);
         palette.setColor(QPalette::Disabled, QPalette::HighlightedText, disabled_color);
-        applyTheme(palette);
+        applyPalette(palette);
         break;
     }
     case forest:
@@ -229,7 +229,7 @@ inline void setTheme(Theme style) {
         palette.setColor(QPalette::Highlight, highlight_color);
         palette.setColor(QPalette::HighlightedText, Qt::black);
         palette.setColor(QPalette::Disabled, QPalette::HighlightedText, disabled_color);
-        applyTheme(palette);
+        applyPalette(palette);
         break;
     }
     case kiwi: {
@@ -258,7 +258,7 @@ inline void setTheme(Theme style) {
         palette.setColor(QPalette::Highlight, accent_highlight_color);
         palette.setColor(QPalette::HighlightedText, highlighted_text_color);
         palette.setColor(QPalette::Disabled, QPalette::HighlightedText, disabled_color);
-        applyTheme(palette);
+        applyPalette(palette);
         break;
     }
     case midnight: {
@@ -286,7 +286,7 @@ inline void setTheme(Theme style) {
         palette.setColor(QPalette::Highlight, highlight_color);
         palette.setColor(QPalette::HighlightedText, highlighted_text_color);
         palette.setColor(QPalette::Disabled, QPalette::HighlightedText, disabled_color);
-        applyTheme(palette);
+        applyPalette(palette);
         break;
     }
     case ruby:
@@ -315,7 +315,7 @@ inline void setTheme(Theme style) {
         palette.setColor(QPalette::Highlight, highlight_color);
         palette.setColor(QPalette::HighlightedText, highlighted_text_color);
         palette.setColor(QPalette::Disabled, QPalette::HighlightedText, disabled_color);
-        applyTheme(palette);
+        applyPalette(palette);
         break;
     }
     case snowfall:
@@ -345,7 +345,7 @@ inline void setTheme(Theme style) {
         palette.setColor(QPalette::Highlight, highlight_color);
         palette.setColor(QPalette::HighlightedText, highlighted_text_color);
         palette.setColor(QPalette::Disabled, QPalette::HighlightedText, disabled_color);
-        applyTheme(palette);
+        applyPalette(palette);
         break;
     }
     case strawberry:
@@ -375,7 +375,7 @@ inline void setTheme(Theme style) {
         palette.setColor(QPalette::Highlight, accent_highlight_color);
         palette.setColor(QPalette::HighlightedText, highlighted_text_color);
         palette.setColor(QPalette::Disabled, QPalette::HighlightedText, disabled_color);
-        applyTheme(palette);
+        applyPalette(palette);
         break;
     }
 }
@@ -430,7 +430,7 @@ inline void initDarkThemeSettings() {
     darkPalette.setColor(QPalette::Highlight, QColor(42, 130, 218));
     darkPalette.setColor(QPalette::HighlightedText, Qt::black);
     darkPalette.setColor(QPalette::Disabled, QPalette::HighlightedText, darkDisabledColor);
-    applyTheme(darkPalette);
+    applyPalette(darkPalette);
 #endif
 }
 

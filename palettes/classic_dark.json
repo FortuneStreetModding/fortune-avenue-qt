@@ -1,0 +1,18 @@
+{
+    "name": "Classic Dark",
+    "category": "Classic",
+    "colors": {
+        "accent_highlight_color":"#d31779",
+        "accent_text_color":"#eeeeee",
+        "alternate_base_color":"#111111",
+        "bright_text_color":"fcfcfc",
+        "canvas_color":"#121212",
+        "disabled_color":"#bbbbbb",
+        "highlighted_text_color":"#eeeeee",
+        "link_color":"#2a82da",
+        "main_text_color":"#eeeeee",
+        "outside_color":"#2d2d2d",
+        "tooltip_base":"#000000",
+        "tooltip_text":"#eeeeee"
+    }
+}
