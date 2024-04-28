@@ -23,13 +23,6 @@ if(APPLE)
     set(app_icon_macos ${CMAKE_CURRENT_SOURCE_DIR}/AppIcon.icns)
     set_source_files_properties(${app_icon_macos} PROPERTIES
         MACOSX_PACKAGE_LOCATION "Resources")
-
-    set_target_properties(FortuneAvenue PROPERTIES
-        MACOSX_BUNDLE_GUI_IDENTIFIER com.fortunestreetmodding
-        MACOSX_BUNDLE_BUNDLE_VERSION ${PROJECT_VERSION}
-        MACOSX_BUNDLE_SHORT_VERSION_STRING ${PROJECT_VERSION}
-        MACOSX_BUNDLE TRUE
-    )
 elseif(WIN32)
     set(app_icon_windows "${CMAKE_CURRENT_SOURCE_DIR}/AppIcon.rc")
 endif()
@@ -93,4 +86,11 @@ target_link_libraries(FortuneAvenue PRIVATE
 install(TARGETS FortuneAvenue
     BUNDLE DESTINATION .
     RUNTIME DESTINATION ${CMAKE_INSTALL_BINDIR}
+)
+
+set_target_properties(FortuneAvenue PROPERTIES
+    MACOSX_BUNDLE_GUI_IDENTIFIER com.fortunestreetmodding
+    MACOSX_BUNDLE_BUNDLE_VERSION ${PROJECT_VERSION}
+    MACOSX_BUNDLE_SHORT_VERSION_STRING ${PROJECT_VERSION}
+    MACOSX_BUNDLE TRUE
 )
