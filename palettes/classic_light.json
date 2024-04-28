@@ -1,18 +1,26 @@
 {
     "name": "Classic Light",
-    "category": "Classic",
+    "category": "Light",
     "colors": {
-        "accent_highlight_color":"#172b89",
-        "accent_text_color":"#111111",
-        "alternate_base_color":"#111111",
-        "bright_text_color":"#fcfcfc",
-        "canvas_color":"#9598a6",
-        "disabled_color":"#333333",
-        "highlighted_text_color":"#eeeeee",
-        "link_color":"#2a82da",
-        "main_text_color":"#111111",
-        "outside_color":"#c3c6c8",
+        "window":"#c3c6c8",
+        "window_text":"#111111",
+        "base":"#9598a6",
+        "alternate_base":"#111111",
+        "text":"#111111",
+
+        "button":"#c3c6c8",
+        "button_text":"#111111",
+        "bright_text":"#fcfcfc",
+
+        "link":"#2a82da",
+        "highlight":"#172b89",
+        "highlighted_text_color":"#111111",
+
         "tooltip_base":"#000000",
-        "tooltip_text":"#eeeeee"
+        "tooltip_text":"#eeeeee",
+
+        "disabled_button":"#aaaaaa",
+        "disabled_highlighted_text":"#aaaaaa",
+        "disabled_text":"#aaaaaa"
     }
 }

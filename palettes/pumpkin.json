@@ -2,17 +2,25 @@
     "name": "Pumpkin",
     "category": "Light",
     "colors": {
-        "accent_highlight_color":"#D0AE8E",
-        "accent_text_color":"#111111",
-        "alternate_base_color":"#111111",
-        "bright_text_color":"#fcfcfc",
-        "canvas_color":"#804E2C",
-        "disabled_color":"#333333",
-        "highlighted_text_color":"#eeeeee",
-        "link_color":"#2a82da",
-        "main_text_color":"#111111",
-        "outside_color":"#e3843e",
+        "window":"#e3843e",
+        "window_text":"#111111",
+        "base":"#804e2c",
+        "alternate_base":"#eeeeee",
+        "text":"#111111",
+
+        "button":"#e3843e",
+        "button_text":"#111111",
+        "bright_text":"#fcfcfc",
+
+        "link":"#2a82da",
+        "highlight":"#d0ae8e",
+        "highlighted_text_color":"#111111",
+
         "tooltip_base":"#000000",
-        "tooltip_text":"#eeeeee"
+        "tooltip_text":"#eeeeee",
+
+        "disabled_button":"#aaaaaa",
+        "disabled_highlighted_text":"#aaaaaa",
+        "disabled_text":"#aaaaaa"
     }
 }

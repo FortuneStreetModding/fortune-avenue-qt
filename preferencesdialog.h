@@ -2,6 +2,7 @@
 #define PREFERENCESDIALOG_H
 
 #include <QDialog>
+#include <QJsonObject>
 
 namespace Ui {
 class PreferencesDialog;
@@ -17,8 +18,6 @@ public:
 
 private:
     Ui::PreferencesDialog *ui;
-
-private slots:
     void buildPaletteMenu();
     void paletteActionTriggered();
 };

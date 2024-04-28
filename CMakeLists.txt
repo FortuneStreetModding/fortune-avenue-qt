@@ -38,6 +38,7 @@ qt_add_executable(FortuneAvenue WIN32 MACOSX_BUNDLE
     squareshiftidscommand.cpp squareshiftidscommand.h
     squareswapidscommand.cpp squareswapidscommand.h
     updateboardmetacmd.cpp updateboardmetacmd.h
+    usersettings.h usersettings.cpp
     util.h
     fortune-avenue.qrc
 )

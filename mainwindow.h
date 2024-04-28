@@ -92,18 +92,6 @@ protected:
     void closeEvent(QCloseEvent *event) override;
     bool eventFilter(QObject *obj, QEvent *event) override;
 private slots:
-    void on_actionClassic_Light_triggered();
-    void on_actionClassic_Dark_triggered();
-    void on_actionAmethyst_triggered();
-    void on_actionForest_triggered();
-    void on_actionRuby_triggered();
-    void on_actionSnowfall_triggered();
-    void on_actionDesert_triggered();
-    void on_actionChocolate_triggered();
-    void on_actionMidnight_triggered();
-    void on_actionStrawberry_triggered();
-    void on_actionCitrine_triggered();
-    void on_actionKiwi_triggered();
     void on_actionExit_triggered();
 };
 #endif // MAINWINDOW_H

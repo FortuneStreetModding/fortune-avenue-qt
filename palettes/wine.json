@@ -2,17 +2,25 @@
     "name": "Wine",
     "category": "Dark",
     "colors": {
-        "accent_highlight_color":"#ff6060",
-        "accent_text_color":"#eeeeee",
-        "alternate_base_color":"#111111",
-        "bright_text_color":"fcfcfc",
-        "canvas_color":"#1e0000",
-        "disabled_color":"#bbbbbb",
-        "highlighted_text_color":"#eeeeee",
-        "link_color":"#2a82da",
-        "main_text_color":"#eeeeee",
-        "outside_color":"#320000",
+        "window":"#320000",
+        "window_text":"#eeeeee",
+        "base":"#1e0000",
+        "alternate_base":"＃111111",
+        "text":"#eeeeee",
+
+        "button":"#320000",
+        "button_text":"#eeeeee",
+        "bright_text":"#eeeeee",
+
+        "link":"#2a82da",
+        "highlight":"#ff6060",
+        "highlighted_text":"#eeeeee",
+
         "tooltip_base":"#000000",
-        "tooltip_text":"#eeeeee"
+        "tooltip_text":"#eeeeee",
+
+        "disabled_button":"#555555",
+        "disabled_highlighted_text":"#555555",
+        "disabled_text":"#555555"
     }
 }

@@ -2,17 +2,25 @@
     "name": "Chocolate",
     "category": "Dark",
     "colors": {
-        "accent_highlight_color":"#934501",
-        "accent_text_color":"#eeeeee",
-        "alternate_base_color":"#111111",
-        "bright_text_color":"fcfcfc",
-        "canvas_color":"#2c0f01",
-        "disabled_color":"#bbbbbb",
-        "highlighted_text_color":"#eeeeee",
-        "link_color":"#2a82da",
-        "main_text_color":"#eeeeee",
-        "outside_color":"#362001",
+        "window":"#362001",
+        "window_text":"#eeeeee",
+        "base":"#2c0f01",
+        "alternate_base":"＃111111",
+        "text":"#eeeeee",
+
+        "button":"#362001",
+        "button_text":"#eeeeee",
+        "bright_text":"#fcfcfc",
+
+        "link":"#2a82da",
+        "highlight":"#934501",
+        "highlighted_text":"#eeeeee",
+
         "tooltip_base":"#000000",
-        "tooltip_text":"#eeeeee"
+        "tooltip_text":"#eeeeee",
+
+        "disabled_button":"#555555",
+        "disabled_highlighted_text":"#555555",
+        "disabled_text":"#555555"
     }
 }

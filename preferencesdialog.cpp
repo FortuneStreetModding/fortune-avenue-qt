@@ -10,61 +10,26 @@
 #include <QJsonArray>
 #include <QDebug>
 #include <QStyleFactory>
+#include <QSettings>
+#include <usersettings.h>
 
 PreferencesDialog::PreferencesDialog(QWidget *parent)
 : QDialog(parent)
     , ui(new Ui::PreferencesDialog)
 {
     ui->setupUi(this);
+    setWindowTitle("Preferences");
 
     ui->windowPaletteToolButton->setMenu(new QMenu);
     connect(ui->windowPaletteToolButton, &QToolButton::clicked, this, &PreferencesDialog::buildPaletteMenu);
+
+    QSettings settings;
+    ui->windowPaletteLabel->setText(settings.value("window_palette/name", "not set").toString());
 }
 
 PreferencesDialog::~PreferencesDialog()
 {
     delete ui;
-}
-
-void setChosenPalette(QJsonObject colors){
-    // read the colors from the JSON object
-    QColor alternate_base_color = colors.value("alternate_base_color").toString();
-    QColor bright_text_color = colors.value("bright_text_color").toString();
-    QColor canvas_color = colors.value("canvas_color").toString();
-    QColor disabled_color = colors.value("disabled_color").toString();
-    QColor highlight_color = colors.value("accent_highlight_color").toString();
-    QColor highlighted_text_color = colors.value("highlighted_text_color").toString();
-    QColor link_color = colors.value("link_color").toString();
-    QColor outside_color = colors.value("outside_color").toString();
-    QColor text_color = colors.value("main_text_color").toString();
-    QColor tooltip_base = colors.value("tooltip_base").toString();
-    QColor tooltip_text = colors.value("tooltip_text").toString();
-
-    // now create the palette
-    QPalette palette;
-    palette.setColor(QPalette::Window, outside_color);
-    palette.setColor(QPalette::WindowText, text_color);
-    palette.setColor(QPalette::Base, canvas_color);
-    palette.setColor(QPalette::AlternateBase, alternate_base_color);
-    palette.setColor(QPalette::Text, text_color);
-
-    palette.setColor(QPalette::Button, outside_color);
-    palette.setColor(QPalette::ButtonText, text_color);
-    palette.setColor(QPalette::BrightText, bright_text_color);
-    palette.setColor(QPalette::Link, link_color);
-    palette.setColor(QPalette::Highlight, highlight_color);
-    palette.setColor(QPalette::HighlightedText, highlighted_text_color);
-    palette.setColor(QPalette::ToolTipBase, tooltip_base);
-    palette.setColor(QPalette::ToolTipText, tooltip_text);
-
-    palette.setColor(QPalette::Disabled, QPalette::ButtonText, disabled_color);
-    palette.setColor(QPalette::Disabled, QPalette::Text, disabled_color);
-    palette.setColor(QPalette::Disabled, QPalette::HighlightedText, disabled_color);
-
-    // apply the palette immediately
-    qApp->setStyle(QStyleFactory::create("Fusion"));
-    qApp->setPalette(palette);
-    qApp->setStyleSheet("QToolTip { color: #ffffff; background-color: #2a82da; border: 1px solid white; }");
 }
 
 // The key is the palette name, and the value is a QJsonObject representing the colors of the palette
@@ -147,6 +112,7 @@ void PreferencesDialog::paletteActionTriggered()
         // apply the palette
         setChosenPalette(palette_files.value(paletteName));
 
-        // TODO: set the palette as chosen in QSettings
+        // set the palette as chosen in QSettings
+        saveUserWindowPalette(paletteName, palette_files.value(paletteName));
     }
 }

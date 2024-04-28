@@ -1377,41 +1377,6 @@ No for Magmalice lift</string>
     <property name="title">
      <string>Tools</string>
     </property>
-    <widget class="QMenu" name="menuTheme">
-     <property name="title">
-      <string>Theme</string>
-     </property>
-     <widget class="QMenu" name="menuLight_Themes">
-      <property name="title">
-       <string>Light Themes</string>
-      </property>
-      <addaction name="actionKiwi"/>
-      <addaction name="actionDesert"/>
-      <addaction name="actionCitrine"/>
-      <addaction name="actionSnowfall"/>
-      <addaction name="actionStrawberry"/>
-     </widget>
-     <widget class="QMenu" name="menuDark_Themes">
-      <property name="title">
-       <string>Dark Themes</string>
-      </property>
-      <addaction name="actionMidnight"/>
-      <addaction name="actionChocolate"/>
-      <addaction name="actionAmethyst"/>
-      <addaction name="actionForest"/>
-      <addaction name="actionRuby"/>
-     </widget>
-     <widget class="QMenu" name="menuClassic_Themes">
-      <property name="title">
-       <string>Classic Themes</string>
-      </property>
-      <addaction name="actionClassic_Light"/>
-      <addaction name="actionClassic_Dark"/>
-     </widget>
-     <addaction name="menuClassic_Themes"/>
-     <addaction name="menuLight_Themes"/>
-     <addaction name="menuDark_Themes"/>
-    </widget>
     <addaction name="actionVerify_Board"/>
     <addaction name="actionScreenshot"/>
     <addaction name="actionSet_Max_Path_Search_Depth"/>
@@ -1424,7 +1389,6 @@ No for Magmalice lift</string>
     <addaction name="actionSync_From_Board"/>
     <addaction name="actionSync_To_Board"/>
     <addaction name="separator"/>
-    <addaction name="menuTheme"/>
     <addaction name="actionSettings"/>
    </widget>
    <widget class="QMenu" name="menuHelp">
@@ -1667,79 +1631,9 @@ No for Magmalice lift</string>
     <string>Sync to Other Board for Switch State</string>
    </property>
   </action>
-  <action name="actionPreferences">
-   <property name="text">
-    <string>Preferences</string>
-   </property>
-  </action>
-  <action name="actionClassic_Light">
-   <property name="text">
-    <string>Light</string>
-   </property>
-  </action>
-  <action name="actionClassic_Dark">
-   <property name="text">
-    <string>Dark</string>
-   </property>
-  </action>
-  <action name="actionAmethyst">
-   <property name="text">
-    <string>Plum</string>
-   </property>
-  </action>
-  <action name="actionForest">
-   <property name="text">
-    <string>Spinach</string>
-   </property>
-  </action>
-  <action name="actionRuby">
-   <property name="text">
-    <string>Wine</string>
-   </property>
-  </action>
-  <action name="actionSnowfall">
-   <property name="text">
-    <string>Sea Salt</string>
-   </property>
-  </action>
-  <action name="actionDesert">
-   <property name="text">
-    <string>Lemon</string>
-   </property>
-  </action>
-  <action name="actionChocolate">
-   <property name="text">
-    <string>Chocolate</string>
-   </property>
-  </action>
-  <action name="actionMidnight">
-   <property name="text">
-    <string>Blueberry</string>
-   </property>
-  </action>
-  <action name="actionStrawberry">
-   <property name="text">
-    <string>Strawberry</string>
-   </property>
-  </action>
-  <action name="actionCitrine">
-   <property name="text">
-    <string>Pumpkin</string>
-   </property>
-  </action>
-  <action name="actionKiwi">
-   <property name="text">
-    <string>Kiwi</string>
-   </property>
-  </action>
   <action name="actionExit">
    <property name="text">
     <string>Exit</string>
-   </property>
-  </action>
-  <action name="actionPreferences_2">
-   <property name="text">
-    <string>Preferences...</string>
    </property>
   </action>
   <action name="actionSettings">
@@ -1754,8 +1648,8 @@ No for Magmalice lift</string>
  <connections/>
  <buttongroups>
   <buttongroup name="fromButtons"/>
-  <buttongroup name="onIDChange"/>
   <buttongroup name="loopingMode"/>
+  <buttongroup name="onIDChange"/>
   <buttongroup name="toButtons">
    <property name="exclusive">
     <bool>false</bool>

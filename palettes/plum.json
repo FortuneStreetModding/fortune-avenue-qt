@@ -2,17 +2,25 @@
     "name": "Plum",
     "category": "Dark",
     "colors": {
-        "accent_highlight_color":"#9381FF",
-        "accent_text_color":"#eeeeee",
-        "alternate_base_color":"#111111",
-        "bright_text_color":"fcfcfc",
-        "canvas_color":"#160725",
-        "disabled_color":"#bbbbbb",
-        "highlighted_text_color":"#eeeeee",
-        "link_color":"#2a82da",
-        "main_text_color":"#eeeeee",
-        "outside_color":"#20112f",
+        "window":"#20112f",
+        "window_text":"#eeeeee",
+        "base":"#160725",
+        "alternate_base":"＃111111",
+        "text":"#eeeeee",
+
+        "button":"#20112f",
+        "button_text":"#eeeeee",
+        "bright_text":"#fcfcfc",
+
+        "link":"#2a82da",
+        "highlight":"#9381FF",
+        "highlighted_text":"#eeeeee",
+
         "tooltip_base":"#000000",
-        "tooltip_text":"#eeeeee"
+        "tooltip_text":"#eeeeee",
+
+        "disabled_button":"#555555",
+        "disabled_highlighted_text":"#555555",
+        "disabled_text":"#555555"
     }
 }
