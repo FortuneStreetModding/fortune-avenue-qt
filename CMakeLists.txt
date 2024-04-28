@@ -1,4 +1,4 @@
-cmake_minimum_required(VERSION 3.16)
+cmake_minimum_required(VERSION 3.19)
 
 set(PROJECT_VERSION 2.7.0)
 project(FortuneAvenue VERSION ${PROJECT_VERSION} LANGUAGES C CXX)
@@ -11,21 +11,6 @@ find_package(QT NAMES Qt6 REQUIRED COMPONENTS Core)
 find_package(Qt${QT_VERSION_MAJOR} REQUIRED COMPONENTS Gui Widgets)
 
 qt_standard_project_setup()
-
-if(APPLE)
-    set(CMAKE_OSX_DEPLOYMENT_TARGET 10.15)
-    set(CMAKE_OSX_ARCHITECTURES "x86_64")
-    # MACOSX_BUNDLE_ICON_FILE gets added to Info.plist and
-    # contains only the .icns file name, without the path.
-    set(MACOSX_BUNDLE_ICON_FILE AppIcon.icns)
-    # the following two commands, however, tell CMake where to find
-    # and install this file.
-    set(app_icon_macos ${CMAKE_CURRENT_SOURCE_DIR}/AppIcon.icns)
-    set_source_files_properties(${app_icon_macos} PROPERTIES
-        MACOSX_PACKAGE_LOCATION "Resources")
-elseif(WIN32)
-    set(app_icon_windows "${CMAKE_CURRENT_SOURCE_DIR}/AppIcon.rc")
-endif()
 
 set(PROJECT_SOURCES
     autoassignshopmodelsdialog.cpp autoassignshopmodelsdialog.h autoassignshopmodelsdialog.ui
@@ -59,12 +44,27 @@ set(PROJECT_SOURCES
     util.h
 )
 
-qt_add_executable(FortuneAvenue # this is where the app icon gets attached:
-    WIN32 ${app_icon_windows}       # ...to the Windows executable
-    MACOSX_BUNDLE ${app_icon_macos} # ...and to the Mac OS X bundle
-    ${PROJECT_SOURCES}
+if(APPLE)
+    set(CMAKE_OSX_DEPLOYMENT_TARGET 11)
+    set(CMAKE_OSX_ARCHITECTURES "x86_64")
+    # MACOSX_BUNDLE_ICON_FILE gets added to Info.plist and
+    # contains only the .icns file name, without the path.
+    set(MACOSX_BUNDLE_ICON_FILE AppIcon.icns)
+    # the following two commands, however, tell CMake where to find
+    # and install this file.
+    set(app_icon_macos ${CMAKE_CURRENT_SOURCE_DIR}/AppIcon.icns)
+    set_source_files_properties(${app_icon_macos} PROPERTIES
+        MACOSX_PACKAGE_LOCATION "Resources")
+    # this is where the app icon gets attached to the Mac OS bundle...
+    qt_add_executable(FortuneAvenue MACOSX_BUNDLE ${app_icon_macos} ${PROJECT_SOURCES})
+elseif(WIN32)
+    set(app_icon_windows "${CMAKE_CURRENT_SOURCE_DIR}/AppIcon.rc")
+    # ...and this is where it is attached to the Windows executable.
+    qt_add_executable(FortuneAvenue WIN32 ${app_icon_windows} ${PROJECT_SOURCES})
+else()
+    qt_add_executable(FortuneAvenue ${PROJECT_SOURCES})
+endif()
 
-)
 target_include_directories(FortuneAvenue PRIVATE
     muparser/include
 )
@@ -93,4 +93,5 @@ set_target_properties(FortuneAvenue PROPERTIES
     MACOSX_BUNDLE_BUNDLE_VERSION ${PROJECT_VERSION}
     MACOSX_BUNDLE_SHORT_VERSION_STRING ${PROJECT_VERSION}
     MACOSX_BUNDLE TRUE
+    WIN32_EXECUTABLE TRUE
 )
