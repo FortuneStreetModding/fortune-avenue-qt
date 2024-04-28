@@ -1,7 +1,7 @@
 cmake_minimum_required(VERSION 3.16)
-project(FortuneAvenue VERSION 2.7.0 LANGUAGES C CXX)
 
-set(MACOSX_BUNDLE_ICON_FILE AppIcon.icns)
+set(PROJECT_VERSION 2.7.0)
+project(FortuneAvenue VERSION ${PROJECT_VERSION} LANGUAGES C CXX)
 
 set(CMAKE_INCLUDE_CURRENT_DIR ON)
 set(CMAKE_AUTORCC ON)
@@ -15,15 +15,19 @@ qt_standard_project_setup()
 if(APPLE)
     set(CMAKE_OSX_DEPLOYMENT_TARGET 10.15)
     set(CMAKE_OSX_ARCHITECTURES "x86_64")
+    # MACOSX_BUNDLE_ICON_FILE gets added to Info.plist and
+    # contains only the .icns file name, without the path.
     set(MACOSX_BUNDLE_ICON_FILE AppIcon.icns)
-    set(APP_ICON_MACOSX ${CMAKE_CURRENT_SOURCE_DIR}/AppIcon.icns)
-    set_source_files_properties(${APP_ICON_MACOSX} PROPERTIES
+    # the following two commands, however, tell CMake where to find
+    # and install this file.
+    set(app_icon_macos ${CMAKE_CURRENT_SOURCE_DIR}/AppIcon.icns)
+    set_source_files_properties(${app_icon_macos} PROPERTIES
         MACOSX_PACKAGE_LOCATION "Resources")
 elseif(WIN32)
     set(APP_ICON_RESOURCE_WINDOWS "${CMAKE_CURRENT_SOURCE_DIR}/AppIcon.rc")
 endif()
 
-qt_add_executable(FortuneAvenue WIN32 MACOSX_BUNDLE
+set(PROJECT_SOURCES
     autoassignshopmodelsdialog.cpp autoassignshopmodelsdialog.h autoassignshopmodelsdialog.ui
     autopath.cpp autopath.h
     darkdetect.h
@@ -53,7 +57,13 @@ qt_add_executable(FortuneAvenue WIN32 MACOSX_BUNDLE
     updateboardmetacmd.cpp updateboardmetacmd.h
     usersettings.h usersettings.cpp
     util.h
-    fortune-avenue.qrc
+)
+
+qt_add_executable(FortuneAvenue
+    WIN32
+    MACOSX_BUNDLE ${app_icon_macos} # this is where the icon actually gets attached to the Mac OS X bundle
+    ${PROJECT_SOURCES}
+
 )
 target_include_directories(FortuneAvenue PRIVATE
     muparser/include
@@ -78,9 +88,10 @@ install(TARGETS FortuneAvenue
     RUNTIME DESTINATION ${CMAKE_INSTALL_BINDIR}
 )
 
-qt_generate_deploy_app_script(
-    TARGET FortuneAvenue
-    FILENAME_VARIABLE deploy_script
-    NO_UNSUPPORTED_PLATFORM_ERROR
+set_target_properties(FortuneAvenue PROPERTIES
+    MACOSX_BUNDLE_GUI_IDENTIFIER com.fortunestreetmodding
+    MACOSX_BUNDLE_BUNDLE_VERSION ${PROJECT_VERSION}
+    MACOSX_BUNDLE_SHORT_VERSION_STRING ${PROJECT_VERSION}
+    MACOSX_BUNDLE TRUE
+    WIN32_EXECUTABLE FALSE
 )
-install(SCRIPT ${deploy_script})
