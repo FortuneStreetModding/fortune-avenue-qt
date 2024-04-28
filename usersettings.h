@@ -6,7 +6,10 @@
 #include <QJsonObject>
 #include <QPalette>
 #include <QObject>
-#include <QStyleFactory>//
+#include <QStyleFactory>
+#include <QJsonDocument>
+#include <QIODevice>
+#include <QFile>//
 
 class UserSettings : public QObject
 {
@@ -106,4 +109,21 @@ inline QJsonObject getSavedUserWindowPalette(){
 
     return palette_colors;
 }
+
+inline QJsonDocument readJsonFile(QString path, QString fileName) {
+    QFile file(path + fileName);
+    if (!file.open(QIODevice::ReadOnly)) {
+        qDebug() << "Failed to open file:" << path + fileName;
+    }
+
+    // read JSON data from file
+    QByteArray jsonData = file.readAll();
+    QJsonDocument doc = QJsonDocument::fromJson(jsonData);
+    if (doc.isNull()) {
+        qDebug() << "Failed to create JSON document from data";
+    }
+    file.close();
+    return doc;
+}
+
 #endif // USERSETTINGS_H

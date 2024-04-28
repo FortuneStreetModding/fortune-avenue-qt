@@ -11,7 +11,7 @@
 #include <QDebug>
 #include <QStyleFactory>
 #include <QSettings>
-#include <usersettings.h>
+#include "usersettings.h"
 
 PreferencesDialog::PreferencesDialog(QWidget *parent)
 : QDialog(parent)
@@ -40,9 +40,8 @@ void PreferencesDialog::buildPaletteMenu()
     ui->windowPaletteToolButton->menu()->clear();
 
     // get the list of JSON palette files
-    QString palettePath = "/palettes/";
-    QString rootDir = qApp->applicationDirPath();
-    QDir paletteDir = rootDir + palettePath;
+    QString palettePath = ":/palettes/";
+    QDir paletteDir = palettePath;
     QStringList paletteFiles = paletteDir.entryList(QStringList() << "*.json", QDir::Files);
 
     // having references to the categories encountered and submenus created
@@ -52,20 +51,7 @@ void PreferencesDialog::buildPaletteMenu()
 
     // iterate over each JSON file
     for (const QString& jsonFile : paletteFiles) {
-        QFile file(rootDir + palettePath + jsonFile);
-        if (!file.open(QIODevice::ReadOnly)) {
-            qDebug() << "Failed to open file:" << rootDir + palettePath + jsonFile;
-            continue;
-        }
-
-        // read JSON data from file
-        QByteArray jsonData = file.readAll();
-        QJsonDocument doc = QJsonDocument::fromJson(jsonData);
-        if (doc.isNull()) {
-            qDebug() << "Failed to create JSON document from data";
-            file.close();
-            continue;
-        }
+        QJsonDocument doc = readJsonFile(palettePath, jsonFile);
 
         // grab the name and category and whatever other data from these palettes
         QJsonObject rootObj = doc.object();
@@ -87,10 +73,8 @@ void PreferencesDialog::buildPaletteMenu()
 
         // add the palette as an action in the submenu of its category
         QAction *action = new QAction(name, this);
-            connect(action, &QAction::triggered, this, &PreferencesDialog::paletteActionTriggered);
+        connect(action, &QAction::triggered, this, &PreferencesDialog::paletteActionTriggered);
         submenus.value(category)->addAction(action);
-
-        file.close();
 
         palette_files.insert(name, colors);
     }
