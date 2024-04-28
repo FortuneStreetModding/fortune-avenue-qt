@@ -23,8 +23,15 @@ if(APPLE)
     set(app_icon_macos ${CMAKE_CURRENT_SOURCE_DIR}/AppIcon.icns)
     set_source_files_properties(${app_icon_macos} PROPERTIES
         MACOSX_PACKAGE_LOCATION "Resources")
+
+    set_target_properties(FortuneAvenue PROPERTIES
+        MACOSX_BUNDLE_GUI_IDENTIFIER com.fortunestreetmodding
+        MACOSX_BUNDLE_BUNDLE_VERSION ${PROJECT_VERSION}
+        MACOSX_BUNDLE_SHORT_VERSION_STRING ${PROJECT_VERSION}
+        MACOSX_BUNDLE TRUE
+    )
 elseif(WIN32)
-    set(APP_ICON_RESOURCE_WINDOWS "${CMAKE_CURRENT_SOURCE_DIR}/AppIcon.rc")
+    set(app_icon_windows "${CMAKE_CURRENT_SOURCE_DIR}/AppIcon.rc")
 endif()
 
 set(PROJECT_SOURCES
@@ -59,9 +66,9 @@ set(PROJECT_SOURCES
     util.h
 )
 
-qt_add_executable(FortuneAvenue
-    WIN32
-    MACOSX_BUNDLE ${app_icon_macos} # this is where the icon actually gets attached to the Mac OS X bundle
+qt_add_executable(FortuneAvenue # this is where the app icon gets attached:
+    WIN32 ${app_icon_windows}       # ...to the Windows executable
+    MACOSX_BUNDLE ${app_icon_macos} # ...and to the Mac OS X bundle
     ${PROJECT_SOURCES}
 
 )
@@ -86,12 +93,4 @@ target_link_libraries(FortuneAvenue PRIVATE
 install(TARGETS FortuneAvenue
     BUNDLE DESTINATION .
     RUNTIME DESTINATION ${CMAKE_INSTALL_BINDIR}
-)
-
-set_target_properties(FortuneAvenue PROPERTIES
-    MACOSX_BUNDLE_GUI_IDENTIFIER com.fortunestreetmodding
-    MACOSX_BUNDLE_BUNDLE_VERSION ${PROJECT_VERSION}
-    MACOSX_BUNDLE_SHORT_VERSION_STRING ${PROJECT_VERSION}
-    MACOSX_BUNDLE TRUE
-    WIN32_EXECUTABLE FALSE
 )
