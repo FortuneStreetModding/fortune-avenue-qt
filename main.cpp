@@ -13,6 +13,8 @@
 
 int main(int argc, char *argv[]) {
     QApplication a(argc, argv);
+    QCoreApplication::setOrganizationName("Custom Street");
+    QCoreApplication::setOrganizationDomain("fortunestreetmodding.github.io");
     QCoreApplication::setApplicationName("FortuneAvenue");
     QFontDatabase::addApplicationFont(":/fonts/Lato-Regular.ttf");
     initWindowPaletteSettings(a.styleHints()->colorScheme()); // pass through the OS light/dark theme setting

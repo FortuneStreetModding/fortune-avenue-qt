@@ -1,6 +1,8 @@
 cmake_minimum_required(VERSION 3.16)
 project(FortuneAvenue VERSION 2.7.0 LANGUAGES C CXX)
 
+set(MACOSX_BUNDLE_ICON_FILE AppIcon.icns)
+
 set(CMAKE_INCLUDE_CURRENT_DIR ON)
 set(CMAKE_AUTORCC ON)
 set(CMAKE_AUTOUIC ON)
@@ -9,6 +11,17 @@ find_package(QT NAMES Qt6 REQUIRED COMPONENTS Core)
 find_package(Qt${QT_VERSION_MAJOR} REQUIRED COMPONENTS Gui Widgets)
 
 qt_standard_project_setup()
+
+if(APPLE)
+    set(CMAKE_OSX_DEPLOYMENT_TARGET 10.15)
+    set(CMAKE_OSX_ARCHITECTURES "x86_64")
+    set(MACOSX_BUNDLE_ICON_FILE AppIcon.icns)
+    set(APP_ICON_MACOSX ${CMAKE_CURRENT_SOURCE_DIR}/AppIcon.icns)
+    set_source_files_properties(${APP_ICON_MACOSX} PROPERTIES
+        MACOSX_PACKAGE_LOCATION "Resources")
+elseif(WIN32)
+    set(APP_ICON_RESOURCE_WINDOWS "${CMAKE_CURRENT_SOURCE_DIR}/AppIcon.rc")
+endif()
 
 qt_add_executable(FortuneAvenue WIN32 MACOSX_BUNDLE
     autoassignshopmodelsdialog.cpp autoassignshopmodelsdialog.h autoassignshopmodelsdialog.ui
