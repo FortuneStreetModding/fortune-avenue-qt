@@ -62,7 +62,7 @@ void PreferencesDialog::buildPaletteMenu()
         QJsonObject colors = rootObj.value("colors").toObject();
 
         // ...so that function can use lines like this.
-        // QString outside_color = colors.value("outside_color").toString();
+        // QString window = colors.value("window").toString();
 
         // build a submenu for the category if it does not already exist
         if(!categories.contains(category))
