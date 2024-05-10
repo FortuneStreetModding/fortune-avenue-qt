@@ -26,6 +26,12 @@
    <bool>false</bool>
   </property>
   <widget class="QWidget" name="centralwidget">
+   <property name="minimumSize">
+    <size>
+     <width>0</width>
+     <height>0</height>
+    </size>
+   </property>
    <layout class="QHBoxLayout" name="horizontalLayout">
     <item>
      <widget class="QSplitter" name="splitter">
@@ -36,7 +42,7 @@
        <enum>Qt::Horizontal</enum>
       </property>
       <property name="handleWidth">
-       <number>10</number>
+       <number>5</number>
       </property>
       <widget class="QTabWidget" name="boardEdit">
        <property name="enabled">
@@ -50,7 +56,7 @@
        </property>
        <property name="minimumSize">
         <size>
-         <width>200</width>
+         <width>250</width>
          <height>0</height>
         </size>
        </property>

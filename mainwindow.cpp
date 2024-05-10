@@ -621,7 +621,7 @@ void MainWindow::updateSquareSidebar() {
             ui->districtDestinationIdLabel->setText("Destination ID");
             break;
         case EventSquare:
-            ui->districtDestinationIdLabel->setText("Venture Card Number");
+            ui->districtDestinationIdLabel->setText("Venture Card ID");
             break;
         default:
             ui->districtDestinationIdLabel->setText("District ID");
