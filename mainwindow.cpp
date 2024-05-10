@@ -64,7 +64,7 @@ MainWindow::MainWindow(QApplication& app)
     ui->shopModel->addItems(shopTextsWithValues());
     addShortcutTextToButton(ui->addSquare);
     addShortcutTextToButton(ui->removeSquare);
-    ui->actionSettings->setMenuRole(QAction::PreferencesRole);
+    ui->actionPreferences->setMenuRole(QAction::PreferencesRole);
 
     connect(ui->actionNew, &QAction::triggered, this, &MainWindow::newFile);
     connect(ui->actionOpen, &QAction::triggered, this, &MainWindow::openFile);
@@ -91,7 +91,7 @@ MainWindow::MainWindow(QApplication& app)
     connect(ui->actionVerify_Board, &QAction::triggered, this, &MainWindow::verifyBoard);
     connect(ui->actionAuto_Path, &QAction::triggered, this, &MainWindow::autoPath);
     connect(ui->actionScreenshot, &QAction::triggered, this, &MainWindow::screenshot);
-    connect(ui->actionSettings, &QAction::triggered, this, &MainWindow::preferences);
+    connect(ui->actionPreferences, &QAction::triggered, this, &MainWindow::preferences);
     connect(ui->actionAuto_Assign_Shop_Models, &QAction::triggered, this, &MainWindow::autoAssignShopModels);
 
     connect(ui->actionFortune_Avenue_Help, &QAction::triggered, this, [&]() {

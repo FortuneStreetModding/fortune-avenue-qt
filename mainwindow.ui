@@ -1413,7 +1413,7 @@ No for Magmalice lift</string>
     <addaction name="actionSync_From_Board"/>
     <addaction name="actionSync_To_Board"/>
     <addaction name="separator"/>
-    <addaction name="actionSettings"/>
+    <addaction name="actionPreferences"/>
    </widget>
    <widget class="QMenu" name="menuHelp">
     <property name="title">
@@ -1660,7 +1660,7 @@ No for Magmalice lift</string>
     <string>Exit</string>
    </property>
   </action>
-  <action name="actionSettings">
+  <action name="actionPreferences">
    <property name="text">
     <string>Preferences...</string>
    </property>
