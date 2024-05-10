@@ -120,7 +120,16 @@ void ScreenshotDialog::makeScreenshot(const QString &filename, BoardFile &boardF
     image.fill(Qt::transparent);
     QPainter painter(&image);
     scene->render(&painter);
-    image.save(screenshotFilename);
+    bool success = image.save(screenshotFilename);
+    QString s_text = "Sadly, it did not work. Value returned: " + QString::number(success);
+    if (success == true){
+        s_text = "It worked!";
+        QMessageBox::information(this, s_text, ("The file ("+ screenshotFilename + ") has been saved."));
+    }
+    else{
+        QMessageBox::critical(this, s_text, ("The file ("+ screenshotFilename + ") was not saved."));
+    }
+
 }
 
 void ScreenshotDialog::accept() {
