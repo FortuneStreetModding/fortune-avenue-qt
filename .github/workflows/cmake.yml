@@ -21,7 +21,7 @@ jobs:
         submodules: true
     - name: Install dependencies
       run: |
-        sudo apt-get install -y libarchive-dev wget ninja-build libxkbcommon0 libxcb-cursor0 libwebp-dev
+        sudo apt-get install -y libarchive-dev wget ninja-build libxkbcommon0 libxcb-cursor0
         wget https://github.com/linuxdeploy/linuxdeploy/releases/download/1-alpha-20220822-1/linuxdeploy-x86_64.AppImage
         chmod +x linuxdeploy-x86_64.AppImage
         wget https://github.com/linuxdeploy/linuxdeploy-plugin-qt/releases/download/continuous/linuxdeploy-plugin-qt-x86_64.AppImage
@@ -34,6 +34,7 @@ jobs:
       with:
         version: 6.6.1
         target: desktop
+        modules: qtimageformats
 
     - name: Configure CMake
       working-directory: ${{github.workspace}}
@@ -71,13 +72,14 @@ jobs:
         submodules: true
 
     - name: Install dependencies
-      run: brew install libarchive ninja webp yaml-cpp
+      run: brew install libarchive ninja yaml-cpp
 
     - name: Install Qt
       uses: jurplel/install-qt-action@v3
       with:
         version: 6.6.1
         target: desktop
+        modules: qtimageformats
 
     - name: Configure CMake
       working-directory: ${{github.workspace}}
@@ -119,6 +121,7 @@ jobs:
         version: 6.6.1
         target: desktop
         arch: win64_msvc2019_64
+        modules: qtimageformats
 
     - name: Install Ninja
       uses: seanmiddleditch/gha-setup-ninja@master
