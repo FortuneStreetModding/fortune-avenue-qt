@@ -624,7 +624,7 @@ void MainWindow::updateSquareSidebar() {
             ui->districtDestinationIdLabel->setText("Venture Card Number");
             break;
         default:
-            ui->districtDestinationIdLabel->setText("District/Destination ID");
+            ui->districtDestinationIdLabel->setText("District ID");
             break;
         }
         ui->districtDestinationId->setText(QString::number(item->getData().districtDestinationId));
@@ -664,7 +664,7 @@ void MainWindow::updateSquareSidebar() {
 
         previouslyVisitedSquareId = item->getData().id;
     } else {
-        ui->districtDestinationIdLabel->setText("District/Destination ID");
+        ui->districtDestinationIdLabel->setText("District ID");
         for (auto &waypointDest: waypointDests) {
             for (auto &child: waypointDest) {
                 child->setEnabled(false);

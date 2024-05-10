@@ -6,8 +6,8 @@
    <rect>
     <x>0</x>
     <y>0</y>
-    <width>1475</width>
-    <height>844</height>
+    <width>1550</width>
+    <height>875</height>
    </rect>
   </property>
   <property name="sizePolicy">
@@ -35,6 +35,9 @@
       <property name="orientation">
        <enum>Qt::Horizontal</enum>
       </property>
+      <property name="handleWidth">
+       <number>10</number>
+      </property>
       <widget class="QTabWidget" name="boardEdit">
        <property name="enabled">
         <bool>true</bool>
@@ -47,13 +50,13 @@
        </property>
        <property name="minimumSize">
         <size>
-         <width>250</width>
+         <width>200</width>
          <height>0</height>
         </size>
        </property>
        <property name="maximumSize">
         <size>
-         <width>16777215</width>
+         <width>600</width>
          <height>16777215</height>
         </size>
        </property>
@@ -349,7 +352,7 @@
        </property>
        <property name="minimumSize">
         <size>
-         <width>750</width>
+         <width>900</width>
          <height>0</height>
         </size>
        </property>
@@ -388,6 +391,12 @@
          <height>0</height>
         </size>
        </property>
+       <property name="maximumSize">
+        <size>
+         <width>600</width>
+         <height>16777215</height>
+        </size>
+       </property>
        <property name="currentIndex">
         <number>0</number>
        </property>
@@ -399,7 +408,7 @@
          <item row="6" column="0">
           <widget class="QLabel" name="districtDestinationIdLabel">
            <property name="text">
-            <string>District/Destination ID</string>
+            <string>District ID</string>
            </property>
           </widget>
          </item>
@@ -1356,7 +1365,7 @@ No for Magmalice lift</string>
     <rect>
      <x>0</x>
      <y>0</y>
-     <width>1475</width>
+     <width>1550</width>
      <height>27</height>
     </rect>
    </property>
@@ -1647,13 +1656,13 @@ No for Magmalice lift</string>
  </resources>
  <connections/>
  <buttongroups>
-  <buttongroup name="fromButtons"/>
-  <buttongroup name="loopingMode"/>
   <buttongroup name="onIDChange"/>
+  <buttongroup name="loopingMode"/>
   <buttongroup name="toButtons">
    <property name="exclusive">
     <bool>false</bool>
    </property>
   </buttongroup>
+  <buttongroup name="fromButtons"/>
  </buttongroups>
 </ui>
