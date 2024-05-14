@@ -1664,6 +1664,9 @@ No for Magmalice lift</string>
    <property name="text">
     <string>Preferences...</string>
    </property>
+   <property name="menuRole">
+    <enum>QAction::PreferencesRole</enum>
+   </property>
   </action>
  </widget>
  <resources>
@@ -1672,12 +1675,12 @@ No for Magmalice lift</string>
  <connections/>
  <buttongroups>
   <buttongroup name="onIDChange"/>
-  <buttongroup name="loopingMode"/>
   <buttongroup name="toButtons">
    <property name="exclusive">
     <bool>false</bool>
    </property>
   </buttongroup>
+  <buttongroup name="loopingMode"/>
   <buttongroup name="fromButtons"/>
  </buttongroups>
 </ui>

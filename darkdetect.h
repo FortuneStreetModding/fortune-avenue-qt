@@ -1,13 +1,11 @@
 #ifndef DARKDETECT_H
 #define DARKDETECT_H
-#include "usersettings.h"
 
-#include <QApplication>
-#include <QGuiApplication>
-#include <QJsonObject>
-#include <QPalette>
-#include <QSettings>
-#include <QStyleFactory>
+#include "qapplication.h"
+#include "qjsondocument.h"
+#include "qpalette.h"
+#include "qsettings.h"
+#include "usersettings.h"
 
 inline void initWindowPaletteSettings(Qt::ColorScheme scheme) {
     QSettings settings;

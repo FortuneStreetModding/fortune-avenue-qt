@@ -14,7 +14,7 @@
 
         "link":"#2a82da",
         "highlight":"#d0ae8e",
-        "highlighted_text_color":"#111111",
+        "highlighted_text":"#111111",
 
         "tooltip_base":"#000000",
         "tooltip_text":"#eeeeee",

@@ -64,7 +64,6 @@ MainWindow::MainWindow(QApplication& app)
     ui->shopModel->addItems(shopTextsWithValues());
     addShortcutTextToButton(ui->addSquare);
     addShortcutTextToButton(ui->removeSquare);
-    ui->actionPreferences->setMenuRole(QAction::PreferencesRole);
 
     connect(ui->actionNew, &QAction::triggered, this, &MainWindow::newFile);
     connect(ui->actionOpen, &QAction::triggered, this, &MainWindow::openFile);
