@@ -6,8 +6,8 @@
    <rect>
     <x>0</x>
     <y>0</y>
-    <width>1550</width>
-    <height>875</height>
+    <width>1468</width>
+    <height>828</height>
    </rect>
   </property>
   <property name="sizePolicy">
@@ -33,6 +33,18 @@
     </size>
    </property>
    <layout class="QHBoxLayout" name="horizontalLayout">
+    <property name="leftMargin">
+     <number>4</number>
+    </property>
+    <property name="topMargin">
+     <number>4</number>
+    </property>
+    <property name="rightMargin">
+     <number>4</number>
+    </property>
+    <property name="bottomMargin">
+     <number>4</number>
+    </property>
     <item>
      <widget class="QSplitter" name="splitter">
       <property name="autoFillBackground">
@@ -1380,7 +1392,7 @@ No for Magmalice lift</string>
     <rect>
      <x>0</x>
      <y>0</y>
-     <width>1550</width>
+     <width>1468</width>
      <height>27</height>
     </rect>
    </property>
@@ -1674,13 +1686,13 @@ No for Magmalice lift</string>
  </resources>
  <connections/>
  <buttongroups>
-  <buttongroup name="onIDChange"/>
   <buttongroup name="toButtons">
    <property name="exclusive">
     <bool>false</bool>
    </property>
   </buttongroup>
-  <buttongroup name="loopingMode"/>
+  <buttongroup name="onIDChange"/>
   <buttongroup name="fromButtons"/>
+  <buttongroup name="loopingMode"/>
  </buttongroups>
 </ui>

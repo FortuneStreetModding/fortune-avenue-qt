@@ -20,6 +20,8 @@ private:
     Ui::PreferencesDialog *ui;
     void buildPaletteMenu();
     void paletteActionTriggered();
+private Q_SLOTS:
+    void usePaletteHighlightColorCheckboxStatusChanged(int status);
 };
 
 #endif // PREFERENCESDIALOG_H

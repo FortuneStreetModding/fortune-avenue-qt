@@ -18,7 +18,7 @@ public:
     explicit UserSettings(QObject *parent = nullptr);
 };
 
-inline void setChosenPalette(QJsonObject colors){
+inline void setChosenPalette(QJsonObject colors, bool usePaletteHighlightColors = true){
     // create the palette from the colors in the QJsonObject
     QPalette palette;
     palette.setColor(QPalette::Window, colors.value("window").toString());
@@ -31,14 +31,18 @@ inline void setChosenPalette(QJsonObject colors){
     palette.setColor(QPalette::ButtonText, colors.value("button_text").toString());
     palette.setColor(QPalette::BrightText, colors.value("bright_text").toString());
     palette.setColor(QPalette::Link, colors.value("link").toString());
-    palette.setColor(QPalette::Highlight, colors.value("highlight").toString());
-    palette.setColor(QPalette::HighlightedText, colors.value("highlighted_text").toString());
+
+    if(usePaletteHighlightColors){
+        palette.setColor(QPalette::Highlight, colors.value("highlight").toString());
+        palette.setColor(QPalette::HighlightedText, colors.value("highlighted_text").toString());
+        palette.setColor(QPalette::Disabled, QPalette::HighlightedText, colors.value("disabled_highlighted_text").toString());
+    }
+
     palette.setColor(QPalette::ToolTipBase, colors.value("tooltip_base").toString());
     palette.setColor(QPalette::ToolTipText, colors.value("tooltip_text").toString());
 
     palette.setColor(QPalette::Disabled, QPalette::ButtonText, colors.value("disabled_button").toString());
     palette.setColor(QPalette::Disabled, QPalette::Text, colors.value("disabled_text").toString());
-    palette.setColor(QPalette::Disabled, QPalette::HighlightedText, colors.value("disabled_highlighted_text").toString());
 
     // apply the palette immediately
     qApp->setStyle(QStyleFactory::create("Fusion"));
@@ -46,7 +50,7 @@ inline void setChosenPalette(QJsonObject colors){
     qApp->setStyleSheet("QToolTip { color: #ffffff; background-color: #2a82da; border: 1px solid white; }");
 }
 
-inline void saveUserWindowPalette(QString paletteName, QJsonObject paletteColors){
+inline void saveUserWindowPalette(QString paletteName, QJsonObject paletteColors, bool usePaletteHighlightColors = true){
     QSettings settings;
     // this group adds a prefix to all of the values below, resulting in path/to/keys
     // like window_palette/colors/window.
@@ -54,6 +58,7 @@ inline void saveUserWindowPalette(QString paletteName, QJsonObject paletteColors
 
     // save the palette name
     settings.setValue("name", paletteName);
+    settings.setValue("use_highlight_colors", usePaletteHighlightColors);
 
     // save the palette colors. if we add keys to our palette schema, we will need
     // to add entries here and in returnPalettePreference().

@@ -18,6 +18,7 @@ PreferencesDialog::PreferencesDialog(QWidget *parent)
     , ui(new Ui::PreferencesDialog)
 {
     ui->setupUi(this);
+    this->resize(100,100);
     setWindowTitle("Preferences");
 
     ui->windowPaletteToolButton->setMenu(new QMenu);
@@ -25,6 +26,13 @@ PreferencesDialog::PreferencesDialog(QWidget *parent)
 
     QSettings settings;
     ui->windowPaletteLabel->setText(settings.value("window_palette/name", "not set").toString());
+
+    bool useHighlightColorSetting = settings.value("window_palette/use_highlight_colors", 1).toBool();
+    ui->usePaletteHighlightColorCheckbox->setChecked(useHighlightColorSetting);
+
+    connect(ui->usePaletteHighlightColorCheckbox, &QCheckBox::stateChanged, this, [this](bool value){
+        usePaletteHighlightColorCheckboxStatusChanged(value);
+    });
 }
 
 PreferencesDialog::~PreferencesDialog()
@@ -93,10 +101,23 @@ void PreferencesDialog::paletteActionTriggered()
         // do stuff with the selected palette name
         ui->windowPaletteLabel->setText(paletteName);
 
+        // check whether or not to use highlight colors
+        bool useHighlightColors = ui->usePaletteHighlightColorCheckbox->isChecked();
+
         // apply the palette
-        setChosenPalette(palette_files.value(paletteName));
+        setChosenPalette(palette_files.value(paletteName), useHighlightColors);
 
         // set the palette as chosen in QSettings
-        saveUserWindowPalette(paletteName, palette_files.value(paletteName));
+        saveUserWindowPalette(paletteName, palette_files.value(paletteName), useHighlightColors);
     }
+}
+
+void PreferencesDialog::usePaletteHighlightColorCheckboxStatusChanged(int status)
+{
+    bool useHighlightColors = status;
+    // if false, we're disabling the use of the palette's highlight color and highlight text color entries.
+    // if true, we're enabling their use.
+    QJsonObject palette = getSavedUserWindowPalette();
+    setChosenPalette(palette, useHighlightColors);
+    saveUserWindowPalette(palette.value("name").toString(), palette, useHighlightColors);
 }
