@@ -6,7 +6,7 @@
    <rect>
     <x>0</x>
     <y>0</y>
-    <width>1468</width>
+    <width>1393</width>
     <height>828</height>
    </rect>
   </property>
@@ -370,7 +370,7 @@
        </property>
        <property name="minimumSize">
         <size>
-         <width>900</width>
+         <width>825</width>
          <height>0</height>
         </size>
        </property>
@@ -1392,7 +1392,7 @@ No for Magmalice lift</string>
     <rect>
      <x>0</x>
      <y>0</y>
-     <width>1468</width>
+     <width>1393</width>
      <height>27</height>
     </rect>
    </property>
@@ -1691,8 +1691,8 @@ No for Magmalice lift</string>
     <bool>false</bool>
    </property>
   </buttongroup>
-  <buttongroup name="onIDChange"/>
   <buttongroup name="fromButtons"/>
   <buttongroup name="loopingMode"/>
+  <buttongroup name="onIDChange"/>
  </buttongroups>
 </ui>
