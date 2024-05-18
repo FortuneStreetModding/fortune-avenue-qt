@@ -1209,6 +1209,7 @@ void MainWindow::screenshot() {
 
 void MainWindow::preferences() {
     PreferencesDialog dialog(this);
+    dialog.setWindowModality(Qt::ApplicationModal);
     dialog.exec();
 }
 
