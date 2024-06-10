@@ -529,6 +529,10 @@ void MainWindow::loadFile(const BoardFile &file) {
     ui->menuTools->setEnabled(true);
     ui->menuView->setEnabled(true);
 
+    ui->boardEdit->setEnabled(true);
+    ui->squareEdit->setEnabled(true);
+    ui->graphicsView->setEnabled(true);
+
     if (file.boardInfo.versionFlag < 3) {
         curBoardFile.boardInfo.useAdvancedAutoPath = (file.boardInfo.versionFlag != 0);
     }

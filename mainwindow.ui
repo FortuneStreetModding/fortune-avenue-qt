@@ -58,7 +58,7 @@
       </property>
       <widget class="QTabWidget" name="boardEdit">
        <property name="enabled">
-        <bool>true</bool>
+        <bool>false</bool>
        </property>
        <property name="sizePolicy">
         <sizepolicy hsizetype="Minimum" vsizetype="Preferred">
@@ -362,6 +362,9 @@
        </widget>
       </widget>
       <widget class="QGraphicsView" name="graphicsView">
+       <property name="enabled">
+        <bool>false</bool>
+       </property>
        <property name="sizePolicy">
         <sizepolicy hsizetype="Maximum" vsizetype="Expanding">
          <horstretch>0</horstretch>
@@ -395,7 +398,7 @@
       </widget>
       <widget class="QTabWidget" name="squareEdit">
        <property name="enabled">
-        <bool>true</bool>
+        <bool>false</bool>
        </property>
        <property name="sizePolicy">
         <sizepolicy hsizetype="Minimum" vsizetype="Preferred">
@@ -450,7 +453,7 @@
          <item row="15" column="1">
           <widget class="QLineEdit" name="yield">
            <property name="enabled">
-            <bool>true</bool>
+            <bool>false</bool>
            </property>
            <property name="readOnly">
             <bool>true</bool>
@@ -539,7 +542,7 @@ No for Magmalice lift</string>
            <item>
             <widget class="QLineEdit" name="shopModelName">
              <property name="enabled">
-              <bool>true</bool>
+              <bool>false</bool>
              </property>
              <property name="minimumSize">
               <size>
@@ -1298,7 +1301,7 @@ No for Magmalice lift</string>
            <item row="0" column="3">
             <widget class="QGraphicsView" name="squareItemView_right">
              <property name="enabled">
-              <bool>true</bool>
+              <bool>false</bool>
              </property>
              <property name="maximumSize">
               <size>
@@ -1346,7 +1349,7 @@ No for Magmalice lift</string>
            <item row="0" column="1">
             <widget class="QGraphicsView" name="squareItemView_left">
              <property name="enabled">
-              <bool>true</bool>
+              <bool>false</bool>
              </property>
              <property name="maximumSize">
               <size>
@@ -1686,13 +1689,13 @@ No for Magmalice lift</string>
  </resources>
  <connections/>
  <buttongroups>
+  <buttongroup name="loopingMode"/>
+  <buttongroup name="onIDChange"/>
+  <buttongroup name="fromButtons"/>
   <buttongroup name="toButtons">
    <property name="exclusive">
     <bool>false</bool>
    </property>
   </buttongroup>
-  <buttongroup name="fromButtons"/>
-  <buttongroup name="loopingMode"/>
-  <buttongroup name="onIDChange"/>
  </buttongroups>
 </ui>
