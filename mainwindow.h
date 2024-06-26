@@ -70,6 +70,7 @@ private:
     void verifyBoard();
     void autoPath();
     void screenshot();
+    void preferences();
     void addSquare();
     void removeSquare();
     int calcSnapSizeFromInput();
@@ -90,5 +91,7 @@ private:
 protected:
     void closeEvent(QCloseEvent *event) override;
     bool eventFilter(QObject *obj, QEvent *event) override;
+private slots:
+    void on_actionExit_triggered();
 };
 #endif // MAINWINDOW_H

@@ -6,16 +6,18 @@
 #include <QFontDatabase>
 #include <QWindow>
 #include "darkdetect.h"
+#include <QStyleHints>
 #ifdef Q_OS_WIN
 #include "Shlobj.h"
 #endif
 
 int main(int argc, char *argv[]) {
     QApplication a(argc, argv);
+    QCoreApplication::setOrganizationName("Custom Street");
+    QCoreApplication::setOrganizationDomain("fortunestreetmodding.github.io");
     QCoreApplication::setApplicationName("FortuneAvenue");
-    a.setAttribute(Qt::AA_UseHighDpiPixmaps);
     QFontDatabase::addApplicationFont(":/fonts/Lato-Regular.ttf");
-    initDarkThemeSettings();
+    initWindowPaletteSettings(a.styleHints()->colorScheme()); // pass through the OS light/dark theme setting
 
 #ifdef Q_OS_WIN
     QSettings s("HKEY_CURRENT_USER\\SOFTWARE\\CLASSES", QSettings::NativeFormat);

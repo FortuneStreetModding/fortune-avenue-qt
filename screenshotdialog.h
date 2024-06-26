@@ -22,7 +22,7 @@ private:
     Ui::ScreenshotDialog *ui;
     FortuneAvenueGraphicsScene *scene;
     void readBoardFile(const QString &filename, BoardFile &boardFile, QRectF &rect);
-    void makeScreenshot(const QString &filename, BoardFile &boardFile, const QRectF &rect);
+    bool makeScreenshot(const QString &filename, BoardFile &boardFile, const QRectF &rect);
 };
 
 #endif // SCREENSHOTDIALOG_H

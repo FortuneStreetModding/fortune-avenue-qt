@@ -6,39 +6,75 @@
    <rect>
     <x>0</x>
     <y>0</y>
-    <width>1280</width>
-    <height>720</height>
+    <width>1393</width>
+    <height>828</height>
    </rect>
+  </property>
+  <property name="sizePolicy">
+   <sizepolicy hsizetype="Preferred" vsizetype="MinimumExpanding">
+    <horstretch>0</horstretch>
+    <verstretch>0</verstretch>
+   </sizepolicy>
   </property>
   <property name="windowTitle">
    <string>Fortune Avenue[*]</string>
   </property>
+  <property name="windowOpacity">
+   <double>1.000000000000000</double>
+  </property>
+  <property name="unifiedTitleAndToolBarOnMac">
+   <bool>false</bool>
+  </property>
   <widget class="QWidget" name="centralwidget">
+   <property name="minimumSize">
+    <size>
+     <width>0</width>
+     <height>0</height>
+    </size>
+   </property>
    <layout class="QHBoxLayout" name="horizontalLayout">
+    <property name="leftMargin">
+     <number>4</number>
+    </property>
+    <property name="topMargin">
+     <number>4</number>
+    </property>
+    <property name="rightMargin">
+     <number>4</number>
+    </property>
+    <property name="bottomMargin">
+     <number>4</number>
+    </property>
     <item>
      <widget class="QSplitter" name="splitter">
+      <property name="autoFillBackground">
+       <bool>false</bool>
+      </property>
       <property name="orientation">
        <enum>Qt::Horizontal</enum>
+      </property>
+      <property name="handleWidth">
+       <number>5</number>
       </property>
       <widget class="QTabWidget" name="boardEdit">
        <property name="enabled">
         <bool>false</bool>
        </property>
        <property name="sizePolicy">
-        <sizepolicy hsizetype="Preferred" vsizetype="Preferred">
+        <sizepolicy hsizetype="Minimum" vsizetype="Preferred">
          <horstretch>0</horstretch>
          <verstretch>0</verstretch>
         </sizepolicy>
        </property>
        <property name="minimumSize">
         <size>
-         <width>170</width>
+         <width>250</width>
          <height>0</height>
         </size>
        </property>
        <property name="maximumSize">
         <size>
-         <width>16777215</width>
+         <width>600</width>
          <height>16777215</height>
         </size>
        </property>
@@ -326,6 +362,36 @@
        </widget>
       </widget>
       <widget class="QGraphicsView" name="graphicsView">
+       <property name="enabled">
+        <bool>false</bool>
+       </property>
+       <property name="sizePolicy">
+        <sizepolicy hsizetype="Maximum" vsizetype="Expanding">
+         <horstretch>0</horstretch>
+         <verstretch>0</verstretch>
+        </sizepolicy>
+       </property>
+       <property name="minimumSize">
+        <size>
+         <width>825</width>
+         <height>0</height>
+        </size>
+       </property>
+       <property name="autoFillBackground">
+        <bool>false</bool>
+       </property>
+       <property name="frameShape">
+        <enum>QFrame::StyledPanel</enum>
+       </property>
+       <property name="frameShadow">
+        <enum>QFrame::Sunken</enum>
+       </property>
+       <property name="lineWidth">
+        <number>1</number>
+       </property>
+       <property name="sizeAdjustPolicy">
+        <enum>QAbstractScrollArea::AdjustToContents</enum>
+       </property>
        <property name="dragMode">
         <enum>QGraphicsView::RubberBandDrag</enum>
        </property>
@@ -335,10 +401,22 @@
         <bool>false</bool>
        </property>
        <property name="sizePolicy">
-        <sizepolicy hsizetype="Preferred" vsizetype="Preferred">
+        <sizepolicy hsizetype="Minimum" vsizetype="Preferred">
          <horstretch>0</horstretch>
          <verstretch>0</verstretch>
         </sizepolicy>
+       </property>
+       <property name="minimumSize">
+        <size>
+         <width>300</width>
+         <height>0</height>
+        </size>
+       </property>
+       <property name="maximumSize">
+        <size>
+         <width>600</width>
+         <height>16777215</height>
+        </size>
        </property>
        <property name="currentIndex">
         <number>0</number>
@@ -351,7 +429,7 @@
          <item row="6" column="0">
           <widget class="QLabel" name="districtDestinationIdLabel">
            <property name="text">
-            <string>District/Destination ID</string>
+            <string>District ID</string>
            </property>
           </widget>
          </item>
@@ -376,6 +454,9 @@
           <widget class="QLineEdit" name="yield">
            <property name="enabled">
             <bool>false</bool>
+           </property>
+           <property name="readOnly">
+            <bool>true</bool>
            </property>
           </widget>
          </item>
@@ -469,6 +550,12 @@ No for Magmalice lift</string>
                <height>0</height>
               </size>
              </property>
+             <property name="dragEnabled">
+              <bool>false</bool>
+             </property>
+             <property name="readOnly">
+              <bool>true</bool>
+             </property>
             </widget>
            </item>
           </layout>
@@ -514,107 +601,39 @@ No for Magmalice lift</string>
             <property name="bottomMargin">
              <number>0</number>
             </property>
-            <item row="1" column="0">
-             <widget class="QToolButton" name="from_northwest">
+            <item row="1" column="6">
+             <widget class="QToolButton" name="to_northeast">
+              <property name="enabled">
+               <bool>false</bool>
+              </property>
               <property name="text">
                <string>...</string>
               </property>
               <property name="icon">
-               <iconset resource="fortune-avenue-port.qrc">
-                <normaloff>:/buttonicons/arrow_southeast.svg</normaloff>
-                <normalon>:/buttonicons/arrow_southeast_green.svg</normalon>:/buttonicons/arrow_southeast.svg</iconset>
+               <iconset resource="fortune-avenue.qrc">
+                <normaloff>:/buttonicons/arrow_northeast_red.svg</normaloff>
+                <normalon>:/buttonicons/arrow_northeast_green.svg</normalon>:/buttonicons/arrow_northeast_red.svg</iconset>
               </property>
               <property name="checkable">
                <bool>true</bool>
               </property>
               <attribute name="buttonGroup">
-               <string notr="true">fromButtons</string>
+               <string notr="true">toButtons</string>
               </attribute>
              </widget>
             </item>
-            <item row="0" column="0" colspan="3">
+            <item row="0" column="4" colspan="3">
+             <widget class="QLabel" name="label_24">
+              <property name="text">
+               <string>To</string>
+              </property>
+             </widget>
+            </item>
+            <item row="0" column="1" colspan="3">
              <widget class="QLabel" name="label_23">
               <property name="text">
                <string>From</string>
               </property>
-             </widget>
-            </item>
-            <item row="1" column="5">
-             <widget class="QToolButton" name="to_north">
-              <property name="enabled">
-               <bool>false</bool>
-              </property>
-              <property name="text">
-               <string>...</string>
-              </property>
-              <property name="icon">
-               <iconset resource="fortune-avenue-port.qrc">
-                <normaloff>:/buttonicons/arrow_north_red.svg</normaloff>
-                <normalon>:/buttonicons/arrow_north_green.svg</normalon>:/buttonicons/arrow_north_red.svg</iconset>
-              </property>
-              <property name="checkable">
-               <bool>true</bool>
-              </property>
-              <attribute name="buttonGroup">
-               <string notr="true">toButtons</string>
-              </attribute>
-             </widget>
-            </item>
-            <item row="2" column="2">
-             <widget class="QToolButton" name="from_east">
-              <property name="text">
-               <string>...</string>
-              </property>
-              <property name="icon">
-               <iconset resource="fortune-avenue-port.qrc">
-                <normaloff>:/buttonicons/arrow_west.svg</normaloff>
-                <normalon>:/buttonicons/arrow_west_green.svg</normalon>:/buttonicons/arrow_west.svg</iconset>
-              </property>
-              <property name="checkable">
-               <bool>true</bool>
-              </property>
-              <attribute name="buttonGroup">
-               <string notr="true">fromButtons</string>
-              </attribute>
-             </widget>
-            </item>
-            <item row="1" column="2">
-             <widget class="QToolButton" name="from_northeast">
-              <property name="text">
-               <string>...</string>
-              </property>
-              <property name="icon">
-               <iconset resource="fortune-avenue-port.qrc">
-                <normaloff>:/buttonicons/arrow_southwest.svg</normaloff>
-                <normalon>:/buttonicons/arrow_southwest_green.svg</normalon>:/buttonicons/arrow_southwest.svg</iconset>
-              </property>
-              <property name="checkable">
-               <bool>true</bool>
-              </property>
-              <attribute name="buttonGroup">
-               <string notr="true">fromButtons</string>
-              </attribute>
-             </widget>
-            </item>
-            <item row="1" column="4">
-             <widget class="QToolButton" name="to_northwest">
-              <property name="enabled">
-               <bool>false</bool>
-              </property>
-              <property name="text">
-               <string>...</string>
-              </property>
-              <property name="icon">
-               <iconset resource="fortune-avenue-port.qrc">
-                <normaloff>:/buttonicons/arrow_northwest_red.svg</normaloff>
-                <normalon>:/buttonicons/arrow_northwest_green.svg</normalon>:/buttonicons/arrow_northwest_red.svg</iconset>
-              </property>
-              <property name="checkable">
-               <bool>true</bool>
-              </property>
-              <attribute name="buttonGroup">
-               <string notr="true">toButtons</string>
-              </attribute>
              </widget>
             </item>
             <item row="4" column="4" colspan="3">
@@ -625,143 +644,12 @@ No for Magmalice lift</string>
              </widget>
             </item>
             <item row="3" column="2">
-             <widget class="QToolButton" name="from_southeast">
-              <property name="text">
-               <string>...</string>
-              </property>
-              <property name="icon">
-               <iconset resource="fortune-avenue-port.qrc">
-                <normaloff>:/buttonicons/arrow_northwest.svg</normaloff>
-                <normalon>:/buttonicons/arrow_northwest_green.svg</normalon>:/buttonicons/arrow_northwest.svg</iconset>
-              </property>
-              <property name="checkable">
-               <bool>true</bool>
-              </property>
-              <attribute name="buttonGroup">
-               <string notr="true">fromButtons</string>
-              </attribute>
-             </widget>
-            </item>
-            <item row="2" column="4">
-             <widget class="QToolButton" name="to_west">
-              <property name="enabled">
-               <bool>false</bool>
-              </property>
-              <property name="text">
-               <string>...</string>
-              </property>
-              <property name="icon">
-               <iconset resource="fortune-avenue-port.qrc">
-                <normaloff>:/buttonicons/arrow_west_red.svg</normaloff>
-                <normalon>:/buttonicons/arrow_west_green.svg</normalon>:/buttonicons/arrow_west_red.svg</iconset>
-              </property>
-              <property name="checkable">
-               <bool>true</bool>
-              </property>
-              <attribute name="buttonGroup">
-               <string notr="true">toButtons</string>
-              </attribute>
-             </widget>
-            </item>
-            <item row="1" column="1">
-             <widget class="QToolButton" name="from_north">
-              <property name="text">
-               <string>...</string>
-              </property>
-              <property name="icon">
-               <iconset resource="fortune-avenue-port.qrc">
-                <normaloff>:/buttonicons/arrow_south.svg</normaloff>
-                <normalon>:/buttonicons/arrow_south_green.svg</normalon>:/buttonicons/arrow_south.svg</iconset>
-              </property>
-              <property name="checkable">
-               <bool>true</bool>
-              </property>
-              <attribute name="buttonGroup">
-               <string notr="true">fromButtons</string>
-              </attribute>
-             </widget>
-            </item>
-            <item row="2" column="6">
-             <widget class="QToolButton" name="to_east">
-              <property name="enabled">
-               <bool>false</bool>
-              </property>
-              <property name="text">
-               <string>...</string>
-              </property>
-              <property name="icon">
-               <iconset resource="fortune-avenue-port.qrc">
-                <normaloff>:/buttonicons/arrow_east_red.svg</normaloff>
-                <normalon>:/buttonicons/arrow_east_green.svg</normalon>:/buttonicons/arrow_east_red.svg</iconset>
-              </property>
-              <property name="checkable">
-               <bool>true</bool>
-              </property>
-              <attribute name="buttonGroup">
-               <string notr="true">toButtons</string>
-              </attribute>
-             </widget>
-            </item>
-            <item row="4" column="0" colspan="3">
-             <widget class="QPushButton" name="resetPaths">
-              <property name="text">
-               <string>Reset Paths</string>
-              </property>
-             </widget>
-            </item>
-            <item row="0" column="4" colspan="3">
-             <widget class="QLabel" name="label_24">
-              <property name="text">
-               <string>To</string>
-              </property>
-             </widget>
-            </item>
-            <item row="3" column="6">
-             <widget class="QToolButton" name="to_southeast">
-              <property name="enabled">
-               <bool>false</bool>
-              </property>
-              <property name="text">
-               <string>...</string>
-              </property>
-              <property name="icon">
-               <iconset resource="fortune-avenue-port.qrc">
-                <normaloff>:/buttonicons/arrow_southeast_red.svg</normaloff>
-                <normalon>:/buttonicons/arrow_southeast_green.svg</normalon>:/buttonicons/arrow_southeast_red.svg</iconset>
-              </property>
-              <property name="checkable">
-               <bool>true</bool>
-              </property>
-              <attribute name="buttonGroup">
-               <string notr="true">toButtons</string>
-              </attribute>
-             </widget>
-            </item>
-            <item row="2" column="0">
-             <widget class="QToolButton" name="from_west">
-              <property name="text">
-               <string>...</string>
-              </property>
-              <property name="icon">
-               <iconset resource="fortune-avenue-port.qrc">
-                <normaloff>:/buttonicons/arrow_east.svg</normaloff>
-                <normalon>:/buttonicons/arrow_east_green.svg</normalon>:/buttonicons/arrow_east.svg</iconset>
-              </property>
-              <property name="checkable">
-               <bool>true</bool>
-              </property>
-              <attribute name="buttonGroup">
-               <string notr="true">fromButtons</string>
-              </attribute>
-             </widget>
-            </item>
-            <item row="3" column="1">
              <widget class="QToolButton" name="from_south">
               <property name="text">
                <string>...</string>
               </property>
               <property name="icon">
-               <iconset resource="fortune-avenue-port.qrc">
+               <iconset resource="fortune-avenue.qrc">
                 <normaloff>:/buttonicons/arrow_north.svg</normaloff>
                 <normalon>:/buttonicons/arrow_north_green.svg</normalon>:/buttonicons/arrow_north.svg</iconset>
               </property>
@@ -773,21 +661,26 @@ No for Magmalice lift</string>
               </attribute>
              </widget>
             </item>
-            <item row="1" column="3">
-             <spacer name="horizontalSpacer">
-              <property name="orientation">
-               <enum>Qt::Horizontal</enum>
+            <item row="3" column="3">
+             <widget class="QToolButton" name="from_southeast">
+              <property name="text">
+               <string>...</string>
               </property>
-              <property name="sizeHint" stdset="0">
-               <size>
-                <width>40</width>
-                <height>20</height>
-               </size>
+              <property name="icon">
+               <iconset resource="fortune-avenue.qrc">
+                <normaloff>:/buttonicons/arrow_northwest.svg</normaloff>
+                <normalon>:/buttonicons/arrow_northwest_green.svg</normalon>:/buttonicons/arrow_northwest.svg</iconset>
               </property>
-             </spacer>
+              <property name="checkable">
+               <bool>true</bool>
+              </property>
+              <attribute name="buttonGroup">
+               <string notr="true">fromButtons</string>
+              </attribute>
+             </widget>
             </item>
-            <item row="1" column="6">
-             <widget class="QToolButton" name="to_northeast">
+            <item row="1" column="5">
+             <widget class="QToolButton" name="to_north">
               <property name="enabled">
                <bool>false</bool>
               </property>
@@ -795,9 +688,9 @@ No for Magmalice lift</string>
                <string>...</string>
               </property>
               <property name="icon">
-               <iconset resource="fortune-avenue-port.qrc">
-                <normaloff>:/buttonicons/arrow_northeast_red.svg</normaloff>
-                <normalon>:/buttonicons/arrow_northeast_green.svg</normalon>:/buttonicons/arrow_northeast_red.svg</iconset>
+               <iconset resource="fortune-avenue.qrc">
+                <normaloff>:/buttonicons/arrow_north_red.svg</normaloff>
+                <normalon>:/buttonicons/arrow_north_green.svg</normalon>:/buttonicons/arrow_north_red.svg</iconset>
               </property>
               <property name="checkable">
                <bool>true</bool>
@@ -816,7 +709,7 @@ No for Magmalice lift</string>
                <string>...</string>
               </property>
               <property name="icon">
-               <iconset resource="fortune-avenue-port.qrc">
+               <iconset resource="fortune-avenue.qrc">
                 <normaloff>:/buttonicons/arrow_southwest_red.svg</normaloff>
                 <normalon>:/buttonicons/arrow_southwest_green.svg</normalon>:/buttonicons/arrow_southwest_red.svg</iconset>
               </property>
@@ -828,15 +721,170 @@ No for Magmalice lift</string>
               </attribute>
              </widget>
             </item>
-            <item row="3" column="0">
+            <item row="1" column="3">
+             <widget class="QToolButton" name="from_northeast">
+              <property name="text">
+               <string>...</string>
+              </property>
+              <property name="icon">
+               <iconset resource="fortune-avenue.qrc">
+                <normaloff>:/buttonicons/arrow_southwest.svg</normaloff>
+                <normalon>:/buttonicons/arrow_southwest_green.svg</normalon>:/buttonicons/arrow_southwest.svg</iconset>
+              </property>
+              <property name="checkable">
+               <bool>true</bool>
+              </property>
+              <attribute name="buttonGroup">
+               <string notr="true">fromButtons</string>
+              </attribute>
+             </widget>
+            </item>
+            <item row="2" column="3">
+             <widget class="QToolButton" name="from_east">
+              <property name="text">
+               <string>...</string>
+              </property>
+              <property name="icon">
+               <iconset resource="fortune-avenue.qrc">
+                <normaloff>:/buttonicons/arrow_west.svg</normaloff>
+                <normalon>:/buttonicons/arrow_west_green.svg</normalon>:/buttonicons/arrow_west.svg</iconset>
+              </property>
+              <property name="checkable">
+               <bool>true</bool>
+              </property>
+              <attribute name="buttonGroup">
+               <string notr="true">fromButtons</string>
+              </attribute>
+             </widget>
+            </item>
+            <item row="2" column="1">
+             <widget class="QToolButton" name="from_west">
+              <property name="text">
+               <string>...</string>
+              </property>
+              <property name="icon">
+               <iconset resource="fortune-avenue.qrc">
+                <normaloff>:/buttonicons/arrow_east.svg</normaloff>
+                <normalon>:/buttonicons/arrow_east_green.svg</normalon>:/buttonicons/arrow_east.svg</iconset>
+              </property>
+              <property name="checkable">
+               <bool>true</bool>
+              </property>
+              <attribute name="buttonGroup">
+               <string notr="true">fromButtons</string>
+              </attribute>
+             </widget>
+            </item>
+            <item row="2" column="6">
+             <widget class="QToolButton" name="to_east">
+              <property name="enabled">
+               <bool>false</bool>
+              </property>
+              <property name="text">
+               <string>...</string>
+              </property>
+              <property name="icon">
+               <iconset resource="fortune-avenue.qrc">
+                <normaloff>:/buttonicons/arrow_east_red.svg</normaloff>
+                <normalon>:/buttonicons/arrow_east_green.svg</normalon>:/buttonicons/arrow_east_red.svg</iconset>
+              </property>
+              <property name="checkable">
+               <bool>true</bool>
+              </property>
+              <attribute name="buttonGroup">
+               <string notr="true">toButtons</string>
+              </attribute>
+             </widget>
+            </item>
+            <item row="1" column="4">
+             <widget class="QToolButton" name="to_northwest">
+              <property name="enabled">
+               <bool>false</bool>
+              </property>
+              <property name="text">
+               <string>...</string>
+              </property>
+              <property name="icon">
+               <iconset resource="fortune-avenue.qrc">
+                <normaloff>:/buttonicons/arrow_northwest_red.svg</normaloff>
+                <normalon>:/buttonicons/arrow_northwest_green.svg</normalon>:/buttonicons/arrow_northwest_red.svg</iconset>
+              </property>
+              <property name="checkable">
+               <bool>true</bool>
+              </property>
+              <attribute name="buttonGroup">
+               <string notr="true">toButtons</string>
+              </attribute>
+             </widget>
+            </item>
+            <item row="3" column="1">
              <widget class="QToolButton" name="from_southwest">
               <property name="text">
                <string>...</string>
               </property>
               <property name="icon">
-               <iconset resource="fortune-avenue-port.qrc">
+               <iconset resource="fortune-avenue.qrc">
                 <normaloff>:/buttonicons/arrow_northeast.svg</normaloff>
                 <normalon>:/buttonicons/arrow_northeast_green.svg</normalon>:/buttonicons/arrow_northeast.svg</iconset>
+              </property>
+              <property name="checkable">
+               <bool>true</bool>
+              </property>
+              <attribute name="buttonGroup">
+               <string notr="true">fromButtons</string>
+              </attribute>
+             </widget>
+            </item>
+            <item row="4" column="1" colspan="3">
+             <widget class="QPushButton" name="resetPaths">
+              <property name="text">
+               <string>Reset Paths</string>
+              </property>
+             </widget>
+            </item>
+            <item row="3" column="0">
+             <spacer name="horizontalSpacer">
+              <property name="orientation">
+               <enum>Qt::Horizontal</enum>
+              </property>
+              <property name="sizeHint" stdset="0">
+               <size>
+                <width>40</width>
+                <height>20</height>
+               </size>
+              </property>
+             </spacer>
+            </item>
+            <item row="2" column="4">
+             <widget class="QToolButton" name="to_west">
+              <property name="enabled">
+               <bool>false</bool>
+              </property>
+              <property name="text">
+               <string>...</string>
+              </property>
+              <property name="icon">
+               <iconset resource="fortune-avenue.qrc">
+                <normaloff>:/buttonicons/arrow_west_red.svg</normaloff>
+                <normalon>:/buttonicons/arrow_west_green.svg</normalon>:/buttonicons/arrow_west_red.svg</iconset>
+              </property>
+              <property name="checkable">
+               <bool>true</bool>
+              </property>
+              <attribute name="buttonGroup">
+               <string notr="true">toButtons</string>
+              </attribute>
+             </widget>
+            </item>
+            <item row="1" column="1">
+             <widget class="QToolButton" name="from_northwest">
+              <property name="text">
+               <string>...</string>
+              </property>
+              <property name="icon">
+               <iconset resource="fortune-avenue.qrc">
+                <normaloff>:/buttonicons/arrow_southeast.svg</normaloff>
+                <normalon>:/buttonicons/arrow_southeast_green.svg</normalon>:/buttonicons/arrow_southeast.svg</iconset>
               </property>
               <property name="checkable">
                <bool>true</bool>
@@ -855,9 +903,48 @@ No for Magmalice lift</string>
                <string>...</string>
               </property>
               <property name="icon">
-               <iconset resource="fortune-avenue-port.qrc">
+               <iconset resource="fortune-avenue.qrc">
                 <normaloff>:/buttonicons/arrow_south_red.svg</normaloff>
                 <normalon>:/buttonicons/arrow_south_green.svg</normalon>:/buttonicons/arrow_south_red.svg</iconset>
+              </property>
+              <property name="checkable">
+               <bool>true</bool>
+              </property>
+              <attribute name="buttonGroup">
+               <string notr="true">toButtons</string>
+              </attribute>
+             </widget>
+            </item>
+            <item row="1" column="2">
+             <widget class="QToolButton" name="from_north">
+              <property name="text">
+               <string>...</string>
+              </property>
+              <property name="icon">
+               <iconset resource="fortune-avenue.qrc">
+                <normaloff>:/buttonicons/arrow_south.svg</normaloff>
+                <normalon>:/buttonicons/arrow_south_green.svg</normalon>:/buttonicons/arrow_south.svg</iconset>
+              </property>
+              <property name="checkable">
+               <bool>true</bool>
+              </property>
+              <attribute name="buttonGroup">
+               <string notr="true">fromButtons</string>
+              </attribute>
+             </widget>
+            </item>
+            <item row="3" column="6">
+             <widget class="QToolButton" name="to_southeast">
+              <property name="enabled">
+               <bool>false</bool>
+              </property>
+              <property name="text">
+               <string>...</string>
+              </property>
+              <property name="icon">
+               <iconset resource="fortune-avenue.qrc">
+                <normaloff>:/buttonicons/arrow_southeast_red.svg</normaloff>
+                <normalon>:/buttonicons/arrow_southeast_green.svg</normalon>:/buttonicons/arrow_southeast_red.svg</iconset>
               </property>
               <property name="checkable">
                <bool>true</bool>
@@ -873,6 +960,19 @@ No for Magmalice lift</string>
                <string>Disallow All</string>
               </property>
              </widget>
+            </item>
+            <item row="2" column="7">
+             <spacer name="horizontalSpacer_4">
+              <property name="orientation">
+               <enum>Qt::Horizontal</enum>
+              </property>
+              <property name="sizeHint" stdset="0">
+               <size>
+                <width>40</width>
+                <height>20</height>
+               </size>
+              </property>
+             </spacer>
             </item>
            </layout>
           </widget>
@@ -898,7 +998,7 @@ No for Magmalice lift</string>
         </attribute>
         <layout class="QVBoxLayout" name="verticalLayout">
          <item>
-          <layout class="QGridLayout" name="gridLayout_6">
+          <layout class="QGridLayout" name="gridLayout_waypoint_1">
            <item row="2" column="2">
             <widget class="QLineEdit" name="waypoint1Dest3"/>
            </item>
@@ -955,7 +1055,7 @@ No for Magmalice lift</string>
           </widget>
          </item>
          <item>
-          <layout class="QGridLayout" name="gridLayout_9">
+          <layout class="QGridLayout" name="gridLayout_waypoint2">
            <item row="2" column="1">
             <widget class="QLineEdit" name="waypoint2Dest2"/>
            </item>
@@ -1009,7 +1109,7 @@ No for Magmalice lift</string>
           </widget>
          </item>
          <item>
-          <layout class="QGridLayout" name="gridLayout_7">
+          <layout class="QGridLayout" name="gridLayout_waypoint_3">
            <item row="2" column="1">
             <widget class="QLineEdit" name="waypoint3Dest2"/>
            </item>
@@ -1063,7 +1163,7 @@ No for Magmalice lift</string>
           </widget>
          </item>
          <item>
-          <layout class="QGridLayout" name="gridLayout_8">
+          <layout class="QGridLayout" name="gridLayout_waypoint_4">
            <item row="2" column="2">
             <widget class="QLineEdit" name="waypoint4Dest3"/>
            </item>
@@ -1117,7 +1217,7 @@ No for Magmalice lift</string>
           </widget>
          </item>
          <item>
-          <layout class="QHBoxLayout" name="horizontalLayout_13">
+          <layout class="QHBoxLayout" name="horizontalLayout_clear_sort_waypoint_buttons">
            <property name="topMargin">
             <number>0</number>
            </property>
@@ -1138,7 +1238,7 @@ No for Magmalice lift</string>
           </layout>
          </item>
          <item>
-          <widget class="QLabel" name="label_3">
+          <widget class="QLabel" name="connectSquaresLabel">
            <property name="text">
             <string>Connect selected squares</string>
            </property>
@@ -1166,7 +1266,7 @@ No for Magmalice lift</string>
             </widget>
            </item>
            <item row="0" column="2">
-            <layout class="QVBoxLayout" name="verticalLayout_2">
+            <layout class="QVBoxLayout" name="verticalLayout_connect_buttons">
              <property name="leftMargin">
               <number>0</number>
              </property>
@@ -1199,7 +1299,7 @@ No for Magmalice lift</string>
             </layout>
            </item>
            <item row="0" column="3">
-            <widget class="QGraphicsView" name="squareItemView2">
+            <widget class="QGraphicsView" name="squareItemView_right">
              <property name="enabled">
               <bool>false</bool>
              </property>
@@ -1221,7 +1321,7 @@ No for Magmalice lift</string>
             </widget>
            </item>
            <item row="0" column="0">
-            <spacer name="horizontalSpacer_2">
+            <spacer name="horizontalSpacer_left">
              <property name="orientation">
               <enum>Qt::Horizontal</enum>
              </property>
@@ -1234,7 +1334,7 @@ No for Magmalice lift</string>
             </spacer>
            </item>
            <item row="0" column="4">
-            <spacer name="horizontalSpacer_3">
+            <spacer name="horizontalSpacer_right">
              <property name="orientation">
               <enum>Qt::Horizontal</enum>
              </property>
@@ -1247,7 +1347,7 @@ No for Magmalice lift</string>
             </spacer>
            </item>
            <item row="0" column="1">
-            <widget class="QGraphicsView" name="squareItemView1">
+            <widget class="QGraphicsView" name="squareItemView_left">
              <property name="enabled">
               <bool>false</bool>
              </property>
@@ -1295,8 +1395,8 @@ No for Magmalice lift</string>
     <rect>
      <x>0</x>
      <y>0</y>
-     <width>1280</width>
-     <height>22</height>
+     <width>1393</width>
+     <height>27</height>
     </rect>
    </property>
    <widget class="QMenu" name="menuFile">
@@ -1307,6 +1407,7 @@ No for Magmalice lift</string>
     <addaction name="actionOpen"/>
     <addaction name="actionSave"/>
     <addaction name="actionSave_As"/>
+    <addaction name="actionExit"/>
    </widget>
    <widget class="QMenu" name="menuTools">
     <property name="enabled">
@@ -1326,6 +1427,8 @@ No for Magmalice lift</string>
     <addaction name="separator"/>
     <addaction name="actionSync_From_Board"/>
     <addaction name="actionSync_To_Board"/>
+    <addaction name="separator"/>
+    <addaction name="actionPreferences"/>
    </widget>
    <widget class="QMenu" name="menuHelp">
     <property name="title">
@@ -1567,19 +1670,32 @@ No for Magmalice lift</string>
     <string>Sync to Other Board for Switch State</string>
    </property>
   </action>
+  <action name="actionExit">
+   <property name="text">
+    <string>Exit</string>
+   </property>
+  </action>
+  <action name="actionPreferences">
+   <property name="text">
+    <string>Preferences...</string>
+   </property>
+   <property name="menuRole">
+    <enum>QAction::PreferencesRole</enum>
+   </property>
+  </action>
  </widget>
  <resources>
-  <include location="fortune-avenue-port.qrc"/>
+  <include location="fortune-avenue.qrc"/>
  </resources>
  <connections/>
  <buttongroups>
-  <buttongroup name="fromButtons"/>
   <buttongroup name="loopingMode"/>
+  <buttongroup name="onIDChange"/>
+  <buttongroup name="fromButtons"/>
   <buttongroup name="toButtons">
    <property name="exclusive">
     <bool>false</bool>
    </property>
   </buttongroup>
-  <buttongroup name="onIDChange"/>
  </buttongroups>
 </ui>

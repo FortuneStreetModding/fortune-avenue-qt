@@ -234,9 +234,6 @@ void BoardFile::verify(QStringList &errors, QStringList &warnings) {
     QVector<int> districtCount(12);
     int highestDistrict = -1;
 
-    if (boardData.squares.size() > 0 && boardData.squares[0].squareType != Bank) {
-        warnings << "There should be a bank at ID 0.";
-    }
     if (boardData.squares.size() < 3) {
         errors << "Board must have at least 3 squares.";
     }

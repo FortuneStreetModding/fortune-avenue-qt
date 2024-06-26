@@ -42,14 +42,14 @@ void FortuneAvenueGraphicsScene::initAxesItems() {
 }
 
 void FortuneAvenueGraphicsScene::setAxesVisible(bool visible) {
-    for (auto axesItem: qAsConst(axesItems)) {
+    for (auto axesItem: std::as_const(axesItems)) {
         axesItem->setVisible(visible);
     }
 }
 
 void FortuneAvenueGraphicsScene::clearSquares() {
     auto squareItemsVal = squareItems();
-    for (auto squareItem: qAsConst(squareItemsVal)) {
+    for (auto squareItem: std::as_const(squareItemsVal)) {
         removeItem(squareItem);
         delete squareItem;
     }

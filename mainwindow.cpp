@@ -18,6 +18,7 @@
 #include "squareitem.h"
 #include "util.h"
 #include "screenshotdialog.h"
+#include "preferencesdialog.h"
 #include "autoassignshopmodelsdialog.h"
 #include "muParser.h"
 #include "squareaddcmd.h"
@@ -52,8 +53,8 @@ MainWindow::MainWindow(QApplication& app)
     waypointDests.insert(3, {ui->waypoint4Dest1, ui->waypoint4Dest2, ui->waypoint4Dest3});
     ui->graphicsView->setScene(scene);
     ui->graphicsView->centerOn(32, 32);
-    ui->squareItemView1->setScene(square1Scene);
-    ui->squareItemView2->setScene(square2Scene);
+    ui->squareItemView_left->setScene(square1Scene);
+    ui->squareItemView_right->setScene(square2Scene);
 
     ui->loopingMode->setId(ui->loopingNone, LoopingMode::None);
     ui->loopingMode->setId(ui->loopingVertical, LoopingMode::Vertical);
@@ -89,6 +90,7 @@ MainWindow::MainWindow(QApplication& app)
     connect(ui->actionVerify_Board, &QAction::triggered, this, &MainWindow::verifyBoard);
     connect(ui->actionAuto_Path, &QAction::triggered, this, &MainWindow::autoPath);
     connect(ui->actionScreenshot, &QAction::triggered, this, &MainWindow::screenshot);
+    connect(ui->actionPreferences, &QAction::triggered, this, &MainWindow::preferences);
     connect(ui->actionAuto_Assign_Shop_Models, &QAction::triggered, this, &MainWindow::autoAssignShopModels);
 
     connect(ui->actionFortune_Avenue_Help, &QAction::triggered, this, [&]() {
@@ -211,7 +213,7 @@ MainWindow::MainWindow(QApplication& app)
         int oldSnapSize = scene->getSnapSize();
         scene->setSnapSize(calcSnapSizeFromInput());
         auto items = scene->squareItems();
-        for (auto item: qAsConst(items)) {
+        for (auto item: std::as_const(items)) {
             item->setPos(item->getSnapLocation(item->pos()));
         }
         scene->setSnapSize(oldSnapSize);
@@ -527,6 +529,10 @@ void MainWindow::loadFile(const BoardFile &file) {
     ui->menuTools->setEnabled(true);
     ui->menuView->setEnabled(true);
 
+    ui->boardEdit->setEnabled(true);
+    ui->squareEdit->setEnabled(true);
+    ui->graphicsView->setEnabled(true);
+
     if (file.boardInfo.versionFlag < 3) {
         curBoardFile.boardInfo.useAdvancedAutoPath = (file.boardInfo.versionFlag != 0);
     }
@@ -618,10 +624,10 @@ void MainWindow::updateSquareSidebar() {
             ui->districtDestinationIdLabel->setText("Destination ID");
             break;
         case EventSquare:
-            ui->districtDestinationIdLabel->setText("Venture Card Number");
+            ui->districtDestinationIdLabel->setText("Venture Card ID");
             break;
         default:
-            ui->districtDestinationIdLabel->setText("District/Destination ID");
+            ui->districtDestinationIdLabel->setText("District ID");
             break;
         }
         ui->districtDestinationId->setText(QString::number(item->getData().districtDestinationId));
@@ -661,7 +667,7 @@ void MainWindow::updateSquareSidebar() {
 
         previouslyVisitedSquareId = item->getData().id;
     } else {
-        ui->districtDestinationIdLabel->setText("District/Destination ID");
+        ui->districtDestinationIdLabel->setText("District ID");
         for (auto &waypointDest: waypointDests) {
             for (auto &child: waypointDest) {
                 child->setEnabled(false);
@@ -782,8 +788,8 @@ int MainWindow::calcShopPriceFromValue(const QString &function, int value) {
 }
 
 void MainWindow::connectSquares(bool previousToCurrent, bool currentToPrevious) {
-    auto items1 = ui->squareItemView1->items();
-    auto items2 = ui->squareItemView2->items();
+    auto items1 = ui->squareItemView_left->items();
+    auto items2 = ui->squareItemView_right->items();
     if(items1.size() > 0 && items2.size() > 0) {
         SquareItem *previous = (SquareItem *)items1.first();
         SquareItem *current = (SquareItem *)items2.first();
@@ -946,7 +952,7 @@ void MainWindow::registerSquareSidebarEvents() {
 
     // add dark mode icons
     auto fromButtons = ui->fromButtons->buttons();
-    for (auto button: qAsConst(fromButtons)) {
+    for (auto button: std::as_const(fromButtons)) {
         if (isDarkMode()) {
             auto icon = button->icon();
             icon.addFile(QString(":/buttonicons/dark/arrow_%1.svg")
@@ -968,7 +974,7 @@ void MainWindow::registerSquareSidebarEvents() {
 
     connect(ui->fromButtons, &QButtonGroup::idClicked, this, [&]() {
         auto toButtons = ui->toButtons->buttons();
-        for (auto button: qAsConst(toButtons)) {
+        for (auto button: std::as_const(toButtons)) {
             button->setEnabled(true);
         }
         updateDestinationUI();
@@ -1020,7 +1026,7 @@ void MainWindow::registerSquareSidebarEvents() {
 template<typename Func> void MainWindow::updateSquare(Func &&func, const QString &text) {
     auto selectedItems = scene->selectedItems();
     QVector<int> idsToUpdate;
-    for(auto selectedItem : qAsConst(selectedItems)) {
+    for(auto selectedItem : std::as_const(selectedItems)) {
         SquareItem *item = (SquareItem *)selectedItem;
         func(item);
         idsToUpdate.push_back(item->getData().id);
@@ -1091,7 +1097,7 @@ void MainWindow::calcStockPrices() {
     QVector<int> districtSum(12);
     int highestDistrict = -1;
     auto items = scene->squareItems();
-    for (auto item: qAsConst(items)) {
+    for (auto item: std::as_const(items)) {
         auto &square = item->getData();
         if (square.districtDestinationId >= 12) {
             continue;
@@ -1127,7 +1133,7 @@ void MainWindow::calcStockPrices() {
         if (searchDepth > 28)
             searchDepth = 28;
     }
-    auto result = AutoPath::getSquareIdWithMaxPathsCount(qAsConst(items), searchDepth, limit);
+    auto result = AutoPath::getSquareIdWithMaxPathsCount(std::as_const(items), searchDepth, limit);
     auto maxPathSquareId = result.first;
     auto maxPathCount = result.second;
     QString maxPathCountStr;
@@ -1187,12 +1193,12 @@ void MainWindow::verifyBoard() {
 void MainWindow::autoPath() {
     auto items = scene->squareItems();
     if(ui->actionUse_Advanced_Auto_Path->isChecked()) {
-        for (auto item: qAsConst(items)) {
+        for (auto item: std::as_const(items)) {
             QMap<AutoPath::Direction, SquareItem *> touchingSquares = AutoPath::getTouchingSquares(item, items, ui->autopathRange->value(), ui->straightLineTolerance->value());
             AutoPath::pathSquare(item, touchingSquares);
         }
     } else {
-        AutoPath::kruskalDfsAutoPathAlgorithm(qAsConst(items));
+        AutoPath::kruskalDfsAutoPathAlgorithm(std::as_const(items));
     }
     QMessageBox::information(this, "Auto-pathing", "Auto-pathed entire map");
     QVector<int> squareIds(items.size());
@@ -1202,6 +1208,12 @@ void MainWindow::autoPath() {
 
 void MainWindow::screenshot() {
     ScreenshotDialog dialog(windowFilePath(), this);
+    dialog.exec();
+}
+
+void MainWindow::preferences() {
+    PreferencesDialog dialog(this);
+    dialog.setWindowModality(Qt::ApplicationModal);
     dialog.exec();
 }
 
@@ -1221,7 +1233,7 @@ void MainWindow::updateDestinationUI() {
     if (!selectedItems.empty()) {
         SquareItem *item = (SquareItem *)selectedItems[0];
         auto allButtons = ui->toButtons->buttons();
-        for (auto toButton: qAsConst(allButtons)) {
+        for (auto toButton: std::as_const(allButtons)) {
             toButton->setChecked(false);
         }
         auto allowedDirections = item->getData().validDirections.equal_range((AutoPath::Direction)ui->fromButtons->checkedId());
@@ -1253,3 +1265,9 @@ void MainWindow::closeEvent(QCloseEvent *event) {
         event->accept();
     }
 }
+
+void MainWindow::on_actionExit_triggered()
+{
+    QApplication::quit();
+}
+

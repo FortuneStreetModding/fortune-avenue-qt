@@ -106,7 +106,7 @@ void ScreenshotDialog::readBoardFile(const QString &filename, BoardFile &boardFi
     }
 }
 
-void ScreenshotDialog::makeScreenshot(const QString &filename, BoardFile &boardFile, const QRectF &rect) {
+bool ScreenshotDialog::makeScreenshot(const QString &filename, BoardFile &boardFile, const QRectF &rect) {
     scene->clearSquares();
     for (auto &square: boardFile.boardData.squares) {
         scene->addItem(new SquareItem(square));
@@ -120,7 +120,7 @@ void ScreenshotDialog::makeScreenshot(const QString &filename, BoardFile &boardF
     image.fill(Qt::transparent);
     QPainter painter(&image);
     scene->render(&painter);
-    image.save(screenshotFilename);
+    return image.save(screenshotFilename);
 }
 
 void ScreenshotDialog::accept() {
@@ -163,18 +163,29 @@ void ScreenshotDialog::accept() {
         filenames += screenshotFilename;
         readBoardFile(filename4, boardFile4, rect);
     }
+    bool status_one = true;
+    bool status_two = true;
+    bool status_three = true;
+    bool status_four = true;
+
     if (ui->checkBox->isChecked()) {
-        makeScreenshot(filename, boardFile, rect);
+        status_one = makeScreenshot(filename, boardFile, rect);
     }
     if (ui->checkBox_2->isChecked()) {
-        makeScreenshot(filename2, boardFile2, rect);
+        status_two = makeScreenshot(filename2, boardFile2, rect);
     }
     if (ui->checkBox_3->isChecked()) {
-        makeScreenshot(filename3, boardFile3, rect);
+        status_three = makeScreenshot(filename3, boardFile3, rect);
     }
     if (ui->checkBox_4->isChecked()) {
-        makeScreenshot(filename4, boardFile4, rect);
+        status_four = makeScreenshot(filename4, boardFile4, rect);
     }
-    QMessageBox::information(this, "Screenshot", "Saved: \n" + filenames.join('\n'));
+    if(status_one && status_two && status_three && status_four){
+        QMessageBox::information(this, "Success!", "All screenshots saved successfully. The filenames created are as follows: \n\n" + filenames.join('\n'));
+    }
+    else{
+        QMessageBox::critical(this, "Failure", "One or more screenshots could not be saved.");
+    }
+
     close();
 }
