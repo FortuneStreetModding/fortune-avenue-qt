@@ -65,7 +65,7 @@ jobs:
       with:
         files: ${{github.workspace}}/fortune-avenue-${{github.event.release.tag_name}}-linux.AppImage
   macos:
-    runs-on: macos-12
+    runs-on: macos-13
     steps:
     - uses: actions/checkout@v4
       with:
