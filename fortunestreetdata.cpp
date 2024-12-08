@@ -1,5 +1,6 @@
 #include "fortunestreetdata.h"
 #include "orderedmap.h"
+#include "qdebug.h"
 #include <QtMath>
 #include <QSet>
 #include <QIODevice>
@@ -237,11 +238,11 @@ void BoardFile::verify(QStringList &errors, QStringList &warnings) {
     if (boardData.squares.size() < 3) {
         errors << "Board must have at least 3 squares.";
     }
-    if (boardData.squares.size() > 85) {
-        errors << "Board must have max 85 squares.";
+    if (boardData.squares.size() > 86) {
+        errors << "Board must have a maximum of 86 squares.";
     }
     if (boardInfo.maxDiceRoll < 1 || boardInfo.maxDiceRoll > 9) {
-        errors << "Max. die roll must be between 1 and 9 inclusive.";
+        errors << "Maximum dice roll must be between 1 and 9 inclusive.";
     }
     for (auto &square: boardData.squares) {
         if (square.squareType == Property || square.squareType == VacantPlot) {
@@ -261,6 +262,50 @@ void BoardFile::verify(QStringList &errors, QStringList &warnings) {
             continue;
         }
 
+        // ensure the ID set on a Switch Square is not 94 or higher
+        if (square.squareType == SwitchSquare){
+            if(square.districtDestinationId > 93){
+                errors << "The Board State ID of all Switch Squares must be 93 or lower.";
+            }
+        }
+
+        // ensure Lift/Magmalice Square is connected to a Lift End or Magmalice square
+        if (square.squareType == LiftMagmaliceSquareStart){
+            // if it doesn't exist
+            if(square.districtDestinationId > boardData.squares.size()){
+                errors << QString("The destination square of Lift/Magmalice Start square with ID %1 was not found.").arg(square.id);
+            } else {
+                SquareData &destSquare = boardData.squares[square.districtDestinationId];
+
+                // if the destination square is not a Magmalice square
+                if(destSquare.squareType == MagmaliceSquare || destSquare.squareType == LiftSquareEnd){
+                    // do nothing
+                } else {
+                    errors << QString("The destination of Lift/Magmalice Start square with ID %1 is not a Magmalice square or a Lift End square.").arg(square.id);
+                }
+            }
+        }
+
+        // ensure Magmalice Square or Lift End is connected to a Lift/Magmalice Start square
+        if (square.squareType == MagmaliceSquare || square.squareType == LiftSquareEnd){
+            // if it doesn't exist
+            if(square.districtDestinationId > boardData.squares.size()){
+                errors << QString("The destination of Magmalice square with ID %1 was not found.").arg(square.id);
+            } else {
+                SquareData &destSquare = boardData.squares[square.districtDestinationId];
+                // if the destination square is not a Lift/Magmalice Start square
+                if(destSquare.squareType != LiftMagmaliceSquareStart){
+                    errors << QString("The destination of Magmalice square with ID %1 is not a Lift/Magmalice Start square.").arg(square.id);
+                }
+            }
+        }
+
+        // if all of a square's waypoints have undefined Entry IDs
+        auto waypoints = square.waypoints;
+        if(waypoints[0].entryId == 255 && waypoints[1].entryId == 255 && waypoints[2].entryId == 255 && waypoints[3].entryId == 255){
+            warnings << QString("All of the waypoint entry IDs for Square ID %1 are undefined.").arg(square.id);
+        }
+
         QSet<quint8> destinations;
         for (int i=0; i<4; ++i) {
             if (square.waypoints[i].entryId > boardData.squares.size()) {
@@ -268,8 +313,7 @@ void BoardFile::verify(QStringList &errors, QStringList &warnings) {
                     errors << QString("Starting square of Waypoint %1 of Square %2 is Square %3 which does not exist")
                               .arg(i+1).arg(square.id).arg(square.waypoints[i].entryId);
                 } else {
-                    // Since this waypoint has an entry point of 255,
-                    // we ignore it entirely.
+                    // Since this waypoint has an entry point of 255, we ignore it entirely.
                     continue;
                 }
             } else {
@@ -280,6 +324,20 @@ void BoardFile::verify(QStringList &errors, QStringList &warnings) {
                               .arg(i+1).arg(square.id).arg(square.waypoints[i].entryId);
                 }
             }
+            if(square.squareType == LiftMagmaliceSquareStart || square.squareType == MagmaliceSquare || square.squareType == LiftSquareEnd){
+                // if the square is one of these types, don't perform the next check, as these squares can actually work this way.
+            } else {
+                // if it's not a Lift/Magmalice square, and its waypoint's entry ID is defined, but all destinations are undefined
+                if(square.waypoints[i].entryId != 255 &&
+                    square.waypoints[i].destinations[0] == 255 &&
+                    square.waypoints[i].destinations[1] == 255 &&
+                    square.waypoints[i].destinations[2] == 255 &&
+                    square.waypoints[i].destinations[3] == 255){
+
+                    warnings << QString("All destinations for waypoint %1 of Square ID %2 are undefined.").arg(i).arg(square.id);
+                }
+            }
+
             for (int j=0; j<3; ++j) {
                 auto dest = square.waypoints[i].destinations[j];
                 destinations.insert(dest);
