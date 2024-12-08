@@ -17,12 +17,14 @@ public:
     ScreenshotDialog(const QString &frbFilename, QWidget *parent = nullptr);
     ~ScreenshotDialog();
     void accept();
-    void browseFrb(QLineEdit *lineEdit, QCheckBox *checkBox);
+    void browseFrb();
+    void removeFrb();
 private:
     Ui::ScreenshotDialog *ui;
     FortuneAvenueGraphicsScene *scene;
-    void readBoardFile(const QString &filename, BoardFile &boardFile, QRectF &rect);
+    BoardFile readBoardFile(const QString &filename, QRectF &rect);
     bool makeScreenshot(const QString &filename, BoardFile &boardFile, const QRectF &rect);
+    QList<bool> takeAllScreenshots(int count, QStringList filenames, QList<BoardFile> boardFiles, QRectF rect);
 };
 
 #endif // SCREENSHOTDIALOG_H

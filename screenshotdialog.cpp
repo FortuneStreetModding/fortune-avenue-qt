@@ -8,23 +8,20 @@
 #include "fortunestreetdata.h"
 #include "squareitem.h"
 
+#include <QFuture>
+#include <QtConcurrent/QtConcurrent>
+
 ScreenshotDialog::ScreenshotDialog(const QString &frbFilename, QWidget *parent) :
     QDialog(parent),
     ui(new Ui::ScreenshotDialog),
     scene(new FortuneAvenueGraphicsScene(-1600 + 32, -1600 + 32, 3200, 3200, this))
 {
     ui->setupUi(this);
-    this->setWindowTitle("Select the maps for which a screenshot shall be created.");
+    this->setWindowTitle("Take Board Screenshots");
     scene->setAxesVisible(false);
-    connect(ui->pushButton, &QPushButton::clicked, this, [&]() { browseFrb(ui->lineEdit, ui->checkBox); });
-    connect(ui->pushButton_2, &QPushButton::clicked, this, [&]() { browseFrb(ui->lineEdit_2, ui->checkBox_2); });
-    connect(ui->pushButton_3, &QPushButton::clicked, this, [&]() { browseFrb(ui->lineEdit_3, ui->checkBox_3); });
-    connect(ui->pushButton_4, &QPushButton::clicked, this, [&]() { browseFrb(ui->lineEdit_4, ui->checkBox_4); });
 
-    connect(ui->checkBox, &QCheckBox::clicked, this, [&](bool checked) { ui->lineEdit->setEnabled(checked); });
-    connect(ui->checkBox_2, &QCheckBox::clicked, this, [&](bool checked) { ui->lineEdit_2->setEnabled(checked); });
-    connect(ui->checkBox_3, &QCheckBox::clicked, this, [&](bool checked) { ui->lineEdit_3->setEnabled(checked); });
-    connect(ui->checkBox_4, &QCheckBox::clicked, this, [&](bool checked) { ui->lineEdit_4->setEnabled(checked); });
+    connect(ui->addFrbsButton, &QPushButton::clicked, this, [this](bool) { browseFrb(); });
+    connect(ui->removeFrbsButton, &QPushButton::clicked, this, [this](bool) { removeFrb(); });
 
     if (!frbFilename.isEmpty()) {
         QFileInfo info(frbFilename);
@@ -34,32 +31,16 @@ ScreenshotDialog::ScreenshotDialog(const QString &frbFilename, QWidget *parent) 
         QString frbFile = info.path() + "/" + baseWithoutNumber + ".frb";
         if(QFile(frbFile).exists())
             frbFiles.append(frbFile);
-        for(int i=0; i<5; i++) {
+        for(int i=0; i<94; i++) {
             QString frbFile = info.path() + "/" + QString("%1%2").arg(baseWithoutNumber).arg(i) + ".frb";
             if(QFile(frbFile).exists())
                 frbFiles.append(frbFile);
-            if(frbFiles.length()>=4)
+            if(frbFiles.length()>=94)
                 break;
         }
-        if(frbFiles.contains(frbFilename)) {
-            ui->lineEdit->setText(frbFiles.at(0));
-            ui->checkBox->setChecked(true);
-            if(frbFiles.length() > 1) {
-                ui->lineEdit_2->setText(frbFiles.at(1));
-                ui->checkBox_2->setChecked(true);
-            }
-            if(frbFiles.length() > 2) {
-                ui->lineEdit_3->setText(frbFiles.at(2));
-                ui->checkBox_3->setChecked(true);
-            }
-            if(frbFiles.length() > 3) {
-                ui->lineEdit_4->setText(frbFiles.at(3));
-                ui->checkBox_4->setChecked(true);
-            }
-        } else {
-            ui->lineEdit->setText(frbFilename);
-            ui->checkBox->setChecked(true);
-        }
+
+        // actually add the items to the widget
+        ui->frbsListWidget->addItems(frbFiles);
     }
 }
 
@@ -68,17 +49,22 @@ ScreenshotDialog::~ScreenshotDialog()
     delete ui;
 }
 
-void ScreenshotDialog::browseFrb(QLineEdit *lineEdit, QCheckBox *checkBox) {
-    QString filename = QFileDialog::getOpenFileName(this, "Open File", QString(), "Fortune Street Boards (*.frb)");
-    if(!filename.isEmpty()) {
-        lineEdit->setText(filename);
-        lineEdit->setEnabled(true);
-        checkBox->setChecked(true);
+void ScreenshotDialog::browseFrb() {
+    QStringList filenames = QFileDialog::getOpenFileNames(this, "Open File", QString(), "Fortune Street Boards (*.frb)");
+    if(!filenames.isEmpty()) {
+        ui->frbsListWidget->addItems(filenames);
     }
 }
 
-void ScreenshotDialog::readBoardFile(const QString &filename, BoardFile &boardFile, QRectF &rect) {
+void ScreenshotDialog::removeFrb() {
+    for (auto item: ui->frbsListWidget->selectedItems()) {
+        delete item;
+    }
+}
+
+BoardFile ScreenshotDialog::readBoardFile(const QString &filename, QRectF &rect) {
     QFile file(filename);
+    BoardFile boardFile;
     if (file.open(QIODevice::ReadOnly)) {
         QDataStream stream(&file);
         stream >> boardFile;
@@ -97,6 +83,7 @@ void ScreenshotDialog::readBoardFile(const QString &filename, BoardFile &boardFi
                     rect.setBottom(square.positionY + 64);
                 }
             }
+            return boardFile;
         } else {
             goto badFile;
         }
@@ -104,6 +91,7 @@ void ScreenshotDialog::readBoardFile(const QString &filename, BoardFile &boardFi
         badFile:
         QMessageBox::critical(this, "Error opening file", "An error occurred while trying to open the file " + filename);
     }
+    return boardFile;
 }
 
 bool ScreenshotDialog::makeScreenshot(const QString &filename, BoardFile &boardFile, const QRectF &rect) {
@@ -112,7 +100,7 @@ bool ScreenshotDialog::makeScreenshot(const QString &filename, BoardFile &boardF
         scene->addItem(new SquareItem(square));
     }
     QFileInfo info(filename);
-    QString ext = "." + ui->format->text();
+    QString ext = "." + ui->screenshotFormatLineEdit->text();
     QString screenshotFilename = info.path() + "/" + info.baseName() + ext;
     scene->clearSelection();
     scene->setSceneRect(rect);
@@ -123,68 +111,78 @@ bool ScreenshotDialog::makeScreenshot(const QString &filename, BoardFile &boardF
     return image.save(screenshotFilename);
 }
 
-void ScreenshotDialog::accept() {
-    QString filename;
-    QString filename2;
-    QString filename3;
-    QString filename4;
-    BoardFile boardFile;
-    BoardFile boardFile2;
-    BoardFile boardFile3;
-    BoardFile boardFile4;
-    QRectF rect(1600, 1600, -3200, -3200);
-    QStringList filenames;
-    QString ext = "." + ui->format->text();
-    if (ui->checkBox->isChecked()) {
-        filename = ui->lineEdit->text();
-        QFileInfo info(filename);
-        QString screenshotFilename = info.path() + "/" + info.baseName() + ext;
-        filenames += screenshotFilename;
-        readBoardFile(filename, boardFile, rect);
+QList<bool> ScreenshotDialog::takeAllScreenshots(int count, QStringList filenames, QList<BoardFile> boardFiles, QRectF rect){
+    QList<bool> statuses;
+    for(int i=0;i<ui->frbsListWidget->count();i++){
+        statuses.append(makeScreenshot(filenames[i], boardFiles[i], rect));
     }
-    if (ui->checkBox_2->isChecked()) {
-        filename2 = ui->lineEdit_2->text();
-        QFileInfo info(filename2);
-        QString screenshotFilename = info.path() + "/" + info.baseName() + ext;
-        filenames += screenshotFilename;
-        readBoardFile(filename2, boardFile2, rect);
-    }
-    if (ui->checkBox_3->isChecked()) {
-        filename3 = ui->lineEdit_3->text();
-        QFileInfo info(filename3);
-        QString screenshotFilename = info.path() + "/" + info.baseName() + ext;
-        filenames += screenshotFilename;
-        readBoardFile(filename3, boardFile3, rect);
-    }
-    if (ui->checkBox_4->isChecked()) {
-        filename4 = ui->lineEdit_4->text();
-        QFileInfo info(filename4);
-        QString screenshotFilename = info.path() + "/" + info.baseName() + ext;
-        filenames += screenshotFilename;
-        readBoardFile(filename4, boardFile4, rect);
-    }
-    bool status_one = true;
-    bool status_two = true;
-    bool status_three = true;
-    bool status_four = true;
+    return statuses;
+}
 
-    if (ui->checkBox->isChecked()) {
-        status_one = makeScreenshot(filename, boardFile, rect);
+extern bool takem(QString* filename, QString* ext, BoardFile* boardFile, QRectF* rect){
+    auto scene = new FortuneAvenueGraphicsScene(-1600 + 32, -1600 + 32, 3200, 3200);
+    scene->deleteLater();
+    scene->clearSquares();
+    for (auto &square: boardFile->boardData.squares) {
+        scene->addItem(new SquareItem(square));
     }
-    if (ui->checkBox_2->isChecked()) {
-        status_two = makeScreenshot(filename2, boardFile2, rect);
+    QFileInfo info(*filename);
+    QString screenshotFilename = info.path() + "/" + info.baseName() + *ext;
+    scene->clearSelection();
+    scene->setSceneRect(*rect);
+    QImage image(scene->sceneRect().size().toSize(), QImage::Format_ARGB32);
+    image.fill(Qt::transparent);
+    QPainter painter(&image);
+    scene->render(&painter);
+    return image.save(screenshotFilename);
+}
+
+void ScreenshotDialog::accept() {
+    if(ui->frbsListWidget->count() != 0){
+        // disable the buttons so users can't mash while the operation is performed.
+        ui->buttonBox->setEnabled(false);
+        QRectF rect(1600, 1600, -3200, -3200);
+        QStringList filenames;
+        QList<BoardFile> boardFiles;
+        QString ext = "." + ui->screenshotFormatLineEdit->text();
+        int count = ui->frbsListWidget->count();
+
+        for(int i=0; i<count; i++){
+            auto filename = ui->frbsListWidget->item(i)->text();
+            QFileInfo info(filename);
+            QString screenshotFilename = info.path() + "/" + info.baseName() + ext;
+            filenames += screenshotFilename;
+            boardFiles.append(readBoardFile(filename, rect));
+        }
+        // do this work asynchronously, because at 93 possible board states, it's a heavy task!
+        QList<QFuture<bool>> futures;
+        qInfo() << "after the popping of the dialog, but before the for loop";
+        for(int i = 0; i<count; i++){
+            QFuture<bool> future = QtConcurrent::run(&takem, &filenames[i], &ext, &boardFiles[i], &rect);
+            futures.append(future);
+        }
+
+        bool anyStatusesFalse = false;
+        for(int i=0; i<futures.count(); i++){
+            if(!futures[i].isFinished()){
+                futures[i].waitForFinished();
+            }
+            if(!futures[i].result()){
+                anyStatusesFalse = true;
+            }
+        }
+        qInfo() << "Done!";
+
+        if(!anyStatusesFalse){
+            QMessageBox::information(this, "Success!", "All screenshots saved successfully.");
+        }
+        else{
+            QMessageBox::critical(this, "Failure", "One or more screenshots could not be saved.");
+        }
+        ui->buttonBox->setEnabled(true);
     }
-    if (ui->checkBox_3->isChecked()) {
-        status_three = makeScreenshot(filename3, boardFile3, rect);
-    }
-    if (ui->checkBox_4->isChecked()) {
-        status_four = makeScreenshot(filename4, boardFile4, rect);
-    }
-    if(status_one && status_two && status_three && status_four){
-        QMessageBox::information(this, "Success!", "All screenshots saved successfully. The filenames created are as follows: \n\n" + filenames.join('\n'));
-    }
-    else{
-        QMessageBox::critical(this, "Failure", "One or more screenshots could not be saved.");
+    else {
+        // nothing to do!
     }
 
     close();
