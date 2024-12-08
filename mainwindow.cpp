@@ -15,6 +15,7 @@
 
 #include "autopath.h"
 #include "darkdetect.h"
+#include "fortunestreetdata.h"
 #include "squareitem.h"
 #include "util.h"
 #include "screenshotdialog.h"
@@ -726,13 +727,15 @@ void MainWindow::clearWaypoint(SquareItem *item, int waypointId) {
 
 void MainWindow::syncForSwitch(bool isTo)
 {
-    QString filename = QFileDialog::getOpenFileName(this, "Choose File to Sync With", QString(), "Fortune Street Boards (*.frb)");
-    if (filename.isEmpty()) {
+    QStringList filenames = QFileDialog::getOpenFileNames(this, "Choose Files to Sync With", QString(), "Fortune Street Boards (*.frb)");
+
+    if(filenames.isEmpty()){
         return;
     }
-    BoardFile otherBoardFile;
-    {
-        QFile otherFile(filename);
+
+    for(int i=0; i < filenames.count(); i++){
+        QFile otherFile(filenames[i]);
+        BoardFile otherBoardFile;
         if (!otherFile.open(QFile::ReadOnly)) {
             QMessageBox::critical(this, "Error opening file for sync", "Could not open file for sync");
             return;
@@ -756,23 +759,54 @@ void MainWindow::syncForSwitch(bool isTo)
                 sqItems[i]->getData().syncForMultiState(otherSquares[i]);
             }
         }
-    }
-    if (isTo) {
-        QSaveFile outOtherFile(filename);
-        if (!outOtherFile.open(QFile::WriteOnly)) {
-            QMessageBox::critical(this, "Error saving file", "Could not open other file for saving");
-            return;
+        if (isTo) {
+            // set non-square data on other board
+            otherBoardFile.boardInfo.initialCash = ui->initialCash->text().toInt();
+            otherBoardFile.boardInfo.baseSalary = ui->baseSalary->text().toInt();
+            otherBoardFile.boardInfo.salaryIncrement = ui->salaryIncrement->text().toInt();
+            otherBoardFile.boardInfo.maxDiceRoll = ui->maxDiceRoll->text().toInt();
+
+            LoopingMode mode = None;
+            if(ui->loopingNone->isChecked()){
+                mode = None;
+            } else if(ui->loopingVertical->isChecked()) {
+                mode = Vertical;
+            } else(ui->loopingVerticalHorizontal->isChecked());{
+                mode = Both;
+            }
+
+            otherBoardFile.boardInfo.galaxyStatus = mode;
+
+            QSaveFile outOtherFile(filenames[i]);
+            if (!outOtherFile.open(QFile::WriteOnly)) {
+                QMessageBox::critical(this, "Error saving file", "Could not open other file for saving");
+                return;
+            }
+            QDataStream outStream(&outOtherFile);
+            outStream << otherBoardFile;
+            if (!outOtherFile.commit()) {
+                QMessageBox::critical(this, "Error saving file", "Could not save other file");
+                return;
+            }
+        } else {
+            QVector<int> sqsToChange(scene->squareItems().size());
+            std::iota(sqsToChange.begin(), sqsToChange.end(), 0);
+            addChangeSquaresAction(sqsToChange, "Sync from Other File for Switch");
+
+            // set non-square board data from other square
+            ui->initialCash->setText(QString::number(otherBoardFile.boardInfo.initialCash));
+            ui->baseSalary->setText(QString::number(otherBoardFile.boardInfo.baseSalary));
+            ui->salaryIncrement->setText(QString::number(otherBoardFile.boardInfo.salaryIncrement));
+            ui->maxDiceRoll->setText(QString::number(otherBoardFile.boardInfo.maxDiceRoll));
+
+            if(otherBoardFile.boardInfo.galaxyStatus == None){
+                ui->loopingNone->setChecked(true);
+            } else if(otherBoardFile.boardInfo.galaxyStatus == Vertical) {
+                ui->loopingVertical->setChecked(true);
+            } else(otherBoardFile.boardInfo.galaxyStatus == Both);{
+                ui->loopingVerticalHorizontal->setChecked(true);
+            }
         }
-        QDataStream outStream(&outOtherFile);
-        outStream << otherBoardFile;
-        if (!outOtherFile.commit()) {
-            QMessageBox::critical(this, "Error saving file", "Could not save other file");
-            return;
-        }
-    } else {
-        QVector<int> sqsToChange(scene->squareItems().size());
-        std::iota(sqsToChange.begin(), sqsToChange.end(), 0);
-        addChangeSquaresAction(sqsToChange, "Sync from Other File for Switch");
     }
 }
 
