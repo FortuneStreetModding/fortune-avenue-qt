@@ -71,10 +71,8 @@ target_include_directories(FortuneAvenue PRIVATE
 
 target_compile_definitions(FortuneAvenue PRIVATE
     MUPARSER_STATIC
-    VERSION_BUILD=0
-    VERSION_MAJOR=2
-    VERSION_MINOR=7
     _UNICODE
+    FORTUNE_AVENUE_VERSION="${PROJECT_VERSION}"
 )
 
 target_link_libraries(FortuneAvenue PRIVATE

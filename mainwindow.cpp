@@ -431,7 +431,7 @@ void MainWindow::toggleAdvancedAutoPath() {
 }
 
 void MainWindow::newFile() {
-    setWindowTitle(QString("Fortune Avenue %1.%2.%3[*]").arg(VERSION_MAJOR).arg(VERSION_MINOR).arg(VERSION_BUILD));
+    setWindowTitle(QString("Fortune Avenue %1[*]").arg(FORTUNE_AVENUE_VERSION));
     setWindowFilePath("");
     loadFile(BoardFile(true));
 }
@@ -485,8 +485,7 @@ bool MainWindow::saveFileAs() {
         }
         QFileInfo fileInfo(saveFileName);
         QString filename(fileInfo.fileName());
-        setWindowTitle(QString("Fortune Avenue %1.%2.%3 - %4[*]")
-                       .arg(VERSION_MAJOR).arg(VERSION_MINOR).arg(VERSION_BUILD).arg(filename));
+        setWindowTitle(QString("Fortune Avenue %1 - %2[*]").arg(FORTUNE_AVENUE_VERSION).arg(filename));
         setWindowFilePath(saveFileName);
         undoStack->setClean();
         return true;
@@ -506,8 +505,7 @@ void MainWindow::loadFile(const QString &fpath) {
         if (stream.status() != QDataStream::Status::ReadCorruptData) {
             QFileInfo fileInfo(file);
             QString filename(fileInfo.fileName());
-            setWindowTitle(QString("Fortune Avenue %1.%2.%3 - %4[*]")
-                           .arg(VERSION_MAJOR).arg(VERSION_MINOR).arg(VERSION_BUILD).arg(filename));
+            setWindowTitle(QString("Fortune Avenue %1 - %2[*]").arg(FORTUNE_AVENUE_VERSION).arg(filename));
             setWindowFilePath(fpath);
             loadFile(boardFile);
         } else {

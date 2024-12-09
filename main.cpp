@@ -36,7 +36,7 @@ int main(int argc, char *argv[]) {
         w.setWindowIcon(QIcon(iconPath));
     }
 #endif
-    w.setWindowTitle(QString("Fortune Avenue %1.%2.%3").arg(VERSION_MAJOR).arg(VERSION_MINOR).arg(VERSION_BUILD));
+    w.setWindowTitle(QString("Fortune Avenue %1").arg(FORTUNE_AVENUE_VERSION));
     w.show();
     return a.exec();
 }
