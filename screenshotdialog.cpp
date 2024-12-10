@@ -94,33 +94,9 @@ BoardFile ScreenshotDialog::readBoardFile(const QString &filename, QRectF &rect)
     return boardFile;
 }
 
-bool ScreenshotDialog::makeScreenshot(const QString &filename, BoardFile &boardFile, const QRectF &rect) {
-    scene->clearSquares();
-    for (auto &square: boardFile.boardData.squares) {
-        scene->addItem(new SquareItem(square));
-    }
-    QFileInfo info(filename);
-    QString ext = "." + ui->screenshotFormatLineEdit->text();
-    QString screenshotFilename = info.path() + "/" + info.baseName() + ext;
-    scene->clearSelection();
-    scene->setSceneRect(rect);
-    QImage image(scene->sceneRect().size().toSize(), QImage::Format_ARGB32);
-    image.fill(Qt::transparent);
-    QPainter painter(&image);
-    scene->render(&painter);
-    return image.save(screenshotFilename);
-}
-
-QList<bool> ScreenshotDialog::takeAllScreenshots(int count, QStringList filenames, QList<BoardFile> boardFiles, QRectF rect){
-    QList<bool> statuses;
-    for(int i=0;i<ui->frbsListWidget->count();i++){
-        statuses.append(makeScreenshot(filenames[i], boardFiles[i], rect));
-    }
-    return statuses;
-}
-
-extern bool takem(QString* filename, QString* ext, BoardFile* boardFile, QRectF* rect){
+extern bool makeScreenshot(QString* filename, QString* ext, BoardFile* boardFile, QRectF* rect){
     auto scene = new FortuneAvenueGraphicsScene(-1600 + 32, -1600 + 32, 3200, 3200);
+    scene->setAxesVisible(false);
     scene->deleteLater();
     scene->clearSquares();
     for (auto &square: boardFile->boardData.squares) {
@@ -156,9 +132,8 @@ void ScreenshotDialog::accept() {
         }
         // do this work asynchronously, because at 93 possible board states, it's a heavy task!
         QList<QFuture<bool>> futures;
-        qInfo() << "after the popping of the dialog, but before the for loop";
         for(int i = 0; i<count; i++){
-            QFuture<bool> future = QtConcurrent::run(&takem, &filenames[i], &ext, &boardFiles[i], &rect);
+            QFuture<bool> future = QtConcurrent::run(&makeScreenshot, &filenames[i], &ext, &boardFiles[i], &rect);
             futures.append(future);
         }
 
@@ -171,7 +146,6 @@ void ScreenshotDialog::accept() {
                 anyStatusesFalse = true;
             }
         }
-        qInfo() << "Done!";
 
         if(!anyStatusesFalse){
             QMessageBox::information(this, "Success!", "All screenshots saved successfully.");
