@@ -1667,7 +1667,7 @@ No for Magmalice lift</string>
   </action>
   <action name="actionSync_To_Board">
    <property name="text">
-    <string>Sync to Other Board for Switch State</string>
+    <string>Sync to Other Board(s) for Switch State</string>
    </property>
   </action>
   <action name="actionExit">
@@ -1689,8 +1689,8 @@ No for Magmalice lift</string>
  </resources>
  <connections/>
  <buttongroups>
-  <buttongroup name="loopingMode"/>
   <buttongroup name="onIDChange"/>
+  <buttongroup name="loopingMode"/>
   <buttongroup name="fromButtons"/>
   <buttongroup name="toButtons">
    <property name="exclusive">

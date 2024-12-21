@@ -723,9 +723,17 @@ void MainWindow::clearWaypoint(SquareItem *item, int waypointId) {
     waypoint.entryId = 255;
 }
 
-void MainWindow::syncForSwitch(bool isTo)
-{
-    QStringList filenames = QFileDialog::getOpenFileNames(this, "Choose Files to Sync With", QString(), "Fortune Street Boards (*.frb)");
+void MainWindow::syncForSwitch(bool isTo){
+    QStringList filenames;
+
+    // if we're syncing to other files, we can sync to as many as we want
+    if(isTo){
+        filenames = QFileDialog::getOpenFileNames(this, "Choose Board File(s) to Sync To", QString(), "Fortune Street Boards (*.frb)");
+    }
+    // but if we're syncing from, it only makes sense to sync from a single file.
+    else{
+        filenames.append(QFileDialog::getOpenFileName(this, "Choose Board File to Sync From", QString(), "Fortune Street Boards (*.frb)"));
+    }
 
     if(filenames.isEmpty()){
         return;
@@ -744,6 +752,7 @@ void MainWindow::syncForSwitch(bool isTo)
             QMessageBox::critical(this, "Error processing file for sync", "Corrupt .frb file");
             return;
         }
+        otherFile.close();
         auto sqItems = scene->squareItems();
         auto &otherSquares = otherBoardFile.boardData.squares;
         if (sqItems.size() != otherSquares.size()) {
@@ -759,21 +768,11 @@ void MainWindow::syncForSwitch(bool isTo)
         }
         if (isTo) {
             // set non-square data on other board
-            otherBoardFile.boardInfo.initialCash = ui->initialCash->text().toInt();
-            otherBoardFile.boardInfo.baseSalary = ui->baseSalary->text().toInt();
-            otherBoardFile.boardInfo.salaryIncrement = ui->salaryIncrement->text().toInt();
-            otherBoardFile.boardInfo.maxDiceRoll = ui->maxDiceRoll->text().toInt();
-
-            LoopingMode mode = None;
-            if(ui->loopingNone->isChecked()){
-                mode = None;
-            } else if(ui->loopingVertical->isChecked()) {
-                mode = Vertical;
-            } else(ui->loopingVerticalHorizontal->isChecked());{
-                mode = Both;
-            }
-
-            otherBoardFile.boardInfo.galaxyStatus = mode;
+            otherBoardFile.boardInfo.initialCash = curBoardFile.boardInfo.initialCash;
+            otherBoardFile.boardInfo.baseSalary = curBoardFile.boardInfo.baseSalary;
+            otherBoardFile.boardInfo.salaryIncrement = curBoardFile.boardInfo.salaryIncrement;
+            otherBoardFile.boardInfo.maxDiceRoll = curBoardFile.boardInfo.maxDiceRoll;
+            otherBoardFile.boardInfo.galaxyStatus = curBoardFile.boardInfo.galaxyStatus;
 
             QSaveFile outOtherFile(filenames[i]);
             if (!outOtherFile.open(QFile::WriteOnly)) {
@@ -783,7 +782,10 @@ void MainWindow::syncForSwitch(bool isTo)
             QDataStream outStream(&outOtherFile);
             outStream << otherBoardFile;
             if (!outOtherFile.commit()) {
-                QMessageBox::critical(this, "Error saving file", "Could not save other file");
+                auto err_num = QString::number(outOtherFile.error());
+                auto err_message = QString("Could not save other board to: \n\n %1 \n\n Error code: %2 \n %3")
+                                       .arg(outOtherFile.fileName()).arg(err_num).arg(outOtherFile.errorString());
+                QMessageBox::critical(this, "Error saving file", err_message);
                 return;
             }
         } else {
@@ -791,21 +793,22 @@ void MainWindow::syncForSwitch(bool isTo)
             std::iota(sqsToChange.begin(), sqsToChange.end(), 0);
             addChangeSquaresAction(sqsToChange, "Sync from Other File for Switch");
 
-            // set non-square board data from other square
-            ui->initialCash->setText(QString::number(otherBoardFile.boardInfo.initialCash));
-            ui->baseSalary->setText(QString::number(otherBoardFile.boardInfo.baseSalary));
-            ui->salaryIncrement->setText(QString::number(otherBoardFile.boardInfo.salaryIncrement));
-            ui->maxDiceRoll->setText(QString::number(otherBoardFile.boardInfo.maxDiceRoll));
+            // set non-square board data from other board
+            curBoardFile.boardInfo.initialCash = otherBoardFile.boardInfo.initialCash;
+            curBoardFile.boardInfo.baseSalary = otherBoardFile.boardInfo.baseSalary;
+            curBoardFile.boardInfo.salaryIncrement = otherBoardFile.boardInfo.salaryIncrement;
+            curBoardFile.boardInfo.maxDiceRoll = otherBoardFile.boardInfo.maxDiceRoll;
+            curBoardFile.boardInfo.galaxyStatus = otherBoardFile.boardInfo.galaxyStatus;
 
-            if(otherBoardFile.boardInfo.galaxyStatus == None){
-                ui->loopingNone->setChecked(true);
-            } else if(otherBoardFile.boardInfo.galaxyStatus == Vertical) {
-                ui->loopingVertical->setChecked(true);
-            } else(otherBoardFile.boardInfo.galaxyStatus == Both);{
-                ui->loopingVerticalHorizontal->setChecked(true);
-            }
+            // update UI elements to match new state
+            ui->initialCash->setText(QString::number(curBoardFile.boardInfo.initialCash));
+            ui->baseSalary->setText(QString::number(curBoardFile.boardInfo.baseSalary));
+            ui->salaryIncrement->setText(QString::number(curBoardFile.boardInfo.salaryIncrement));
+            ui->maxDiceRoll->setText(QString::number(curBoardFile.boardInfo.maxDiceRoll));
+            ui->loopingMode->button(curBoardFile.boardInfo.galaxyStatus)->setChecked(true);
         }
     }
+    QMessageBox::information(this, "Success!", "Successfully synced data between board files.");
 }
 
 int MainWindow::calcShopPriceFromValue(const QString &function, int value) {
