@@ -39,7 +39,7 @@ qreal SquareData::getYield() {
 SquareData &SquareData::syncForMultiState(const SquareData &other)
 {
     squareType = other.squareType;
-    if (squareType == Property) {
+    if (squareType == Property || squareType == SwitchSquare) {
         districtDestinationId = other.districtDestinationId;
     }
     oneWayLift = other.oneWayLift;
@@ -376,8 +376,8 @@ void BoardFile::verify(QStringList &errors, QStringList &warnings) {
     for (int i=0; i<=highestDistrict; ++i) {
         if (districtCount[i] == 0) {
             errors << QString("Did you skip District %1 when assigning districts?").arg(i);
-        } else if (districtCount[i] > 6) {
-            errors << QString("District %1 has %2 shops which is more than the maximum of 6").arg(i).arg(districtCount[i]);
+        } else if (districtCount[i] > 7) {
+            errors << QString("District %1 has %2 shops which is more than the maximum of 7").arg(i).arg(districtCount[i]);
         }
     }
 }
