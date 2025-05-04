@@ -8,7 +8,9 @@ set(CMAKE_AUTORCC ON)
 set(CMAKE_AUTOUIC ON)
 
 find_package(QT NAMES Qt6 REQUIRED COMPONENTS Core Concurrent)
-find_package(Qt${QT_VERSION_MAJOR} REQUIRED COMPONENTS Gui Widgets Concurrent)
+find_package(Qt${QT_VERSION_MAJOR} REQUIRED COMPONENTS Gui Widgets Concurrent LinguistTools)
+qt_create_translation(QM_FILES ${CMAKE_SOURCE_DIR} languages/en_US.ts languages/it_IT.ts languages/ja_JP.ts)
+qt6_add_lupdate(FortuneAvenue ${QM_FILES})
 
 qt_standard_project_setup()
 
@@ -17,7 +19,7 @@ set(PROJECT_SOURCES
     autopath.cpp autopath.h
     darkdetect.h
     directions.h
-    fortune-avenue.qrc
+
     fortuneavenuegraphicsscene.cpp fortuneavenuegraphicsscene.h
     fortunestreetdata.cpp fortunestreetdata.h
     hungarian.cpp hungarian.h
@@ -56,13 +58,15 @@ if(APPLE)
     set_source_files_properties(${app_icon_macos} PROPERTIES
         MACOSX_PACKAGE_LOCATION "Resources")
     # this is where the app icon gets attached to the Mac OS bundle...
-    qt_add_executable(FortuneAvenue MACOSX_BUNDLE ${app_icon_macos} ${PROJECT_SOURCES})
+    qt_add_executable(FortuneAvenue MACOSX_BUNDLE ${app_icon_macos} ${PROJECT_SOURCES} ${QM_FILES})
 elseif(WIN32)
     set(app_icon_windows "${CMAKE_CURRENT_SOURCE_DIR}/AppIcon.rc")
     # ...and this is where it is attached to the Windows executable.
-    qt_add_executable(FortuneAvenue WIN32 ${app_icon_windows} ${PROJECT_SOURCES})
+    qt_add_executable(FortuneAvenue WIN32 ${app_icon_windows} ${PROJECT_SOURCES} ${QM_FILES})
 else()
-    qt_add_executable(FortuneAvenue ${PROJECT_SOURCES})
+    qt_add_executable(FortuneAvenue ${PROJECT_SOURCES} ${QM_FILES}
+        region.h region.cpp
+        fortune-avenue.qrc)
 endif()
 
 target_include_directories(FortuneAvenue PRIVATE

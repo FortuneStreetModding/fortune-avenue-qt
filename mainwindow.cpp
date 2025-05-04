@@ -1,8 +1,6 @@
 #include "mainwindow.h"
 #include "ui_mainwindow.h"
 
-#include <iostream>
-
 #include <QCloseEvent>
 #include <QDesktopServices>
 #include <QFileDialog>
@@ -128,7 +126,7 @@ MainWindow::MainWindow(QApplication& app)
 
     connect(ui->actionAuto_Calc_Custom_Function, &QAction::triggered, this, [&]() {
         bool ok;
-        QString newFunc = QInputDialog::getText(this, "Enter Function", "Enter the shop price based on shop value function (x = shop value).\nEnter empty string to restore default.", QLineEdit::Normal, priceFunction, &ok);
+        QString newFunc = QInputDialog::getText(this, tr("Enter Function"), tr("Enter the shop price based on shop value function (x = shop value).\nEnter empty string to restore default."), QLineEdit::Normal, priceFunction, &ok);
         if (ok) {
             if(newFunc.isEmpty()) {
                 priceFunction = defaultPriceFunction;
@@ -140,7 +138,7 @@ MainWindow::MainWindow(QApplication& app)
                 }
                 catch (mu::Parser::exception_type &e)
                 {
-                    QMessageBox::critical(this, "Error Function", QString::fromStdWString(e.GetMsg()));
+                    QMessageBox::critical(this, tr("Error Function"), QString::fromStdWString(e.GetMsg()));
                 }
             }
         }
@@ -148,10 +146,10 @@ MainWindow::MainWindow(QApplication& app)
 
     connect(ui->actionSet_Max_Path_Search_Depth, &QAction::triggered, this, [&]() {
         bool ok;
-        int newMaxPathSearchDepth = QInputDialog::getInt(this, "Enter Search Depth", "Enter the max path search depth.\n\n"
-                                                                                     "This is only for demonstration purposes and does not have any ingame effect.\n"
-                                                                                     "Sensible values are between 16 (small boards) and 28 (huge boards).\n\n"
-                                                                                     "Enter 0 to restore game default behavior which is max(squareCount/3,16)", maxPathSearchDepth, 0, 50, 1, &ok);
+        int newMaxPathSearchDepth = QInputDialog::getInt(this, tr("Enter Search Depth"), tr("Enter the max path search depth.\n\n"
+            "This is only for demonstration purposes and does not have any ingame effect.\n"
+            "Sensible values are between 16 (small boards) and 28 (huge boards).\n\n"
+            "Enter 0 to restore game default behavior which is max(squareCount/3,16)"), maxPathSearchDepth, 0, 50, 1, &ok);
         if (ok) {
             maxPathSearchDepth = newMaxPathSearchDepth;
         }
@@ -308,7 +306,7 @@ void MainWindow::addUpdateBoardMetaAction(Func &&func, const QString &text)
 void MainWindow::updateZoom() {
     ui->graphicsView->resetTransform();
     ui->graphicsView->scale(zoomPercent / 100.0, zoomPercent / 100.0);
-    ui->statusbar->showMessage(QString("Zoom: %1%").arg(zoomPercent));
+    ui->statusbar->showMessage(QString(tr("Zoom: %1%")).arg(zoomPercent));
 }
 
 QPair<SquareItem*,SquareItem*> MainWindow::getPreviousAndCurrentSquare() {
@@ -431,13 +429,13 @@ void MainWindow::toggleAdvancedAutoPath() {
 }
 
 void MainWindow::newFile() {
-    setWindowTitle(QString("Fortune Avenue %1[*]").arg(FORTUNE_AVENUE_VERSION));
+    setWindowTitle(QString(tr("Fortune Avenue %1[*]")).arg(FORTUNE_AVENUE_VERSION));
     setWindowFilePath("");
     loadFile(BoardFile(true));
 }
 
 void MainWindow::openFile() {
-    QString filename = QFileDialog::getOpenFileName(this, "Open File", QString(), "Fortune Street Boards (*.frb)");
+    QString filename = QFileDialog::getOpenFileName(this, tr("Open File"), QString(), tr("Fortune Street Boards (*.frb)"));
     if (filename.isEmpty()) {
         return;
     }
@@ -464,14 +462,14 @@ bool MainWindow::saveFile() {
             return true;
         } else {
             fail:
-            QMessageBox::critical(this, "Error saving file", "An error occurred while trying to save the file");
+            QMessageBox::critical(this, tr("Error saving file"), tr("An error occurred while trying to save the file"));
             return false;
         }
     }
 }
 
 bool MainWindow::saveFileAs() {
-    QString saveFileName = QFileDialog::getSaveFileName(this, "Save File", QString(), "Fortune Street Boards (*.frb)");
+    QString saveFileName = QFileDialog::getSaveFileName(this, tr("Save File"), QString(), tr("Fortune Street Boards (*.frb)"));
     if (saveFileName.isEmpty()) {
         return false;
     }
@@ -485,13 +483,13 @@ bool MainWindow::saveFileAs() {
         }
         QFileInfo fileInfo(saveFileName);
         QString filename(fileInfo.fileName());
-        setWindowTitle(QString("Fortune Avenue %1 - %2[*]").arg(FORTUNE_AVENUE_VERSION).arg(filename));
+        setWindowTitle(QString(tr("Fortune Avenue %1 - %2[*]")).arg(FORTUNE_AVENUE_VERSION).arg(filename));
         setWindowFilePath(saveFileName);
         undoStack->setClean();
         return true;
     } else {
         fail:
-        QMessageBox::critical(this, "Error saving file", "An error occurred while trying to save the file");
+        QMessageBox::critical(this, tr("Error saving file"), tr("An error occurred while trying to save the file"));
         return false;
     }
 }
@@ -505,7 +503,7 @@ void MainWindow::loadFile(const QString &fpath) {
         if (stream.status() != QDataStream::Status::ReadCorruptData) {
             QFileInfo fileInfo(file);
             QString filename(fileInfo.fileName());
-            setWindowTitle(QString("Fortune Avenue %1 - %2[*]").arg(FORTUNE_AVENUE_VERSION).arg(filename));
+            setWindowTitle(QString(tr("Fortune Avenue %1 - %2[*]")).arg(FORTUNE_AVENUE_VERSION).arg(filename));
             setWindowFilePath(fpath);
             loadFile(boardFile);
         } else {
@@ -513,7 +511,7 @@ void MainWindow::loadFile(const QString &fpath) {
         }
     } else {
         badFile:
-        QMessageBox::critical(this, "Error opening file", "An error occurred while trying to open the file");
+        QMessageBox::critical(this, tr("Error opening file"), tr("An error occurred while trying to open the file"));
     }
 }
 
@@ -547,8 +545,8 @@ void MainWindow::loadFile(const BoardFile &file) {
     if (file.boardInfo.versionFlag < 3) {
         auto response = QMessageBox::question(
             this,
-            "Open File",
-            QString("This file is version %1, but the latest version is version 3. Would you like to upgrade the file to the latest version?")
+            tr("Open File"),
+            QString(tr("This file is version %1, but the latest version is version 3. Would you like to upgrade the file to the latest version?"))
                 .arg(file.boardInfo.versionFlag)
         );
         if (response == QMessageBox::Yes) {
@@ -611,7 +609,7 @@ void MainWindow::updateSquareSidebar() {
         switch (item->getData().squareType) {
         case Property:
         case VacantPlot:
-            ui->districtDestinationIdLabel->setText("District ID");
+            ui->districtDestinationIdLabel->setText(tr("District ID"));
             break;
         case BackStreetSquareA:
         case BackStreetSquareB:
@@ -620,13 +618,13 @@ void MainWindow::updateSquareSidebar() {
         case BackStreetSquareE:
         case LiftMagmaliceSquareStart:
         case MagmaliceSquare:
-            ui->districtDestinationIdLabel->setText("Destination ID");
+            ui->districtDestinationIdLabel->setText(tr("Destination ID"));
             break;
         case EventSquare:
-            ui->districtDestinationIdLabel->setText("Venture Card ID");
+            ui->districtDestinationIdLabel->setText(tr("Venture Card ID"));
             break;
         default:
-            ui->districtDestinationIdLabel->setText("District ID");
+            ui->districtDestinationIdLabel->setText(tr("District ID"));
             break;
         }
         ui->districtDestinationId->setText(QString::number(item->getData().districtDestinationId));
@@ -666,7 +664,7 @@ void MainWindow::updateSquareSidebar() {
 
         previouslyVisitedSquareId = item->getData().id;
     } else {
-        ui->districtDestinationIdLabel->setText("District ID");
+        ui->districtDestinationIdLabel->setText(tr("District ID"));
         for (auto &waypointDest: waypointDests) {
             for (auto &child: waypointDest) {
                 child->setEnabled(false);
@@ -677,7 +675,7 @@ void MainWindow::updateSquareSidebar() {
         }
         ui->id->setEnabled(false);
         if(selectedItems.size() > 1) {
-            ui->id->setText(QString("%1 selected").arg(selectedItems.size()));
+            ui->id->setText(QString(tr("%1 selected")).arg(selectedItems.size()));
         } else {
             ui->id->setText("");
         }
@@ -728,11 +726,11 @@ void MainWindow::syncForSwitch(bool isTo){
 
     // if we're syncing to other files, we can sync to as many as we want
     if(isTo){
-        filenames = QFileDialog::getOpenFileNames(this, "Choose Board File(s) to Sync To", QString(), "Fortune Street Boards (*.frb)");
+        filenames = QFileDialog::getOpenFileNames(this, tr("Choose Board File(s) to Sync To"), QString(), tr("Fortune Street Boards (*.frb)"));
     }
     // but if we're syncing from, it only makes sense to sync from a single file.
     else{
-        filenames.append(QFileDialog::getOpenFileName(this, "Choose Board File to Sync From", QString(), "Fortune Street Boards (*.frb)"));
+        filenames.append(QFileDialog::getOpenFileName(this, tr("Choose Board File to Sync From"), QString(), tr("Fortune Street Boards (*.frb)")));
     }
 
     if(filenames.isEmpty()){
@@ -743,20 +741,20 @@ void MainWindow::syncForSwitch(bool isTo){
         QFile otherFile(filenames[i]);
         BoardFile otherBoardFile;
         if (!otherFile.open(QFile::ReadOnly)) {
-            QMessageBox::critical(this, "Error opening file for sync", "Could not open file for sync");
+            QMessageBox::critical(this, tr("Error opening file for sync"), tr("Could not open file for sync"));
             return;
         }
         QDataStream stream(&otherFile);
         stream >> otherBoardFile;
         if (stream.status() == QDataStream::Status::ReadCorruptData) {
-            QMessageBox::critical(this, "Error processing file for sync", "Corrupt .frb file");
+            QMessageBox::critical(this, tr("Error processing file for sync"), tr("Corrupt .frb file"));
             return;
         }
         otherFile.close();
         auto sqItems = scene->squareItems();
         auto &otherSquares = otherBoardFile.boardData.squares;
         if (sqItems.size() != otherSquares.size()) {
-            QMessageBox::critical(this, "Error processing file for sync", "Number of squares in other file is not the same as this one");
+            QMessageBox::critical(this, tr("Error processing file for sync"), tr("Number of squares in other file is not the same as this one"));
             return;
         }
         for (int i=0; i<sqItems.size(); ++i) {
@@ -776,16 +774,16 @@ void MainWindow::syncForSwitch(bool isTo){
 
             QSaveFile outOtherFile(filenames[i]);
             if (!outOtherFile.open(QFile::WriteOnly)) {
-                QMessageBox::critical(this, "Error saving file", "Could not open other file for saving");
+                QMessageBox::critical(this, tr("Error saving file"), tr("Could not open other file for saving"));
                 return;
             }
             QDataStream outStream(&outOtherFile);
             outStream << otherBoardFile;
             if (!outOtherFile.commit()) {
                 auto err_num = QString::number(outOtherFile.error());
-                auto err_message = QString("Could not save other board to: \n\n %1 \n\n Error code: %2 \n %3")
+                auto err_message = QString(tr("Could not save other board to: \n\n %1 \n\n Error code: %2 \n %3"))
                                        .arg(outOtherFile.fileName()).arg(err_num).arg(outOtherFile.errorString());
-                QMessageBox::critical(this, "Error saving file", err_message);
+                QMessageBox::critical(this, tr("Error saving file"), err_message);
                 return;
             }
         } else {
@@ -808,7 +806,7 @@ void MainWindow::syncForSwitch(bool isTo){
             ui->loopingMode->button(curBoardFile.boardInfo.galaxyStatus)->setChecked(true);
         }
     }
-    QMessageBox::information(this, "Success!", "Successfully synced data between board files.");
+    QMessageBox::information(this, tr("Success!"), tr("Successfully synced data between board files."));
 }
 
 int MainWindow::calcShopPriceFromValue(const QString &function, int value) {
@@ -923,7 +921,7 @@ void MainWindow::registerSquareSidebarEvents() {
                     item->getData().price = newPrice;
                 } catch (mu::Parser::exception_type &) {}
             }
-        }, "Chnage Shop Model");
+        }, "Change Shop Model");
     });
     connect(ui->shopModelId, &QLineEdit::editingFinished, this, [&]() {
         updateSquare([&](SquareItem *item) {
@@ -1155,7 +1153,7 @@ void MainWindow::calcStockPrices() {
         qint64 result = districtSum[i] / districtCount[i];
         result *= 0xB00;
         result >>= 16;
-        builder << QString("District %1: %2g").arg(char('A' + i)).arg(result);
+        builder << QString(tr("District %1: %2g")).arg(char('A' + i)).arg(result);
     }
     builder << QString();
     int limit = 300;
@@ -1179,21 +1177,21 @@ void MainWindow::calcStockPrices() {
     }
     if(maxPathSquareId != 255) {
         if(maxPathSearchDepth == 0) {
-            builder << QString("Search Depth: %1").arg(searchDepth);
+            builder << QString(tr("Search Depth: %1")).arg(searchDepth);
         } else {
-            builder << QString("Using Fixed Depth: %1").arg(searchDepth);
+            builder << QString(tr("Using Fixed Depth: %1")).arg(searchDepth);
         }
-        builder << QString("Max Paths Square ID: %1").arg(maxPathSquareId);
-        builder << QString("Possible Paths: %1").arg(maxPathCountStr);
+        builder << QString(tr("Max Paths Square ID: %1")).arg(maxPathSquareId);
+        builder << QString(tr("Possible Paths: %1")).arg(maxPathCountStr);
         if(maxPathSearchDepth == 0) {
             if(maxPathCount > 150) {
-                builder << QString("Crash inevitable!");
+                builder << QString(tr("Crash inevitable!"));
             } else if(maxPathCount > 90) {
-                builder << QString("Crash possible!");
+                builder << QString(tr("Crash possible!"));
             } else if(maxPathCount > 70) {
-                builder << QString("Stuttering likely!");
+                builder << QString(tr("Stuttering likely!"));
             } else {
-                builder << QString("Ok");
+                builder << QString(tr("Ok"));
             }
         } else {
             builder << QString("");
@@ -1213,14 +1211,14 @@ void MainWindow::verifyBoard() {
     exportFile().verify(errors, warnings);
 
     if (errors.isEmpty() && warnings.isEmpty()) {
-        QMessageBox::information(this, "Verification", "Board passed verification.");
+        QMessageBox::information(this, tr("Verification"), tr("Board passed verification."));
     } else {
-        QString numErrorsWarnings = QString("%1 error(s) and %2 warning(s):\n")
+        QString numErrorsWarnings = QString(tr("%1 error(s) and %2 warning(s):\n"))
                 .arg(errors.size()).arg(warnings.size());
         if (!errors.isEmpty()) {
-            QMessageBox::critical(this, "Verification", numErrorsWarnings + errors.join("\n"));
+            QMessageBox::critical(this, tr("Verification"), numErrorsWarnings + errors.join("\n"));
         } else {
-            QMessageBox::warning(this, "Verification", numErrorsWarnings + warnings.join("\n"));
+            QMessageBox::warning(this, tr("Verification"), numErrorsWarnings + warnings.join("\n"));
         }
     }
 }
@@ -1235,7 +1233,7 @@ void MainWindow::autoPath() {
     } else {
         AutoPath::kruskalDfsAutoPathAlgorithm(std::as_const(items));
     }
-    QMessageBox::information(this, "Auto-pathing", "Auto-pathed entire map");
+    QMessageBox::information(this, tr("Auto-pathing"), tr("Auto-pathed entire map"));
     QVector<int> squareIds(items.size());
     std::iota(squareIds.begin(), squareIds.end(), 0);
     addChangeSquaresAction(squareIds, "Autopath");
@@ -1285,7 +1283,7 @@ void MainWindow::closeEvent(QCloseEvent *event) {
         return;
     }
 
-    auto button = QMessageBox::warning(this, "Unsaved Changes", "You have unsaved changes. Do you want to save them?",
+    auto button = QMessageBox::warning(this, tr("Unsaved Changes"), tr("You have unsaved changes. Do you want to save them?"),
                                         QMessageBox::StandardButtons(QMessageBox::Save | QMessageBox::Discard | QMessageBox::Cancel));
     //qDebug() << button;
     if (button == QMessageBox::Cancel) {
@@ -1301,8 +1299,17 @@ void MainWindow::closeEvent(QCloseEvent *event) {
     }
 }
 
+void MainWindow::changeEvent(QEvent *event) {
+    if (event->type() == QEvent::LanguageChange) {
+        qInfo() << "A MainWindow::changeEvent() has fired!";
+        ui->retranslateUi(this);
+    }
+
+    QMainWindow::changeEvent(event);
+}
+
+
 void MainWindow::on_actionExit_triggered()
 {
     QApplication::quit();
 }
-

@@ -20,8 +20,11 @@ private:
     Ui::PreferencesDialog *ui;
     void buildPaletteMenu();
     void paletteActionTriggered();
+    void rebuildLanguageComboBox();
 private Q_SLOTS:
     void usePaletteHighlightColorCheckboxStatusChanged(int status);
+protected:
+    void changeEvent(QEvent *event) override;
 };
 
 #endif // PREFERENCESDIALOG_H

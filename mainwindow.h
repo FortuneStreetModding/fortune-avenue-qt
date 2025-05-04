@@ -89,6 +89,7 @@ private:
     void clearWaypoint(SquareItem *item, int waypointId);
     void syncForSwitch(bool isTo);
 protected:
+    void changeEvent(QEvent *event) override;
     void closeEvent(QCloseEvent *event) override;
     bool eventFilter(QObject *obj, QEvent *event) override;
 private slots:

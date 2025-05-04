@@ -17,7 +17,7 @@ ScreenshotDialog::ScreenshotDialog(const QString &frbFilename, QWidget *parent) 
     scene(new FortuneAvenueGraphicsScene(-1600 + 32, -1600 + 32, 3200, 3200, this))
 {
     ui->setupUi(this);
-    this->setWindowTitle("Take Board Screenshots");
+    this->setWindowTitle(tr("Take Board Screenshots"));
     scene->setAxesVisible(false);
 
     connect(ui->addFrbsButton, &QPushButton::clicked, this, [this](bool) { browseFrb(); });
@@ -50,7 +50,7 @@ ScreenshotDialog::~ScreenshotDialog()
 }
 
 void ScreenshotDialog::browseFrb() {
-    QStringList filenames = QFileDialog::getOpenFileNames(this, "Open File", QString(), "Fortune Street Boards (*.frb)");
+    QStringList filenames = QFileDialog::getOpenFileNames(this, tr("Open File"), QString(), tr("Fortune Street Boards (*.frb)"));
     if(!filenames.isEmpty()) {
         ui->frbsListWidget->addItems(filenames);
     }
@@ -89,7 +89,7 @@ BoardFile ScreenshotDialog::readBoardFile(const QString &filename, QRectF &rect)
         }
     } else {
         badFile:
-        QMessageBox::critical(this, "Error opening file", "An error occurred while trying to open the file " + filename);
+        QMessageBox::critical(this, tr("Error opening file"), QString(tr("An error occurred while trying to open the file: %1")).arg(filename));
     }
     return boardFile;
 }
@@ -148,10 +148,10 @@ void ScreenshotDialog::accept() {
         }
 
         if(!anyStatusesFalse){
-            QMessageBox::information(this, "Success!", "All screenshots saved successfully.");
+            QMessageBox::information(this, tr("Success!"), tr("All screenshots saved successfully."));
         }
         else{
-            QMessageBox::critical(this, "Failure", "One or more screenshots could not be saved.");
+            QMessageBox::critical(this, tr("Failure"), tr("One or more screenshots could not be saved."));
         }
         ui->buttonBox->setEnabled(true);
     }
