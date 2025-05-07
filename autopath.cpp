@@ -338,25 +338,30 @@ void connect(SquareData &square1, SquareData &square2) {
  * a twist: We allow cycles in the Minimal Spanning Tree where the path is longer than 3
  * squares.
  *
+ * If pathSelectedOnly is set to true, we only want to auto-path the selected squares
+ * and the ones they are immediately connected to.
+ *
  * @brief kruskalDfsAutoPathAlgorithm
- * @param squares
+ * @param allSquares
+ * @param selectedSquares
+ * @param pathSelectedOnly
  */
-void kruskalDfsAutoPathAlgorithm(const QVector<SquareItem *> &squares) {
+void kruskalDfsAutoPathAlgorithm(const QVector<SquareItem *> &allSquares, const QVector<SquareItem *> &selectedSquares, bool pathSelectedOnly) {
     int maxManhattanDistance = 80;
     // Construct edges first
     QVector<QPair<double, QPair<int, int>>> edges;
-    for (int i=0; i<squares.size(); ++i) {
-        auto &square = ((SquareItem *)squares[i])->getData();
-        for (int j=i+1; j<squares.size(); ++j) {
-            auto &otherSquare = ((SquareItem *)squares[j])->getData();
+    for (int i=0; i<allSquares.size(); ++i) {
+        auto &square = ((SquareItem *)allSquares[i])->getData();
+        for (int j=i+1; j<allSquares.size(); ++j) {
+            auto &otherSquare = ((SquareItem *)allSquares[j])->getData();
 
             // Special case handling for transporting squares
             bool isTransportingEdge = isConnected(square, otherSquare)
-                    && isTransportingSquareType(square.squareType)
-                    && isTransportingSquareType(otherSquare.squareType);
+                                      && isTransportingSquareType(square.squareType)
+                                      && isTransportingSquareType(otherSquare.squareType);
 
             if (isTransportingEdge || (qAbs(square.positionX - otherSquare.positionX) <= maxManhattanDistance
-                    && qAbs(square.positionY - otherSquare.positionY) <= maxManhattanDistance)) {
+                                       && qAbs(square.positionY - otherSquare.positionY) <= maxManhattanDistance)) {
                 auto xDistance = square.positionX - otherSquare.positionX;
                 auto yDistance = square.positionY - otherSquare.positionY;
                 auto euclideanDistance = qSqrt(xDistance*xDistance + yDistance*yDistance);
@@ -376,19 +381,32 @@ void kruskalDfsAutoPathAlgorithm(const QVector<SquareItem *> &squares) {
         // path longer than 3
         auto autoPathCandidate(autoPathEdges);
         autoPathCandidate.append(edge);
-        if (!hasCycle(autoPathCandidate, squares.size(), 3))
+        if (!hasCycle(autoPathCandidate, allSquares.size(), 3))
         {
             autoPathEdges = autoPathCandidate;
         }
     }
 
     // Clear waypoints
-    for (int i=0; i<squares.size(); ++i) {
-        auto &square = ((SquareItem *)squares[i])->getData();
-        for (auto &waypoint: square.waypoints) {
-            waypoint.entryId = 255;
-            for (auto &dest: waypoint.destinations) {
-                dest = 255;
+    if(pathSelectedOnly){
+        for (int i=0; i<selectedSquares.size(); ++i) {
+            auto &square = ((SquareItem *)selectedSquares[i])->getData();
+            for (auto &waypoint: square.waypoints) {
+                waypoint.entryId = 255;
+                for (auto &dest: waypoint.destinations) {
+                    dest = 255;
+                }
+            }
+        }
+    }
+    else{
+        for (int i=0; i<allSquares.size(); ++i) {
+            auto &square = ((SquareItem *)allSquares[i])->getData();
+            for (auto &waypoint: square.waypoints) {
+                waypoint.entryId = 255;
+                for (auto &dest: waypoint.destinations) {
+                    dest = 255;
+                }
             }
         }
     }
@@ -397,15 +415,27 @@ void kruskalDfsAutoPathAlgorithm(const QVector<SquareItem *> &squares) {
     for(auto& edge : autoPathEdges) {
         int u = edge.second.first;
         int v = edge.second.second;
-        auto& square = ((SquareItem *)squares[u])->getData();
-        auto& otherSquare = ((SquareItem *)squares[v])->getData();
-        connect(square, otherSquare);
-        connect(otherSquare, square);
+        const auto& squareItem = (SquareItem *)allSquares[u];
+        const auto& otherSquareItem = (SquareItem *)allSquares[v];
+
+        auto& square = squareItem->getData();
+        auto& otherSquare = otherSquareItem->getData();
+
+        if(pathSelectedOnly){
+            if(selectedSquares.contains(squareItem) || selectedSquares.contains(otherSquareItem)){
+                connect(square, otherSquare);
+                connect(otherSquare, square);
+            }
+        }
+        else{
+            connect(square, otherSquare);
+            connect(otherSquare, square);
+        }
     }
 
     // Cleanup waypoints (set all destinations to 255 if entry id is still 255)
-    for (int i=0; i<squares.size(); ++i) {
-        auto &square = ((SquareItem *)squares[i])->getData();
+    for (int i=0; i<allSquares.size(); ++i) {
+        auto &square = ((SquareItem *)allSquares[i])->getData();
         for (auto &waypoint: square.waypoints) {
             if (waypoint.entryId == 255) {
                 for (auto &dest: waypoint.destinations) {
@@ -416,8 +446,8 @@ void kruskalDfsAutoPathAlgorithm(const QVector<SquareItem *> &squares) {
     }
 
     // Sort waypoints
-    for (int i=0; i<squares.size(); ++i) {
-        sortWaypoints(squares[i]);
+    for (int i=0; i<allSquares.size(); ++i) {
+        sortWaypoints(allSquares[i]);
     }
 }
 

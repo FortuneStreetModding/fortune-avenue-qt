@@ -69,6 +69,7 @@ private:
     void calcStockPrices();
     void verifyBoard();
     void autoPath();
+    void autoPathSelection();
     void screenshot();
     void preferences();
     void addSquare();

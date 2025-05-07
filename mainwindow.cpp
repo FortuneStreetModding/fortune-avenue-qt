@@ -88,6 +88,8 @@ MainWindow::MainWindow(QApplication& app)
 
     connect(ui->actionVerify_Board, &QAction::triggered, this, &MainWindow::verifyBoard);
     connect(ui->actionAuto_Path, &QAction::triggered, this, &MainWindow::autoPath);
+    connect(ui->actionAuto_Path_Selected_Squares, &QAction::triggered, this, &::MainWindow::autoPathSelection);
+
     connect(ui->actionScreenshot, &QAction::triggered, this, &MainWindow::screenshot);
     connect(ui->actionPreferences, &QAction::triggered, this, &MainWindow::preferences);
     connect(ui->actionAuto_Assign_Shop_Models, &QAction::triggered, this, &MainWindow::autoAssignShopModels);
@@ -1224,19 +1226,72 @@ void MainWindow::verifyBoard() {
 }
 
 void MainWindow::autoPath() {
-    auto items = scene->squareItems();
+    auto selectedSquares = scene->selectedItems();
+    auto squares = scene->squareItems();
+
+    QList<SquareItem*> selectedItems;
+    QList<SquareItem*> squareItems;
+
+    for (auto square: std::as_const(squares)){
+        squareItems.append((SquareItem *) square);
+    }
+
+    for (auto square: std::as_const(selectedSquares)){
+        selectedItems.append((SquareItem *) square);
+    }
+
     if(ui->actionUse_Advanced_Auto_Path->isChecked()) {
-        for (auto item: std::as_const(items)) {
-            QMap<AutoPath::Direction, SquareItem *> touchingSquares = AutoPath::getTouchingSquares(item, items, ui->autopathRange->value(), ui->straightLineTolerance->value());
+        for (auto item: std::as_const(squareItems)) {
+            QMap<AutoPath::Direction, SquareItem *> touchingSquares = AutoPath::getTouchingSquares(item, squareItems, ui->autopathRange->value(), ui->straightLineTolerance->value());
             AutoPath::pathSquare(item, touchingSquares);
         }
     } else {
-        AutoPath::kruskalDfsAutoPathAlgorithm(std::as_const(items));
+        AutoPath::kruskalDfsAutoPathAlgorithm(std::as_const(squareItems), std::as_const(selectedItems), false);
     }
+<<<<<<< HEAD
     QMessageBox::information(this, tr("Auto-pathing"), tr("Successfully auto-pathed the entire board."));
     QVector<int> squareIds(items.size());
+=======
+
+    QMessageBox::information(this, "Auto-pathing", "Auto-pathed the entire board!");
+    QVector<int> squareIds(squareItems.size());
+>>>>>>> e542cd2 (Add auto-path selected squares, and clean up Tools menu by nesting auto-path and sync options in sub-menus)
     std::iota(squareIds.begin(), squareIds.end(), 0);
     addChangeSquaresAction(squareIds, tr("Autopath"));
+}
+
+void MainWindow::autoPathSelection() {
+    auto selectedSquares = scene->selectedItems();
+    auto squares = scene->squareItems();
+
+    if(selectedSquares.size() < 1){
+        QMessageBox::information(this, "Auto-pathing", "Nothing to auto-path! No squares are selected.");
+        return;
+    }
+
+    QList<SquareItem*> selectedItems;
+    QList<SquareItem*> squareItems;
+
+    for (auto square: std::as_const(squares)){
+        squareItems.append((SquareItem *) square);
+    }
+
+    for (auto square: std::as_const(selectedSquares)){
+        selectedItems.append((SquareItem *) square);
+    }
+
+    if(ui->actionUse_Advanced_Auto_Path->isChecked()) {
+        for (auto item: std::as_const(selectedItems)) {
+            QMap<AutoPath::Direction, SquareItem *> touchingSquares = AutoPath::getTouchingSquares(item, squareItems, ui->autopathRange->value(), ui->straightLineTolerance->value());
+            AutoPath::pathSquare(item, touchingSquares);
+        }
+    } else {
+        AutoPath::kruskalDfsAutoPathAlgorithm(std::as_const(squareItems), std::as_const(selectedItems), true);
+    }
+    QMessageBox::information(this, "Auto-pathing", "Auto-pathed selected squares.");
+    QVector<int> squareIds(selectedItems.size());
+    std::iota(squareIds.begin(), squareIds.end(), 0);
+    addChangeSquaresAction(squareIds, "Autopath Selected");
 }
 
 void MainWindow::screenshot() {
