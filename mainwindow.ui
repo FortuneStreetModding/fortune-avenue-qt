@@ -1416,17 +1416,30 @@ No for Magmalice lift</string>
     <property name="title">
      <string>Tools</string>
     </property>
+    <widget class="QMenu" name="menuAuto_Path">
+     <property name="title">
+      <string>Auto-Path</string>
+     </property>
+     <addaction name="actionAuto_Path"/>
+     <addaction name="actionAuto_Path_Selected_Squares"/>
+     <addaction name="actionUse_Advanced_Auto_Path"/>
+    </widget>
+    <widget class="QMenu" name="menuSync_for_Switch_State">
+     <property name="title">
+      <string>Sync for Switch State</string>
+     </property>
+     <addaction name="actionSync_From_Board"/>
+     <addaction name="actionSync_To_Board"/>
+    </widget>
     <addaction name="actionVerify_Board"/>
     <addaction name="actionScreenshot"/>
+    <addaction name="menuAuto_Path"/>
+    <addaction name="menuSync_for_Switch_State"/>
     <addaction name="actionSet_Max_Path_Search_Depth"/>
     <addaction name="actionAuto_Calc_Custom_Function"/>
     <addaction name="actionAuto_Assign_Shop_Models"/>
     <addaction name="separator"/>
-    <addaction name="actionAuto_Path"/>
-    <addaction name="actionUse_Advanced_Auto_Path"/>
     <addaction name="separator"/>
-    <addaction name="actionSync_From_Board"/>
-    <addaction name="actionSync_To_Board"/>
     <addaction name="separator"/>
     <addaction name="actionPreferences"/>
    </widget>
@@ -1522,7 +1535,7 @@ No for Magmalice lift</string>
   </action>
   <action name="actionAuto_Path">
    <property name="text">
-    <string>Auto-Path</string>
+    <string>Entire Board</string>
    </property>
   </action>
   <action name="actionFortune_Avenue_Help">
@@ -1662,12 +1675,12 @@ No for Magmalice lift</string>
   </action>
   <action name="actionSync_From_Board">
    <property name="text">
-    <string>Sync from Other Board for Switch State</string>
+    <string>From Other Board</string>
    </property>
   </action>
   <action name="actionSync_To_Board">
    <property name="text">
-    <string>Sync to Other Board(s) for Switch State</string>
+    <string>To Other Board(s)</string>
    </property>
   </action>
   <action name="actionExit">
@@ -1683,19 +1696,24 @@ No for Magmalice lift</string>
     <enum>QAction::PreferencesRole</enum>
    </property>
   </action>
+  <action name="actionAuto_Path_Selected_Squares">
+   <property name="text">
+    <string>Selected Squares</string>
+   </property>
+  </action>
  </widget>
  <resources>
   <include location="fortune-avenue.qrc"/>
  </resources>
  <connections/>
  <buttongroups>
-  <buttongroup name="onIDChange"/>
-  <buttongroup name="loopingMode"/>
-  <buttongroup name="fromButtons"/>
   <buttongroup name="toButtons">
    <property name="exclusive">
     <bool>false</bool>
    </property>
   </buttongroup>
+  <buttongroup name="loopingMode"/>
+  <buttongroup name="onIDChange"/>
+  <buttongroup name="fromButtons"/>
  </buttongroups>
 </ui>
