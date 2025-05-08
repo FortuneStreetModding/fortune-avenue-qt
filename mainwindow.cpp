@@ -842,9 +842,9 @@ void MainWindow::connectSquares(bool previousToCurrent, bool currentToPrevious) 
             }
         }
         if(previousToCurrent)
-            AutoPath::connect(previous->getData(), current->getData());
+            AutoPath::connect(previous->getData(), current->getData(), false, true, true);
         if(currentToPrevious)
-            AutoPath::connect(current->getData(), previous->getData());
+            AutoPath::connect(current->getData(), previous->getData(), false, true, true);
         addChangeSquaresAction({previous->getData().id, current->getData().id}, "Connect Squares");
     }
 }
