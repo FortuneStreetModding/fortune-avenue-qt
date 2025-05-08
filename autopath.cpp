@@ -432,7 +432,7 @@ void kruskalDfsAutoPathAlgorithm(const QVector<SquareItem *> &allSquares, const 
 
         QSettings settings;
         bool pathSurroundingSquaresToo = settings.value("autopath_selected_should_add_entry_ids_to_nearby_squares", false).toBool();
-
+      
         if(pathSelectedOnly){
             if(!pathSurroundingSquaresToo){
                 connect(square, otherSquare, pathSelectedOnly, square1Selected, square2Selected);
