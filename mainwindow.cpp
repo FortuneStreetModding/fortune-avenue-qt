@@ -1250,7 +1250,7 @@ void MainWindow::autoPath() {
     QMessageBox::information(this, tr("Auto-pathing"), tr("Successfully auto-pathed the entire board."));
     QVector<int> squareIds(squareItems.size());
     std::iota(squareIds.begin(), squareIds.end(), 0);
-    addChangeSquaresAction(squareIds, tr("Autopath"));
+    addChangeSquaresAction(squareIds, tr("Autopath Entire Board"));
 }
 
 void MainWindow::autoPathSelection() {
@@ -1282,7 +1282,7 @@ void MainWindow::autoPathSelection() {
         AutoPath::kruskalDfsAutoPathAlgorithm(std::as_const(squareItems), std::as_const(selectedItems), true);
     }
     QMessageBox::information(this, tr("Auto-pathing"), tr("Successfully auto-pathed the selected squares."));
-    QVector<int> squareIds(selectedItems.size());
+    QVector<int> squareIds(squareItems.size());
     std::iota(squareIds.begin(), squareIds.end(), 0);
     addChangeSquaresAction(squareIds, tr("Autopath Selected Squares"));
 }

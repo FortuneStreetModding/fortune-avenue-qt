@@ -1187,7 +1187,7 @@ Enter 0 to restore game default behavior which is max(squareCount/3,16)</source>
     </message>
     <message>
         <location filename="../mainwindow.cpp" line="1253"/>
-        <source>Autopath</source>
+        <source>Autopath Entire Board</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
