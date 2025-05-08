@@ -85,7 +85,7 @@ private:
     void selectNext();
     void selectPrevious();
     void selectAll();
-    void toggleAdvancedAutoPath();
+    void setAdvancedAutoPath();
     void autoAssignShopModels();
     void clearWaypoint(SquareItem *item, int waypointId);
     void syncForSwitch(bool isTo);

@@ -95,6 +95,67 @@
     </message>
 </context>
 <context>
+    <name>AutoPath::Directions</name>
+    <message>
+        <location filename="../directions.h" line="61"/>
+        <source>north</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../directions.h" line="63"/>
+        <source>northwest</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../directions.h" line="65"/>
+        <source>northeast</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../directions.h" line="67"/>
+        <source>south</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../directions.h" line="69"/>
+        <source>southwest</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../directions.h" line="71"/>
+        <source>southeast</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../directions.h" line="73"/>
+        <source>west</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../directions.h" line="75"/>
+        <source>east</source>
+        <translation type="unfinished"></translation>
+    </message>
+</context>
+<context>
+    <name>FortuneAvenueGraphicsScene</name>
+    <message>
+        <location filename="../squareaddcmd.cpp" line="7"/>
+        <source>Add Square</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../squaremovecmd.cpp" line="7"/>
+        <source>Move Squares</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../squareremovecmd.cpp" line="14"/>
+        <source>Remove Squares</source>
+        <translation type="unfinished"></translation>
+    </message>
+</context>
+<context>
     <name>FortuneStreetData</name>
     <message>
         <location filename="../fortunestreetdata.cpp" line="239"/>
@@ -191,176 +252,1104 @@
         <source>District %1 has %2 shops which is more than the maximum of 7</source>
         <translation type="unfinished"></translation>
     </message>
+</context>
+<context>
+    <name>MainWindow</name>
     <message>
-        <location filename="../fortunestreetdata.cpp" line="386"/>
-        <source>Property</source>
+        <location filename="../mainwindow.ui" line="86"/>
+        <source>Toolbox</source>
+        <translation></translation>
+    </message>
+    <message>
+        <location filename="../mainwindow.ui" line="129"/>
+        <source>Straight-Line Tolerance</source>
+        <translation></translation>
+    </message>
+    <message>
+        <location filename="../mainwindow.ui" line="143"/>
+        <source>Autopath Range</source>
+        <translation></translation>
+    </message>
+    <message>
+        <location filename="../mainwindow.ui" line="153"/>
+        <source>Snap All</source>
+        <translation></translation>
+    </message>
+    <message>
+        <location filename="../mainwindow.ui" line="160"/>
+        <source>Snap To:</source>
+        <translation></translation>
+    </message>
+    <message>
+        <location filename="../mainwindow.ui" line="173"/>
+        <source>On ID Change:</source>
+        <translation></translation>
+    </message>
+    <message>
+        <location filename="../mainwindow.ui" line="180"/>
+        <source>Swap IDs</source>
+        <translation></translation>
+    </message>
+    <message>
+        <location filename="../mainwindow.ui" line="193"/>
+        <source>Remove Square(s)</source>
+        <translation></translation>
+    </message>
+    <message>
+        <location filename="../mainwindow.ui" line="196"/>
+        <source>Backspace</source>
+        <translation></translation>
+    </message>
+    <message>
+        <location filename="../mainwindow.ui" line="203"/>
+        <source>Add Square</source>
+        <translation></translation>
+    </message>
+    <message>
+        <location filename="../mainwindow.ui" line="206"/>
+        <source>Ctrl+E</source>
+        <translation></translation>
+    </message>
+    <message>
+        <location filename="../mainwindow.ui" line="213"/>
+        <source>Shift IDs</source>
+        <translation></translation>
+    </message>
+    <message>
+        <location filename="../mainwindow.ui" line="223"/>
+        <source>16</source>
+        <translation></translation>
+    </message>
+    <message>
+        <location filename="../mainwindow.ui" line="254"/>
+        <source>Board Settings</source>
+        <translation></translation>
+    </message>
+    <message>
+        <location filename="../mainwindow.ui" line="267"/>
+        <source>Salary Increment</source>
+        <translation></translation>
+    </message>
+    <message>
+        <location filename="../mainwindow.ui" line="274"/>
+        <source>Vertical + Horizontal</source>
+        <translation></translation>
+    </message>
+    <message>
+        <location filename="../mainwindow.ui" line="287"/>
+        <source>Initial Cash</source>
+        <translation></translation>
+    </message>
+    <message>
+        <location filename="../mainwindow.ui" line="297"/>
+        <source>None</source>
+        <translation></translation>
+    </message>
+    <message>
+        <location filename="../mainwindow.ui" line="310"/>
+        <source>Base Salary</source>
+        <translation></translation>
+    </message>
+    <message>
+        <location filename="../mainwindow.ui" line="333"/>
+        <source>Looping Mode</source>
+        <translation></translation>
+    </message>
+    <message>
+        <location filename="../mainwindow.ui" line="340"/>
+        <source>Vertical</source>
+        <translation></translation>
+    </message>
+    <message>
+        <location filename="../mainwindow.ui" line="350"/>
+        <source>File Version</source>
+        <translation></translation>
+    </message>
+    <message>
+        <location filename="../mainwindow.ui" line="426"/>
+        <source>Info</source>
+        <translation></translation>
+    </message>
+    <message>
+        <location filename="../mainwindow.ui" line="432"/>
+        <location filename="../mainwindow.cpp" line="610"/>
+        <location filename="../mainwindow.cpp" line="625"/>
+        <location filename="../mainwindow.cpp" line="665"/>
+        <source>District ID</source>
+        <translation></translation>
+    </message>
+    <message>
+        <location filename="../mainwindow.ui" line="449"/>
+        <source>Yield</source>
+        <translation></translation>
+    </message>
+    <message>
+        <location filename="../mainwindow.ui" line="466"/>
+        <source>Type</source>
+        <translation></translation>
+    </message>
+    <message>
+        <location filename="../mainwindow.ui" line="473"/>
+        <source>Load Shop Preset</source>
+        <translation></translation>
+    </message>
+    <message>
+        <location filename="../mainwindow.ui" line="485"/>
+        <source>Is Yoshi-type Lift?</source>
+        <translation></translation>
+    </message>
+    <message>
+        <location filename="../mainwindow.ui" line="492"/>
+        <source>Shop Model</source>
+        <translation></translation>
+    </message>
+    <message>
+        <location filename="../mainwindow.ui" line="509"/>
+        <source>Initial Price</source>
+        <translation></translation>
+    </message>
+    <message>
+        <location filename="../mainwindow.ui" line="521"/>
+        <source>Auto-Calc</source>
+        <translation></translation>
+    </message>
+    <message>
+        <location filename="../mainwindow.ui" line="569"/>
+        <source>Initial Value</source>
+        <translation></translation>
+    </message>
+    <message>
+        <location filename="../mainwindow.ui" line="582"/>
+        <source>ID</source>
+        <translation></translation>
+    </message>
+    <message>
+        <location filename="../mainwindow.ui" line="635"/>
+        <source>From</source>
+        <translation></translation>
+    </message>
+    <message>
+        <location filename="../mainwindow.ui" line="642"/>
+        <source>Allow All</source>
+        <translation></translation>
+    </message>
+    <message>
+        <location filename="../mainwindow.ui" line="841"/>
+        <source>Reset Paths</source>
+        <translation></translation>
+    </message>
+    <message>
+        <location filename="../mainwindow.ui" line="960"/>
+        <source>Disallow All</source>
+        <translation></translation>
+    </message>
+    <message>
+        <location filename="../mainwindow.ui" line="997"/>
+        <source>Waypoints</source>
+        <translation></translation>
+    </message>
+    <message>
+        <location filename="../mainwindow.ui" line="1026"/>
+        <location filename="../mainwindow.ui" line="1077"/>
+        <location filename="../mainwindow.ui" line="1141"/>
+        <location filename="../mainwindow.ui" line="1195"/>
+        <source>Clear</source>
+        <translation></translation>
+    </message>
+    <message>
+        <location filename="../mainwindow.ui" line="1033"/>
+        <source>Waypoint 1</source>
+        <translation></translation>
+    </message>
+    <message>
+        <location filename="../mainwindow.ui" line="1087"/>
+        <source>Waypoint 2</source>
+        <translation></translation>
+    </message>
+    <message>
+        <location filename="../mainwindow.ui" line="1128"/>
+        <source>Waypoint 3</source>
+        <translation></translation>
+    </message>
+    <message>
+        <location filename="../mainwindow.ui" line="1179"/>
+        <source>Waypoint 4</source>
+        <translation></translation>
+    </message>
+    <message>
+        <location filename="../mainwindow.ui" line="1227"/>
+        <location filename="../mainwindow.cpp" line="964"/>
+        <source>Clear All Waypoints</source>
+        <translation></translation>
+    </message>
+    <message>
+        <location filename="../mainwindow.ui" line="1234"/>
+        <source>Sort All Waypoints</source>
+        <translation></translation>
+    </message>
+    <message>
+        <location filename="../mainwindow.ui" line="1243"/>
+        <source>Connect selected squares</source>
+        <translation></translation>
+    </message>
+    <message>
+        <location filename="../mainwindow.ui" line="1264"/>
+        <source>Connect Bidirectionally</source>
+        <translation></translation>
+    </message>
+    <message>
+        <location filename="../mainwindow.ui" line="1282"/>
+        <source>-- Connect --&gt;</source>
+        <translation></translation>
+    </message>
+    <message>
+        <location filename="../mainwindow.ui" line="1677"/>
+        <source>From Other Board</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../fortunestreetdata.cpp" line="387"/>
-        <source>Bank</source>
+        <location filename="../mainwindow.ui" line="1682"/>
+        <source>To Other Board(s)</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../fortunestreetdata.cpp" line="388"/>
-        <source>Venture</source>
+        <location filename="../mainwindow.ui" line="1700"/>
+        <source>Selected Squares</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../fortunestreetdata.cpp" line="389"/>
-        <source>Spade</source>
+        <location filename="../mainwindow.ui" line="20"/>
+        <source>Fortune Avenue[*]</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../fortunestreetdata.cpp" line="390"/>
-        <source>Heart</source>
+        <location filename="../mainwindow.ui" line="260"/>
+        <source>Max.&#xa0;Dice Roll</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../fortunestreetdata.cpp" line="391"/>
-        <source>Diamond</source>
+        <location filename="../mainwindow.ui" line="439"/>
+        <source>Position (x, y)</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../fortunestreetdata.cpp" line="392"/>
-        <source>Club</source>
+        <location filename="../mainwindow.ui" line="480"/>
+        <source>Lift/Magmalice Start:
+Yes for Yoshi-type lift
+No for Magmalice lift</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../fortunestreetdata.cpp" line="393"/>
-        <source>Spade (Change-of-Suit)</source>
+        <location filename="../mainwindow.ui" line="610"/>
+        <location filename="../mainwindow.ui" line="649"/>
+        <location filename="../mainwindow.ui" line="667"/>
+        <location filename="../mainwindow.ui" line="688"/>
+        <location filename="../mainwindow.ui" line="709"/>
+        <location filename="../mainwindow.ui" line="727"/>
+        <location filename="../mainwindow.ui" line="745"/>
+        <location filename="../mainwindow.ui" line="763"/>
+        <location filename="../mainwindow.ui" line="784"/>
+        <location filename="../mainwindow.ui" line="805"/>
+        <location filename="../mainwindow.ui" line="823"/>
+        <location filename="../mainwindow.ui" line="864"/>
+        <location filename="../mainwindow.ui" line="882"/>
+        <location filename="../mainwindow.ui" line="903"/>
+        <location filename="../mainwindow.ui" line="921"/>
+        <location filename="../mainwindow.ui" line="942"/>
+        <source>...</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../fortunestreetdata.cpp" line="394"/>
-        <source>Heart (Change-of-Suit)</source>
+        <location filename="../mainwindow.ui" line="628"/>
+        <source>To</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../fortunestreetdata.cpp" line="395"/>
-        <source>Diamond (Change-of-Suit)</source>
+        <location filename="../mainwindow.ui" line="1295"/>
+        <source>&lt;-- Connect --</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../fortunestreetdata.cpp" line="396"/>
-        <source>Club (Change-of-Suit)</source>
+        <location filename="../mainwindow.ui" line="1404"/>
+        <source>File</source>
+        <translation></translation>
+    </message>
+    <message>
+        <location filename="../mainwindow.ui" line="1417"/>
+        <source>Tools</source>
+        <translation></translation>
+    </message>
+    <message>
+        <location filename="../mainwindow.ui" line="1447"/>
+        <source>Help</source>
+        <translation></translation>
+    </message>
+    <message>
+        <location filename="../mainwindow.ui" line="1457"/>
+        <source>View</source>
+        <translation></translation>
+    </message>
+    <message>
+        <location filename="../mainwindow.ui" line="1466"/>
+        <source>Select</source>
+        <translation></translation>
+    </message>
+    <message>
+        <location filename="../mainwindow.ui" line="1478"/>
+        <source>Edit</source>
+        <translation></translation>
+    </message>
+    <message>
+        <location filename="../mainwindow.ui" line="1491"/>
+        <source>New</source>
+        <translation></translation>
+    </message>
+    <message>
+        <location filename="../mainwindow.ui" line="1494"/>
+        <source>Ctrl+N</source>
+        <translation></translation>
+    </message>
+    <message>
+        <location filename="../mainwindow.ui" line="1499"/>
+        <source>Open</source>
+        <translation></translation>
+    </message>
+    <message>
+        <location filename="../mainwindow.ui" line="1502"/>
+        <source>Ctrl+O</source>
+        <translation></translation>
+    </message>
+    <message>
+        <location filename="../mainwindow.ui" line="1510"/>
+        <source>Save</source>
+        <translation></translation>
+    </message>
+    <message>
+        <location filename="../mainwindow.ui" line="1513"/>
+        <source>Ctrl+S</source>
+        <translation></translation>
+    </message>
+    <message>
+        <location filename="../mainwindow.ui" line="1521"/>
+        <source>Save As</source>
+        <translation></translation>
+    </message>
+    <message>
+        <location filename="../mainwindow.ui" line="1524"/>
+        <source>Ctrl+Shift+S</source>
+        <translation></translation>
+    </message>
+    <message>
+        <location filename="../mainwindow.ui" line="1532"/>
+        <source>Verify Board</source>
+        <translation></translation>
+    </message>
+    <message>
+        <location filename="../mainwindow.ui" line="1421"/>
+        <source>Auto-Path</source>
+        <translation></translation>
+    </message>
+    <message>
+        <location filename="../mainwindow.ui" line="1428"/>
+        <source>Sync for Switch State</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../fortunestreetdata.cpp" line="397"/>
-        <source>Take-A-Break</source>
+        <location filename="../mainwindow.ui" line="1537"/>
+        <source>Entire Board</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../fortunestreetdata.cpp" line="398"/>
-        <source>Boon</source>
+        <location filename="../mainwindow.ui" line="1542"/>
+        <source>Fortune Avenue Help</source>
+        <translation></translation>
+    </message>
+    <message>
+        <location filename="../mainwindow.ui" line="1547"/>
+        <source>Zoom In</source>
+        <translation></translation>
+    </message>
+    <message>
+        <location filename="../mainwindow.ui" line="1550"/>
+        <source>Ctrl+Shift+=</source>
+        <translation></translation>
+    </message>
+    <message>
+        <location filename="../mainwindow.ui" line="1555"/>
+        <source>Zoom Out</source>
+        <translation></translation>
+    </message>
+    <message>
+        <location filename="../mainwindow.ui" line="1558"/>
+        <source>Ctrl+-</source>
+        <translation></translation>
+    </message>
+    <message>
+        <location filename="../mainwindow.ui" line="1569"/>
+        <source>Draw Axes</source>
+        <translation></translation>
+    </message>
+    <message>
+        <location filename="../mainwindow.ui" line="1572"/>
+        <source>Ctrl+K</source>
+        <translation></translation>
+    </message>
+    <message>
+        <location filename="../mainwindow.ui" line="1580"/>
+        <source>Drag to Pan</source>
+        <translation></translation>
+    </message>
+    <message>
+        <location filename="../mainwindow.ui" line="1583"/>
+        <source>Ctrl+D</source>
+        <translation></translation>
+    </message>
+    <message>
+        <location filename="../mainwindow.ui" line="1588"/>
+        <source>Screenshot</source>
+        <translation></translation>
+    </message>
+    <message>
+        <location filename="../mainwindow.ui" line="1593"/>
+        <source>Next</source>
+        <translation></translation>
+    </message>
+    <message>
+        <location filename="../mainwindow.ui" line="1596"/>
+        <source>PgUp</source>
+        <translation></translation>
+    </message>
+    <message>
+        <location filename="../mainwindow.ui" line="1601"/>
+        <source>Previous</source>
+        <translation></translation>
+    </message>
+    <message>
+        <location filename="../mainwindow.ui" line="1604"/>
+        <source>PgDown</source>
+        <translation></translation>
+    </message>
+    <message>
+        <location filename="../mainwindow.ui" line="1609"/>
+        <source>Select All</source>
+        <translation></translation>
+    </message>
+    <message>
+        <location filename="../mainwindow.ui" line="1612"/>
+        <source>Ctrl+A</source>
+        <translation></translation>
+    </message>
+    <message>
+        <location filename="../mainwindow.ui" line="1617"/>
+        <source>Follow Waypoint Destination 1</source>
+        <translation></translation>
+    </message>
+    <message>
+        <location filename="../mainwindow.ui" line="1620"/>
+        <source>Ctrl+1</source>
+        <translation></translation>
+    </message>
+    <message>
+        <location filename="../mainwindow.ui" line="1625"/>
+        <source>Follow Waypoint Destination 2</source>
+        <translation></translation>
+    </message>
+    <message>
+        <location filename="../mainwindow.ui" line="1628"/>
+        <source>Ctrl+2</source>
+        <translation></translation>
+    </message>
+    <message>
+        <location filename="../mainwindow.ui" line="1633"/>
+        <source>Follow Waypoint Destination 3</source>
+        <translation></translation>
+    </message>
+    <message>
+        <location filename="../mainwindow.ui" line="1636"/>
+        <source>Ctrl+3</source>
+        <translation></translation>
+    </message>
+    <message>
+        <location filename="../mainwindow.ui" line="1641"/>
+        <source>Shop Price Auto-Calc Function</source>
+        <translation></translation>
+    </message>
+    <message>
+        <location filename="../mainwindow.ui" line="1646"/>
+        <source>District Simulator</source>
+        <translation></translation>
+    </message>
+    <message>
+        <location filename="../mainwindow.ui" line="1654"/>
+        <source>Use Legacy Auto-Path</source>
+        <translation></translation>
+    </message>
+    <message>
+        <location filename="../mainwindow.ui" line="1662"/>
+        <source>Use Advanced Auto-Path</source>
+        <translation></translation>
+    </message>
+    <message>
+        <location filename="../mainwindow.ui" line="1667"/>
+        <source>Auto-Assign Shop Models</source>
+        <translation></translation>
+    </message>
+    <message>
+        <location filename="../mainwindow.ui" line="1672"/>
+        <source>Set Max Path Search Depth</source>
+        <translation></translation>
+    </message>
+    <message>
+        <location filename="../mainwindow.ui" line="1692"/>
+        <source>Preferences...</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../fortunestreetdata.cpp" line="399"/>
-        <source>Boom</source>
+        <location filename="../mainwindow.ui" line="1687"/>
+        <source>Exit</source>
+        <translation></translation>
+    </message>
+    <message>
+        <location filename="../main.cpp" line="40"/>
+        <source>Fortune Avenue %1</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../fortunestreetdata.cpp" line="400"/>
-        <source>Stockbroker</source>
+        <location filename="../mainwindow.cpp" line="126"/>
+        <source>Enter Function</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../fortunestreetdata.cpp" line="401"/>
-        <source>Roll On</source>
+        <location filename="../mainwindow.cpp" line="126"/>
+        <source>Enter the shop price based on shop value function (x = shop value).
+Enter empty string to restore default.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../fortunestreetdata.cpp" line="402"/>
-        <source>Arcade</source>
+        <location filename="../mainwindow.cpp" line="138"/>
+        <source>Error Function</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../fortunestreetdata.cpp" line="403"/>
-        <source>Switch</source>
+        <location filename="../mainwindow.cpp" line="146"/>
+        <source>Enter Search Depth</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../fortunestreetdata.cpp" line="404"/>
-        <source>Cannon</source>
+        <location filename="../mainwindow.cpp" line="146"/>
+        <source>Enter the max path search depth.
+
+This is only for demonstration purposes and does not have any ingame effect.
+Sensible values are between 16 (small boards) and 28 (huge boards).
+
+Enter 0 to restore game default behavior which is max(squareCount/3,16)</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../fortunestreetdata.cpp" line="405"/>
-        <source>Backstreet A</source>
+        <location filename="../mainwindow.cpp" line="165"/>
+        <source>Update Initial Cash</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../fortunestreetdata.cpp" line="406"/>
-        <source>Backstreet B</source>
+        <location filename="../mainwindow.cpp" line="170"/>
+        <source>Update Base Salary</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../fortunestreetdata.cpp" line="407"/>
-        <source>Backstreet C</source>
+        <location filename="../mainwindow.cpp" line="175"/>
+        <source>Update Salary Increment</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../fortunestreetdata.cpp" line="408"/>
-        <source>Backstreet D</source>
+        <location filename="../mainwindow.cpp" line="180"/>
+        <source>Update Max Dice Roll</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../fortunestreetdata.cpp" line="409"/>
-        <source>Backstreet E</source>
+        <location filename="../mainwindow.cpp" line="185"/>
+        <source>Update Looping Mode</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../fortunestreetdata.cpp" line="410"/>
-        <source>One-Way Alley Door A</source>
+        <location filename="../mainwindow.cpp" line="190"/>
+        <source>Update Autopath Range</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../fortunestreetdata.cpp" line="411"/>
-        <source>One-Way Alley Door B</source>
+        <location filename="../mainwindow.cpp" line="195"/>
+        <source>Update Straight Line Tolerance</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../fortunestreetdata.cpp" line="412"/>
-        <source>One-Way Alley Door C</source>
+        <location filename="../mainwindow.cpp" line="306"/>
+        <source>Zoom: %1%</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../fortunestreetdata.cpp" line="413"/>
-        <source>One-Way Alley Door D</source>
+        <location filename="../mainwindow.cpp" line="430"/>
+        <source>Fortune Avenue %1[*]</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../fortunestreetdata.cpp" line="414"/>
-        <source>Lift/Magmalice Start</source>
+        <location filename="../mainwindow.cpp" line="436"/>
+        <location filename="../mainwindow.cpp" line="546"/>
+        <source>Open File</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../fortunestreetdata.cpp" line="415"/>
-        <source>Lift End</source>
+        <location filename="../mainwindow.cpp" line="436"/>
+        <location filename="../mainwindow.cpp" line="470"/>
+        <location filename="../mainwindow.cpp" line="727"/>
+        <location filename="../mainwindow.cpp" line="731"/>
+        <source>Fortune Street Boards (*.frb)</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../fortunestreetdata.cpp" line="416"/>
-        <source>Magmalice</source>
+        <location filename="../mainwindow.cpp" line="463"/>
+        <location filename="../mainwindow.cpp" line="490"/>
+        <location filename="../mainwindow.cpp" line="775"/>
+        <location filename="../mainwindow.cpp" line="784"/>
+        <source>Error saving file</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../fortunestreetdata.cpp" line="417"/>
-        <source>One-Way Alley End</source>
+        <location filename="../mainwindow.cpp" line="463"/>
+        <location filename="../mainwindow.cpp" line="490"/>
+        <source>An error occurred while trying to save the file</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../fortunestreetdata.cpp" line="418"/>
-        <source>Event</source>
+        <location filename="../mainwindow.cpp" line="470"/>
+        <source>Save File</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../fortunestreetdata.cpp" line="419"/>
-        <source>Vacant Plot</source>
+        <location filename="../mainwindow.cpp" line="484"/>
+        <location filename="../mainwindow.cpp" line="504"/>
+        <source>Fortune Avenue %1 - %2[*]</source>
         <translation type="unfinished"></translation>
     </message>
+    <message>
+        <location filename="../mainwindow.cpp" line="512"/>
+        <source>Error opening file</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../mainwindow.cpp" line="512"/>
+        <source>An error occurred while trying to open the file</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../mainwindow.cpp" line="547"/>
+        <source>This file is version %1, but the latest version is version 3. Would you like to upgrade the file to the latest version?</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../mainwindow.cpp" line="619"/>
+        <source>Destination ID</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../mainwindow.cpp" line="622"/>
+        <source>Venture Card ID</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../mainwindow.cpp" line="676"/>
+        <source>%1 selected</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../mainwindow.cpp" line="727"/>
+        <source>Choose Board File(s) to Sync To</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../mainwindow.cpp" line="731"/>
+        <source>Choose Board File to Sync From</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../mainwindow.cpp" line="742"/>
+        <source>Error opening file for sync</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../mainwindow.cpp" line="742"/>
+        <source>Could not open file for sync</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../mainwindow.cpp" line="748"/>
+        <location filename="../mainwindow.cpp" line="755"/>
+        <source>Error processing file for sync</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../mainwindow.cpp" line="748"/>
+        <source>Corrupt .frb file</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../mainwindow.cpp" line="755"/>
+        <source>Number of squares in other file is not the same as this one</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../mainwindow.cpp" line="775"/>
+        <source>Could not open other file for saving</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../mainwindow.cpp" line="782"/>
+        <source>Could not save other board to: 
+
+ %1 
+
+ Error code: %2 
+ %3</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../mainwindow.cpp" line="807"/>
+        <source>Success!</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../mainwindow.cpp" line="807"/>
+        <source>Successfully synced data between board files.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../mainwindow.cpp" line="842"/>
+        <source>Connect Squares</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../mainwindow.cpp" line="881"/>
+        <source>Change Square Type</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../mainwindow.cpp" line="910"/>
+        <source>Change District/Destination ID</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../mainwindow.cpp" line="922"/>
+        <source>Change Shop Model</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../mainwindow.cpp" line="927"/>
+        <source>Change Shop Model ID</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../mainwindow.cpp" line="938"/>
+        <source>Change Initial Shop Value</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../mainwindow.cpp" line="943"/>
+        <source>Change Initial Shop Price</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../mainwindow.cpp" line="948"/>
+        <source>Change Is Lift</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../mainwindow.cpp" line="966"/>
+        <source>Clear Waypoint 1</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../mainwindow.cpp" line="967"/>
+        <source>Clear Waypoint 2</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../mainwindow.cpp" line="968"/>
+        <source>Clear Waypoint 3</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../mainwindow.cpp" line="969"/>
+        <source>Clear Waypoint 4</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../mainwindow.cpp" line="970"/>
+        <source>Sort Waypoints</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../mainwindow.cpp" line="1022"/>
+        <source>Toggle (Dis)allowed Direction</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../mainwindow.cpp" line="1033"/>
+        <source>Reset Autopath Directions</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../mainwindow.cpp" line="1043"/>
+        <source>Allow All Directions</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../mainwindow.cpp" line="1052"/>
+        <source>Disallow All Directions</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../mainwindow.cpp" line="1090"/>
+        <source>Update Waypoint</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../mainwindow.cpp" line="1154"/>
+        <source>District %1: %2g</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../mainwindow.cpp" line="1178"/>
+        <source>Search Depth: %1</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../mainwindow.cpp" line="1180"/>
+        <source>Using Fixed Depth: %1</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../mainwindow.cpp" line="1182"/>
+        <source>Max Paths Square ID: %1</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../mainwindow.cpp" line="1183"/>
+        <source>Possible Paths: %1</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../mainwindow.cpp" line="1186"/>
+        <source>Crash inevitable!</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../mainwindow.cpp" line="1188"/>
+        <source>Crash possible!</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../mainwindow.cpp" line="1190"/>
+        <source>Stuttering likely!</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../mainwindow.cpp" line="1192"/>
+        <source>Ok</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../mainwindow.cpp" line="1212"/>
+        <location filename="../mainwindow.cpp" line="1217"/>
+        <location filename="../mainwindow.cpp" line="1219"/>
+        <source>Verification</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../mainwindow.cpp" line="1212"/>
+        <source>Board passed verification.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../mainwindow.cpp" line="1214"/>
+        <source>%1 error(s) and %2 warning(s):
+</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../mainwindow.cpp" line="1250"/>
+        <location filename="../mainwindow.cpp" line="1261"/>
+        <location filename="../mainwindow.cpp" line="1284"/>
+        <source>Auto-pathing</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../mainwindow.cpp" line="1250"/>
+        <source>Successfully auto-pathed the entire board.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../mainwindow.cpp" line="1253"/>
+        <source>Autopath</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../mainwindow.cpp" line="1261"/>
+        <source>Nothing to auto-path! No squares are selected.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../mainwindow.cpp" line="1284"/>
+        <source>Successfully auto-pathed the selected squares.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../mainwindow.cpp" line="1287"/>
+        <source>Autopath Selected Squares</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../mainwindow.cpp" line="1309"/>
+        <source>Assign Shop Models</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../mainwindow.cpp" line="1335"/>
+        <source>Unsaved Changes</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../mainwindow.cpp" line="1335"/>
+        <source>You have unsaved changes. Do you want to save them?</source>
+        <translation type="unfinished"></translation>
+    </message>
+</context>
+<context>
+    <name>PreferencesDialog</name>
+    <message>
+        <location filename="../preferencesdialog.ui" line="29"/>
+        <source>Window Palette</source>
+        <translation></translation>
+    </message>
+    <message>
+        <location filename="../preferencesdialog.ui" line="55"/>
+        <source>Classic Dark</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../preferencesdialog.ui" line="65"/>
+        <source>Change</source>
+        <translation></translation>
+    </message>
+    <message>
+        <location filename="../preferencesdialog.ui" line="99"/>
+        <source>Use Palette Highlight Color</source>
+        <translation></translation>
+    </message>
+    <message>
+        <location filename="../preferencesdialog.ui" line="125"/>
+        <source>Display Language</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../preferencesdialog.ui" line="137"/>
+        <source>Auto-Path</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../preferencesdialog.ui" line="143"/>
+        <source>Use Advanced Auto-Pathing System</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../preferencesdialog.ui" line="150"/>
+        <source>Auto-Path Selected: Add Entry IDs to nearby squares</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../preferencesdialog.ui" line="14"/>
+        <location filename="../preferencesdialog.cpp" line="25"/>
+        <source>Preferences</source>
+        <translation type="unfinished"></translation>
+    </message>
+</context>
+<context>
+    <name>ScreenshotDialog</name>
+    <message>
+        <location filename="../screenshotdialog.ui" line="20"/>
+        <source>Dialog</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../screenshotdialog.ui" line="56"/>
+        <source>+</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../screenshotdialog.ui" line="63"/>
+        <source>-</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../screenshotdialog.ui" line="89"/>
+        <source>Screenshot format:</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../screenshotdialog.ui" line="96"/>
+        <source>webp</source>
+        <translation></translation>
+    </message>
+    <message>
+        <location filename="../screenshotdialog.ui" line="26"/>
+        <source>Choose board files (.frb) to take screenshots for:</source>
+        <translation></translation>
+    </message>
+    <message>
+        <location filename="../screenshotdialog.cpp" line="20"/>
+        <source>Take Board Screenshots</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../screenshotdialog.cpp" line="53"/>
+        <source>Open File</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../screenshotdialog.cpp" line="53"/>
+        <source>Fortune Street Boards (*.frb)</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../screenshotdialog.cpp" line="92"/>
+        <source>Error opening file</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../screenshotdialog.cpp" line="92"/>
+        <source>An error occurred while trying to open the file: %1</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../screenshotdialog.cpp" line="151"/>
+        <source>Success!</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../screenshotdialog.cpp" line="151"/>
+        <source>All screenshots saved successfully.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../screenshotdialog.cpp" line="154"/>
+        <source>Failure</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../screenshotdialog.cpp" line="154"/>
+        <source>One or more screenshots could not be saved.</source>
+        <translation type="unfinished"></translation>
+    </message>
+</context>
+<context>
+    <name>ShopNames</name>
     <message>
         <location filename="../fortunestreetdata.cpp" line="423"/>
         <source>Scrap-paper shop</source>
@@ -703,918 +1692,183 @@
     </message>
 </context>
 <context>
-    <name>MainWindow</name>
+    <name>SquareTypes</name>
     <message>
-        <location filename="../mainwindow.ui" line="86"/>
-        <source>Toolbox</source>
-        <translation></translation>
-    </message>
-    <message>
-        <location filename="../mainwindow.ui" line="129"/>
-        <source>Straight-Line Tolerance</source>
-        <translation></translation>
-    </message>
-    <message>
-        <location filename="../mainwindow.ui" line="143"/>
-        <source>Autopath Range</source>
-        <translation></translation>
-    </message>
-    <message>
-        <location filename="../mainwindow.ui" line="153"/>
-        <source>Snap All</source>
-        <translation></translation>
-    </message>
-    <message>
-        <location filename="../mainwindow.ui" line="160"/>
-        <source>Snap To:</source>
-        <translation></translation>
-    </message>
-    <message>
-        <location filename="../mainwindow.ui" line="173"/>
-        <source>On ID Change:</source>
-        <translation></translation>
-    </message>
-    <message>
-        <location filename="../mainwindow.ui" line="180"/>
-        <source>Swap IDs</source>
-        <translation></translation>
-    </message>
-    <message>
-        <location filename="../mainwindow.ui" line="193"/>
-        <source>Remove Square(s)</source>
-        <translation></translation>
-    </message>
-    <message>
-        <location filename="../mainwindow.ui" line="196"/>
-        <source>Backspace</source>
-        <translation></translation>
-    </message>
-    <message>
-        <location filename="../mainwindow.ui" line="203"/>
-        <source>Add Square</source>
-        <translation></translation>
-    </message>
-    <message>
-        <location filename="../mainwindow.ui" line="206"/>
-        <source>Ctrl+E</source>
-        <translation></translation>
-    </message>
-    <message>
-        <location filename="../mainwindow.ui" line="213"/>
-        <source>Shift IDs</source>
-        <translation></translation>
-    </message>
-    <message>
-        <location filename="../mainwindow.ui" line="223"/>
-        <source>16</source>
-        <translation></translation>
-    </message>
-    <message>
-        <location filename="../mainwindow.ui" line="254"/>
-        <source>Board Settings</source>
-        <translation></translation>
-    </message>
-    <message>
-        <location filename="../mainwindow.ui" line="267"/>
-        <source>Salary Increment</source>
-        <translation></translation>
-    </message>
-    <message>
-        <location filename="../mainwindow.ui" line="274"/>
-        <source>Vertical + Horizontal</source>
-        <translation></translation>
-    </message>
-    <message>
-        <location filename="../mainwindow.ui" line="287"/>
-        <source>Initial Cash</source>
-        <translation></translation>
-    </message>
-    <message>
-        <location filename="../mainwindow.ui" line="297"/>
-        <source>None</source>
-        <translation></translation>
-    </message>
-    <message>
-        <location filename="../mainwindow.ui" line="310"/>
-        <source>Base Salary</source>
-        <translation></translation>
-    </message>
-    <message>
-        <location filename="../mainwindow.ui" line="333"/>
-        <source>Looping Mode</source>
-        <translation></translation>
-    </message>
-    <message>
-        <location filename="../mainwindow.ui" line="340"/>
-        <source>Vertical</source>
-        <translation></translation>
-    </message>
-    <message>
-        <location filename="../mainwindow.ui" line="350"/>
-        <source>File Version</source>
-        <translation></translation>
-    </message>
-    <message>
-        <location filename="../mainwindow.ui" line="426"/>
-        <source>Info</source>
-        <translation></translation>
-    </message>
-    <message>
-        <location filename="../mainwindow.ui" line="432"/>
-        <location filename="../mainwindow.cpp" line="612"/>
-        <location filename="../mainwindow.cpp" line="627"/>
-        <location filename="../mainwindow.cpp" line="667"/>
-        <source>District ID</source>
-        <translation></translation>
-    </message>
-    <message>
-        <location filename="../mainwindow.ui" line="449"/>
-        <source>Yield</source>
-        <translation></translation>
-    </message>
-    <message>
-        <location filename="../mainwindow.ui" line="466"/>
-        <source>Type</source>
-        <translation></translation>
-    </message>
-    <message>
-        <location filename="../mainwindow.ui" line="473"/>
-        <source>Load Shop Preset</source>
-        <translation></translation>
-    </message>
-    <message>
-        <location filename="../mainwindow.ui" line="485"/>
-        <source>Is Yoshi-type Lift?</source>
-        <translation></translation>
-    </message>
-    <message>
-        <location filename="../mainwindow.ui" line="492"/>
-        <source>Shop Model</source>
-        <translation></translation>
-    </message>
-    <message>
-        <location filename="../mainwindow.ui" line="509"/>
-        <source>Initial Price</source>
-        <translation></translation>
-    </message>
-    <message>
-        <location filename="../mainwindow.ui" line="521"/>
-        <source>Auto-Calc</source>
-        <translation></translation>
-    </message>
-    <message>
-        <location filename="../mainwindow.ui" line="569"/>
-        <source>Initial Value</source>
-        <translation></translation>
-    </message>
-    <message>
-        <location filename="../mainwindow.ui" line="582"/>
-        <source>ID</source>
-        <translation></translation>
-    </message>
-    <message>
-        <location filename="../mainwindow.ui" line="635"/>
-        <source>From</source>
-        <translation></translation>
-    </message>
-    <message>
-        <location filename="../mainwindow.ui" line="642"/>
-        <source>Allow All</source>
-        <translation></translation>
-    </message>
-    <message>
-        <location filename="../mainwindow.ui" line="841"/>
-        <source>Reset Paths</source>
-        <translation></translation>
-    </message>
-    <message>
-        <location filename="../mainwindow.ui" line="960"/>
-        <source>Disallow All</source>
-        <translation></translation>
-    </message>
-    <message>
-        <location filename="../mainwindow.ui" line="997"/>
-        <source>Waypoints</source>
-        <translation></translation>
-    </message>
-    <message>
-        <location filename="../mainwindow.ui" line="1026"/>
-        <location filename="../mainwindow.ui" line="1077"/>
-        <location filename="../mainwindow.ui" line="1141"/>
-        <location filename="../mainwindow.ui" line="1195"/>
-        <source>Clear</source>
-        <translation></translation>
-    </message>
-    <message>
-        <location filename="../mainwindow.ui" line="1033"/>
-        <source>Waypoint 1</source>
-        <translation></translation>
-    </message>
-    <message>
-        <location filename="../mainwindow.ui" line="1087"/>
-        <source>Waypoint 2</source>
-        <translation></translation>
-    </message>
-    <message>
-        <location filename="../mainwindow.ui" line="1128"/>
-        <source>Waypoint 3</source>
-        <translation></translation>
-    </message>
-    <message>
-        <location filename="../mainwindow.ui" line="1179"/>
-        <source>Waypoint 4</source>
-        <translation></translation>
-    </message>
-    <message>
-        <location filename="../mainwindow.ui" line="1227"/>
-        <source>Clear All Waypoints</source>
-        <translation></translation>
-    </message>
-    <message>
-        <location filename="../mainwindow.ui" line="1234"/>
-        <source>Sort All Waypoints</source>
-        <translation></translation>
-    </message>
-    <message>
-        <location filename="../mainwindow.ui" line="1243"/>
-        <source>Connect selected squares</source>
-        <translation></translation>
-    </message>
-    <message>
-        <location filename="../mainwindow.ui" line="1264"/>
-        <source>Connect Bidirectionally</source>
-        <translation></translation>
-    </message>
-    <message>
-        <location filename="../mainwindow.ui" line="1282"/>
-        <source>-- Connect --&gt;</source>
-        <translation></translation>
-    </message>
-    <message>
-        <location filename="../mainwindow.ui" line="20"/>
-        <source>Fortune Avenue[*]</source>
+        <location filename="../fortunestreetdata.cpp" line="386"/>
+        <source>Property</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../mainwindow.ui" line="260"/>
-        <source>Max.&#xa0;Dice Roll</source>
+        <location filename="../fortunestreetdata.cpp" line="387"/>
+        <source>Bank</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../mainwindow.ui" line="439"/>
-        <source>Position (x, y)</source>
+        <location filename="../fortunestreetdata.cpp" line="388"/>
+        <source>Venture</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../mainwindow.ui" line="480"/>
-        <source>Lift/Magmalice Start:
-Yes for Yoshi-type lift
-No for Magmalice lift</source>
+        <location filename="../fortunestreetdata.cpp" line="389"/>
+        <source>Spade</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../mainwindow.ui" line="610"/>
-        <location filename="../mainwindow.ui" line="649"/>
-        <location filename="../mainwindow.ui" line="667"/>
-        <location filename="../mainwindow.ui" line="688"/>
-        <location filename="../mainwindow.ui" line="709"/>
-        <location filename="../mainwindow.ui" line="727"/>
-        <location filename="../mainwindow.ui" line="745"/>
-        <location filename="../mainwindow.ui" line="763"/>
-        <location filename="../mainwindow.ui" line="784"/>
-        <location filename="../mainwindow.ui" line="805"/>
-        <location filename="../mainwindow.ui" line="823"/>
-        <location filename="../mainwindow.ui" line="864"/>
-        <location filename="../mainwindow.ui" line="882"/>
-        <location filename="../mainwindow.ui" line="903"/>
-        <location filename="../mainwindow.ui" line="921"/>
-        <location filename="../mainwindow.ui" line="942"/>
-        <source>...</source>
+        <location filename="../fortunestreetdata.cpp" line="390"/>
+        <source>Heart</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../mainwindow.ui" line="628"/>
-        <source>To</source>
+        <location filename="../fortunestreetdata.cpp" line="391"/>
+        <source>Diamond</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../mainwindow.ui" line="1295"/>
-        <source>&lt;-- Connect --</source>
+        <location filename="../fortunestreetdata.cpp" line="392"/>
+        <source>Club</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../mainwindow.ui" line="1404"/>
-        <source>File</source>
-        <translation></translation>
-    </message>
-    <message>
-        <location filename="../mainwindow.ui" line="1417"/>
-        <source>Tools</source>
-        <translation></translation>
-    </message>
-    <message>
-        <location filename="../mainwindow.ui" line="1435"/>
-        <source>Help</source>
-        <translation></translation>
-    </message>
-    <message>
-        <location filename="../mainwindow.ui" line="1445"/>
-        <source>View</source>
-        <translation></translation>
-    </message>
-    <message>
-        <location filename="../mainwindow.ui" line="1454"/>
-        <source>Select</source>
-        <translation></translation>
-    </message>
-    <message>
-        <location filename="../mainwindow.ui" line="1466"/>
-        <source>Edit</source>
-        <translation></translation>
-    </message>
-    <message>
-        <location filename="../mainwindow.ui" line="1479"/>
-        <source>New</source>
-        <translation></translation>
-    </message>
-    <message>
-        <location filename="../mainwindow.ui" line="1482"/>
-        <source>Ctrl+N</source>
-        <translation></translation>
-    </message>
-    <message>
-        <location filename="../mainwindow.ui" line="1487"/>
-        <source>Open</source>
-        <translation></translation>
-    </message>
-    <message>
-        <location filename="../mainwindow.ui" line="1490"/>
-        <source>Ctrl+O</source>
-        <translation></translation>
-    </message>
-    <message>
-        <location filename="../mainwindow.ui" line="1498"/>
-        <source>Save</source>
-        <translation></translation>
-    </message>
-    <message>
-        <location filename="../mainwindow.ui" line="1501"/>
-        <source>Ctrl+S</source>
-        <translation></translation>
-    </message>
-    <message>
-        <location filename="../mainwindow.ui" line="1509"/>
-        <source>Save As</source>
-        <translation></translation>
-    </message>
-    <message>
-        <location filename="../mainwindow.ui" line="1512"/>
-        <source>Ctrl+Shift+S</source>
-        <translation></translation>
-    </message>
-    <message>
-        <location filename="../mainwindow.ui" line="1520"/>
-        <source>Verify Board</source>
-        <translation></translation>
-    </message>
-    <message>
-        <location filename="../mainwindow.ui" line="1525"/>
-        <source>Auto-Path</source>
-        <translation></translation>
-    </message>
-    <message>
-        <location filename="../mainwindow.ui" line="1530"/>
-        <source>Fortune Avenue Help</source>
-        <translation></translation>
-    </message>
-    <message>
-        <location filename="../mainwindow.ui" line="1535"/>
-        <source>Zoom In</source>
-        <translation></translation>
-    </message>
-    <message>
-        <location filename="../mainwindow.ui" line="1538"/>
-        <source>Ctrl+Shift+=</source>
-        <translation></translation>
-    </message>
-    <message>
-        <location filename="../mainwindow.ui" line="1543"/>
-        <source>Zoom Out</source>
-        <translation></translation>
-    </message>
-    <message>
-        <location filename="../mainwindow.ui" line="1546"/>
-        <source>Ctrl+-</source>
-        <translation></translation>
-    </message>
-    <message>
-        <location filename="../mainwindow.ui" line="1557"/>
-        <source>Draw Axes</source>
-        <translation></translation>
-    </message>
-    <message>
-        <location filename="../mainwindow.ui" line="1560"/>
-        <source>Ctrl+K</source>
-        <translation></translation>
-    </message>
-    <message>
-        <location filename="../mainwindow.ui" line="1568"/>
-        <source>Drag to Pan</source>
-        <translation></translation>
-    </message>
-    <message>
-        <location filename="../mainwindow.ui" line="1571"/>
-        <source>Ctrl+D</source>
-        <translation></translation>
-    </message>
-    <message>
-        <location filename="../mainwindow.ui" line="1576"/>
-        <source>Screenshot</source>
-        <translation></translation>
-    </message>
-    <message>
-        <location filename="../mainwindow.ui" line="1581"/>
-        <source>Next</source>
-        <translation></translation>
-    </message>
-    <message>
-        <location filename="../mainwindow.ui" line="1584"/>
-        <source>PgUp</source>
-        <translation></translation>
-    </message>
-    <message>
-        <location filename="../mainwindow.ui" line="1589"/>
-        <source>Previous</source>
-        <translation></translation>
-    </message>
-    <message>
-        <location filename="../mainwindow.ui" line="1592"/>
-        <source>PgDown</source>
-        <translation></translation>
-    </message>
-    <message>
-        <location filename="../mainwindow.ui" line="1597"/>
-        <source>Select All</source>
-        <translation></translation>
-    </message>
-    <message>
-        <location filename="../mainwindow.ui" line="1600"/>
-        <source>Ctrl+A</source>
-        <translation></translation>
-    </message>
-    <message>
-        <location filename="../mainwindow.ui" line="1605"/>
-        <source>Follow Waypoint Destination 1</source>
-        <translation></translation>
-    </message>
-    <message>
-        <location filename="../mainwindow.ui" line="1608"/>
-        <source>Ctrl+1</source>
-        <translation></translation>
-    </message>
-    <message>
-        <location filename="../mainwindow.ui" line="1613"/>
-        <source>Follow Waypoint Destination 2</source>
-        <translation></translation>
-    </message>
-    <message>
-        <location filename="../mainwindow.ui" line="1616"/>
-        <source>Ctrl+2</source>
-        <translation></translation>
-    </message>
-    <message>
-        <location filename="../mainwindow.ui" line="1621"/>
-        <source>Follow Waypoint Destination 3</source>
-        <translation></translation>
-    </message>
-    <message>
-        <location filename="../mainwindow.ui" line="1624"/>
-        <source>Ctrl+3</source>
-        <translation></translation>
-    </message>
-    <message>
-        <location filename="../mainwindow.ui" line="1629"/>
-        <source>Shop Price Auto-Calc Function</source>
-        <translation></translation>
-    </message>
-    <message>
-        <location filename="../mainwindow.ui" line="1634"/>
-        <source>District Simulator</source>
-        <translation></translation>
-    </message>
-    <message>
-        <location filename="../mainwindow.ui" line="1642"/>
-        <source>Use Legacy Auto-Path</source>
-        <translation></translation>
-    </message>
-    <message>
-        <location filename="../mainwindow.ui" line="1650"/>
-        <source>Use Advanced Auto-Path</source>
-        <translation></translation>
-    </message>
-    <message>
-        <location filename="../mainwindow.ui" line="1655"/>
-        <source>Auto-Assign Shop Models</source>
-        <translation></translation>
-    </message>
-    <message>
-        <location filename="../mainwindow.ui" line="1660"/>
-        <source>Set Max Path Search Depth</source>
-        <translation></translation>
-    </message>
-    <message>
-        <location filename="../mainwindow.ui" line="1665"/>
-        <source>Sync from Other Board for Switch State</source>
-        <translation></translation>
-    </message>
-    <message>
-        <location filename="../mainwindow.ui" line="1670"/>
-        <source>Sync to Other Board(s) for Switch State</source>
+        <location filename="../fortunestreetdata.cpp" line="393"/>
+        <source>Spade (Change-of-Suit)</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../mainwindow.ui" line="1680"/>
-        <source>Preferences...</source>
+        <location filename="../fortunestreetdata.cpp" line="394"/>
+        <source>Heart (Change-of-Suit)</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../mainwindow.ui" line="1675"/>
-        <source>Exit</source>
-        <translation></translation>
-    </message>
-    <message>
-        <location filename="../main.cpp" line="40"/>
-        <source>Fortune Avenue %1</source>
+        <location filename="../fortunestreetdata.cpp" line="395"/>
+        <source>Diamond (Change-of-Suit)</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../mainwindow.cpp" line="129"/>
-        <source>Enter Function</source>
+        <location filename="../fortunestreetdata.cpp" line="396"/>
+        <source>Club (Change-of-Suit)</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../mainwindow.cpp" line="129"/>
-        <source>Enter the shop price based on shop value function (x = shop value).
-Enter empty string to restore default.</source>
+        <location filename="../fortunestreetdata.cpp" line="397"/>
+        <source>Take-A-Break</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../mainwindow.cpp" line="141"/>
-        <source>Error Function</source>
+        <location filename="../fortunestreetdata.cpp" line="398"/>
+        <source>Boon</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../mainwindow.cpp" line="149"/>
-        <source>Enter Search Depth</source>
+        <location filename="../fortunestreetdata.cpp" line="399"/>
+        <source>Boom</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../mainwindow.cpp" line="149"/>
-        <source>Enter the max path search depth.
-
-This is only for demonstration purposes and does not have any ingame effect.
-Sensible values are between 16 (small boards) and 28 (huge boards).
-
-Enter 0 to restore game default behavior which is max(squareCount/3,16)</source>
+        <location filename="../fortunestreetdata.cpp" line="400"/>
+        <source>Stockbroker</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../mainwindow.cpp" line="309"/>
-        <source>Zoom: %1%</source>
+        <location filename="../fortunestreetdata.cpp" line="401"/>
+        <source>Roll On</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../mainwindow.cpp" line="432"/>
-        <source>Fortune Avenue %1[*]</source>
+        <location filename="../fortunestreetdata.cpp" line="402"/>
+        <source>Arcade</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../mainwindow.cpp" line="438"/>
-        <location filename="../mainwindow.cpp" line="548"/>
-        <source>Open File</source>
+        <location filename="../fortunestreetdata.cpp" line="403"/>
+        <source>Switch</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../mainwindow.cpp" line="438"/>
-        <location filename="../mainwindow.cpp" line="472"/>
-        <location filename="../mainwindow.cpp" line="729"/>
-        <location filename="../mainwindow.cpp" line="733"/>
-        <source>Fortune Street Boards (*.frb)</source>
+        <location filename="../fortunestreetdata.cpp" line="404"/>
+        <source>Cannon</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../mainwindow.cpp" line="465"/>
-        <location filename="../mainwindow.cpp" line="492"/>
-        <location filename="../mainwindow.cpp" line="777"/>
-        <location filename="../mainwindow.cpp" line="786"/>
-        <source>Error saving file</source>
+        <location filename="../fortunestreetdata.cpp" line="405"/>
+        <source>Backstreet A</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../mainwindow.cpp" line="465"/>
-        <location filename="../mainwindow.cpp" line="492"/>
-        <source>An error occurred while trying to save the file</source>
+        <location filename="../fortunestreetdata.cpp" line="406"/>
+        <source>Backstreet B</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../mainwindow.cpp" line="472"/>
-        <source>Save File</source>
+        <location filename="../fortunestreetdata.cpp" line="407"/>
+        <source>Backstreet C</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../mainwindow.cpp" line="486"/>
-        <location filename="../mainwindow.cpp" line="506"/>
-        <source>Fortune Avenue %1 - %2[*]</source>
+        <location filename="../fortunestreetdata.cpp" line="408"/>
+        <source>Backstreet D</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../mainwindow.cpp" line="514"/>
-        <source>Error opening file</source>
+        <location filename="../fortunestreetdata.cpp" line="409"/>
+        <source>Backstreet E</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../mainwindow.cpp" line="514"/>
-        <source>An error occurred while trying to open the file</source>
+        <location filename="../fortunestreetdata.cpp" line="410"/>
+        <source>One-Way Alley Door A</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../mainwindow.cpp" line="549"/>
-        <source>This file is version %1, but the latest version is version 3. Would you like to upgrade the file to the latest version?</source>
+        <location filename="../fortunestreetdata.cpp" line="411"/>
+        <source>One-Way Alley Door B</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../mainwindow.cpp" line="621"/>
-        <source>Destination ID</source>
+        <location filename="../fortunestreetdata.cpp" line="412"/>
+        <source>One-Way Alley Door C</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../mainwindow.cpp" line="624"/>
-        <source>Venture Card ID</source>
+        <location filename="../fortunestreetdata.cpp" line="413"/>
+        <source>One-Way Alley Door D</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../mainwindow.cpp" line="678"/>
-        <source>%1 selected</source>
+        <location filename="../fortunestreetdata.cpp" line="414"/>
+        <source>Lift/Magmalice Start</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../mainwindow.cpp" line="729"/>
-        <source>Choose Board File(s) to Sync To</source>
+        <location filename="../fortunestreetdata.cpp" line="415"/>
+        <source>Lift End</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../mainwindow.cpp" line="733"/>
-        <source>Choose Board File to Sync From</source>
+        <location filename="../fortunestreetdata.cpp" line="416"/>
+        <source>Magmalice</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../mainwindow.cpp" line="744"/>
-        <source>Error opening file for sync</source>
+        <location filename="../fortunestreetdata.cpp" line="417"/>
+        <source>One-Way Alley End</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../mainwindow.cpp" line="744"/>
-        <source>Could not open file for sync</source>
+        <location filename="../fortunestreetdata.cpp" line="418"/>
+        <source>Event</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../mainwindow.cpp" line="750"/>
-        <location filename="../mainwindow.cpp" line="757"/>
-        <source>Error processing file for sync</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location filename="../mainwindow.cpp" line="750"/>
-        <source>Corrupt .frb file</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location filename="../mainwindow.cpp" line="757"/>
-        <source>Number of squares in other file is not the same as this one</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location filename="../mainwindow.cpp" line="777"/>
-        <source>Could not open other file for saving</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location filename="../mainwindow.cpp" line="784"/>
-        <source>Could not save other board to: 
-
- %1 
-
- Error code: %2 
- %3</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location filename="../mainwindow.cpp" line="809"/>
-        <source>Success!</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location filename="../mainwindow.cpp" line="809"/>
-        <source>Successfully synced data between board files.</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location filename="../mainwindow.cpp" line="1156"/>
-        <source>District %1: %2g</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location filename="../mainwindow.cpp" line="1180"/>
-        <source>Search Depth: %1</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location filename="../mainwindow.cpp" line="1182"/>
-        <source>Using Fixed Depth: %1</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location filename="../mainwindow.cpp" line="1184"/>
-        <source>Max Paths Square ID: %1</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location filename="../mainwindow.cpp" line="1185"/>
-        <source>Possible Paths: %1</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location filename="../mainwindow.cpp" line="1188"/>
-        <source>Crash inevitable!</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location filename="../mainwindow.cpp" line="1190"/>
-        <source>Crash possible!</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location filename="../mainwindow.cpp" line="1192"/>
-        <source>Stuttering likely!</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location filename="../mainwindow.cpp" line="1194"/>
-        <source>Ok</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location filename="../mainwindow.cpp" line="1214"/>
-        <location filename="../mainwindow.cpp" line="1219"/>
-        <location filename="../mainwindow.cpp" line="1221"/>
-        <source>Verification</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location filename="../mainwindow.cpp" line="1214"/>
-        <source>Board passed verification.</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location filename="../mainwindow.cpp" line="1216"/>
-        <source>%1 error(s) and %2 warning(s):
-</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location filename="../mainwindow.cpp" line="1236"/>
-        <source>Auto-pathing</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location filename="../mainwindow.cpp" line="1236"/>
-        <source>Auto-pathed entire map</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location filename="../mainwindow.cpp" line="1286"/>
-        <source>Unsaved Changes</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location filename="../mainwindow.cpp" line="1286"/>
-        <source>You have unsaved changes. Do you want to save them?</source>
+        <location filename="../fortunestreetdata.cpp" line="419"/>
+        <source>Vacant Plot</source>
         <translation type="unfinished"></translation>
     </message>
 </context>
 <context>
-    <name>PreferencesDialog</name>
+    <name>UserSettings</name>
     <message>
-        <location filename="../preferencesdialog.ui" line="14"/>
-        <source>Dialog</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location filename="../preferencesdialog.ui" line="29"/>
-        <source>Window Palette</source>
-        <translation></translation>
-    </message>
-    <message>
-        <location filename="../preferencesdialog.ui" line="55"/>
-        <source>Classic Dark</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location filename="../preferencesdialog.ui" line="65"/>
-        <source>Change</source>
-        <translation></translation>
-    </message>
-    <message>
-        <location filename="../preferencesdialog.ui" line="99"/>
-        <source>Use Palette Highlight Color</source>
-        <translation></translation>
-    </message>
-    <message>
-        <location filename="../preferencesdialog.ui" line="122"/>
-        <source>Display Language</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location filename="../preferencesdialog.cpp" line="24"/>
-        <source>Preferences</source>
-        <translation type="unfinished"></translation>
-    </message>
-</context>
-<context>
-    <name>ScreenshotDialog</name>
-    <message>
-        <location filename="../screenshotdialog.ui" line="20"/>
-        <source>Dialog</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location filename="../screenshotdialog.ui" line="56"/>
-        <source>+</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location filename="../screenshotdialog.ui" line="63"/>
-        <source>-</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location filename="../screenshotdialog.ui" line="89"/>
-        <source>Screenshot format:</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location filename="../screenshotdialog.ui" line="96"/>
-        <source>webp</source>
-        <translation></translation>
-    </message>
-    <message>
-        <location filename="../screenshotdialog.ui" line="26"/>
-        <source>Choose board files (.frb) to take screenshots for:</source>
-        <translation></translation>
-    </message>
-    <message>
-        <location filename="../screenshotdialog.cpp" line="20"/>
-        <source>Take Board Screenshots</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location filename="../screenshotdialog.cpp" line="53"/>
-        <source>Open File</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location filename="../screenshotdialog.cpp" line="53"/>
-        <source>Fortune Street Boards (*.frb)</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location filename="../screenshotdialog.cpp" line="92"/>
-        <source>Error opening file</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location filename="../screenshotdialog.cpp" line="92"/>
-        <source>An error occurred while trying to open the file: %1</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location filename="../screenshotdialog.cpp" line="151"/>
-        <source>Success!</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location filename="../screenshotdialog.cpp" line="151"/>
-        <source>All screenshots saved successfully.</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location filename="../screenshotdialog.cpp" line="154"/>
-        <source>Failure</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location filename="../screenshotdialog.cpp" line="154"/>
-        <source>One or more screenshots could not be saved.</source>
+        <location filename="../usersettings.h" line="128"/>
+        <source>Failed to create JSON document from data</source>
         <translation type="unfinished"></translation>
     </message>
 </context>

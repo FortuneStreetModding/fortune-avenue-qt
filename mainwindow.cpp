@@ -113,12 +113,7 @@ MainWindow::MainWindow(QApplication& app)
     connect(ui->actionNext, &QAction::triggered, this, &MainWindow::selectNext);
     connect(ui->actionPrevious, &QAction::triggered, this, &MainWindow::selectPrevious);
     connect(ui->actionSelectAll, &QAction::triggered, this, &MainWindow::selectAll);
-    connect(ui->actionUse_Advanced_Auto_Path, &QAction::triggered, this, [this]() {
-        addUpdateBoardMetaAction([this](BoardInfo &info) {
-            info.useAdvancedAutoPath = ui->actionUse_Advanced_Auto_Path->isChecked();
-        }, tr("Toggle Advanced Auto Path"));
-    });
-    toggleAdvancedAutoPath();
+    setAdvancedAutoPath();
     connect(ui->actionSync_From_Board, &QAction::triggered, this, [this]() {
         syncForSwitch(false);
     });
@@ -300,7 +295,7 @@ void MainWindow::addUpdateBoardMetaAction(Func &&func, const QString &text)
         undoStack->push(new UpdateBoardMetaCmd(oldBoardInfo, curBoardFile.boardInfo, text, [this](const BoardInfo &info) {
             curBoardFile.boardInfo = info;
             updateBoardInfoSidebar();
-            toggleAdvancedAutoPath();
+            setAdvancedAutoPath();
         }));
     }
 }
@@ -423,11 +418,12 @@ void MainWindow::selectAll() {
     }
 }
 
-void MainWindow::toggleAdvancedAutoPath() {
-    bool visible = curBoardFile.boardInfo.useAdvancedAutoPath;
-    ui->actionUse_Advanced_Auto_Path->setChecked(visible);
-    ui->autoPathCfg->setVisible(visible);
-    ui->autopathArrowsWidget->setVisible(visible);
+void MainWindow::setAdvancedAutoPath() {
+    QSettings settings;
+    bool b = settings.value("use_advanced_auto_path", false).toBool();
+    curBoardFile.boardInfo.useAdvancedAutoPath = b;
+    ui->autoPathCfg->setVisible(b);
+    ui->autopathArrowsWidget->setVisible(b);
 }
 
 void MainWindow::newFile() {
@@ -542,7 +538,7 @@ void MainWindow::loadFile(const BoardFile &file) {
     for (auto &square: file.boardData.squares) {
         scene->addItem(new SquareItem(square));
     }
-    toggleAdvancedAutoPath();
+    setAdvancedAutoPath();
 
     if (file.boardInfo.versionFlag < 3) {
         auto response = QMessageBox::question(
@@ -842,17 +838,8 @@ void MainWindow::connectSquares(bool previousToCurrent, bool currentToPrevious) 
         if(previousToCurrent)
             AutoPath::connect(previous->getData(), current->getData(), false, true, true);
         if(currentToPrevious)
-<<<<<<< HEAD
             AutoPath::connect(current->getData(), previous->getData(), false, true, true);
-<<<<<<< HEAD
         addChangeSquaresAction({previous->getData().id, current->getData().id}, tr("Connect Squares"));
-=======
-        addChangeSquaresAction({previous->getData().id, current->getData().id}, "Connect Squares");
-=======
-            AutoPath::connect(current->getData(), previous->getData());
-        addChangeSquaresAction({previous->getData().id, current->getData().id}, tr("Connect Squares"));
->>>>>>> 9bb2a06 (Mark more text for translation, and add empty classes to some files to better organize those lines of text)
->>>>>>> eadb6b4 (Mark more text for translation, and add empty classes to some files to better organize those lines of text)
     }
 }
 
@@ -1249,7 +1236,10 @@ void MainWindow::autoPath() {
         selectedItems.append((SquareItem *) square);
     }
 
-    if(ui->actionUse_Advanced_Auto_Path->isChecked()) {
+    QSettings settings;
+    bool shouldUseAdvancedAutoPath = settings.value("use_advanced_auto_path", false).toBool();
+
+    if(shouldUseAdvancedAutoPath) {
         for (auto item: std::as_const(squareItems)) {
             QMap<AutoPath::Direction, SquareItem *> touchingSquares = AutoPath::getTouchingSquares(item, squareItems, ui->autopathRange->value(), ui->straightLineTolerance->value());
             AutoPath::pathSquare(item, touchingSquares);
@@ -1258,7 +1248,7 @@ void MainWindow::autoPath() {
         AutoPath::kruskalDfsAutoPathAlgorithm(std::as_const(squareItems), std::as_const(selectedItems), false);
     }
     QMessageBox::information(this, tr("Auto-pathing"), tr("Successfully auto-pathed the entire board."));
-    QVector<int> squareIds(items.size());
+    QVector<int> squareIds(squareItems.size());
     std::iota(squareIds.begin(), squareIds.end(), 0);
     addChangeSquaresAction(squareIds, tr("Autopath"));
 }
@@ -1268,7 +1258,7 @@ void MainWindow::autoPathSelection() {
     auto squares = scene->squareItems();
 
     if(selectedSquares.size() < 1){
-        QMessageBox::information(this, "Auto-pathing", "Nothing to auto-path! No squares are selected.");
+        QMessageBox::information(this, tr("Auto-pathing"), tr("Nothing to auto-path! No squares are selected."));
         return;
     }
 
@@ -1291,10 +1281,10 @@ void MainWindow::autoPathSelection() {
     } else {
         AutoPath::kruskalDfsAutoPathAlgorithm(std::as_const(squareItems), std::as_const(selectedItems), true);
     }
-    QMessageBox::information(this, "Auto-pathing", "Auto-pathed selected squares.");
+    QMessageBox::information(this, tr("Auto-pathing"), tr("Successfully auto-pathed the selected squares."));
     QVector<int> squareIds(selectedItems.size());
     std::iota(squareIds.begin(), squareIds.end(), 0);
-    addChangeSquaresAction(squareIds, "Autopath Selected");
+    addChangeSquaresAction(squareIds, tr("Autopath Selected Squares"));
 }
 
 void MainWindow::screenshot() {
@@ -1305,6 +1295,7 @@ void MainWindow::screenshot() {
 void MainWindow::preferences() {
     PreferencesDialog dialog(this);
     dialog.setWindowModality(Qt::ApplicationModal);
+    connect(&dialog, &PreferencesDialog::advancedAutoPathChanged, this, &MainWindow::setAdvancedAutoPath);
     dialog.exec();
 }
 

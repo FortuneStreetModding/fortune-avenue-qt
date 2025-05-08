@@ -95,6 +95,67 @@
     </message>
 </context>
 <context>
+    <name>AutoPath::Directions</name>
+    <message>
+        <location filename="../directions.h" line="61"/>
+        <source>north</source>
+        <translation type="unfinished">north</translation>
+    </message>
+    <message>
+        <location filename="../directions.h" line="63"/>
+        <source>northwest</source>
+        <translation type="unfinished">northwest</translation>
+    </message>
+    <message>
+        <location filename="../directions.h" line="65"/>
+        <source>northeast</source>
+        <translation type="unfinished">northeast</translation>
+    </message>
+    <message>
+        <location filename="../directions.h" line="67"/>
+        <source>south</source>
+        <translation type="unfinished">south</translation>
+    </message>
+    <message>
+        <location filename="../directions.h" line="69"/>
+        <source>southwest</source>
+        <translation type="unfinished">southwest</translation>
+    </message>
+    <message>
+        <location filename="../directions.h" line="71"/>
+        <source>southeast</source>
+        <translation type="unfinished">southeast</translation>
+    </message>
+    <message>
+        <location filename="../directions.h" line="73"/>
+        <source>west</source>
+        <translation type="unfinished">west</translation>
+    </message>
+    <message>
+        <location filename="../directions.h" line="75"/>
+        <source>east</source>
+        <translation type="unfinished">east</translation>
+    </message>
+</context>
+<context>
+    <name>FortuneAvenueGraphicsScene</name>
+    <message>
+        <location filename="../squareaddcmd.cpp" line="7"/>
+        <source>Add Square</source>
+        <translation type="unfinished">Add Square</translation>
+    </message>
+    <message>
+        <location filename="../squaremovecmd.cpp" line="7"/>
+        <source>Move Squares</source>
+        <translation type="unfinished">Move Squares</translation>
+    </message>
+    <message>
+        <location filename="../squareremovecmd.cpp" line="14"/>
+        <source>Remove Squares</source>
+        <translation type="unfinished">Remove Squares</translation>
+    </message>
+</context>
+<context>
     <name>FortuneStreetData</name>
     <message>
         <location filename="../fortunestreetdata.cpp" line="239"/>
@@ -192,514 +253,412 @@
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../fortunestreetdata.cpp" line="386"/>
         <source>Property</source>
-        <translation type="unfinished">Property</translation>
+        <translation type="obsolete">Property</translation>
     </message>
     <message>
-        <location filename="../fortunestreetdata.cpp" line="387"/>
         <source>Bank</source>
-        <translation type="unfinished">Bank</translation>
+        <translation type="obsolete">Bank</translation>
     </message>
     <message>
-        <location filename="../fortunestreetdata.cpp" line="388"/>
         <source>Venture</source>
-        <translation type="unfinished">Venture</translation>
+        <translation type="obsolete">Venture</translation>
     </message>
     <message>
-        <location filename="../fortunestreetdata.cpp" line="389"/>
         <source>Spade</source>
-        <translation type="unfinished">Spade</translation>
+        <translation type="obsolete">Spade</translation>
     </message>
     <message>
-        <location filename="../fortunestreetdata.cpp" line="390"/>
         <source>Heart</source>
-        <translation type="unfinished">Heart</translation>
+        <translation type="obsolete">Heart</translation>
     </message>
     <message>
-        <location filename="../fortunestreetdata.cpp" line="391"/>
         <source>Diamond</source>
-        <translation type="unfinished">Diamond</translation>
+        <translation type="obsolete">Diamond</translation>
     </message>
     <message>
-        <location filename="../fortunestreetdata.cpp" line="392"/>
         <source>Club</source>
-        <translation type="unfinished">Club</translation>
+        <translation type="obsolete">Club</translation>
     </message>
     <message>
-        <location filename="../fortunestreetdata.cpp" line="393"/>
         <source>Spade (Change-of-Suit)</source>
-        <translation type="unfinished">Spade (Change-of-Suit)</translation>
+        <translation type="obsolete">Spade (Change-of-Suit)</translation>
     </message>
     <message>
-        <location filename="../fortunestreetdata.cpp" line="394"/>
         <source>Heart (Change-of-Suit)</source>
-        <translation type="unfinished">Heart (Change-of-Suit)</translation>
+        <translation type="obsolete">Heart (Change-of-Suit)</translation>
     </message>
     <message>
-        <location filename="../fortunestreetdata.cpp" line="395"/>
         <source>Diamond (Change-of-Suit)</source>
-        <translation type="unfinished">Diamond (Change-of-Suit)</translation>
+        <translation type="obsolete">Diamond (Change-of-Suit)</translation>
     </message>
     <message>
-        <location filename="../fortunestreetdata.cpp" line="396"/>
         <source>Club (Change-of-Suit)</source>
-        <translation type="unfinished">Club (Change-of-Suit)</translation>
+        <translation type="obsolete">Club (Change-of-Suit)</translation>
     </message>
     <message>
-        <location filename="../fortunestreetdata.cpp" line="397"/>
         <source>Take-A-Break</source>
-        <translation type="unfinished">Take-A-Break</translation>
+        <translation type="obsolete">Take-A-Break</translation>
     </message>
     <message>
-        <location filename="../fortunestreetdata.cpp" line="398"/>
         <source>Boon</source>
-        <translation type="unfinished">Boon</translation>
+        <translation type="obsolete">Boon</translation>
     </message>
     <message>
-        <location filename="../fortunestreetdata.cpp" line="399"/>
         <source>Boom</source>
-        <translation type="unfinished">Boom</translation>
+        <translation type="obsolete">Boom</translation>
     </message>
     <message>
-        <location filename="../fortunestreetdata.cpp" line="400"/>
         <source>Stockbroker</source>
-        <translation type="unfinished">Stockbroker</translation>
+        <translation type="obsolete">Stockbroker</translation>
     </message>
     <message>
-        <location filename="../fortunestreetdata.cpp" line="401"/>
         <source>Roll On</source>
-        <translation type="unfinished">Roll On</translation>
+        <translation type="obsolete">Roll On</translation>
     </message>
     <message>
-        <location filename="../fortunestreetdata.cpp" line="402"/>
         <source>Arcade</source>
-        <translation type="unfinished">Arcade</translation>
+        <translation type="obsolete">Arcade</translation>
     </message>
     <message>
-        <location filename="../fortunestreetdata.cpp" line="403"/>
         <source>Switch</source>
-        <translation type="unfinished">Switch</translation>
+        <translation type="obsolete">Switch</translation>
     </message>
     <message>
-        <location filename="../fortunestreetdata.cpp" line="404"/>
         <source>Cannon</source>
-        <translation type="unfinished">Cannon</translation>
+        <translation type="obsolete">Cannon</translation>
     </message>
     <message>
-        <location filename="../fortunestreetdata.cpp" line="405"/>
         <source>Backstreet A</source>
-        <translation type="unfinished">Backstreet A</translation>
+        <translation type="obsolete">Backstreet A</translation>
     </message>
     <message>
-        <location filename="../fortunestreetdata.cpp" line="406"/>
         <source>Backstreet B</source>
-        <translation type="unfinished">Backstreet B</translation>
+        <translation type="obsolete">Backstreet B</translation>
     </message>
     <message>
-        <location filename="../fortunestreetdata.cpp" line="407"/>
         <source>Backstreet C</source>
-        <translation type="unfinished">Backstreet C</translation>
+        <translation type="obsolete">Backstreet C</translation>
     </message>
     <message>
-        <location filename="../fortunestreetdata.cpp" line="408"/>
         <source>Backstreet D</source>
-        <translation type="unfinished">Backstreet D</translation>
+        <translation type="obsolete">Backstreet D</translation>
     </message>
     <message>
-        <location filename="../fortunestreetdata.cpp" line="409"/>
         <source>Backstreet E</source>
-        <translation type="unfinished">Backstreet E</translation>
+        <translation type="obsolete">Backstreet E</translation>
     </message>
     <message>
-        <location filename="../fortunestreetdata.cpp" line="410"/>
         <source>One-Way Alley Door A</source>
-        <translation type="unfinished">One-Way Alley Door A</translation>
+        <translation type="obsolete">One-Way Alley Door A</translation>
     </message>
     <message>
-        <location filename="../fortunestreetdata.cpp" line="411"/>
         <source>One-Way Alley Door B</source>
-        <translation type="unfinished">One-Way Alley Door B</translation>
+        <translation type="obsolete">One-Way Alley Door B</translation>
     </message>
     <message>
-        <location filename="../fortunestreetdata.cpp" line="412"/>
         <source>One-Way Alley Door C</source>
-        <translation type="unfinished">One-Way Alley Door C</translation>
+        <translation type="obsolete">One-Way Alley Door C</translation>
     </message>
     <message>
-        <location filename="../fortunestreetdata.cpp" line="413"/>
         <source>One-Way Alley Door D</source>
-        <translation type="unfinished">One-Way Alley Door D</translation>
+        <translation type="obsolete">One-Way Alley Door D</translation>
     </message>
     <message>
-        <location filename="../fortunestreetdata.cpp" line="414"/>
         <source>Lift/Magmalice Start</source>
-        <translation type="unfinished">Lift/Magmalice Start</translation>
+        <translation type="obsolete">Lift/Magmalice Start</translation>
     </message>
     <message>
-        <location filename="../fortunestreetdata.cpp" line="415"/>
         <source>Lift End</source>
-        <translation type="unfinished">Lift End</translation>
+        <translation type="obsolete">Lift End</translation>
     </message>
     <message>
-        <location filename="../fortunestreetdata.cpp" line="416"/>
         <source>Magmalice</source>
-        <translation type="unfinished">Magmalice</translation>
+        <translation type="obsolete">Magmalice</translation>
     </message>
     <message>
-        <location filename="../fortunestreetdata.cpp" line="417"/>
         <source>One-Way Alley End</source>
-        <translation type="unfinished">One-Way Alley End</translation>
+        <translation type="obsolete">One-Way Alley End</translation>
     </message>
     <message>
-        <location filename="../fortunestreetdata.cpp" line="418"/>
         <source>Event</source>
-        <translation type="unfinished">Event</translation>
+        <translation type="obsolete">Event</translation>
     </message>
     <message>
-        <location filename="../fortunestreetdata.cpp" line="419"/>
         <source>Vacant Plot</source>
-        <translation type="unfinished">Vacant Plot</translation>
+        <translation type="obsolete">Vacant Plot</translation>
     </message>
     <message>
-        <location filename="../fortunestreetdata.cpp" line="423"/>
         <source>Scrap-paper shop</source>
-        <translation type="unfinished">Scrap-paper shop</translation>
+        <translation type="obsolete">Scrap-paper shop</translation>
     </message>
     <message>
-        <location filename="../fortunestreetdata.cpp" line="424"/>
         <source>Wool shop</source>
-        <translation type="unfinished">Wool shop</translation>
+        <translation type="obsolete">Wool shop</translation>
     </message>
     <message>
-        <location filename="../fortunestreetdata.cpp" line="425"/>
         <source>Bottle store</source>
-        <translation type="unfinished">Bottle store</translation>
+        <translation type="obsolete">Bottle store</translation>
     </message>
     <message>
-        <location filename="../fortunestreetdata.cpp" line="426"/>
         <source>Secondhand book shop</source>
-        <translation type="unfinished">Secondhand book shop</translation>
+        <translation type="obsolete">Secondhand book shop</translation>
     </message>
     <message>
-        <location filename="../fortunestreetdata.cpp" line="427"/>
         <source>Scrap-metal supplier</source>
-        <translation type="unfinished">Scrap-metal supplier</translation>
+        <translation type="obsolete">Scrap-metal supplier</translation>
     </message>
     <message>
-        <location filename="../fortunestreetdata.cpp" line="428"/>
         <source>Stationery shop</source>
-        <translation type="unfinished">Stationery shop</translation>
+        <translation type="obsolete">Stationery shop</translation>
     </message>
     <message>
-        <location filename="../fortunestreetdata.cpp" line="429"/>
         <source>General store</source>
-        <translation type="unfinished">General store</translation>
+        <translation type="obsolete">General store</translation>
     </message>
     <message>
-        <location filename="../fortunestreetdata.cpp" line="430"/>
         <source>Florist&apos;s</source>
-        <translation type="unfinished">Florist&apos;s</translation>
+        <translation type="obsolete">Florist&apos;s</translation>
     </message>
     <message>
-        <location filename="../fortunestreetdata.cpp" line="431"/>
         <source>Ice-cream shop</source>
-        <translation type="unfinished">Ice-cream shop</translation>
+        <translation type="obsolete">Ice-cream shop</translation>
     </message>
     <message>
-        <location filename="../fortunestreetdata.cpp" line="432"/>
         <source>Comic-book shop</source>
-        <translation type="unfinished">Comic-book shop</translation>
+        <translation type="obsolete">Comic-book shop</translation>
     </message>
     <message>
-        <location filename="../fortunestreetdata.cpp" line="433"/>
         <source>Dairy</source>
-        <translation type="unfinished">Dairy</translation>
+        <translation type="obsolete">Dairy</translation>
     </message>
     <message>
-        <location filename="../fortunestreetdata.cpp" line="434"/>
         <source>Doughnut shop</source>
-        <translation type="unfinished">Doughnut shop</translation>
+        <translation type="obsolete">Doughnut shop</translation>
     </message>
     <message>
-        <location filename="../fortunestreetdata.cpp" line="435"/>
         <source>Pizza shack</source>
-        <translation type="unfinished">Pizza shack</translation>
+        <translation type="obsolete">Pizza shack</translation>
     </message>
     <message>
-        <location filename="../fortunestreetdata.cpp" line="436"/>
         <source>Bakery</source>
-        <translation type="unfinished">Bakery</translation>
+        <translation type="obsolete">Bakery</translation>
     </message>
     <message>
-        <location filename="../fortunestreetdata.cpp" line="437"/>
         <source>Grocery store</source>
-        <translation type="unfinished">Grocery store</translation>
+        <translation type="obsolete">Grocery store</translation>
     </message>
     <message>
-        <location filename="../fortunestreetdata.cpp" line="438"/>
         <source>Pharmacy</source>
-        <translation type="unfinished">Pharmacy</translation>
+        <translation type="obsolete">Pharmacy</translation>
     </message>
     <message>
-        <location filename="../fortunestreetdata.cpp" line="439"/>
         <source>Fish market</source>
-        <translation type="unfinished">Fish market</translation>
+        <translation type="obsolete">Fish market</translation>
     </message>
     <message>
-        <location filename="../fortunestreetdata.cpp" line="440"/>
         <source>Toy shop</source>
-        <translation type="unfinished">Toy shop</translation>
+        <translation type="obsolete">Toy shop</translation>
     </message>
     <message>
-        <location filename="../fortunestreetdata.cpp" line="441"/>
         <source>Bookshop</source>
-        <translation type="unfinished">Bookshop</translation>
+        <translation type="obsolete">Bookshop</translation>
     </message>
     <message>
-        <location filename="../fortunestreetdata.cpp" line="442"/>
         <source>Cosmetics boutique</source>
-        <translation type="unfinished">Cosmetics boutique</translation>
+        <translation type="obsolete">Cosmetics boutique</translation>
     </message>
     <message>
-        <location filename="../fortunestreetdata.cpp" line="443"/>
         <source>T-shirt shop</source>
-        <translation type="unfinished">T-shirt shop</translation>
+        <translation type="obsolete">T-shirt shop</translation>
     </message>
     <message>
-        <location filename="../fortunestreetdata.cpp" line="444"/>
         <source>Fruit stall</source>
-        <translation type="unfinished">Fruit stall</translation>
+        <translation type="obsolete">Fruit stall</translation>
     </message>
     <message>
-        <location filename="../fortunestreetdata.cpp" line="445"/>
         <source>Photography studio</source>
-        <translation type="unfinished">Photography studio</translation>
+        <translation type="obsolete">Photography studio</translation>
     </message>
     <message>
-        <location filename="../fortunestreetdata.cpp" line="446"/>
         <source>Coffee shop</source>
-        <translation type="unfinished">Coffee shop</translation>
+        <translation type="obsolete">Coffee shop</translation>
     </message>
     <message>
-        <location filename="../fortunestreetdata.cpp" line="447"/>
         <source>Butcher shop</source>
-        <translation type="unfinished">Butcher shop</translation>
+        <translation type="obsolete">Butcher shop</translation>
     </message>
     <message>
-        <location filename="../fortunestreetdata.cpp" line="448"/>
         <source>Restaurant</source>
-        <translation type="unfinished">Restaurant</translation>
+        <translation type="obsolete">Restaurant</translation>
     </message>
     <message>
-        <location filename="../fortunestreetdata.cpp" line="449"/>
         <source>Barbershop</source>
-        <translation type="unfinished">Barbershop</translation>
+        <translation type="obsolete">Barbershop</translation>
     </message>
     <message>
-        <location filename="../fortunestreetdata.cpp" line="450"/>
         <source>Hat boutique</source>
-        <translation type="unfinished">Hat boutique</translation>
+        <translation type="obsolete">Hat boutique</translation>
     </message>
     <message>
-        <location filename="../fortunestreetdata.cpp" line="451"/>
         <source>Hardware store</source>
-        <translation type="unfinished">Hardware store</translation>
+        <translation type="obsolete">Hardware store</translation>
     </message>
     <message>
-        <location filename="../fortunestreetdata.cpp" line="452"/>
         <source>Gift shop</source>
-        <translation type="unfinished">Gift shop</translation>
+        <translation type="obsolete">Gift shop</translation>
     </message>
     <message>
-        <location filename="../fortunestreetdata.cpp" line="453"/>
         <source>Launderette</source>
-        <translation type="unfinished">Launderette</translation>
+        <translation type="obsolete">Launderette</translation>
     </message>
     <message>
-        <location filename="../fortunestreetdata.cpp" line="454"/>
         <source>Shoe shop</source>
-        <translation type="unfinished">Shoe shop</translation>
+        <translation type="obsolete">Shoe shop</translation>
     </message>
     <message>
-        <location filename="../fortunestreetdata.cpp" line="455"/>
         <source>Clothing store</source>
-        <translation type="unfinished">Clothing store</translation>
+        <translation type="obsolete">Clothing store</translation>
     </message>
     <message>
-        <location filename="../fortunestreetdata.cpp" line="456"/>
         <source>Optician&apos;s</source>
-        <translation type="unfinished">Optician&apos;s</translation>
+        <translation type="obsolete">Optician&apos;s</translation>
     </message>
     <message>
-        <location filename="../fortunestreetdata.cpp" line="457"/>
         <source>Clockmaker&apos;s</source>
-        <translation type="unfinished">Clockmaker&apos;s</translation>
+        <translation type="obsolete">Clockmaker&apos;s</translation>
     </message>
     <message>
-        <location filename="../fortunestreetdata.cpp" line="458"/>
         <source>Furniture shop</source>
-        <translation type="unfinished">Furniture shop</translation>
+        <translation type="obsolete">Furniture shop</translation>
     </message>
     <message>
-        <location filename="../fortunestreetdata.cpp" line="459"/>
         <source>Sports shop</source>
-        <translation type="unfinished">Sports shop</translation>
+        <translation type="obsolete">Sports shop</translation>
     </message>
     <message>
-        <location filename="../fortunestreetdata.cpp" line="460"/>
         <source>Locksmith&apos;s</source>
-        <translation type="unfinished">Locksmith&apos;s</translation>
+        <translation type="obsolete">Locksmith&apos;s</translation>
     </message>
     <message>
-        <location filename="../fortunestreetdata.cpp" line="461"/>
         <source>Glassmaker&apos;s</source>
-        <translation type="unfinished">Glassmaker&apos;s</translation>
+        <translation type="obsolete">Glassmaker&apos;s</translation>
     </message>
     <message>
-        <location filename="../fortunestreetdata.cpp" line="462"/>
         <source>Sushi restaurant</source>
-        <translation type="unfinished">Sushi restaurant</translation>
+        <translation type="obsolete">Sushi restaurant</translation>
     </message>
     <message>
-        <location filename="../fortunestreetdata.cpp" line="463"/>
         <source>Art gallery</source>
-        <translation type="unfinished">Art gallery</translation>
+        <translation type="obsolete">Art gallery</translation>
     </message>
     <message>
-        <location filename="../fortunestreetdata.cpp" line="464"/>
         <source>Leatherware boutique</source>
-        <translation type="unfinished">Leatherware boutique</translation>
+        <translation type="obsolete">Leatherware boutique</translation>
     </message>
     <message>
-        <location filename="../fortunestreetdata.cpp" line="465"/>
         <source>Pet shop</source>
-        <translation type="unfinished">Pet shop</translation>
+        <translation type="obsolete">Pet shop</translation>
     </message>
     <message>
-        <location filename="../fortunestreetdata.cpp" line="466"/>
         <source>Nail salon</source>
-        <translation type="unfinished">Nail salon</translation>
+        <translation type="obsolete">Nail salon</translation>
     </message>
     <message>
-        <location filename="../fortunestreetdata.cpp" line="467"/>
         <source>Spice shop</source>
-        <translation type="unfinished">Spice shop</translation>
+        <translation type="obsolete">Spice shop</translation>
     </message>
     <message>
-        <location filename="../fortunestreetdata.cpp" line="468"/>
         <source>Music shop</source>
-        <translation type="unfinished">Music shop</translation>
+        <translation type="obsolete">Music shop</translation>
     </message>
     <message>
-        <location filename="../fortunestreetdata.cpp" line="469"/>
         <source>Surf shop</source>
-        <translation type="unfinished">Surf shop</translation>
+        <translation type="obsolete">Surf shop</translation>
     </message>
     <message>
-        <location filename="../fortunestreetdata.cpp" line="470"/>
         <source>Boating shop</source>
-        <translation type="unfinished">Boating shop</translation>
+        <translation type="obsolete">Boating shop</translation>
     </message>
     <message>
-        <location filename="../fortunestreetdata.cpp" line="471"/>
         <source>Cartographer&apos;s</source>
-        <translation type="unfinished">Cartographer&apos;s</translation>
+        <translation type="obsolete">Cartographer&apos;s</translation>
     </message>
     <message>
-        <location filename="../fortunestreetdata.cpp" line="472"/>
         <source>Alloy rims shop</source>
-        <translation type="unfinished">Alloy rims shop</translation>
+        <translation type="obsolete">Alloy rims shop</translation>
     </message>
     <message>
-        <location filename="../fortunestreetdata.cpp" line="473"/>
         <source>Fashion boutique</source>
-        <translation type="unfinished">Fashion boutique</translation>
+        <translation type="obsolete">Fashion boutique</translation>
     </message>
     <message>
-        <location filename="../fortunestreetdata.cpp" line="474"/>
         <source>Waxworks</source>
-        <translation type="unfinished">Waxworks</translation>
+        <translation type="obsolete">Waxworks</translation>
     </message>
     <message>
-        <location filename="../fortunestreetdata.cpp" line="475"/>
         <source>Lens shop</source>
-        <translation type="unfinished">Lens shop</translation>
+        <translation type="obsolete">Lens shop</translation>
     </message>
     <message>
-        <location filename="../fortunestreetdata.cpp" line="476"/>
         <source>Kaleidoscope shop</source>
-        <translation type="unfinished">Kaleidoscope shop</translation>
+        <translation type="obsolete">Kaleidoscope shop</translation>
     </message>
     <message>
-        <location filename="../fortunestreetdata.cpp" line="477"/>
         <source>Crystal ball shop</source>
-        <translation type="unfinished">Crystal ball shop</translation>
+        <translation type="obsolete">Crystal ball shop</translation>
     </message>
     <message>
-        <location filename="../fortunestreetdata.cpp" line="478"/>
         <source>Gemstone supplier</source>
-        <translation type="unfinished">Gemstone supplier</translation>
+        <translation type="obsolete">Gemstone supplier</translation>
     </message>
     <message>
-        <location filename="../fortunestreetdata.cpp" line="479"/>
         <source>Taxidermy studio</source>
-        <translation type="unfinished">Taxidermy studio</translation>
+        <translation type="obsolete">Taxidermy studio</translation>
     </message>
     <message>
-        <location filename="../fortunestreetdata.cpp" line="480"/>
         <source>Antiques dealer&apos;s</source>
-        <translation type="unfinished">Antiques dealer&apos;s</translation>
+        <translation type="obsolete">Antiques dealer&apos;s</translation>
     </message>
     <message>
-        <location filename="../fortunestreetdata.cpp" line="481"/>
         <source>Goldsmith&apos;s</source>
-        <translation type="unfinished">Goldsmith&apos;s</translation>
+        <translation type="obsolete">Goldsmith&apos;s</translation>
     </message>
     <message>
-        <location filename="../fortunestreetdata.cpp" line="482"/>
         <source>Fossil shop</source>
-        <translation type="unfinished">Fossil shop</translation>
+        <translation type="obsolete">Fossil shop</translation>
     </message>
     <message>
-        <location filename="../fortunestreetdata.cpp" line="483"/>
         <source>Music-box shop</source>
-        <translation type="unfinished">Music-box shop</translation>
+        <translation type="obsolete">Music-box shop</translation>
     </message>
     <message>
-        <location filename="../fortunestreetdata.cpp" line="484"/>
         <source>Marionette workshop</source>
-        <translation type="unfinished">Marionette workshop</translation>
+        <translation type="obsolete">Marionette workshop</translation>
     </message>
     <message>
-        <location filename="../fortunestreetdata.cpp" line="485"/>
         <source>Health shop</source>
-        <translation type="unfinished">Health shop</translation>
+        <translation type="obsolete">Health shop</translation>
     </message>
     <message>
-        <location filename="../fortunestreetdata.cpp" line="486"/>
         <source>Organic food shop</source>
-        <translation type="unfinished">Organic food shop</translation>
+        <translation type="obsolete">Organic food shop</translation>
     </message>
     <message>
-        <location filename="../fortunestreetdata.cpp" line="487"/>
         <source>Bridal boutique</source>
-        <translation type="unfinished">Bridal boutique</translation>
+        <translation type="obsolete">Bridal boutique</translation>
     </message>
     <message>
-        <location filename="../fortunestreetdata.cpp" line="488"/>
         <source>Autograph shop</source>
-        <translation type="unfinished">Autograph shop</translation>
+        <translation type="obsolete">Autograph shop</translation>
     </message>
     <message>
-        <location filename="../fortunestreetdata.cpp" line="489"/>
         <source>Meteorite shop</source>
-        <translation type="unfinished">Meteorite shop</translation>
+        <translation type="obsolete">Meteorite shop</translation>
     </message>
     <message>
-        <location filename="../fortunestreetdata.cpp" line="490"/>
         <source>Department store</source>
-        <translation type="unfinished">Department store</translation>
+        <translation type="obsolete">Department store</translation>
     </message>
 </context>
 <context>
@@ -829,9 +788,9 @@
     </message>
     <message>
         <location filename="../mainwindow.ui" line="432"/>
-        <location filename="../mainwindow.cpp" line="612"/>
-        <location filename="../mainwindow.cpp" line="627"/>
-        <location filename="../mainwindow.cpp" line="667"/>
+        <location filename="../mainwindow.cpp" line="610"/>
+        <location filename="../mainwindow.cpp" line="625"/>
+        <location filename="../mainwindow.cpp" line="665"/>
         <source>District ID</source>
         <translation>District ID</translation>
     </message>
@@ -947,6 +906,7 @@
     </message>
     <message>
         <location filename="../mainwindow.ui" line="1227"/>
+        <location filename="../mainwindow.cpp" line="964"/>
         <source>Clear All Waypoints</source>
         <translation>Clear All Waypoints</translation>
     </message>
@@ -1037,227 +997,246 @@ No for Magmalice lift</source>
         <translation>Tools</translation>
     </message>
     <message>
-        <location filename="../mainwindow.ui" line="1435"/>
+        <location filename="../mainwindow.ui" line="1447"/>
         <source>Help</source>
         <translation>Help</translation>
     </message>
     <message>
-        <location filename="../mainwindow.ui" line="1445"/>
+        <location filename="../mainwindow.ui" line="1457"/>
         <source>View</source>
         <translation>View</translation>
     </message>
     <message>
-        <location filename="../mainwindow.ui" line="1454"/>
+        <location filename="../mainwindow.ui" line="1466"/>
         <source>Select</source>
         <translation>Select</translation>
     </message>
     <message>
-        <location filename="../mainwindow.ui" line="1466"/>
+        <location filename="../mainwindow.ui" line="1478"/>
         <source>Edit</source>
         <translation>Edit</translation>
     </message>
     <message>
-        <location filename="../mainwindow.ui" line="1479"/>
+        <location filename="../mainwindow.ui" line="1491"/>
         <source>New</source>
         <translation>New</translation>
     </message>
     <message>
-        <location filename="../mainwindow.ui" line="1482"/>
+        <location filename="../mainwindow.ui" line="1494"/>
         <source>Ctrl+N</source>
         <translation>Ctrl+N</translation>
     </message>
     <message>
-        <location filename="../mainwindow.ui" line="1487"/>
+        <location filename="../mainwindow.ui" line="1499"/>
         <source>Open</source>
         <translation>Open</translation>
     </message>
     <message>
-        <location filename="../mainwindow.ui" line="1490"/>
+        <location filename="../mainwindow.ui" line="1502"/>
         <source>Ctrl+O</source>
         <translation>Ctrl+O</translation>
     </message>
     <message>
-        <location filename="../mainwindow.ui" line="1498"/>
+        <location filename="../mainwindow.ui" line="1510"/>
         <source>Save</source>
         <translation>Save</translation>
     </message>
     <message>
-        <location filename="../mainwindow.ui" line="1501"/>
+        <location filename="../mainwindow.ui" line="1513"/>
         <source>Ctrl+S</source>
         <translation>Ctrl+S</translation>
     </message>
     <message>
-        <location filename="../mainwindow.ui" line="1509"/>
+        <location filename="../mainwindow.ui" line="1521"/>
         <source>Save As</source>
         <translation>Save As</translation>
     </message>
     <message>
-        <location filename="../mainwindow.ui" line="1512"/>
+        <location filename="../mainwindow.ui" line="1524"/>
         <source>Ctrl+Shift+S</source>
         <translation>Ctrl+Shift+S</translation>
     </message>
     <message>
-        <location filename="../mainwindow.ui" line="1520"/>
+        <location filename="../mainwindow.ui" line="1532"/>
         <source>Verify Board</source>
         <translation>Verify Board</translation>
     </message>
     <message>
-        <location filename="../mainwindow.ui" line="1525"/>
+        <location filename="../mainwindow.ui" line="1421"/>
         <source>Auto-Path</source>
         <translation>Auto-Path</translation>
     </message>
     <message>
-        <location filename="../mainwindow.ui" line="1530"/>
+        <location filename="../mainwindow.ui" line="1428"/>
+        <source>Sync for Switch State</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../mainwindow.ui" line="1537"/>
+        <source>Entire Board</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../mainwindow.ui" line="1542"/>
         <source>Fortune Avenue Help</source>
         <translation>Fortune Avenue Help</translation>
     </message>
     <message>
-        <location filename="../mainwindow.ui" line="1535"/>
+        <location filename="../mainwindow.ui" line="1547"/>
         <source>Zoom In</source>
         <translation>Zoom In</translation>
     </message>
     <message>
-        <location filename="../mainwindow.ui" line="1538"/>
+        <location filename="../mainwindow.ui" line="1550"/>
         <source>Ctrl+Shift+=</source>
         <translation>Ctrl+Shift+=</translation>
     </message>
     <message>
-        <location filename="../mainwindow.ui" line="1543"/>
+        <location filename="../mainwindow.ui" line="1555"/>
         <source>Zoom Out</source>
         <translation>Zoom Out</translation>
     </message>
     <message>
-        <location filename="../mainwindow.ui" line="1546"/>
+        <location filename="../mainwindow.ui" line="1558"/>
         <source>Ctrl+-</source>
         <translation>Ctrl+-</translation>
     </message>
     <message>
-        <location filename="../mainwindow.ui" line="1557"/>
+        <location filename="../mainwindow.ui" line="1569"/>
         <source>Draw Axes</source>
         <translation>Draw Axes</translation>
     </message>
     <message>
-        <location filename="../mainwindow.ui" line="1560"/>
+        <location filename="../mainwindow.ui" line="1572"/>
         <source>Ctrl+K</source>
         <translation>Ctrl+K</translation>
     </message>
     <message>
-        <location filename="../mainwindow.ui" line="1568"/>
+        <location filename="../mainwindow.ui" line="1580"/>
         <source>Drag to Pan</source>
         <translation>Drag to Pan</translation>
     </message>
     <message>
-        <location filename="../mainwindow.ui" line="1571"/>
+        <location filename="../mainwindow.ui" line="1583"/>
         <source>Ctrl+D</source>
         <translation>Ctrl+D</translation>
     </message>
     <message>
-        <location filename="../mainwindow.ui" line="1576"/>
+        <location filename="../mainwindow.ui" line="1588"/>
         <source>Screenshot</source>
         <translation>Screenshot</translation>
     </message>
     <message>
-        <location filename="../mainwindow.ui" line="1581"/>
+        <location filename="../mainwindow.ui" line="1593"/>
         <source>Next</source>
         <translation>Next</translation>
     </message>
     <message>
-        <location filename="../mainwindow.ui" line="1584"/>
+        <location filename="../mainwindow.ui" line="1596"/>
         <source>PgUp</source>
         <translation>PgUp</translation>
     </message>
     <message>
-        <location filename="../mainwindow.ui" line="1589"/>
+        <location filename="../mainwindow.ui" line="1601"/>
         <source>Previous</source>
         <translation>Previous</translation>
     </message>
     <message>
-        <location filename="../mainwindow.ui" line="1592"/>
+        <location filename="../mainwindow.ui" line="1604"/>
         <source>PgDown</source>
         <translation>PgDown</translation>
     </message>
     <message>
-        <location filename="../mainwindow.ui" line="1597"/>
+        <location filename="../mainwindow.ui" line="1609"/>
         <source>Select All</source>
         <translation>Select All</translation>
     </message>
     <message>
-        <location filename="../mainwindow.ui" line="1600"/>
+        <location filename="../mainwindow.ui" line="1612"/>
         <source>Ctrl+A</source>
         <translation>Ctrl+A</translation>
     </message>
     <message>
-        <location filename="../mainwindow.ui" line="1605"/>
+        <location filename="../mainwindow.ui" line="1617"/>
         <source>Follow Waypoint Destination 1</source>
         <translation>Follow Waypoint Destination 1</translation>
     </message>
     <message>
-        <location filename="../mainwindow.ui" line="1608"/>
+        <location filename="../mainwindow.ui" line="1620"/>
         <source>Ctrl+1</source>
         <translation>Ctrl+1</translation>
     </message>
     <message>
-        <location filename="../mainwindow.ui" line="1613"/>
+        <location filename="../mainwindow.ui" line="1625"/>
         <source>Follow Waypoint Destination 2</source>
         <translation>Follow Waypoint Destination 2</translation>
     </message>
     <message>
-        <location filename="../mainwindow.ui" line="1616"/>
+        <location filename="../mainwindow.ui" line="1628"/>
         <source>Ctrl+2</source>
         <translation>Ctrl+2</translation>
     </message>
     <message>
-        <location filename="../mainwindow.ui" line="1621"/>
+        <location filename="../mainwindow.ui" line="1633"/>
         <source>Follow Waypoint Destination 3</source>
         <translation>Follow Waypoint Destination 3</translation>
     </message>
     <message>
-        <location filename="../mainwindow.ui" line="1624"/>
+        <location filename="../mainwindow.ui" line="1636"/>
         <source>Ctrl+3</source>
         <translation>Ctrl+3</translation>
     </message>
     <message>
-        <location filename="../mainwindow.ui" line="1629"/>
+        <location filename="../mainwindow.ui" line="1641"/>
         <source>Shop Price Auto-Calc Function</source>
         <translation>Shop Price Auto-Calc Function</translation>
     </message>
     <message>
-        <location filename="../mainwindow.ui" line="1634"/>
+        <location filename="../mainwindow.ui" line="1646"/>
         <source>District Simulator</source>
         <translation>District Simulator</translation>
     </message>
     <message>
-        <location filename="../mainwindow.ui" line="1642"/>
+        <location filename="../mainwindow.ui" line="1654"/>
         <source>Use Legacy Auto-Path</source>
         <translation>Use Legacy Auto-Path</translation>
     </message>
     <message>
-        <location filename="../mainwindow.ui" line="1650"/>
+        <location filename="../mainwindow.ui" line="1662"/>
         <source>Use Advanced Auto-Path</source>
         <translation>Use Advanced Auto-Path</translation>
     </message>
     <message>
-        <location filename="../mainwindow.ui" line="1655"/>
+        <location filename="../mainwindow.ui" line="1667"/>
         <source>Auto-Assign Shop Models</source>
         <translation>Auto-Assign Shop Models</translation>
     </message>
     <message>
-        <location filename="../mainwindow.ui" line="1660"/>
+        <location filename="../mainwindow.ui" line="1672"/>
         <source>Set Max Path Search Depth</source>
         <translation>Set Max Path Search Depth</translation>
     </message>
     <message>
-        <location filename="../mainwindow.ui" line="1665"/>
-        <source>Sync from Other Board for Switch State</source>
-        <translation>Sync from Other Board for Switch State</translation>
-    </message>
-    <message>
-        <location filename="../mainwindow.ui" line="1670"/>
-        <source>Sync to Other Board(s) for Switch State</source>
+        <location filename="../mainwindow.ui" line="1677"/>
+        <source>From Other Board</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../mainwindow.ui" line="1680"/>
+        <location filename="../mainwindow.ui" line="1682"/>
+        <source>To Other Board(s)</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../mainwindow.ui" line="1700"/>
+        <source>Selected Squares</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Sync from Other Board for Switch State</source>
+        <translation type="vanished">Sync from Other Board for Switch State</translation>
+    </message>
+    <message>
+        <location filename="../mainwindow.ui" line="1692"/>
         <source>Preferences...</source>
         <translation type="unfinished"></translation>
     </message>
@@ -1266,7 +1245,7 @@ No for Magmalice lift</source>
         <translation type="vanished">Sync to Other Board for Switch State</translation>
     </message>
     <message>
-        <location filename="../mainwindow.ui" line="1675"/>
+        <location filename="../mainwindow.ui" line="1687"/>
         <source>Exit</source>
         <translation>Exit</translation>
     </message>
@@ -1280,28 +1259,28 @@ No for Magmalice lift</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../mainwindow.cpp" line="129"/>
+        <location filename="../mainwindow.cpp" line="126"/>
         <source>Enter Function</source>
         <translation type="unfinished">Enter Function</translation>
     </message>
     <message>
-        <location filename="../mainwindow.cpp" line="129"/>
+        <location filename="../mainwindow.cpp" line="126"/>
         <source>Enter the shop price based on shop value function (x = shop value).
 Enter empty string to restore default.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../mainwindow.cpp" line="141"/>
+        <location filename="../mainwindow.cpp" line="138"/>
         <source>Error Function</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../mainwindow.cpp" line="149"/>
+        <location filename="../mainwindow.cpp" line="146"/>
         <source>Enter Search Depth</source>
         <translation type="unfinished">Enter Search Depth</translation>
     </message>
     <message>
-        <location filename="../mainwindow.cpp" line="149"/>
+        <location filename="../mainwindow.cpp" line="146"/>
         <source>Enter the max path search depth.
 
 This is only for demonstration purposes and does not have any ingame effect.
@@ -1311,127 +1290,162 @@ Enter 0 to restore game default behavior which is max(squareCount/3,16)</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../mainwindow.cpp" line="309"/>
+        <location filename="../mainwindow.cpp" line="165"/>
+        <source>Update Initial Cash</source>
+        <translation type="unfinished">Update Initial Cash</translation>
+    </message>
+    <message>
+        <location filename="../mainwindow.cpp" line="170"/>
+        <source>Update Base Salary</source>
+        <translation type="unfinished">Update Base Salary</translation>
+    </message>
+    <message>
+        <location filename="../mainwindow.cpp" line="175"/>
+        <source>Update Salary Increment</source>
+        <translation type="unfinished">Update Salary Increment</translation>
+    </message>
+    <message>
+        <location filename="../mainwindow.cpp" line="180"/>
+        <source>Update Max Dice Roll</source>
+        <translation type="unfinished">Update Max Dice Roll</translation>
+    </message>
+    <message>
+        <location filename="../mainwindow.cpp" line="185"/>
+        <source>Update Looping Mode</source>
+        <translation type="unfinished">Update Looping Mode</translation>
+    </message>
+    <message>
+        <location filename="../mainwindow.cpp" line="190"/>
+        <source>Update Autopath Range</source>
+        <translation type="unfinished">Update Autopath Range</translation>
+    </message>
+    <message>
+        <location filename="../mainwindow.cpp" line="195"/>
+        <source>Update Straight Line Tolerance</source>
+        <translation type="unfinished">Update Straight Line Tolerance</translation>
+    </message>
+    <message>
+        <location filename="../mainwindow.cpp" line="306"/>
         <source>Zoom: %1%</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../mainwindow.cpp" line="432"/>
+        <location filename="../mainwindow.cpp" line="430"/>
         <source>Fortune Avenue %1[*]</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../mainwindow.cpp" line="438"/>
-        <location filename="../mainwindow.cpp" line="548"/>
+        <location filename="../mainwindow.cpp" line="436"/>
+        <location filename="../mainwindow.cpp" line="546"/>
         <source>Open File</source>
         <translation type="unfinished">Open File</translation>
     </message>
     <message>
-        <location filename="../mainwindow.cpp" line="438"/>
-        <location filename="../mainwindow.cpp" line="472"/>
-        <location filename="../mainwindow.cpp" line="729"/>
-        <location filename="../mainwindow.cpp" line="733"/>
+        <location filename="../mainwindow.cpp" line="436"/>
+        <location filename="../mainwindow.cpp" line="470"/>
+        <location filename="../mainwindow.cpp" line="727"/>
+        <location filename="../mainwindow.cpp" line="731"/>
         <source>Fortune Street Boards (*.frb)</source>
         <translation type="unfinished">Fortune Street Boards (*.frb)</translation>
     </message>
     <message>
-        <location filename="../mainwindow.cpp" line="465"/>
-        <location filename="../mainwindow.cpp" line="492"/>
-        <location filename="../mainwindow.cpp" line="777"/>
-        <location filename="../mainwindow.cpp" line="786"/>
+        <location filename="../mainwindow.cpp" line="463"/>
+        <location filename="../mainwindow.cpp" line="490"/>
+        <location filename="../mainwindow.cpp" line="775"/>
+        <location filename="../mainwindow.cpp" line="784"/>
         <source>Error saving file</source>
         <translation type="unfinished">Error saving file</translation>
     </message>
     <message>
-        <location filename="../mainwindow.cpp" line="465"/>
-        <location filename="../mainwindow.cpp" line="492"/>
+        <location filename="../mainwindow.cpp" line="463"/>
+        <location filename="../mainwindow.cpp" line="490"/>
         <source>An error occurred while trying to save the file</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../mainwindow.cpp" line="472"/>
+        <location filename="../mainwindow.cpp" line="470"/>
         <source>Save File</source>
         <translation type="unfinished">Save File</translation>
     </message>
     <message>
-        <location filename="../mainwindow.cpp" line="486"/>
-        <location filename="../mainwindow.cpp" line="506"/>
+        <location filename="../mainwindow.cpp" line="484"/>
+        <location filename="../mainwindow.cpp" line="504"/>
         <source>Fortune Avenue %1 - %2[*]</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../mainwindow.cpp" line="514"/>
+        <location filename="../mainwindow.cpp" line="512"/>
         <source>Error opening file</source>
         <translation type="unfinished">Error opening file</translation>
     </message>
     <message>
-        <location filename="../mainwindow.cpp" line="514"/>
+        <location filename="../mainwindow.cpp" line="512"/>
         <source>An error occurred while trying to open the file</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../mainwindow.cpp" line="549"/>
+        <location filename="../mainwindow.cpp" line="547"/>
         <source>This file is version %1, but the latest version is version 3. Would you like to upgrade the file to the latest version?</source>
         <translation type="unfinished">This file is version %1, but the latest version is version 3. Would you like to upgrade the file to the latest version?</translation>
     </message>
     <message>
-        <location filename="../mainwindow.cpp" line="621"/>
+        <location filename="../mainwindow.cpp" line="619"/>
         <source>Destination ID</source>
         <translation type="unfinished">Destination ID</translation>
     </message>
     <message>
-        <location filename="../mainwindow.cpp" line="624"/>
+        <location filename="../mainwindow.cpp" line="622"/>
         <source>Venture Card ID</source>
         <translation type="unfinished">Venture Card ID</translation>
     </message>
     <message>
-        <location filename="../mainwindow.cpp" line="678"/>
+        <location filename="../mainwindow.cpp" line="676"/>
         <source>%1 selected</source>
         <translation type="unfinished">%1 selected</translation>
     </message>
     <message>
-        <location filename="../mainwindow.cpp" line="729"/>
+        <location filename="../mainwindow.cpp" line="727"/>
         <source>Choose Board File(s) to Sync To</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../mainwindow.cpp" line="733"/>
+        <location filename="../mainwindow.cpp" line="731"/>
         <source>Choose Board File to Sync From</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../mainwindow.cpp" line="744"/>
+        <location filename="../mainwindow.cpp" line="742"/>
         <source>Error opening file for sync</source>
         <translation type="unfinished">Error opening file for sync</translation>
     </message>
     <message>
-        <location filename="../mainwindow.cpp" line="744"/>
+        <location filename="../mainwindow.cpp" line="742"/>
         <source>Could not open file for sync</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../mainwindow.cpp" line="750"/>
-        <location filename="../mainwindow.cpp" line="757"/>
+        <location filename="../mainwindow.cpp" line="748"/>
+        <location filename="../mainwindow.cpp" line="755"/>
         <source>Error processing file for sync</source>
         <translation type="unfinished">Error processing file for sync</translation>
     </message>
     <message>
-        <location filename="../mainwindow.cpp" line="750"/>
+        <location filename="../mainwindow.cpp" line="748"/>
         <source>Corrupt .frb file</source>
         <translation type="unfinished">Corrupt .frb file</translation>
     </message>
     <message>
-        <location filename="../mainwindow.cpp" line="757"/>
+        <location filename="../mainwindow.cpp" line="755"/>
         <source>Number of squares in other file is not the same as this one</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../mainwindow.cpp" line="777"/>
+        <location filename="../mainwindow.cpp" line="775"/>
         <source>Could not open other file for saving</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../mainwindow.cpp" line="784"/>
+        <location filename="../mainwindow.cpp" line="782"/>
         <source>Could not save other board to: 
 
  %1 
@@ -1441,106 +1455,218 @@ Enter 0 to restore game default behavior which is max(squareCount/3,16)</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../mainwindow.cpp" line="809"/>
+        <location filename="../mainwindow.cpp" line="807"/>
         <source>Success!</source>
         <translation type="unfinished">Success!</translation>
     </message>
     <message>
-        <location filename="../mainwindow.cpp" line="809"/>
+        <location filename="../mainwindow.cpp" line="807"/>
         <source>Successfully synced data between board files.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../mainwindow.cpp" line="1156"/>
+        <location filename="../mainwindow.cpp" line="842"/>
+        <source>Connect Squares</source>
+        <translation type="unfinished">Connect Squares</translation>
+    </message>
+    <message>
+        <location filename="../mainwindow.cpp" line="881"/>
+        <source>Change Square Type</source>
+        <translation type="unfinished">Change Square Type</translation>
+    </message>
+    <message>
+        <location filename="../mainwindow.cpp" line="910"/>
+        <source>Change District/Destination ID</source>
+        <translation type="unfinished">Change District/Destination ID</translation>
+    </message>
+    <message>
+        <location filename="../mainwindow.cpp" line="922"/>
+        <source>Change Shop Model</source>
+        <translation type="unfinished">Change Shop Model</translation>
+    </message>
+    <message>
+        <location filename="../mainwindow.cpp" line="927"/>
+        <source>Change Shop Model ID</source>
+        <translation type="unfinished">Change Shop Model ID</translation>
+    </message>
+    <message>
+        <location filename="../mainwindow.cpp" line="938"/>
+        <source>Change Initial Shop Value</source>
+        <translation type="unfinished">Change Initial Shop Value</translation>
+    </message>
+    <message>
+        <location filename="../mainwindow.cpp" line="943"/>
+        <source>Change Initial Shop Price</source>
+        <translation type="unfinished">Change Initial Shop Price</translation>
+    </message>
+    <message>
+        <location filename="../mainwindow.cpp" line="948"/>
+        <source>Change Is Lift</source>
+        <translation type="unfinished">Change Is Lift</translation>
+    </message>
+    <message>
+        <location filename="../mainwindow.cpp" line="966"/>
+        <source>Clear Waypoint 1</source>
+        <translation type="unfinished">Clear Waypoint 1</translation>
+    </message>
+    <message>
+        <location filename="../mainwindow.cpp" line="967"/>
+        <source>Clear Waypoint 2</source>
+        <translation type="unfinished">Clear Waypoint 2</translation>
+    </message>
+    <message>
+        <location filename="../mainwindow.cpp" line="968"/>
+        <source>Clear Waypoint 3</source>
+        <translation type="unfinished">Clear Waypoint 3</translation>
+    </message>
+    <message>
+        <location filename="../mainwindow.cpp" line="969"/>
+        <source>Clear Waypoint 4</source>
+        <translation type="unfinished">Clear Waypoint 4</translation>
+    </message>
+    <message>
+        <location filename="../mainwindow.cpp" line="970"/>
+        <source>Sort Waypoints</source>
+        <translation type="unfinished">Sort Waypoints</translation>
+    </message>
+    <message>
+        <location filename="../mainwindow.cpp" line="1022"/>
+        <source>Toggle (Dis)allowed Direction</source>
+        <translation type="unfinished">Toggle (Dis)allowed Direction</translation>
+    </message>
+    <message>
+        <location filename="../mainwindow.cpp" line="1033"/>
+        <source>Reset Autopath Directions</source>
+        <translation type="unfinished">Reset Autopath Directions</translation>
+    </message>
+    <message>
+        <location filename="../mainwindow.cpp" line="1043"/>
+        <source>Allow All Directions</source>
+        <translation type="unfinished">Allow All Directions</translation>
+    </message>
+    <message>
+        <location filename="../mainwindow.cpp" line="1052"/>
+        <source>Disallow All Directions</source>
+        <translation type="unfinished">Disallow All Directions</translation>
+    </message>
+    <message>
+        <location filename="../mainwindow.cpp" line="1090"/>
+        <source>Update Waypoint</source>
+        <translation type="unfinished">Update Waypoint</translation>
+    </message>
+    <message>
+        <location filename="../mainwindow.cpp" line="1154"/>
         <source>District %1: %2g</source>
         <translation type="unfinished">District %1: %2g</translation>
     </message>
     <message>
-        <location filename="../mainwindow.cpp" line="1180"/>
+        <location filename="../mainwindow.cpp" line="1178"/>
         <source>Search Depth: %1</source>
         <translation type="unfinished">Search Depth: %1</translation>
     </message>
     <message>
-        <location filename="../mainwindow.cpp" line="1182"/>
+        <location filename="../mainwindow.cpp" line="1180"/>
         <source>Using Fixed Depth: %1</source>
         <translation type="unfinished">Using Fixed Depth: %1</translation>
     </message>
     <message>
-        <location filename="../mainwindow.cpp" line="1184"/>
+        <location filename="../mainwindow.cpp" line="1182"/>
         <source>Max Paths Square ID: %1</source>
         <translation type="unfinished">Max Paths Square ID: %1</translation>
     </message>
     <message>
-        <location filename="../mainwindow.cpp" line="1185"/>
+        <location filename="../mainwindow.cpp" line="1183"/>
         <source>Possible Paths: %1</source>
         <translation type="unfinished">Possible Paths: %1</translation>
     </message>
     <message>
-        <location filename="../mainwindow.cpp" line="1188"/>
+        <location filename="../mainwindow.cpp" line="1186"/>
         <source>Crash inevitable!</source>
         <translation type="unfinished">Crash inevitable!</translation>
     </message>
     <message>
-        <location filename="../mainwindow.cpp" line="1190"/>
+        <location filename="../mainwindow.cpp" line="1188"/>
         <source>Crash possible!</source>
         <translation type="unfinished">Crash possible!</translation>
     </message>
     <message>
-        <location filename="../mainwindow.cpp" line="1192"/>
+        <location filename="../mainwindow.cpp" line="1190"/>
         <source>Stuttering likely!</source>
         <translation type="unfinished">Stuttering likely!</translation>
     </message>
     <message>
-        <location filename="../mainwindow.cpp" line="1194"/>
+        <location filename="../mainwindow.cpp" line="1192"/>
         <source>Ok</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../mainwindow.cpp" line="1214"/>
+        <location filename="../mainwindow.cpp" line="1212"/>
+        <location filename="../mainwindow.cpp" line="1217"/>
         <location filename="../mainwindow.cpp" line="1219"/>
-        <location filename="../mainwindow.cpp" line="1221"/>
         <source>Verification</source>
         <translation type="unfinished">Verification</translation>
     </message>
     <message>
-        <location filename="../mainwindow.cpp" line="1214"/>
+        <location filename="../mainwindow.cpp" line="1212"/>
         <source>Board passed verification.</source>
         <translation type="unfinished">Board passed verification.</translation>
     </message>
     <message>
-        <location filename="../mainwindow.cpp" line="1216"/>
+        <location filename="../mainwindow.cpp" line="1214"/>
         <source>%1 error(s) and %2 warning(s):
 </source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../mainwindow.cpp" line="1236"/>
+        <location filename="../mainwindow.cpp" line="1250"/>
+        <location filename="../mainwindow.cpp" line="1261"/>
+        <location filename="../mainwindow.cpp" line="1284"/>
         <source>Auto-pathing</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../mainwindow.cpp" line="1236"/>
-        <source>Auto-pathed entire map</source>
+        <location filename="../mainwindow.cpp" line="1250"/>
+        <source>Successfully auto-pathed the entire board.</source>
+        <translation type="unfinished">Successfully auto-pathed the entire board.</translation>
+    </message>
+    <message>
+        <location filename="../mainwindow.cpp" line="1253"/>
+        <source>Autopath</source>
+        <translation type="unfinished">Autopath</translation>
+    </message>
+    <message>
+        <location filename="../mainwindow.cpp" line="1261"/>
+        <source>Nothing to auto-path! No squares are selected.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../mainwindow.cpp" line="1286"/>
+        <location filename="../mainwindow.cpp" line="1284"/>
+        <source>Successfully auto-pathed the selected squares.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../mainwindow.cpp" line="1287"/>
+        <source>Autopath Selected Squares</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../mainwindow.cpp" line="1309"/>
+        <source>Assign Shop Models</source>
+        <translation type="unfinished">Assign Shop Models</translation>
+    </message>
+    <message>
+        <location filename="../mainwindow.cpp" line="1335"/>
         <source>Unsaved Changes</source>
         <translation type="unfinished">Unsaved Changes</translation>
     </message>
     <message>
-        <location filename="../mainwindow.cpp" line="1286"/>
+        <location filename="../mainwindow.cpp" line="1335"/>
         <source>You have unsaved changes. Do you want to save them?</source>
         <translation type="unfinished">You have unsaved changes. Do you want to save them?</translation>
     </message>
 </context>
 <context>
     <name>PreferencesDialog</name>
-    <message>
-        <location filename="../preferencesdialog.ui" line="14"/>
-        <source>Dialog</source>
-        <translation type="unfinished"></translation>
-    </message>
     <message>
         <location filename="../preferencesdialog.ui" line="29"/>
         <source>Window Palette</source>
@@ -1562,8 +1688,23 @@ Enter 0 to restore game default behavior which is max(squareCount/3,16)</source>
         <translation>Use Palette Highlight Color</translation>
     </message>
     <message>
-        <location filename="../preferencesdialog.ui" line="122"/>
+        <location filename="../preferencesdialog.ui" line="125"/>
         <source>Display Language</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../preferencesdialog.ui" line="137"/>
+        <source>Auto-Path</source>
+        <translation type="unfinished">Auto-Path</translation>
+    </message>
+    <message>
+        <location filename="../preferencesdialog.ui" line="143"/>
+        <source>Use Advanced Auto-Pathing System</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../preferencesdialog.ui" line="150"/>
+        <source>Auto-Path Selected: Add Entry IDs to nearby squares</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
@@ -1571,7 +1712,8 @@ Enter 0 to restore game default behavior which is max(squareCount/3,16)</source>
         <translation type="vanished">Language</translation>
     </message>
     <message>
-        <location filename="../preferencesdialog.cpp" line="24"/>
+        <location filename="../preferencesdialog.ui" line="14"/>
+        <location filename="../preferencesdialog.cpp" line="25"/>
         <source>Preferences</source>
         <translation type="unfinished">Preferences</translation>
     </message>
@@ -1938,6 +2080,349 @@ Enter 0 to restore game default behavior which is max(squareCount/3,16)</source>
     </message>
 </context>
 <context>
+    <name>ShopNames</name>
+    <message>
+        <location filename="../fortunestreetdata.cpp" line="423"/>
+        <source>Scrap-paper shop</source>
+        <translation type="unfinished">Scrap-paper shop</translation>
+    </message>
+    <message>
+        <location filename="../fortunestreetdata.cpp" line="424"/>
+        <source>Wool shop</source>
+        <translation type="unfinished">Wool shop</translation>
+    </message>
+    <message>
+        <location filename="../fortunestreetdata.cpp" line="425"/>
+        <source>Bottle store</source>
+        <translation type="unfinished">Bottle store</translation>
+    </message>
+    <message>
+        <location filename="../fortunestreetdata.cpp" line="426"/>
+        <source>Secondhand book shop</source>
+        <translation type="unfinished">Secondhand book shop</translation>
+    </message>
+    <message>
+        <location filename="../fortunestreetdata.cpp" line="427"/>
+        <source>Scrap-metal supplier</source>
+        <translation type="unfinished">Scrap-metal supplier</translation>
+    </message>
+    <message>
+        <location filename="../fortunestreetdata.cpp" line="428"/>
+        <source>Stationery shop</source>
+        <translation type="unfinished">Stationery shop</translation>
+    </message>
+    <message>
+        <location filename="../fortunestreetdata.cpp" line="429"/>
+        <source>General store</source>
+        <translation type="unfinished">General store</translation>
+    </message>
+    <message>
+        <location filename="../fortunestreetdata.cpp" line="430"/>
+        <source>Florist&apos;s</source>
+        <translation type="unfinished">Florist&apos;s</translation>
+    </message>
+    <message>
+        <location filename="../fortunestreetdata.cpp" line="431"/>
+        <source>Ice-cream shop</source>
+        <translation type="unfinished">Ice-cream shop</translation>
+    </message>
+    <message>
+        <location filename="../fortunestreetdata.cpp" line="432"/>
+        <source>Comic-book shop</source>
+        <translation type="unfinished">Comic-book shop</translation>
+    </message>
+    <message>
+        <location filename="../fortunestreetdata.cpp" line="433"/>
+        <source>Dairy</source>
+        <translation type="unfinished">Dairy</translation>
+    </message>
+    <message>
+        <location filename="../fortunestreetdata.cpp" line="434"/>
+        <source>Doughnut shop</source>
+        <translation type="unfinished">Doughnut shop</translation>
+    </message>
+    <message>
+        <location filename="../fortunestreetdata.cpp" line="435"/>
+        <source>Pizza shack</source>
+        <translation type="unfinished">Pizza shack</translation>
+    </message>
+    <message>
+        <location filename="../fortunestreetdata.cpp" line="436"/>
+        <source>Bakery</source>
+        <translation type="unfinished">Bakery</translation>
+    </message>
+    <message>
+        <location filename="../fortunestreetdata.cpp" line="437"/>
+        <source>Grocery store</source>
+        <translation type="unfinished">Grocery store</translation>
+    </message>
+    <message>
+        <location filename="../fortunestreetdata.cpp" line="438"/>
+        <source>Pharmacy</source>
+        <translation type="unfinished">Pharmacy</translation>
+    </message>
+    <message>
+        <location filename="../fortunestreetdata.cpp" line="439"/>
+        <source>Fish market</source>
+        <translation type="unfinished">Fish market</translation>
+    </message>
+    <message>
+        <location filename="../fortunestreetdata.cpp" line="440"/>
+        <source>Toy shop</source>
+        <translation type="unfinished">Toy shop</translation>
+    </message>
+    <message>
+        <location filename="../fortunestreetdata.cpp" line="441"/>
+        <source>Bookshop</source>
+        <translation type="unfinished">Bookshop</translation>
+    </message>
+    <message>
+        <location filename="../fortunestreetdata.cpp" line="442"/>
+        <source>Cosmetics boutique</source>
+        <translation type="unfinished">Cosmetics boutique</translation>
+    </message>
+    <message>
+        <location filename="../fortunestreetdata.cpp" line="443"/>
+        <source>T-shirt shop</source>
+        <translation type="unfinished">T-shirt shop</translation>
+    </message>
+    <message>
+        <location filename="../fortunestreetdata.cpp" line="444"/>
+        <source>Fruit stall</source>
+        <translation type="unfinished">Fruit stall</translation>
+    </message>
+    <message>
+        <location filename="../fortunestreetdata.cpp" line="445"/>
+        <source>Photography studio</source>
+        <translation type="unfinished">Photography studio</translation>
+    </message>
+    <message>
+        <location filename="../fortunestreetdata.cpp" line="446"/>
+        <source>Coffee shop</source>
+        <translation type="unfinished">Coffee shop</translation>
+    </message>
+    <message>
+        <location filename="../fortunestreetdata.cpp" line="447"/>
+        <source>Butcher shop</source>
+        <translation type="unfinished">Butcher shop</translation>
+    </message>
+    <message>
+        <location filename="../fortunestreetdata.cpp" line="448"/>
+        <source>Restaurant</source>
+        <translation type="unfinished">Restaurant</translation>
+    </message>
+    <message>
+        <location filename="../fortunestreetdata.cpp" line="449"/>
+        <source>Barbershop</source>
+        <translation type="unfinished">Barbershop</translation>
+    </message>
+    <message>
+        <location filename="../fortunestreetdata.cpp" line="450"/>
+        <source>Hat boutique</source>
+        <translation type="unfinished">Hat boutique</translation>
+    </message>
+    <message>
+        <location filename="../fortunestreetdata.cpp" line="451"/>
+        <source>Hardware store</source>
+        <translation type="unfinished">Hardware store</translation>
+    </message>
+    <message>
+        <location filename="../fortunestreetdata.cpp" line="452"/>
+        <source>Gift shop</source>
+        <translation type="unfinished">Gift shop</translation>
+    </message>
+    <message>
+        <location filename="../fortunestreetdata.cpp" line="453"/>
+        <source>Launderette</source>
+        <translation type="unfinished">Launderette</translation>
+    </message>
+    <message>
+        <location filename="../fortunestreetdata.cpp" line="454"/>
+        <source>Shoe shop</source>
+        <translation type="unfinished">Shoe shop</translation>
+    </message>
+    <message>
+        <location filename="../fortunestreetdata.cpp" line="455"/>
+        <source>Clothing store</source>
+        <translation type="unfinished">Clothing store</translation>
+    </message>
+    <message>
+        <location filename="../fortunestreetdata.cpp" line="456"/>
+        <source>Optician&apos;s</source>
+        <translation type="unfinished">Optician&apos;s</translation>
+    </message>
+    <message>
+        <location filename="../fortunestreetdata.cpp" line="457"/>
+        <source>Clockmaker&apos;s</source>
+        <translation type="unfinished">Clockmaker&apos;s</translation>
+    </message>
+    <message>
+        <location filename="../fortunestreetdata.cpp" line="458"/>
+        <source>Furniture shop</source>
+        <translation type="unfinished">Furniture shop</translation>
+    </message>
+    <message>
+        <location filename="../fortunestreetdata.cpp" line="459"/>
+        <source>Sports shop</source>
+        <translation type="unfinished">Sports shop</translation>
+    </message>
+    <message>
+        <location filename="../fortunestreetdata.cpp" line="460"/>
+        <source>Locksmith&apos;s</source>
+        <translation type="unfinished">Locksmith&apos;s</translation>
+    </message>
+    <message>
+        <location filename="../fortunestreetdata.cpp" line="461"/>
+        <source>Glassmaker&apos;s</source>
+        <translation type="unfinished">Glassmaker&apos;s</translation>
+    </message>
+    <message>
+        <location filename="../fortunestreetdata.cpp" line="462"/>
+        <source>Sushi restaurant</source>
+        <translation type="unfinished">Sushi restaurant</translation>
+    </message>
+    <message>
+        <location filename="../fortunestreetdata.cpp" line="463"/>
+        <source>Art gallery</source>
+        <translation type="unfinished">Art gallery</translation>
+    </message>
+    <message>
+        <location filename="../fortunestreetdata.cpp" line="464"/>
+        <source>Leatherware boutique</source>
+        <translation type="unfinished">Leatherware boutique</translation>
+    </message>
+    <message>
+        <location filename="../fortunestreetdata.cpp" line="465"/>
+        <source>Pet shop</source>
+        <translation type="unfinished">Pet shop</translation>
+    </message>
+    <message>
+        <location filename="../fortunestreetdata.cpp" line="466"/>
+        <source>Nail salon</source>
+        <translation type="unfinished">Nail salon</translation>
+    </message>
+    <message>
+        <location filename="../fortunestreetdata.cpp" line="467"/>
+        <source>Spice shop</source>
+        <translation type="unfinished">Spice shop</translation>
+    </message>
+    <message>
+        <location filename="../fortunestreetdata.cpp" line="468"/>
+        <source>Music shop</source>
+        <translation type="unfinished">Music shop</translation>
+    </message>
+    <message>
+        <location filename="../fortunestreetdata.cpp" line="469"/>
+        <source>Surf shop</source>
+        <translation type="unfinished">Surf shop</translation>
+    </message>
+    <message>
+        <location filename="../fortunestreetdata.cpp" line="470"/>
+        <source>Boating shop</source>
+        <translation type="unfinished">Boating shop</translation>
+    </message>
+    <message>
+        <location filename="../fortunestreetdata.cpp" line="471"/>
+        <source>Cartographer&apos;s</source>
+        <translation type="unfinished">Cartographer&apos;s</translation>
+    </message>
+    <message>
+        <location filename="../fortunestreetdata.cpp" line="472"/>
+        <source>Alloy rims shop</source>
+        <translation type="unfinished">Alloy rims shop</translation>
+    </message>
+    <message>
+        <location filename="../fortunestreetdata.cpp" line="473"/>
+        <source>Fashion boutique</source>
+        <translation type="unfinished">Fashion boutique</translation>
+    </message>
+    <message>
+        <location filename="../fortunestreetdata.cpp" line="474"/>
+        <source>Waxworks</source>
+        <translation type="unfinished">Waxworks</translation>
+    </message>
+    <message>
+        <location filename="../fortunestreetdata.cpp" line="475"/>
+        <source>Lens shop</source>
+        <translation type="unfinished">Lens shop</translation>
+    </message>
+    <message>
+        <location filename="../fortunestreetdata.cpp" line="476"/>
+        <source>Kaleidoscope shop</source>
+        <translation type="unfinished">Kaleidoscope shop</translation>
+    </message>
+    <message>
+        <location filename="../fortunestreetdata.cpp" line="477"/>
+        <source>Crystal ball shop</source>
+        <translation type="unfinished">Crystal ball shop</translation>
+    </message>
+    <message>
+        <location filename="../fortunestreetdata.cpp" line="478"/>
+        <source>Gemstone supplier</source>
+        <translation type="unfinished">Gemstone supplier</translation>
+    </message>
+    <message>
+        <location filename="../fortunestreetdata.cpp" line="479"/>
+        <source>Taxidermy studio</source>
+        <translation type="unfinished">Taxidermy studio</translation>
+    </message>
+    <message>
+        <location filename="../fortunestreetdata.cpp" line="480"/>
+        <source>Antiques dealer&apos;s</source>
+        <translation type="unfinished">Antiques dealer&apos;s</translation>
+    </message>
+    <message>
+        <location filename="../fortunestreetdata.cpp" line="481"/>
+        <source>Goldsmith&apos;s</source>
+        <translation type="unfinished">Goldsmith&apos;s</translation>
+    </message>
+    <message>
+        <location filename="../fortunestreetdata.cpp" line="482"/>
+        <source>Fossil shop</source>
+        <translation type="unfinished">Fossil shop</translation>
+    </message>
+    <message>
+        <location filename="../fortunestreetdata.cpp" line="483"/>
+        <source>Music-box shop</source>
+        <translation type="unfinished">Music-box shop</translation>
+    </message>
+    <message>
+        <location filename="../fortunestreetdata.cpp" line="484"/>
+        <source>Marionette workshop</source>
+        <translation type="unfinished">Marionette workshop</translation>
+    </message>
+    <message>
+        <location filename="../fortunestreetdata.cpp" line="485"/>
+        <source>Health shop</source>
+        <translation type="unfinished">Health shop</translation>
+    </message>
+    <message>
+        <location filename="../fortunestreetdata.cpp" line="486"/>
+        <source>Organic food shop</source>
+        <translation type="unfinished">Organic food shop</translation>
+    </message>
+    <message>
+        <location filename="../fortunestreetdata.cpp" line="487"/>
+        <source>Bridal boutique</source>
+        <translation type="unfinished">Bridal boutique</translation>
+    </message>
+    <message>
+        <location filename="../fortunestreetdata.cpp" line="488"/>
+        <source>Autograph shop</source>
+        <translation type="unfinished">Autograph shop</translation>
+    </message>
+    <message>
+        <location filename="../fortunestreetdata.cpp" line="489"/>
+        <source>Meteorite shop</source>
+        <translation type="unfinished">Meteorite shop</translation>
+    </message>
+    <message>
+        <location filename="../fortunestreetdata.cpp" line="490"/>
+        <source>Department store</source>
+        <translation type="unfinished">Department store</translation>
+    </message>
+</context>
+<context>
     <name>Square Types</name>
     <message>
         <source>Property</source>
@@ -2074,6 +2559,187 @@ Enter 0 to restore game default behavior which is max(squareCount/3,16)</source>
     <message>
         <source>Vacant Plot</source>
         <translation type="vanished">Vacant Plot</translation>
+    </message>
+</context>
+<context>
+    <name>SquareTypes</name>
+    <message>
+        <location filename="../fortunestreetdata.cpp" line="386"/>
+        <source>Property</source>
+        <translation type="unfinished">Property</translation>
+    </message>
+    <message>
+        <location filename="../fortunestreetdata.cpp" line="387"/>
+        <source>Bank</source>
+        <translation type="unfinished">Bank</translation>
+    </message>
+    <message>
+        <location filename="../fortunestreetdata.cpp" line="388"/>
+        <source>Venture</source>
+        <translation type="unfinished">Venture</translation>
+    </message>
+    <message>
+        <location filename="../fortunestreetdata.cpp" line="389"/>
+        <source>Spade</source>
+        <translation type="unfinished">Spade</translation>
+    </message>
+    <message>
+        <location filename="../fortunestreetdata.cpp" line="390"/>
+        <source>Heart</source>
+        <translation type="unfinished">Heart</translation>
+    </message>
+    <message>
+        <location filename="../fortunestreetdata.cpp" line="391"/>
+        <source>Diamond</source>
+        <translation type="unfinished">Diamond</translation>
+    </message>
+    <message>
+        <location filename="../fortunestreetdata.cpp" line="392"/>
+        <source>Club</source>
+        <translation type="unfinished">Club</translation>
+    </message>
+    <message>
+        <location filename="../fortunestreetdata.cpp" line="393"/>
+        <source>Spade (Change-of-Suit)</source>
+        <translation type="unfinished">Spade (Change-of-Suit)</translation>
+    </message>
+    <message>
+        <location filename="../fortunestreetdata.cpp" line="394"/>
+        <source>Heart (Change-of-Suit)</source>
+        <translation type="unfinished">Heart (Change-of-Suit)</translation>
+    </message>
+    <message>
+        <location filename="../fortunestreetdata.cpp" line="395"/>
+        <source>Diamond (Change-of-Suit)</source>
+        <translation type="unfinished">Diamond (Change-of-Suit)</translation>
+    </message>
+    <message>
+        <location filename="../fortunestreetdata.cpp" line="396"/>
+        <source>Club (Change-of-Suit)</source>
+        <translation type="unfinished">Club (Change-of-Suit)</translation>
+    </message>
+    <message>
+        <location filename="../fortunestreetdata.cpp" line="397"/>
+        <source>Take-A-Break</source>
+        <translation type="unfinished">Take-A-Break</translation>
+    </message>
+    <message>
+        <location filename="../fortunestreetdata.cpp" line="398"/>
+        <source>Boon</source>
+        <translation type="unfinished">Boon</translation>
+    </message>
+    <message>
+        <location filename="../fortunestreetdata.cpp" line="399"/>
+        <source>Boom</source>
+        <translation type="unfinished">Boom</translation>
+    </message>
+    <message>
+        <location filename="../fortunestreetdata.cpp" line="400"/>
+        <source>Stockbroker</source>
+        <translation type="unfinished">Stockbroker</translation>
+    </message>
+    <message>
+        <location filename="../fortunestreetdata.cpp" line="401"/>
+        <source>Roll On</source>
+        <translation type="unfinished">Roll On</translation>
+    </message>
+    <message>
+        <location filename="../fortunestreetdata.cpp" line="402"/>
+        <source>Arcade</source>
+        <translation type="unfinished">Arcade</translation>
+    </message>
+    <message>
+        <location filename="../fortunestreetdata.cpp" line="403"/>
+        <source>Switch</source>
+        <translation type="unfinished">Switch</translation>
+    </message>
+    <message>
+        <location filename="../fortunestreetdata.cpp" line="404"/>
+        <source>Cannon</source>
+        <translation type="unfinished">Cannon</translation>
+    </message>
+    <message>
+        <location filename="../fortunestreetdata.cpp" line="405"/>
+        <source>Backstreet A</source>
+        <translation type="unfinished">Backstreet A</translation>
+    </message>
+    <message>
+        <location filename="../fortunestreetdata.cpp" line="406"/>
+        <source>Backstreet B</source>
+        <translation type="unfinished">Backstreet B</translation>
+    </message>
+    <message>
+        <location filename="../fortunestreetdata.cpp" line="407"/>
+        <source>Backstreet C</source>
+        <translation type="unfinished">Backstreet C</translation>
+    </message>
+    <message>
+        <location filename="../fortunestreetdata.cpp" line="408"/>
+        <source>Backstreet D</source>
+        <translation type="unfinished">Backstreet D</translation>
+    </message>
+    <message>
+        <location filename="../fortunestreetdata.cpp" line="409"/>
+        <source>Backstreet E</source>
+        <translation type="unfinished">Backstreet E</translation>
+    </message>
+    <message>
+        <location filename="../fortunestreetdata.cpp" line="410"/>
+        <source>One-Way Alley Door A</source>
+        <translation type="unfinished">One-Way Alley Door A</translation>
+    </message>
+    <message>
+        <location filename="../fortunestreetdata.cpp" line="411"/>
+        <source>One-Way Alley Door B</source>
+        <translation type="unfinished">One-Way Alley Door B</translation>
+    </message>
+    <message>
+        <location filename="../fortunestreetdata.cpp" line="412"/>
+        <source>One-Way Alley Door C</source>
+        <translation type="unfinished">One-Way Alley Door C</translation>
+    </message>
+    <message>
+        <location filename="../fortunestreetdata.cpp" line="413"/>
+        <source>One-Way Alley Door D</source>
+        <translation type="unfinished">One-Way Alley Door D</translation>
+    </message>
+    <message>
+        <location filename="../fortunestreetdata.cpp" line="414"/>
+        <source>Lift/Magmalice Start</source>
+        <translation type="unfinished">Lift/Magmalice Start</translation>
+    </message>
+    <message>
+        <location filename="../fortunestreetdata.cpp" line="415"/>
+        <source>Lift End</source>
+        <translation type="unfinished">Lift End</translation>
+    </message>
+    <message>
+        <location filename="../fortunestreetdata.cpp" line="416"/>
+        <source>Magmalice</source>
+        <translation type="unfinished">Magmalice</translation>
+    </message>
+    <message>
+        <location filename="../fortunestreetdata.cpp" line="417"/>
+        <source>One-Way Alley End</source>
+        <translation type="unfinished">One-Way Alley End</translation>
+    </message>
+    <message>
+        <location filename="../fortunestreetdata.cpp" line="418"/>
+        <source>Event</source>
+        <translation type="unfinished">Event</translation>
+    </message>
+    <message>
+        <location filename="../fortunestreetdata.cpp" line="419"/>
+        <source>Vacant Plot</source>
+        <translation type="unfinished">Vacant Plot</translation>
+    </message>
+</context>
+<context>
+    <name>UserSettings</name>
+    <message>
+        <location filename="../usersettings.h" line="128"/>
+        <source>Failed to create JSON document from data</source>
+        <translation type="unfinished"></translation>
     </message>
 </context>
 <context>

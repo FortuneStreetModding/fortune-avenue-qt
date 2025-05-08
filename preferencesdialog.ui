@@ -6,12 +6,12 @@
    <rect>
     <x>0</x>
     <y>0</y>
-    <width>363</width>
-    <height>310</height>
+    <width>531</width>
+    <height>437</height>
    </rect>
   </property>
   <property name="windowTitle">
-   <string>Dialog</string>
+   <string>Preferences</string>
   </property>
   <property name="sizeGripEnabled">
    <bool>false</bool>
@@ -116,16 +116,39 @@
         </layout>
        </widget>
       </item>
+     </layout>
+    </widget>
+   </item>
+   <item>
+    <widget class="QGroupBox" name="programLanguageGroupBox">
+     <property name="title">
+      <string>Display Language</string>
+     </property>
+     <layout class="QHBoxLayout" name="horizontalLayout_5">
       <item>
-       <widget class="QGroupBox" name="programLanguageGroupBox">
-        <property name="title">
-         <string>Display Language</string>
+       <widget class="QComboBox" name="languageComboBox"/>
+      </item>
+     </layout>
+    </widget>
+   </item>
+   <item>
+    <widget class="QGroupBox" name="autoPathGroupBox">
+     <property name="title">
+      <string>Auto-Path</string>
+     </property>
+     <layout class="QVBoxLayout" name="verticalLayout_3">
+      <item>
+       <widget class="QCheckBox" name="useAdvancedAutoPathingSystemCheckbox">
+        <property name="text">
+         <string>Use Advanced Auto-Pathing System</string>
         </property>
-        <layout class="QHBoxLayout" name="horizontalLayout_5">
-         <item>
-          <widget class="QComboBox" name="languageComboBox"/>
-         </item>
-        </layout>
+       </widget>
+      </item>
+      <item>
+       <widget class="QCheckBox" name="autoPathSelectedShouldAddEntryIdsToNearbySquaresCheckBox">
+        <property name="text">
+         <string>Auto-Path Selected: Add Entry IDs to nearby squares</string>
+        </property>
        </widget>
       </item>
      </layout>

@@ -1422,7 +1422,6 @@ No for Magmalice lift</string>
      </property>
      <addaction name="actionAuto_Path"/>
      <addaction name="actionAuto_Path_Selected_Squares"/>
-     <addaction name="actionUse_Advanced_Auto_Path"/>
     </widget>
     <widget class="QMenu" name="menuSync_for_Switch_State">
      <property name="title">

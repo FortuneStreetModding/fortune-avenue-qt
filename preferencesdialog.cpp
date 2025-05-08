@@ -14,6 +14,7 @@
 #include <QStyleFactory>
 #include <QSettings>
 #include "usersettings.h"
+#include "mainwindow.h"
 
 PreferencesDialog::PreferencesDialog(QWidget *parent)
 : QDialog(parent)
@@ -36,6 +37,11 @@ PreferencesDialog::PreferencesDialog(QWidget *parent)
     QLocale locale(localeCode);
 
     rebuildLanguageComboBox();
+
+    bool shouldUseAdvancedAutoPath = settings.value("use_advanced_auto_path", false).toBool();
+    bool autoPathSelectedShouldAddEntryIdsToNearbySquares = settings.value("autopath_selected_should_add_entry_ids_to_nearby_squares", false).toBool();
+    ui->useAdvancedAutoPathingSystemCheckbox->setChecked(shouldUseAdvancedAutoPath);
+    ui->autoPathSelectedShouldAddEntryIdsToNearbySquaresCheckBox->setChecked(autoPathSelectedShouldAddEntryIdsToNearbySquares);
 
     int currentLanguageIndex = ui->languageComboBox->findText(locale.nativeLanguageName());
     if(currentLanguageIndex == -1){
@@ -60,6 +66,14 @@ PreferencesDialog::PreferencesDialog(QWidget *parent)
         QLocale locale(selectedLanguage);
 
         qInfo() << QString("language changed to %1").arg(QLocale::languageToString(locale.language()));
+    });
+
+    connect(ui->useAdvancedAutoPathingSystemCheckbox, &QCheckBox::stateChanged, this, [this](bool value){
+        toggleAdvancedAutoPath(value);
+    });
+
+    connect(ui->autoPathSelectedShouldAddEntryIdsToNearbySquaresCheckBox, &QCheckBox::stateChanged, this, [this](bool value){
+        toggleAutoPathSelectedShouldAddEntryIdsToNearbySquares(value);
     });
 }
 
@@ -148,6 +162,21 @@ void PreferencesDialog::usePaletteHighlightColorCheckboxStatusChanged(int status
     QJsonObject palette = getSavedUserWindowPalette();
     setChosenPalette(palette, useHighlightColors);
     saveUserWindowPalette(palette.value("name").toString(), palette, useHighlightColors);
+}
+
+void PreferencesDialog::toggleAdvancedAutoPath(int status)
+{
+    bool boolStatus = status;
+    QSettings settings;
+    settings.setValue("use_advanced_auto_path", boolStatus);
+    emit advancedAutoPathChanged();
+}
+
+void PreferencesDialog::toggleAutoPathSelectedShouldAddEntryIdsToNearbySquares(int status)
+{
+    bool boolStatus = status;
+    QSettings settings;
+    settings.setValue("autopath_selected_should_add_entry_ids_to_nearby_squares", boolStatus);
 }
 
 void PreferencesDialog::changeEvent(QEvent *event)
