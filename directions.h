@@ -1,9 +1,15 @@
 #ifndef DIRECTIONS_H
 #define DIRECTIONS_H
 
+#include "qobject.h"
 #include <QString>
 
 namespace AutoPath {
+
+class Directions : public QObject
+{
+    Q_OBJECT
+};
 
 enum Direction {
     North, South, West, East, Northwest, Northeast, Southwest, Southeast,
@@ -52,21 +58,21 @@ inline int getYOffset(Direction dir) {
 inline QString getDirectionName(Direction dir) {
     switch (dir) {
     case North:
-        return "north";
+        return Directions::tr("north");
     case Northwest:
-        return "northwest";
+        return Directions::tr("northwest");
     case Northeast:
-        return "northeast";
+        return Directions::tr("northeast");
     case South:
-        return "south";
+        return Directions::tr("south");
     case Southwest:
-        return "southwest";
+        return Directions::tr("southwest");
     case Southeast:
-        return "southeast";
+        return Directions::tr("southeast");
     case West:
-        return "west";
+        return Directions::tr("west");
     case East:
-        return "east";
+        return Directions::tr("east");
     default:
         return "";
     }

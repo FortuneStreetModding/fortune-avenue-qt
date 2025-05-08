@@ -125,7 +125,7 @@ inline QJsonDocument readJsonFile(QString path, QString fileName) {
     QByteArray jsonData = file.readAll();
     QJsonDocument doc = QJsonDocument::fromJson(jsonData);
     if (doc.isNull()) {
-        qDebug() << "Failed to create JSON document from data";
+        qDebug() << UserSettings::tr("Failed to create JSON document from data");
     }
     file.close();
     return doc;

@@ -8,9 +8,19 @@
 #include "directions.h"
 #include "qobject.h"
 
-// this class is used only for the purposes for the translation, so the text
-// can be classified according to this class
+// these classes are used only for the purposes for the translation, so the text
+// can be classified according to them
 class FortuneStreetData : public QObject
+{
+    Q_OBJECT
+};
+
+class ShopNames : public QObject
+{
+    Q_OBJECT
+};
+
+class SquareTypes : public QObject
 {
     Q_OBJECT
 };

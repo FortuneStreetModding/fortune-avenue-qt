@@ -4,7 +4,7 @@
 
 SquareAddCmd::SquareAddCmd(FortuneAvenueGraphicsScene *scene, const std::function<void (SquareItem *)> &updateFn) : scene(scene), updateFn(updateFn)
 {
-    setText("Add Square");
+    setText(FortuneAvenueGraphicsScene::tr("Add Square"));
 }
 
 void SquareAddCmd::undo()
