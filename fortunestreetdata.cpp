@@ -236,18 +236,18 @@ void BoardFile::verify(QStringList &errors, QStringList &warnings) {
     int highestDistrict = -1;
 
     if (boardData.squares.size() < 3) {
-        errors << "Board must have at least 3 squares.";
+        errors << FortuneStreetData::tr("Board must have at least 3 squares.");
     }
     if (boardData.squares.size() > 86) {
-        errors << "Board must have a maximum of 86 squares.";
+        errors << FortuneStreetData::tr("Board must have a maximum of 86 squares.");
     }
     if (boardInfo.maxDiceRoll < 1 || boardInfo.maxDiceRoll > 9) {
-        errors << "Maximum dice roll must be between 1 and 9 inclusive.";
+        errors << FortuneStreetData::tr("Maximum dice roll must be between 1 and 9 inclusive.");
     }
     for (auto &square: boardData.squares) {
         if (square.squareType == Property || square.squareType == VacantPlot) {
             if (square.districtDestinationId >= 12) {
-                warnings << QString("Square %1 has district value %2. Maximum is 11.").arg(square.id).arg(square.districtDestinationId);
+                warnings << QString(FortuneStreetData::tr("Square %1 has district value %2. Maximum is 11.")).arg(square.id).arg(square.districtDestinationId);
             } else {
                 ++districtCount[square.districtDestinationId];
                 highestDistrict = qMax(highestDistrict, (int)square.districtDestinationId);
@@ -265,7 +265,7 @@ void BoardFile::verify(QStringList &errors, QStringList &warnings) {
         // ensure the ID set on a Switch Square is not 94 or higher
         if (square.squareType == SwitchSquare){
             if(square.districtDestinationId > 93){
-                errors << "The Board State ID of all Switch Squares must be 93 or lower.";
+                errors << FortuneStreetData::tr("The Board State ID of all Switch Squares must be 93 or lower.");
             }
         }
 
@@ -273,7 +273,7 @@ void BoardFile::verify(QStringList &errors, QStringList &warnings) {
         if (square.squareType == LiftMagmaliceSquareStart){
             // if it doesn't exist
             if(square.districtDestinationId > boardData.squares.size()){
-                errors << QString("The destination square of Lift/Magmalice Start square with ID %1 was not found.").arg(square.id);
+                errors << QString(FortuneStreetData::tr("The destination square of Lift/Magmalice Start square with ID %1 was not found.")).arg(square.id);
             } else {
                 SquareData &destSquare = boardData.squares[square.districtDestinationId];
 
@@ -281,7 +281,7 @@ void BoardFile::verify(QStringList &errors, QStringList &warnings) {
                 if(destSquare.squareType == MagmaliceSquare || destSquare.squareType == LiftSquareEnd){
                     // do nothing
                 } else {
-                    errors << QString("The destination of Lift/Magmalice Start square with ID %1 is not a Magmalice square or a Lift End square.").arg(square.id);
+                    errors << QString(FortuneStreetData::tr("The destination of Lift/Magmalice Start square with ID %1 is not a Magmalice square or a Lift End square.")).arg(square.id);
                 }
             }
         }
@@ -290,12 +290,12 @@ void BoardFile::verify(QStringList &errors, QStringList &warnings) {
         if (square.squareType == MagmaliceSquare || square.squareType == LiftSquareEnd){
             // if it doesn't exist
             if(square.districtDestinationId > boardData.squares.size()){
-                errors << QString("The destination of Magmalice square with ID %1 was not found.").arg(square.id);
+                errors << QString(FortuneStreetData::tr("The destination of Magmalice square with ID %1 was not found.")).arg(square.id);
             } else {
                 SquareData &destSquare = boardData.squares[square.districtDestinationId];
                 // if the destination square is not a Lift/Magmalice Start square
                 if(destSquare.squareType != LiftMagmaliceSquareStart){
-                    errors << QString("The destination of Magmalice square with ID %1 is not a Lift/Magmalice Start square.").arg(square.id);
+                    errors << QString(FortuneStreetData::tr("The destination of Magmalice square with ID %1 is not a Lift/Magmalice Start square.")).arg(square.id);
                 }
             }
         }
@@ -303,14 +303,14 @@ void BoardFile::verify(QStringList &errors, QStringList &warnings) {
         // if all of a square's waypoints have undefined Entry IDs
         auto waypoints = square.waypoints;
         if(waypoints[0].entryId == 255 && waypoints[1].entryId == 255 && waypoints[2].entryId == 255 && waypoints[3].entryId == 255){
-            warnings << QString("All of the waypoint entry IDs for Square ID %1 are undefined.").arg(square.id);
+            warnings << QString(FortuneStreetData::tr("All of the waypoint entry IDs for Square ID %1 are undefined.")).arg(square.id);
         }
 
         QSet<quint8> destinations;
         for (int i=0; i<4; ++i) {
             if (square.waypoints[i].entryId > boardData.squares.size()) {
                 if (square.waypoints[i].entryId != 255) {
-                    errors << QString("Starting square of Waypoint %1 of Square %2 is Square %3 which does not exist")
+                    errors << QString(FortuneStreetData::tr("Starting square of Waypoint %1 of Square %2 is Square %3 which does not exist"))
                               .arg(i+1).arg(square.id).arg(square.waypoints[i].entryId);
                 } else {
                     // Since this waypoint has an entry point of 255, we ignore it entirely.
@@ -320,7 +320,7 @@ void BoardFile::verify(QStringList &errors, QStringList &warnings) {
                 auto &otherSquare = boardData.squares[square.waypoints[i].entryId];
                 if (qAbs(square.positionX - otherSquare.positionX) > 96
                         || qAbs(square.positionY - otherSquare.positionY) > 96) {
-                    warnings << QString("Starting square of Waypoint %1 of Square %2 is Square %3 which is too far")
+                    warnings << QString(FortuneStreetData::tr("Starting square of Waypoint %1 of Square %2 is Square %3 which is too far"))
                               .arg(i+1).arg(square.id).arg(square.waypoints[i].entryId);
                 }
             }
@@ -334,7 +334,7 @@ void BoardFile::verify(QStringList &errors, QStringList &warnings) {
                     square.waypoints[i].destinations[2] == 255 &&
                     square.waypoints[i].destinations[3] == 255){
 
-                    warnings << QString("All destinations for waypoint %1 of Square ID %2 are undefined.").arg(i).arg(square.id);
+                    warnings << QString(FortuneStreetData::tr("All destinations for waypoint %1 of Square ID %2 are undefined.")).arg(i).arg(square.id);
                 }
             }
 
@@ -344,14 +344,14 @@ void BoardFile::verify(QStringList &errors, QStringList &warnings) {
 
                 if (dest > boardData.squares.size()) {
                     if (dest != 255) {
-                        errors << QString("Destination square #%4 of Waypoint %1 of Square %2 is Square %3 which does not exist")
+                        errors << QString(FortuneStreetData::tr("Destination square #%4 of Waypoint %1 of Square %2 is Square %3 which does not exist"))
                                   .arg(i+1).arg(square.id).arg(dest).arg(j+1);
                     }
                 } else {
                     auto &otherSquare = boardData.squares[dest];
                     if (qAbs(square.positionX - otherSquare.positionX) > 96
                             || qAbs(square.positionY - otherSquare.positionY) > 96) {
-                        warnings << QString("Destination square #%4 of Waypoint %1 of Square %2 is Square %3 which is too far")
+                        warnings << QString(FortuneStreetData::tr("Destination square #%4 of Waypoint %1 of Square %2 is Square %3 which is too far"))
                                   .arg(i+1).arg(square.id).arg(dest).arg(j+1);
                     }
                     if (otherSquare.squareType == OneWayAlleySquare &&
@@ -359,7 +359,7 @@ void BoardFile::verify(QStringList &errors, QStringList &warnings) {
                             square.squareType != OneWayAlleyDoorB &&
                             square.squareType != OneWayAlleyDoorC &&
                             square.squareType != OneWayAlleyDoorD) {
-                        warnings << QString("Destination square #%4 of Waypoint %1 of Square %2 is Square %3 which is a One Way Alley Square")
+                        warnings << QString(FortuneStreetData::tr("Destination square #%4 of Waypoint %1 of Square %2 is Square %3 which is a One Way Alley Square"))
                                   .arg(i+1).arg(square.id).arg(dest).arg(j+1);
                     }
                 }
@@ -368,126 +368,126 @@ void BoardFile::verify(QStringList &errors, QStringList &warnings) {
 
         destinations.remove(255);
         if (destinations.size() > 4) {
-            errors << QString("Square %1 has %2 destinations, which is more than the maximum of 4.")
+            errors << QString(FortuneStreetData::tr("Square %1 has %2 destinations, which is more than the maximum of 4."))
                       .arg(square.id).arg(destinations.size());
         }
     }
 
     for (int i=0; i<=highestDistrict; ++i) {
         if (districtCount[i] == 0) {
-            errors << QString("Did you skip District %1 when assigning districts?").arg(i);
+            errors << QString(FortuneStreetData::tr("Did you skip District %1 when assigning districts?")).arg(i);
         } else if (districtCount[i] > 7) {
-            errors << QString("District %1 has %2 shops which is more than the maximum of 7").arg(i).arg(districtCount[i]);
+            errors << QString(FortuneStreetData::tr("District %1 has %2 shops which is more than the maximum of 7")).arg(i).arg(districtCount[i]);
         }
     }
 }
 
 OrderedMap<QString, SquareType> textToSquareTypes = {
-    {"Property", Property},
-    {"Bank", Bank},
-    {"Venture", VentureSquare},
-    {"Spade", SuitSquareSpade},
-    {"Heart", SuitSquareHeart},
-    {"Diamond", SuitSquareDiamond},
-    {"Club", SuitSquareClub},
-    {"Spade (Change-of-Suit)", ChangeOfSuitSquareSpade},
-    {"Heart (Change-of-Suit)", ChangeOfSuitSquareHeart},
-    {"Diamond (Change-of-Suit)", ChangeOfSuitSquareDiamond},
-    {"Club (Change-of-Suit)", ChangeOfSuitSquareClub},
-    {"Take-A-Break", TakeABreakSquare},
-    {"Boon", BoonSquare},
-    {"Boom", BoomSquare},
-    {"Stockbroker", StockBrokerSquare},
-    {"Roll On", RollOnSquare},
-    {"Arcade", ArcadeSquare},
-    {"Switch", SwitchSquare},
-    {"Cannon", CannonSquare},
-    {"Backstreet A", BackStreetSquareA},
-    {"Backstreet B", BackStreetSquareB},
-    {"Backstreet C", BackStreetSquareC},
-    {"Backstreet D", BackStreetSquareD},
-    {"Backstreet E", BackStreetSquareE},
-    {"One-Way Alley Door A", OneWayAlleyDoorA},
-    {"One-Way Alley Door B", OneWayAlleyDoorB},
-    {"One-Way Alley Door C", OneWayAlleyDoorC},
-    {"One-Way Alley Door D", OneWayAlleyDoorD},
-    {"Lift/Magmalice Start", LiftMagmaliceSquareStart},
-    {"Lift End", LiftSquareEnd},
-    {"Magmalice", MagmaliceSquare},
-    {"One-Way Alley End", OneWayAlleySquare},
-    {"Event", EventSquare},
-    {"Vacant Plot", VacantPlot}
+    {SquareTypes::tr("Property"), Property},
+    {SquareTypes::tr("Bank"), Bank},
+    {SquareTypes::tr("Venture"), VentureSquare},
+    {SquareTypes::tr("Spade"), SuitSquareSpade},
+    {SquareTypes::tr("Heart"), SuitSquareHeart},
+    {SquareTypes::tr("Diamond"), SuitSquareDiamond},
+    {SquareTypes::tr("Club"), SuitSquareClub},
+    {SquareTypes::tr("Spade (Change-of-Suit)"), ChangeOfSuitSquareSpade},
+    {SquareTypes::tr("Heart (Change-of-Suit)"), ChangeOfSuitSquareHeart},
+    {SquareTypes::tr("Diamond (Change-of-Suit)"), ChangeOfSuitSquareDiamond},
+    {SquareTypes::tr("Club (Change-of-Suit)"), ChangeOfSuitSquareClub},
+    {SquareTypes::tr("Take-A-Break"), TakeABreakSquare},
+    {SquareTypes::tr("Boon"), BoonSquare},
+    {SquareTypes::tr("Boom"), BoomSquare},
+    {SquareTypes::tr("Stockbroker"), StockBrokerSquare},
+    {SquareTypes::tr("Roll On"), RollOnSquare},
+    {SquareTypes::tr("Arcade"), ArcadeSquare},
+    {SquareTypes::tr("Switch"), SwitchSquare},
+    {SquareTypes::tr("Cannon"), CannonSquare},
+    {SquareTypes::tr("Backstreet A"), BackStreetSquareA},
+    {SquareTypes::tr("Backstreet B"), BackStreetSquareB},
+    {SquareTypes::tr("Backstreet C"), BackStreetSquareC},
+    {SquareTypes::tr("Backstreet D"), BackStreetSquareD},
+    {SquareTypes::tr("Backstreet E"), BackStreetSquareE},
+    {SquareTypes::tr("One-Way Alley Door A"), OneWayAlleyDoorA},
+    {SquareTypes::tr("One-Way Alley Door B"), OneWayAlleyDoorB},
+    {SquareTypes::tr("One-Way Alley Door C"), OneWayAlleyDoorC},
+    {SquareTypes::tr("One-Way Alley Door D"), OneWayAlleyDoorD},
+    {SquareTypes::tr("Lift/Magmalice Start"), LiftMagmaliceSquareStart},
+    {SquareTypes::tr("Lift End"), LiftSquareEnd},
+    {SquareTypes::tr("Magmalice"), MagmaliceSquare},
+    {SquareTypes::tr("One-Way Alley End"), OneWayAlleySquare},
+    {SquareTypes::tr("Event"), EventSquare},
+    {SquareTypes::tr("Vacant Plot"), VacantPlot}
 };
 OrderedMap<QString, quint8> textToShopTypes = {
     {"",0},
-    {"Scrap-paper shop",5},
-    {"Wool shop",6},
-    {"Bottle store",7},
-    {"Secondhand book shop",8},
-    {"Scrap-metal supplier",9},
-    {"Stationery shop",10},
-    {"General store",11},
-    {"Florist's",12},
-    {"Ice-cream shop",13},
-    {"Comic-book shop",14},
-    {"Dairy",15},
-    {"Doughnut shop",16},
-    {"Pizza shack",17},
-    {"Bakery",18},
-    {"Grocery store",19},
-    {"Pharmacy",20},
-    {"Fish market",21},
-    {"Toy shop",22},
-    {"Bookshop",23},
-    {"Cosmetics boutique",24},
-    {"T-shirt shop",25},
-    {"Fruit stall",26},
-    {"Photography studio",27},
-    {"Coffee shop",28},
-    {"Butcher shop",29},
-    {"Restaurant",30},
-    {"Barbershop",31},
-    {"Hat boutique",32},
-    {"Hardware store",33},
-    {"Gift shop",34},
-    {"Launderette",35},
-    {"Shoe shop",36},
-    {"Clothing store",37},
-    {"Optician's",38},
-    {"Clockmaker's",39},
-    {"Furniture shop",40},
-    {"Sports shop",41},
-    {"Locksmith's",42},
-    {"Glassmaker's",43},
-    {"Sushi restaurant",44},
-    {"Art gallery",45},
-    {"Leatherware boutique",46},
-    {"Pet shop",47},
-    {"Nail salon",48},
-    {"Spice shop",49},
-    {"Music shop",50},
-    {"Surf shop",51},
-    {"Boating shop",52},
-    {"Cartographer's",53},
-    {"Alloy rims shop",54},
-    {"Fashion boutique",55},
-    {"Waxworks",56},
-    {"Lens shop",57},
-    {"Kaleidoscope shop",58},
-    {"Crystal ball shop",59},
-    {"Gemstone supplier",61},
-    {"Taxidermy studio",62},
-    {"Antiques dealer's",65},
-    {"Goldsmith's",68},
-    {"Fossil shop",70},
-    {"Music-box shop",72},
-    {"Marionette workshop",75},
-    {"Health shop",76},
-    {"Organic food shop",80},
-    {"Bridal boutique",81},
-    {"Autograph shop",85},
-    {"Meteorite shop",90},
-    {"Department store",98}
+    {ShopNames::tr("Scrap-paper shop"),5},
+    {ShopNames::tr("Wool shop"),6},
+    {ShopNames::tr("Bottle store"),7},
+    {ShopNames::tr("Secondhand book shop"),8},
+    {ShopNames::tr("Scrap-metal supplier"),9},
+    {ShopNames::tr("Stationery shop"),10},
+    {ShopNames::tr("General store"),11},
+    {ShopNames::tr("Florist's"),12},
+    {ShopNames::tr("Ice-cream shop"),13},
+    {ShopNames::tr("Comic-book shop"),14},
+    {ShopNames::tr("Dairy"),15},
+    {ShopNames::tr("Doughnut shop"),16},
+    {ShopNames::tr("Pizza shack"),17},
+    {ShopNames::tr("Bakery"),18},
+    {ShopNames::tr("Grocery store"),19},
+    {ShopNames::tr("Pharmacy"),20},
+    {ShopNames::tr("Fish market"),21},
+    {ShopNames::tr("Toy shop"),22},
+    {ShopNames::tr("Bookshop"),23},
+    {ShopNames::tr("Cosmetics boutique"),24},
+    {ShopNames::tr("T-shirt shop"),25},
+    {ShopNames::tr("Fruit stall"),26},
+    {ShopNames::tr("Photography studio"),27},
+    {ShopNames::tr("Coffee shop"),28},
+    {ShopNames::tr("Butcher shop"),29},
+    {ShopNames::tr("Restaurant"),30},
+    {ShopNames::tr("Barbershop"),31},
+    {ShopNames::tr("Hat boutique"),32},
+    {ShopNames::tr("Hardware store"),33},
+    {ShopNames::tr("Gift shop"),34},
+    {ShopNames::tr("Launderette"),35},
+    {ShopNames::tr("Shoe shop"),36},
+    {ShopNames::tr("Clothing store"),37},
+    {ShopNames::tr("Optician's"),38},
+    {ShopNames::tr("Clockmaker's"),39},
+    {ShopNames::tr("Furniture shop"),40},
+    {ShopNames::tr("Sports shop"),41},
+    {ShopNames::tr("Locksmith's"),42},
+    {ShopNames::tr("Glassmaker's"),43},
+    {ShopNames::tr("Sushi restaurant"),44},
+    {ShopNames::tr("Art gallery"),45},
+    {ShopNames::tr("Leatherware boutique"),46},
+    {ShopNames::tr("Pet shop"),47},
+    {ShopNames::tr("Nail salon"),48},
+    {ShopNames::tr("Spice shop"),49},
+    {ShopNames::tr("Music shop"),50},
+    {ShopNames::tr("Surf shop"),51},
+    {ShopNames::tr("Boating shop"),52},
+    {ShopNames::tr("Cartographer's"),53},
+    {ShopNames::tr("Alloy rims shop"),54},
+    {ShopNames::tr("Fashion boutique"),55},
+    {ShopNames::tr("Waxworks"),56},
+    {ShopNames::tr("Lens shop"),57},
+    {ShopNames::tr("Kaleidoscope shop"),58},
+    {ShopNames::tr("Crystal ball shop"),59},
+    {ShopNames::tr("Gemstone supplier"),61},
+    {ShopNames::tr("Taxidermy studio"),62},
+    {ShopNames::tr("Antiques dealer's"),65},
+    {ShopNames::tr("Goldsmith's"),68},
+    {ShopNames::tr("Fossil shop"),70},
+    {ShopNames::tr("Music-box shop"),72},
+    {ShopNames::tr("Marionette workshop"),75},
+    {ShopNames::tr("Health shop"),76},
+    {ShopNames::tr("Organic food shop"),80},
+    {ShopNames::tr("Bridal boutique"),81},
+    {ShopNames::tr("Autograph shop"),85},
+    {ShopNames::tr("Meteorite shop"),90},
+    {ShopNames::tr("Department store"),98}
 };
 
 QString squareTypeToText(SquareType type) {

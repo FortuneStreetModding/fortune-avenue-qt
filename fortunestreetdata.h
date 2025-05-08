@@ -6,6 +6,24 @@
 #include <QVector>
 #include <array>
 #include "directions.h"
+#include "qobject.h"
+
+// these classes are used only for the purposes for the translation, so the text
+// can be classified according to them
+class FortuneStreetData : public QObject
+{
+    Q_OBJECT
+};
+
+class ShopNames : public QObject
+{
+    Q_OBJECT
+};
+
+class SquareTypes : public QObject
+{
+    Q_OBJECT
+};
 
 struct WaypointData {
     quint8 entryId = 255;

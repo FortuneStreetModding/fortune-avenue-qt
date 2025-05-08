@@ -9,6 +9,7 @@
 // by Cong Ma, 2016
 //
 
+#include <iostream>
 #include <stdlib.h>
 #include <cfloat> // for DBL_MAX
 #include <cmath>  // for fabs()
