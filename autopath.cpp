@@ -245,70 +245,53 @@ bool canConnectSquareTypes(SquareType squareType1, SquareType squareType2) {
     }
 }
 
-void connect(SquareData &square1, SquareData &square2) {
+void connect(SquareData &square1, SquareData &square2, bool onlyPathSelected, bool square1InSelected, bool square2InSelected) {
     if(!canConnectSquareTypes(square1.squareType, square2.squareType)) {
         return;
     }
-    // Find a free entry id in square 2
-    int square2FreeEntryId = -1;
-    for (int i=0; i<4; ++i) {
-        bool square1IdInDestinations = std::any_of(std::begin(square2.waypoints[i].destinations), std::end(square2.waypoints[i].destinations), [&](int i) { return i == square1.id; });
-        if(square2.waypoints[i].entryId == 255 && square2FreeEntryId == -1 && !square1IdInDestinations) {
-            square2FreeEntryId = i;
-        }
-        if(square2.waypoints[i].entryId == square1.id) {
-            square2FreeEntryId = i;
-            break;
-        }
-    }
-    if(square2FreeEntryId != -1) {
-        QSet<int> destinations;
-        // Collect all other destinations in square2
+    if(!onlyPathSelected || square2InSelected){
+        // Find a free entry id in square 2
+        int square2FreeEntryId = -1;
         for (int i=0; i<4; ++i) {
-            for(int j=0; j<3; j++) {
-                int destination = square2.waypoints[i].destinations[j];
-                if(destination != 255 && destination != square1.id) {
-                    destinations.insert(destination);
-                }
+            bool square1IdInDestinations = std::any_of(std::begin(square2.waypoints[i].destinations), std::end(square2.waypoints[i].destinations), [&](int i) { return i == square1.id; });
+            if(square2.waypoints[i].entryId == 255 && square2FreeEntryId == -1 && !square1IdInDestinations) {
+                square2FreeEntryId = i;
+            }
+            if(square2.waypoints[i].entryId == square1.id) {
+                square2FreeEntryId = i;
+                break;
             }
         }
-        // add the square1 id as entry
-        square2.waypoints[square2FreeEntryId].entryId = square1.id;
-        // add the other destinations to it
-        int destinationIndex = 0;
-        for(int destination : destinations) {
-            if(destination != square1.id && destinationIndex < 3) {
-                square2.waypoints[square2FreeEntryId].destinations[destinationIndex] = destination;
-                destinationIndex++;
-            }
-        }
-    }
-    // add the square2 id to all destinations in square1
-    bool hasAdded = false;
-    for (int i=0; i<4; ++i) {
-        if(square1.waypoints[i].entryId != 255 && square1.waypoints[i].entryId != square2.id) {
-            // do not add the destination if it already exists
-            auto waypoint = square1.waypoints[i];
-            bool square2IdInDestinations = std::any_of(std::begin(waypoint.destinations), std::end(waypoint.destinations), [&](int i) { return i == square2.id; });
-            if(square2IdInDestinations) {
-                 hasAdded = true;
-            } else {
+        if(square2FreeEntryId != -1) {
+            QSet<int> destinations;
+            // Collect all other destinations in square2
+            for (int i=0; i<4; ++i) {
                 for(int j=0; j<3; j++) {
-                    int destination = square1.waypoints[i].destinations[j];
-                    if(destination == 255) {
-                        square1.waypoints[i].destinations[j] = square2.id;
-                        hasAdded = true;
-                        break;
+                    int destination = square2.waypoints[i].destinations[j];
+                    if(destination != 255 && destination != square1.id) {
+                        destinations.insert(destination);
                     }
                 }
             }
+            // add the square1 id as entry
+            square2.waypoints[square2FreeEntryId].entryId = square1.id;
+            // add the other destinations to it
+            int destinationIndex = 0;
+            for(int destination : destinations) {
+                if(destination != square1.id && destinationIndex < 3) {
+                    square2.waypoints[square2FreeEntryId].destinations[destinationIndex] = destination;
+                    destinationIndex++;
+                }
+            }
         }
     }
-    // if it was not possible to add the square2 id as destination in square1, then there is no entry ids defined yet.
-    // -> lets force add it somewhere
-    if(!hasAdded) {
+
+    if(!onlyPathSelected || square1InSelected){
+        // add the square2 id to all destinations in square1
+        bool hasAdded = false;
         for (int i=0; i<4; ++i) {
-            if(square1.waypoints[i].entryId == 255) {
+            if(square1.waypoints[i].entryId != 255 && square1.waypoints[i].entryId != square2.id) {
+                // do not add the destination if it already exists
                 auto waypoint = square1.waypoints[i];
                 bool square2IdInDestinations = std::any_of(std::begin(waypoint.destinations), std::end(waypoint.destinations), [&](int i) { return i == square2.id; });
                 if(square2IdInDestinations) {
@@ -324,8 +307,30 @@ void connect(SquareData &square1, SquareData &square2) {
                     }
                 }
             }
-            if(hasAdded)
-                break;
+        }
+        // if it was not possible to add the square2 id as destination in square1, then there is no entry ids defined yet.
+        // -> lets force add it somewhere
+        if(!hasAdded) {
+            for (int i=0; i<4; ++i) {
+                if(square1.waypoints[i].entryId == 255) {
+                    auto waypoint = square1.waypoints[i];
+                    bool square2IdInDestinations = std::any_of(std::begin(waypoint.destinations), std::end(waypoint.destinations), [&](int i) { return i == square2.id; });
+                    if(square2IdInDestinations) {
+                         hasAdded = true;
+                    } else {
+                        for(int j=0; j<3; j++) {
+                            int destination = square1.waypoints[i].destinations[j];
+                            if(destination == 255) {
+                                square1.waypoints[i].destinations[j] = square2.id;
+                                hasAdded = true;
+                                break;
+                            }
+                        }
+                    }
+                }
+                if(hasAdded)
+                    break;
+            }
         }
     }
 }
@@ -421,15 +426,28 @@ void kruskalDfsAutoPathAlgorithm(const QVector<SquareItem *> &allSquares, const 
         auto& square = squareItem->getData();
         auto& otherSquare = otherSquareItem->getData();
 
+        auto square1Selected = selectedSquares.contains(squareItem);
+        auto square2Selected = selectedSquares.contains(otherSquareItem);
+
+        //TODO: make this configurable
+        bool pathSurroundingSquaresToo = false;
         if(pathSelectedOnly){
-            if(selectedSquares.contains(squareItem) || selectedSquares.contains(otherSquareItem)){
-                connect(square, otherSquare);
-                connect(otherSquare, square);
+            if(!pathSurroundingSquaresToo){
+                connect(square, otherSquare, pathSelectedOnly, square1Selected, square2Selected);
+                connect(otherSquare, square, pathSelectedOnly, square2Selected, square1Selected);
+            }
+            else{
+                if(square1Selected || square2Selected){
+                    // if pathSurroundingSquaresToo is true, we want to treat the edge as
+                    // though both squares are selected.
+                    connect(square, otherSquare, false, true, true);
+                    connect(otherSquare, square, false, true, true);
+                }
             }
         }
         else{
-            connect(square, otherSquare);
-            connect(otherSquare, square);
+            connect(square, otherSquare, pathSelectedOnly, square1Selected, square2Selected);
+            connect(otherSquare, square, pathSelectedOnly, square2Selected, square1Selected);
         }
     }
 

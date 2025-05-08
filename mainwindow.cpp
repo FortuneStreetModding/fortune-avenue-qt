@@ -840,9 +840,9 @@ void MainWindow::connectSquares(bool previousToCurrent, bool currentToPrevious) 
             }
         }
         if(previousToCurrent)
-            AutoPath::connect(previous->getData(), current->getData());
+            AutoPath::connect(previous->getData(), current->getData(), false, true, true);
         if(currentToPrevious)
-            AutoPath::connect(current->getData(), previous->getData());
+            AutoPath::connect(current->getData(), previous->getData(), false, true, true);
         addChangeSquaresAction({previous->getData().id, current->getData().id}, tr("Connect Squares"));
     }
 }
@@ -1248,14 +1248,8 @@ void MainWindow::autoPath() {
     } else {
         AutoPath::kruskalDfsAutoPathAlgorithm(std::as_const(squareItems), std::as_const(selectedItems), false);
     }
-<<<<<<< HEAD
     QMessageBox::information(this, tr("Auto-pathing"), tr("Successfully auto-pathed the entire board."));
     QVector<int> squareIds(items.size());
-=======
-
-    QMessageBox::information(this, "Auto-pathing", "Auto-pathed the entire board!");
-    QVector<int> squareIds(squareItems.size());
->>>>>>> e542cd2 (Add auto-path selected squares, and clean up Tools menu by nesting auto-path and sync options in sub-menus)
     std::iota(squareIds.begin(), squareIds.end(), 0);
     addChangeSquaresAction(squareIds, tr("Autopath"));
 }

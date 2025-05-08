@@ -1,6 +1,6 @@
 cmake_minimum_required(VERSION 3.19)
 
-set(PROJECT_VERSION 2.8.3)
+set(PROJECT_VERSION 2.8.4)
 project(FortuneAvenue VERSION ${PROJECT_VERSION} LANGUAGES C CXX)
 
 set(CMAKE_INCLUDE_CURRENT_DIR ON)
