@@ -8,21 +8,39 @@ set(CMAKE_AUTORCC ON)
 set(CMAKE_AUTOUIC ON)
 
 find_package(QT NAMES Qt6 REQUIRED COMPONENTS Core Concurrent)
-find_package(Qt${QT_VERSION_MAJOR} REQUIRED COMPONENTS Gui Widgets Concurrent)
+find_package(Qt${QT_VERSION_MAJOR} REQUIRED COMPONENTS Gui Widgets Concurrent LinguistTools)
+qt_standard_project_setup(
+    I18N_SOURCE_LANGUAGE en_US
+    I18N_TRANSLATED_LANGUAGES it_IT ja_JP
+)
 
-qt_standard_project_setup()
+qt_add_translations(FortuneAvenue
+    TS_FILES
+        languages/en_US.ts
+        languages/it_IT.ts
+        languages/ja_JP.ts
+    RESOURCE_PREFIX "translations"
+)
 
 set(PROJECT_SOURCES
-    autoassignshopmodelsdialog.cpp autoassignshopmodelsdialog.h autoassignshopmodelsdialog.ui
-    autopath.cpp autopath.h
+    autoassignshopmodelsdialog.cpp
+    autoassignshopmodelsdialog.h
+    autoassignshopmodelsdialog.ui
+    autopath.cpp
+    autopath.h
     darkdetect.h
     directions.h
     fortune-avenue.qrc
-    fortuneavenuegraphicsscene.cpp fortuneavenuegraphicsscene.h
-    fortunestreetdata.cpp fortunestreetdata.h
-    hungarian.cpp hungarian.h
+    fortuneavenuegraphicsscene.cpp
+    fortuneavenuegraphicsscene.h
+    fortunestreetdata.cpp
+    fortunestreetdata.h
+    hungarian.cpp
+    hungarian.h
     main.cpp
-    mainwindow.cpp mainwindow.h mainwindow.ui
+    mainwindow.cpp
+    mainwindow.h
+    mainwindow.ui
     muparser/src/muParser.cpp
     muparser/src/muParserBase.cpp
     muparser/src/muParserBytecode.cpp
@@ -30,17 +48,32 @@ set(PROJECT_SOURCES
     muparser/src/muParserError.cpp
     muparser/src/muParserTokenReader.cpp
     orderedmap.h
-    preferencesdialog.h preferencesdialog.cpp preferencesdialog.ui
-    screenshotdialog.cpp screenshotdialog.h screenshotdialog.ui
-    squareaddcmd.cpp squareaddcmd.h
-    squarechangecmd.cpp squarechangecmd.h
-    squareitem.cpp squareitem.h
-    squaremovecmd.cpp squaremovecmd.h
-    squareremovecmd.cpp squareremovecmd.h
-    squareshiftidscommand.cpp squareshiftidscommand.h
-    squareswapidscommand.cpp squareswapidscommand.h
-    updateboardmetacmd.cpp updateboardmetacmd.h
-    usersettings.h usersettings.cpp
+    preferencesdialog.h
+    preferencesdialog.cpp
+    preferencesdialog.ui
+    region.h
+    region.cpp
+    screenshotdialog.cpp
+    screenshotdialog.h
+    screenshotdialog.ui
+    squareaddcmd.cpp
+    squareaddcmd.h
+    squarechangecmd.cpp
+    squarechangecmd.h
+    squareitem.cpp
+    squareitem.h
+    squaremovecmd.cpp
+    squaremovecmd.h
+    squareremovecmd.cpp
+    squareremovecmd.h
+    squareshiftidscommand.cpp
+    squareshiftidscommand.h
+    squareswapidscommand.cpp
+    squareswapidscommand.h
+    updateboardmetacmd.cpp
+    updateboardmetacmd.h
+    usersettings.h
+    usersettings.cpp
     util.h
 )
 
@@ -56,13 +89,13 @@ if(APPLE)
     set_source_files_properties(${app_icon_macos} PROPERTIES
         MACOSX_PACKAGE_LOCATION "Resources")
     # this is where the app icon gets attached to the Mac OS bundle...
-    qt_add_executable(FortuneAvenue MACOSX_BUNDLE ${app_icon_macos} ${PROJECT_SOURCES})
+    qt_add_executable(FortuneAvenue MACOSX_BUNDLE ${app_icon_macos} ${PROJECT_SOURCES} ${QM_FILES})
 elseif(WIN32)
     set(app_icon_windows "${CMAKE_CURRENT_SOURCE_DIR}/AppIcon.rc")
     # ...and this is where it is attached to the Windows executable.
-    qt_add_executable(FortuneAvenue WIN32 ${app_icon_windows} ${PROJECT_SOURCES})
+    qt_add_executable(FortuneAvenue WIN32 ${app_icon_windows} ${PROJECT_SOURCES} ${QM_FILES})
 else()
-    qt_add_executable(FortuneAvenue ${PROJECT_SOURCES})
+    qt_add_executable(FortuneAvenue ${PROJECT_SOURCES} ${QM_FILES})
 endif()
 
 target_include_directories(FortuneAvenue PRIVATE

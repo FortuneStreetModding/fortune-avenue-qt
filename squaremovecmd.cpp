@@ -4,7 +4,7 @@
 SquareMoveCmd::SquareMoveCmd(FortuneAvenueGraphicsScene *scene, const QMap<int, QPointF> &oldPositions, const QMap<int, QPointF> &newPositions, const std::function<void (const QMap<int, QPointF> &)> &updateFn)
     : scene(scene), oldPositions(oldPositions), newPositions(newPositions), updateFn(updateFn)
 {
-    setText("Move Squares");
+    setText(FortuneAvenueGraphicsScene::tr("Move Squares"));
 }
 
 void SquareMoveCmd::undo()

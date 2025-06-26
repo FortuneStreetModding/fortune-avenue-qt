@@ -21,7 +21,7 @@ AutoAssignShopModelsDialog::AutoAssignShopModelsDialog(QWidget *parent, QVector<
     autoCalcFunction(autoCalcFunction)
 {
     ui->setupUi(this);
-    this->setWindowTitle("Auto Shop Model Assignment Options");
+    this->setWindowTitle(tr("Auto Shop Model Assignment Options"));
 
     connect(ui->allowNonVanilla, &QCheckBox::clicked, this, [&](bool checked) {
         ui->maxShopModelLabel->setEnabled(checked);
@@ -180,22 +180,22 @@ void AutoAssignShopModelsDialog::accept() {
     QStringList builder;
     if(updatedSquareItems.size() != modifiedSquareItems.size()) {
         if(updatedSquareItems.size() == 1) {
-            builder << QString("The shop model of %1 square has been assigned. %2 shop models remain the same.").arg(updatedSquareItems.size()).arg(modifiedSquareItems.size());
+            builder << QString(tr("The shop model of %1 square has been assigned. %2 shop models remain the same.")).arg(updatedSquareItems.size()).arg(modifiedSquareItems.size());
         } else {
-            builder << QString("The shop models of %1 squares have been assigned. %2 shop models remain the same.").arg(updatedSquareItems.size()).arg(modifiedSquareItems.size());
+            builder << QString(tr("The shop models of %1 squares have been assigned. %2 shop models remain the same.")).arg(updatedSquareItems.size()).arg(modifiedSquareItems.size());
         }
     } else {
         if(updatedSquareItems.size() == 0) {
-            builder << QString("No shop models have been assigned.").arg(updatedSquareItems.size());
+            builder << QString(tr("No shop models have been assigned.")).arg(updatedSquareItems.size());
         } else if(updatedSquareItems.size() == 1) {
-            builder << QString("The shop model of %1 square has been assigned.").arg(updatedSquareItems.size());
+            builder << QString(tr("The shop model of %1 square has been assigned.")).arg(updatedSquareItems.size());
         } else {
-            builder << QString("The shop models of %1 squares have been assigned.").arg(updatedSquareItems.size());
+            builder << QString(tr("The shop models of %1 squares have been assigned.")).arg(updatedSquareItems.size());
         }
     }
     if(preventDuplicates && !randomizedAssign && updatedSquareItems.size() > 0) {
-        builder << QString("Total deviation from previous shop values: %1").arg(QString::number(cost));
+        builder << QString(tr("Total deviation from previous shop values: %1")).arg(QString::number(cost));
     }
-    QMessageBox::information(this, "Auto Shop Model Assignment", builder.join("\n"));
+    QMessageBox::information(this, tr("Auto Shop Model Assignment"), builder.join("\n"));
     close();
 }

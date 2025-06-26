@@ -11,7 +11,7 @@ SquareRemoveCmd::SquareRemoveCmd(FortuneAvenueGraphicsScene *scene, const std::f
     std::sort(removedItems.begin(), removedItems.end(), [](const SquareData &A, const SquareData &B) {
         return A.id < B.id;
     });
-    setText("Remove Squares");
+    setText(FortuneAvenueGraphicsScene::tr("Remove Squares"));
 }
 
 void SquareRemoveCmd::undo()

@@ -1,11 +1,11 @@
 #ifndef AUTOASSIGNSHOPMODELSDIALOG_H
 #define AUTOASSIGNSHOPMODELSDIALOG_H
 
+#include "squareitem.h"
 #include <QDialog>
 #include <QCheckBox>
 #include <QGraphicsView>
 #include <QLineEdit>
-#include "fortuneavenuegraphicsscene.h"
 
 namespace Ui { class AutoAssignShopModelsDialog; }
 
