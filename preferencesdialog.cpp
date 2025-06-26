@@ -28,7 +28,7 @@ PreferencesDialog::PreferencesDialog(QWidget *parent)
     connect(ui->windowPaletteToolButton, &QToolButton::clicked, this, &PreferencesDialog::buildPaletteMenu);
 
     QSettings settings;
-    ui->windowPaletteLabel->setText(settings.value("window_palette/name", "not set").toString());
+    setPaletteLabel();
 
     bool useHighlightColorSetting = settings.value("window_palette/use_highlight_colors", 1).toBool();
     ui->usePaletteHighlightColorCheckbox->setChecked(useHighlightColorSetting);
@@ -53,7 +53,7 @@ PreferencesDialog::PreferencesDialog(QWidget *parent)
         ui->languageComboBox->setCurrentIndex(currentLanguageIndex);  // Select the item if found
     }
 
-    connect(ui->usePaletteHighlightColorCheckbox, &QCheckBox::stateChanged, this, [this](bool value){
+    connect(ui->usePaletteHighlightColorCheckbox, &QCheckBox::checkStateChanged, this, [this](bool value){
         usePaletteHighlightColorCheckboxStatusChanged(value);
     });
 
@@ -68,11 +68,11 @@ PreferencesDialog::PreferencesDialog(QWidget *parent)
         qInfo() << QString("language changed to %1").arg(QLocale::languageToString(locale.language()));
     });
 
-    connect(ui->useAdvancedAutoPathingSystemCheckbox, &QCheckBox::stateChanged, this, [this](bool value){
+    connect(ui->useAdvancedAutoPathingSystemCheckbox, &QCheckBox::checkStateChanged, this, [this](bool value){
         toggleAdvancedAutoPath(value);
     });
 
-    connect(ui->autoPathSelectedShouldAddEntryIdsToNearbySquaresCheckBox, &QCheckBox::stateChanged, this, [this](bool value){
+    connect(ui->autoPathSelectedShouldAddEntryIdsToNearbySquaresCheckBox, &QCheckBox::checkStateChanged, this, [this](bool value){
         toggleAutoPathSelectedShouldAddEntryIdsToNearbySquares(value);
     });
 }
@@ -105,8 +105,40 @@ void PreferencesDialog::buildPaletteMenu()
 
         // grab the name and category and whatever other data from these palettes
         QJsonObject rootObj = doc.object();
-        QString name = rootObj.value("name").toString();
-        QString category = rootObj.value("category").toString();
+
+        QSettings settings;
+        QString currentLanguageLocaleCode = settings.value("programLanguage","").toString();
+
+        // creating the variables first, just in case
+        QString name = "not set";
+        QString englishName = "not set";
+        QString category = "not set";
+
+        if(rootObj.contains("name") && rootObj["name"].isObject()){
+            // just being extra careful that the json is in the proper format
+            QJsonObject nameObj = rootObj["name"].toObject();
+
+            if(nameObj.contains(currentLanguageLocaleCode)){
+                name = nameObj.value(currentLanguageLocaleCode).toString();
+                englishName = nameObj.value("en_US").toString();
+            }
+            else{
+                name = nameObj.value("en_US").toString();
+                englishName = name;
+            }
+        }
+
+        if(rootObj.contains("category") && rootObj["category"].isObject()){
+            // just being extra careful that the json is in the proper format
+            QJsonObject categoryObj = rootObj["category"].toObject();
+
+            if(categoryObj.contains(currentLanguageLocaleCode)){
+                category = categoryObj.value(currentLanguageLocaleCode).toString();
+            }
+            else{
+                category = categoryObj.value("en_US").toString();
+            }
+        }
 
         // this is what we'll pass to setChosenPalette
         QJsonObject colors = rootObj.value("colors").toObject();
@@ -123,10 +155,13 @@ void PreferencesDialog::buildPaletteMenu()
 
         // add the palette as an action in the submenu of its category
         QAction *action = new QAction(name, this);
+        // set the English name so we can set this value in Settings
+        action->setData(englishName);
+
         connect(action, &QAction::triggered, this, &PreferencesDialog::paletteActionTriggered);
         submenus.value(category)->addAction(action);
 
-        palette_files.insert(name, colors);
+        palette_files.insert(englishName, colors);
     }
 
     // finally show the menu after building it, so we don't require
@@ -139,18 +174,64 @@ void PreferencesDialog::paletteActionTriggered()
     QAction *action = qobject_cast<QAction*>(sender());
     if (action) {
         QString paletteName = action->text();
+        QString paletteEnglishName = action->data().toString();
 
-        // do stuff with the selected palette name
+        // set the window palette label with the name of the new palette
         ui->windowPaletteLabel->setText(paletteName);
 
         // check whether or not to use highlight colors
         bool useHighlightColors = ui->usePaletteHighlightColorCheckbox->isChecked();
 
         // apply the palette
-        setChosenPalette(palette_files.value(paletteName), useHighlightColors);
+        setChosenPalette(palette_files.value(paletteEnglishName), useHighlightColors);
 
         // set the palette as chosen in QSettings
-        saveUserWindowPalette(paletteName, palette_files.value(paletteName), useHighlightColors);
+        saveUserWindowPalette(paletteEnglishName, palette_files.value(paletteEnglishName), useHighlightColors);
+    }
+}
+
+QString PreferencesDialog::returnPaletteNameInCurrentLanguage(QString currentLocaleCode, QString englishPaletteName){
+    // get the list of JSON palette files
+    QString palettePath = ":/palettes/";
+    QDir paletteDir = palettePath;
+    QStringList paletteFiles = paletteDir.entryList(QStringList() << "*.json", QDir::Files);
+
+    // return the english palette name if we cannot otherwise find it;
+    // if we can find it we'll overwrite it in the loop below.
+    QString nameInCurrentLanguage = englishPaletteName;
+
+    // iterate over each JSON file
+    for (const QString& jsonFile : paletteFiles) {
+        QJsonDocument doc = readJsonFile(palettePath, jsonFile);
+
+        // grab the name and category and whatever other data from these palettes
+        QJsonObject rootObj = doc.object();
+
+        if(rootObj.contains("name") && rootObj["name"].isObject()){
+            // just being extra careful that the json is in the proper format
+            QJsonObject nameObj = rootObj["name"].toObject();
+
+            if(englishPaletteName == nameObj.value("en_US").toString()){
+                if(nameObj.contains(currentLocaleCode)){
+                    nameInCurrentLanguage = nameObj.value(currentLocaleCode).toString();
+                }
+            }
+        }
+    }
+    return nameInCurrentLanguage;
+}
+
+void PreferencesDialog::setPaletteLabel(){
+    QSettings settings;
+    QString localeCode = settings.value("programLanguage","").toString();
+    QString englishPaletteName = settings.value("window_palette/name", "not set").toString();
+
+    // if language is not english, set the palette name in the appropriate language
+    if(localeCode == "en_US"){
+        ui->windowPaletteLabel->setText(englishPaletteName);
+    }
+    else{
+        ui->windowPaletteLabel->setText(returnPaletteNameInCurrentLanguage(localeCode, englishPaletteName));
     }
 }
 
@@ -183,7 +264,9 @@ void PreferencesDialog::changeEvent(QEvent *event)
 {
     if (event->type() == QEvent::LanguageChange) {
         qInfo() << "A PreferencesDialog::changeEvent() has fired!";
+
         ui->retranslateUi(this);
+        setPaletteLabel();
     }
     QWidget::changeEvent(event);
 }

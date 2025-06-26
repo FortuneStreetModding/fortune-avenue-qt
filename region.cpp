@@ -15,7 +15,8 @@ Region& Region::instance() {
 
 QStringList Region::availableProgramLanguages() const
 {
-    QDir dir(":/languages");
+    QDir dir(":/translations");
+
     QStringList translationFileNames = dir.entryList(QStringList("*.qm"), QDir::Files, QDir::Name);
     QStringList languagesAvailable;
 
@@ -39,7 +40,18 @@ bool Region::applyProgramLanguage(QString string)
     qApp->removeTranslator(&translator);
 
     qInfo() << QString("Installing %1").arg(string);
-    bool was_translation_successful = translator.load(QString(":/languages/%1").arg(string));
+
+    QDir dir(":/translations");
+
+    bool was_translation_successful = false;
+
+    QFileInfo translationFile(dir.filePath(string + ".qm"));
+    if(translationFile.exists() && translationFile.isFile()){
+        was_translation_successful = translator.load(dir.filePath(string + ".qm"));
+    }
+    else{
+        was_translation_successful = false;
+    }
 
     if(was_translation_successful){
         qApp->installTranslator(&translator);

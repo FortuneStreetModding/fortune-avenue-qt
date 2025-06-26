@@ -5,51 +5,61 @@
     <name>AutoAssignShopModelsDialog</name>
     <message>
         <location filename="../autoassignshopmodelsdialog.ui" line="14"/>
+        <location filename="../build/Desktop_Qt_6_9_1-Debug/FortuneAvenue_autogen/include/ui_autoassignshopmodelsdialog.h" line="181"/>
         <source>Dialog</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
         <location filename="../autoassignshopmodelsdialog.ui" line="32"/>
+        <location filename="../build/Desktop_Qt_6_9_1-Debug/FortuneAvenue_autogen/include/ui_autoassignshopmodelsdialog.h" line="182"/>
         <source>Allow readjusting shop values</source>
         <translation>Consenti la modifica dei valori dei negozi</translation>
     </message>
     <message>
         <location filename="../autoassignshopmodelsdialog.ui" line="49"/>
+        <location filename="../build/Desktop_Qt_6_9_1-Debug/FortuneAvenue_autogen/include/ui_autoassignshopmodelsdialog.h" line="183"/>
         <source>Max Shop Model Id:</source>
         <translation>ID massimo per il modello dei negozi:</translation>
     </message>
     <message>
         <location filename="../autoassignshopmodelsdialog.ui" line="76"/>
+        <location filename="../build/Desktop_Qt_6_9_1-Debug/FortuneAvenue_autogen/include/ui_autoassignshopmodelsdialog.h" line="184"/>
         <source>Assign shop model according to</source>
         <translation>Assegna il modello dei negozzi in base a</translation>
     </message>
     <message>
         <location filename="../autoassignshopmodelsdialog.ui" line="84"/>
+        <location filename="../build/Desktop_Qt_6_9_1-Debug/FortuneAvenue_autogen/include/ui_autoassignshopmodelsdialog.h" line="185"/>
         <source>Closest Value</source>
         <translation>Valore più vicino</translation>
     </message>
     <message>
         <location filename="../autoassignshopmodelsdialog.ui" line="89"/>
+        <location filename="../build/Desktop_Qt_6_9_1-Debug/FortuneAvenue_autogen/include/ui_autoassignshopmodelsdialog.h" line="186"/>
         <source>Randomized</source>
         <translation>Randomizzato</translation>
     </message>
     <message>
         <location filename="../autoassignshopmodelsdialog.ui" line="101"/>
+        <location filename="../build/Desktop_Qt_6_9_1-Debug/FortuneAvenue_autogen/include/ui_autoassignshopmodelsdialog.h" line="188"/>
         <source>Allow readjusting shop prices</source>
         <translation>Consenti la modifica dei prezzi dei negozi</translation>
     </message>
     <message>
         <location filename="../autoassignshopmodelsdialog.ui" line="118"/>
+        <location filename="../build/Desktop_Qt_6_9_1-Debug/FortuneAvenue_autogen/include/ui_autoassignshopmodelsdialog.h" line="189"/>
         <source>Prevent duplicates</source>
         <translation>Evita duplicati</translation>
     </message>
     <message>
         <location filename="../autoassignshopmodelsdialog.ui" line="135"/>
+        <location filename="../build/Desktop_Qt_6_9_1-Debug/FortuneAvenue_autogen/include/ui_autoassignshopmodelsdialog.h" line="190"/>
         <source>Allow non-vanilla shop models</source>
         <translation>Permetti modelli dei negozi non vanilla</translation>
     </message>
     <message>
         <location filename="../autoassignshopmodelsdialog.ui" line="152"/>
+        <location filename="../build/Desktop_Qt_6_9_1-Debug/FortuneAvenue_autogen/include/ui_autoassignshopmodelsdialog.h" line="191"/>
         <source>Modify only unset shop models</source>
         <translation>Modifica solo i modelli dei negozi non impostati</translation>
     </message>
@@ -261,71 +271,85 @@
     </message>
     <message>
         <location filename="../mainwindow.ui" line="86"/>
+        <location filename="../build/Desktop_Qt_6_9_1-Debug/FortuneAvenue_autogen/include/ui_mainwindow.h" line="1367"/>
         <source>Toolbox</source>
         <translation>Strumenti</translation>
     </message>
     <message>
         <location filename="../mainwindow.ui" line="129"/>
+        <location filename="../build/Desktop_Qt_6_9_1-Debug/FortuneAvenue_autogen/include/ui_mainwindow.h" line="1350"/>
         <source>Straight-Line Tolerance</source>
         <translation>Tolleranza Linea-Retta</translation>
     </message>
     <message>
         <location filename="../mainwindow.ui" line="143"/>
+        <location filename="../build/Desktop_Qt_6_9_1-Debug/FortuneAvenue_autogen/include/ui_mainwindow.h" line="1351"/>
         <source>Autopath Range</source>
         <translation>Range dell&apos;autopath</translation>
     </message>
     <message>
         <location filename="../mainwindow.ui" line="153"/>
+        <location filename="../build/Desktop_Qt_6_9_1-Debug/FortuneAvenue_autogen/include/ui_mainwindow.h" line="1352"/>
         <source>Snap All</source>
         <translation>Scatta tutti</translation>
     </message>
     <message>
         <location filename="../mainwindow.ui" line="160"/>
+        <location filename="../build/Desktop_Qt_6_9_1-Debug/FortuneAvenue_autogen/include/ui_mainwindow.h" line="1353"/>
         <source>Snap To:</source>
         <translation>Scatta a:</translation>
     </message>
     <message>
         <location filename="../mainwindow.ui" line="173"/>
+        <location filename="../build/Desktop_Qt_6_9_1-Debug/FortuneAvenue_autogen/include/ui_mainwindow.h" line="1354"/>
         <source>On ID Change:</source>
         <translation>Quando l&apos;ID è modificato:</translation>
     </message>
     <message>
         <location filename="../mainwindow.ui" line="180"/>
+        <location filename="../build/Desktop_Qt_6_9_1-Debug/FortuneAvenue_autogen/include/ui_mainwindow.h" line="1355"/>
         <source>Swap IDs</source>
         <translation>Scambia ID</translation>
     </message>
     <message>
         <location filename="../mainwindow.ui" line="193"/>
+        <location filename="../build/Desktop_Qt_6_9_1-Debug/FortuneAvenue_autogen/include/ui_mainwindow.h" line="1356"/>
         <source>Remove Square(s)</source>
         <translation>Rimuovi casella(e)</translation>
     </message>
     <message>
         <location filename="../mainwindow.ui" line="196"/>
+        <location filename="../build/Desktop_Qt_6_9_1-Debug/FortuneAvenue_autogen/include/ui_mainwindow.h" line="1358"/>
         <source>Backspace</source>
         <translation>Backspace</translation>
     </message>
     <message>
         <location filename="../mainwindow.ui" line="203"/>
+        <location filename="../build/Desktop_Qt_6_9_1-Debug/FortuneAvenue_autogen/include/ui_mainwindow.h" line="1360"/>
         <source>Add Square</source>
         <translation>Aggiungi casella</translation>
     </message>
     <message>
         <location filename="../mainwindow.ui" line="206"/>
+        <location filename="../build/Desktop_Qt_6_9_1-Debug/FortuneAvenue_autogen/include/ui_mainwindow.h" line="1362"/>
         <source>Ctrl+E</source>
         <translation></translation>
     </message>
     <message>
         <location filename="../mainwindow.ui" line="213"/>
+        <location filename="../build/Desktop_Qt_6_9_1-Debug/FortuneAvenue_autogen/include/ui_mainwindow.h" line="1364"/>
         <source>Shift IDs</source>
         <translation>Shifta ID</translation>
     </message>
     <message>
         <location filename="../mainwindow.ui" line="223"/>
+        <location filename="../build/Desktop_Qt_6_9_1-Debug/FortuneAvenue_autogen/include/ui_mainwindow.h" line="1365"/>
         <source>16</source>
         <translation></translation>
     </message>
     <message>
         <location filename="../mainwindow.ui" line="254"/>
+        <location filename="../build/Desktop_Qt_6_9_1-Debug/FortuneAvenue_autogen/include/ui_mainwindow.h" line="1377"/>
         <source>Board Settings</source>
         <translation>Impostazioni della mappa</translation>
     </message>
@@ -335,51 +359,61 @@
     </message>
     <message>
         <location filename="../mainwindow.ui" line="267"/>
+        <location filename="../build/Desktop_Qt_6_9_1-Debug/FortuneAvenue_autogen/include/ui_mainwindow.h" line="1369"/>
         <source>Salary Increment</source>
         <translation>Incremento del salario</translation>
     </message>
     <message>
         <location filename="../mainwindow.ui" line="274"/>
+        <location filename="../build/Desktop_Qt_6_9_1-Debug/FortuneAvenue_autogen/include/ui_mainwindow.h" line="1370"/>
         <source>Vertical + Horizontal</source>
         <translation>Verticale + Orizzontale</translation>
     </message>
     <message>
         <location filename="../mainwindow.ui" line="287"/>
+        <location filename="../build/Desktop_Qt_6_9_1-Debug/FortuneAvenue_autogen/include/ui_mainwindow.h" line="1371"/>
         <source>Initial Cash</source>
         <translation>Denaro Iniziale</translation>
     </message>
     <message>
         <location filename="../mainwindow.ui" line="297"/>
+        <location filename="../build/Desktop_Qt_6_9_1-Debug/FortuneAvenue_autogen/include/ui_mainwindow.h" line="1372"/>
         <source>None</source>
         <translation>Nessuno</translation>
     </message>
     <message>
         <location filename="../mainwindow.ui" line="310"/>
+        <location filename="../build/Desktop_Qt_6_9_1-Debug/FortuneAvenue_autogen/include/ui_mainwindow.h" line="1373"/>
         <source>Base Salary</source>
         <translation>Salario Base</translation>
     </message>
     <message>
         <location filename="../mainwindow.ui" line="333"/>
+        <location filename="../build/Desktop_Qt_6_9_1-Debug/FortuneAvenue_autogen/include/ui_mainwindow.h" line="1374"/>
         <source>Looping Mode</source>
         <translation>Modalità Looping</translation>
     </message>
     <message>
         <location filename="../mainwindow.ui" line="340"/>
+        <location filename="../build/Desktop_Qt_6_9_1-Debug/FortuneAvenue_autogen/include/ui_mainwindow.h" line="1375"/>
         <source>Vertical</source>
         <translation>Verticale</translation>
     </message>
     <message>
         <location filename="../mainwindow.ui" line="350"/>
+        <location filename="../build/Desktop_Qt_6_9_1-Debug/FortuneAvenue_autogen/include/ui_mainwindow.h" line="1376"/>
         <source>File Version</source>
         <translation>Versione dei file</translation>
     </message>
     <message>
         <location filename="../mainwindow.ui" line="426"/>
+        <location filename="../build/Desktop_Qt_6_9_1-Debug/FortuneAvenue_autogen/include/ui_mainwindow.h" line="1415"/>
         <source>Info</source>
         <translation>Info</translation>
     </message>
     <message>
         <location filename="../mainwindow.ui" line="432"/>
+        <location filename="../build/Desktop_Qt_6_9_1-Debug/FortuneAvenue_autogen/include/ui_mainwindow.h" line="1378"/>
         <location filename="../mainwindow.cpp" line="610"/>
         <location filename="../mainwindow.cpp" line="625"/>
         <location filename="../mainwindow.cpp" line="665"/>
@@ -392,16 +426,19 @@
     </message>
     <message>
         <location filename="../mainwindow.ui" line="449"/>
+        <location filename="../build/Desktop_Qt_6_9_1-Debug/FortuneAvenue_autogen/include/ui_mainwindow.h" line="1380"/>
         <source>Yield</source>
         <translation>Rendita</translation>
     </message>
     <message>
         <location filename="../mainwindow.ui" line="466"/>
+        <location filename="../build/Desktop_Qt_6_9_1-Debug/FortuneAvenue_autogen/include/ui_mainwindow.h" line="1381"/>
         <source>Type</source>
         <translation>Tipo</translation>
     </message>
     <message>
         <location filename="../mainwindow.ui" line="473"/>
+        <location filename="../build/Desktop_Qt_6_9_1-Debug/FortuneAvenue_autogen/include/ui_mainwindow.h" line="1382"/>
         <source>Load Shop Preset</source>
         <translation>Carica Preset del negozio</translation>
     </message>
@@ -411,56 +448,67 @@
     </message>
     <message>
         <location filename="../mainwindow.ui" line="485"/>
+        <location filename="../build/Desktop_Qt_6_9_1-Debug/FortuneAvenue_autogen/include/ui_mainwindow.h" line="1388"/>
         <source>Is Yoshi-type Lift?</source>
         <translation>È un passaggio di tipo Yoshi?</translation>
     </message>
     <message>
         <location filename="../mainwindow.ui" line="492"/>
+        <location filename="../build/Desktop_Qt_6_9_1-Debug/FortuneAvenue_autogen/include/ui_mainwindow.h" line="1389"/>
         <source>Shop Model</source>
         <translation>Modello del Negozio</translation>
     </message>
     <message>
         <location filename="../mainwindow.ui" line="509"/>
+        <location filename="../build/Desktop_Qt_6_9_1-Debug/FortuneAvenue_autogen/include/ui_mainwindow.h" line="1390"/>
         <source>Initial Price</source>
         <translation>Prezzo Iniziale</translation>
     </message>
     <message>
         <location filename="../mainwindow.ui" line="521"/>
+        <location filename="../build/Desktop_Qt_6_9_1-Debug/FortuneAvenue_autogen/include/ui_mainwindow.h" line="1391"/>
         <source>Auto-Calc</source>
         <translation>Calcolo automatico</translation>
     </message>
     <message>
         <location filename="../mainwindow.ui" line="569"/>
+        <location filename="../build/Desktop_Qt_6_9_1-Debug/FortuneAvenue_autogen/include/ui_mainwindow.h" line="1392"/>
         <source>Initial Value</source>
         <translation>Valore iniziale</translation>
     </message>
     <message>
         <location filename="../mainwindow.ui" line="582"/>
+        <location filename="../build/Desktop_Qt_6_9_1-Debug/FortuneAvenue_autogen/include/ui_mainwindow.h" line="1393"/>
         <source>ID</source>
         <translation>ID</translation>
     </message>
     <message>
         <location filename="../mainwindow.ui" line="635"/>
+        <location filename="../build/Desktop_Qt_6_9_1-Debug/FortuneAvenue_autogen/include/ui_mainwindow.h" line="1396"/>
         <source>From</source>
         <translation>Da</translation>
     </message>
     <message>
         <location filename="../mainwindow.ui" line="642"/>
+        <location filename="../build/Desktop_Qt_6_9_1-Debug/FortuneAvenue_autogen/include/ui_mainwindow.h" line="1397"/>
         <source>Allow All</source>
         <translation>Permetti Tutto</translation>
     </message>
     <message>
         <location filename="../mainwindow.ui" line="841"/>
+        <location filename="../build/Desktop_Qt_6_9_1-Debug/FortuneAvenue_autogen/include/ui_mainwindow.h" line="1408"/>
         <source>Reset Paths</source>
         <translation>Reimposta percorsi</translation>
     </message>
     <message>
         <location filename="../mainwindow.ui" line="960"/>
+        <location filename="../build/Desktop_Qt_6_9_1-Debug/FortuneAvenue_autogen/include/ui_mainwindow.h" line="1414"/>
         <source>Disallow All</source>
         <translation>Permetti Niente</translation>
     </message>
     <message>
         <location filename="../mainwindow.ui" line="997"/>
+        <location filename="../build/Desktop_Qt_6_9_1-Debug/FortuneAvenue_autogen/include/ui_mainwindow.h" line="1430"/>
         <source>Waypoints</source>
         <translation>Tappe</translation>
     </message>
@@ -469,52 +517,65 @@
         <location filename="../mainwindow.ui" line="1077"/>
         <location filename="../mainwindow.ui" line="1141"/>
         <location filename="../mainwindow.ui" line="1195"/>
+        <location filename="../build/Desktop_Qt_6_9_1-Debug/FortuneAvenue_autogen/include/ui_mainwindow.h" line="1416"/>
+        <location filename="../build/Desktop_Qt_6_9_1-Debug/FortuneAvenue_autogen/include/ui_mainwindow.h" line="1418"/>
+        <location filename="../build/Desktop_Qt_6_9_1-Debug/FortuneAvenue_autogen/include/ui_mainwindow.h" line="1421"/>
+        <location filename="../build/Desktop_Qt_6_9_1-Debug/FortuneAvenue_autogen/include/ui_mainwindow.h" line="1423"/>
         <source>Clear</source>
         <translation>Rimuovi</translation>
     </message>
     <message>
         <location filename="../mainwindow.ui" line="1033"/>
+        <location filename="../build/Desktop_Qt_6_9_1-Debug/FortuneAvenue_autogen/include/ui_mainwindow.h" line="1417"/>
         <source>Waypoint 1</source>
         <translation>Tappa 1</translation>
     </message>
     <message>
         <location filename="../mainwindow.ui" line="1087"/>
+        <location filename="../build/Desktop_Qt_6_9_1-Debug/FortuneAvenue_autogen/include/ui_mainwindow.h" line="1419"/>
         <source>Waypoint 2</source>
         <translation>Tappa 2</translation>
     </message>
     <message>
         <location filename="../mainwindow.ui" line="1128"/>
+        <location filename="../build/Desktop_Qt_6_9_1-Debug/FortuneAvenue_autogen/include/ui_mainwindow.h" line="1420"/>
         <source>Waypoint 3</source>
         <translation>Tappa 3</translation>
     </message>
     <message>
         <location filename="../mainwindow.ui" line="1179"/>
+        <location filename="../build/Desktop_Qt_6_9_1-Debug/FortuneAvenue_autogen/include/ui_mainwindow.h" line="1422"/>
         <source>Waypoint 4</source>
         <translation>Tappa 4</translation>
     </message>
     <message>
         <location filename="../mainwindow.ui" line="1227"/>
+        <location filename="../build/Desktop_Qt_6_9_1-Debug/FortuneAvenue_autogen/include/ui_mainwindow.h" line="1424"/>
         <location filename="../mainwindow.cpp" line="964"/>
         <source>Clear All Waypoints</source>
         <translation>Rimuovi Tutte le Tappe</translation>
     </message>
     <message>
         <location filename="../mainwindow.ui" line="1234"/>
+        <location filename="../build/Desktop_Qt_6_9_1-Debug/FortuneAvenue_autogen/include/ui_mainwindow.h" line="1425"/>
         <source>Sort All Waypoints</source>
         <translation>Organizza Tutte le Tappe</translation>
     </message>
     <message>
         <location filename="../mainwindow.ui" line="1243"/>
+        <location filename="../build/Desktop_Qt_6_9_1-Debug/FortuneAvenue_autogen/include/ui_mainwindow.h" line="1426"/>
         <source>Connect selected squares</source>
         <translation>Connetti tutte le caselle selezionate</translation>
     </message>
     <message>
         <location filename="../mainwindow.ui" line="1264"/>
+        <location filename="../build/Desktop_Qt_6_9_1-Debug/FortuneAvenue_autogen/include/ui_mainwindow.h" line="1427"/>
         <source>Connect Bidirectionally</source>
         <translation>Connetti bidirezionalmente</translation>
     </message>
     <message>
         <location filename="../mainwindow.ui" line="1282"/>
+        <location filename="../build/Desktop_Qt_6_9_1-Debug/FortuneAvenue_autogen/include/ui_mainwindow.h" line="1428"/>
         <source>-- Connect --&gt;</source>
         <translation>-- Connetti --&gt;</translation>
     </message>
@@ -524,21 +585,25 @@
     </message>
     <message>
         <location filename="../mainwindow.ui" line="20"/>
+        <location filename="../build/Desktop_Qt_6_9_1-Debug/FortuneAvenue_autogen/include/ui_mainwindow.h" line="1278"/>
         <source>Fortune Avenue[*]</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
         <location filename="../mainwindow.ui" line="260"/>
+        <location filename="../build/Desktop_Qt_6_9_1-Debug/FortuneAvenue_autogen/include/ui_mainwindow.h" line="1368"/>
         <source>Max.&#xa0;Dice Roll</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
         <location filename="../mainwindow.ui" line="439"/>
+        <location filename="../build/Desktop_Qt_6_9_1-Debug/FortuneAvenue_autogen/include/ui_mainwindow.h" line="1379"/>
         <source>Position (x, y)</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
         <location filename="../mainwindow.ui" line="480"/>
+        <location filename="../build/Desktop_Qt_6_9_1-Debug/FortuneAvenue_autogen/include/ui_mainwindow.h" line="1384"/>
         <source>Lift/Magmalice Start:
 Yes for Yoshi-type lift
 No for Magmalice lift</source>
@@ -561,261 +626,328 @@ No for Magmalice lift</source>
         <location filename="../mainwindow.ui" line="903"/>
         <location filename="../mainwindow.ui" line="921"/>
         <location filename="../mainwindow.ui" line="942"/>
+        <location filename="../build/Desktop_Qt_6_9_1-Debug/FortuneAvenue_autogen/include/ui_mainwindow.h" line="1394"/>
+        <location filename="../build/Desktop_Qt_6_9_1-Debug/FortuneAvenue_autogen/include/ui_mainwindow.h" line="1398"/>
+        <location filename="../build/Desktop_Qt_6_9_1-Debug/FortuneAvenue_autogen/include/ui_mainwindow.h" line="1399"/>
+        <location filename="../build/Desktop_Qt_6_9_1-Debug/FortuneAvenue_autogen/include/ui_mainwindow.h" line="1400"/>
+        <location filename="../build/Desktop_Qt_6_9_1-Debug/FortuneAvenue_autogen/include/ui_mainwindow.h" line="1401"/>
+        <location filename="../build/Desktop_Qt_6_9_1-Debug/FortuneAvenue_autogen/include/ui_mainwindow.h" line="1402"/>
+        <location filename="../build/Desktop_Qt_6_9_1-Debug/FortuneAvenue_autogen/include/ui_mainwindow.h" line="1403"/>
+        <location filename="../build/Desktop_Qt_6_9_1-Debug/FortuneAvenue_autogen/include/ui_mainwindow.h" line="1404"/>
+        <location filename="../build/Desktop_Qt_6_9_1-Debug/FortuneAvenue_autogen/include/ui_mainwindow.h" line="1405"/>
+        <location filename="../build/Desktop_Qt_6_9_1-Debug/FortuneAvenue_autogen/include/ui_mainwindow.h" line="1406"/>
+        <location filename="../build/Desktop_Qt_6_9_1-Debug/FortuneAvenue_autogen/include/ui_mainwindow.h" line="1407"/>
+        <location filename="../build/Desktop_Qt_6_9_1-Debug/FortuneAvenue_autogen/include/ui_mainwindow.h" line="1409"/>
+        <location filename="../build/Desktop_Qt_6_9_1-Debug/FortuneAvenue_autogen/include/ui_mainwindow.h" line="1410"/>
+        <location filename="../build/Desktop_Qt_6_9_1-Debug/FortuneAvenue_autogen/include/ui_mainwindow.h" line="1411"/>
+        <location filename="../build/Desktop_Qt_6_9_1-Debug/FortuneAvenue_autogen/include/ui_mainwindow.h" line="1412"/>
+        <location filename="../build/Desktop_Qt_6_9_1-Debug/FortuneAvenue_autogen/include/ui_mainwindow.h" line="1413"/>
         <source>...</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
         <location filename="../mainwindow.ui" line="628"/>
+        <location filename="../build/Desktop_Qt_6_9_1-Debug/FortuneAvenue_autogen/include/ui_mainwindow.h" line="1395"/>
         <source>To</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
         <location filename="../mainwindow.ui" line="1295"/>
+        <location filename="../build/Desktop_Qt_6_9_1-Debug/FortuneAvenue_autogen/include/ui_mainwindow.h" line="1429"/>
         <source>&lt;-- Connect --</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
         <location filename="../mainwindow.ui" line="1404"/>
+        <location filename="../build/Desktop_Qt_6_9_1-Debug/FortuneAvenue_autogen/include/ui_mainwindow.h" line="1431"/>
         <source>File</source>
         <translation>File</translation>
     </message>
     <message>
         <location filename="../mainwindow.ui" line="1417"/>
+        <location filename="../build/Desktop_Qt_6_9_1-Debug/FortuneAvenue_autogen/include/ui_mainwindow.h" line="1432"/>
         <source>Tools</source>
         <translation>Strumenti</translation>
     </message>
     <message>
         <location filename="../mainwindow.ui" line="1447"/>
+        <location filename="../build/Desktop_Qt_6_9_1-Debug/FortuneAvenue_autogen/include/ui_mainwindow.h" line="1435"/>
         <source>Help</source>
         <translation>Aiuto</translation>
     </message>
     <message>
         <location filename="../mainwindow.ui" line="1457"/>
+        <location filename="../build/Desktop_Qt_6_9_1-Debug/FortuneAvenue_autogen/include/ui_mainwindow.h" line="1436"/>
         <source>View</source>
         <translation>Visualizza</translation>
     </message>
     <message>
         <location filename="../mainwindow.ui" line="1466"/>
+        <location filename="../build/Desktop_Qt_6_9_1-Debug/FortuneAvenue_autogen/include/ui_mainwindow.h" line="1437"/>
         <source>Select</source>
         <translation>Seleziona</translation>
     </message>
     <message>
         <location filename="../mainwindow.ui" line="1478"/>
+        <location filename="../build/Desktop_Qt_6_9_1-Debug/FortuneAvenue_autogen/include/ui_mainwindow.h" line="1438"/>
         <source>Edit</source>
         <translation>Modifica</translation>
     </message>
     <message>
         <location filename="../mainwindow.ui" line="1491"/>
+        <location filename="../build/Desktop_Qt_6_9_1-Debug/FortuneAvenue_autogen/include/ui_mainwindow.h" line="1279"/>
         <source>New</source>
         <translation>Nuovo</translation>
     </message>
     <message>
         <location filename="../mainwindow.ui" line="1494"/>
+        <location filename="../build/Desktop_Qt_6_9_1-Debug/FortuneAvenue_autogen/include/ui_mainwindow.h" line="1281"/>
         <source>Ctrl+N</source>
         <translation></translation>
     </message>
     <message>
         <location filename="../mainwindow.ui" line="1499"/>
+        <location filename="../build/Desktop_Qt_6_9_1-Debug/FortuneAvenue_autogen/include/ui_mainwindow.h" line="1283"/>
         <source>Open</source>
         <translation>Apri</translation>
     </message>
     <message>
         <location filename="../mainwindow.ui" line="1502"/>
+        <location filename="../build/Desktop_Qt_6_9_1-Debug/FortuneAvenue_autogen/include/ui_mainwindow.h" line="1285"/>
         <source>Ctrl+O</source>
         <translation></translation>
     </message>
     <message>
         <location filename="../mainwindow.ui" line="1510"/>
+        <location filename="../build/Desktop_Qt_6_9_1-Debug/FortuneAvenue_autogen/include/ui_mainwindow.h" line="1287"/>
         <source>Save</source>
         <translation>Salva</translation>
     </message>
     <message>
         <location filename="../mainwindow.ui" line="1513"/>
+        <location filename="../build/Desktop_Qt_6_9_1-Debug/FortuneAvenue_autogen/include/ui_mainwindow.h" line="1289"/>
         <source>Ctrl+S</source>
         <translation></translation>
     </message>
     <message>
         <location filename="../mainwindow.ui" line="1521"/>
+        <location filename="../build/Desktop_Qt_6_9_1-Debug/FortuneAvenue_autogen/include/ui_mainwindow.h" line="1291"/>
         <source>Save As</source>
         <translation>Salva Come</translation>
     </message>
     <message>
         <location filename="../mainwindow.ui" line="1524"/>
+        <location filename="../build/Desktop_Qt_6_9_1-Debug/FortuneAvenue_autogen/include/ui_mainwindow.h" line="1293"/>
         <source>Ctrl+Shift+S</source>
         <translation></translation>
     </message>
     <message>
         <location filename="../mainwindow.ui" line="1532"/>
+        <location filename="../build/Desktop_Qt_6_9_1-Debug/FortuneAvenue_autogen/include/ui_mainwindow.h" line="1295"/>
         <source>Verify Board</source>
         <translation>Verifica Mappa</translation>
     </message>
     <message>
         <location filename="../mainwindow.ui" line="1421"/>
+        <location filename="../build/Desktop_Qt_6_9_1-Debug/FortuneAvenue_autogen/include/ui_mainwindow.h" line="1433"/>
         <source>Auto-Path</source>
         <translation>Auto-Percorso</translation>
     </message>
     <message>
         <location filename="../mainwindow.ui" line="1428"/>
+        <location filename="../build/Desktop_Qt_6_9_1-Debug/FortuneAvenue_autogen/include/ui_mainwindow.h" line="1434"/>
         <source>Sync for Switch State</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
         <location filename="../mainwindow.ui" line="1537"/>
+        <location filename="../build/Desktop_Qt_6_9_1-Debug/FortuneAvenue_autogen/include/ui_mainwindow.h" line="1296"/>
         <source>Entire Board</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
         <location filename="../mainwindow.ui" line="1542"/>
+        <location filename="../build/Desktop_Qt_6_9_1-Debug/FortuneAvenue_autogen/include/ui_mainwindow.h" line="1297"/>
         <source>Fortune Avenue Help</source>
         <translation>Aiuto di Fortune Avenue</translation>
     </message>
     <message>
         <location filename="../mainwindow.ui" line="1547"/>
+        <location filename="../build/Desktop_Qt_6_9_1-Debug/FortuneAvenue_autogen/include/ui_mainwindow.h" line="1298"/>
         <source>Zoom In</source>
         <translation>Ingrandisci</translation>
     </message>
     <message>
         <location filename="../mainwindow.ui" line="1550"/>
+        <location filename="../build/Desktop_Qt_6_9_1-Debug/FortuneAvenue_autogen/include/ui_mainwindow.h" line="1300"/>
         <source>Ctrl+Shift+=</source>
         <translation></translation>
     </message>
     <message>
         <location filename="../mainwindow.ui" line="1555"/>
+        <location filename="../build/Desktop_Qt_6_9_1-Debug/FortuneAvenue_autogen/include/ui_mainwindow.h" line="1302"/>
         <source>Zoom Out</source>
         <translation>Rimpicciolisci</translation>
     </message>
     <message>
         <location filename="../mainwindow.ui" line="1558"/>
+        <location filename="../build/Desktop_Qt_6_9_1-Debug/FortuneAvenue_autogen/include/ui_mainwindow.h" line="1304"/>
         <source>Ctrl+-</source>
         <translation></translation>
     </message>
     <message>
         <location filename="../mainwindow.ui" line="1569"/>
+        <location filename="../build/Desktop_Qt_6_9_1-Debug/FortuneAvenue_autogen/include/ui_mainwindow.h" line="1306"/>
         <source>Draw Axes</source>
         <translation>Mostra Assi</translation>
     </message>
     <message>
         <location filename="../mainwindow.ui" line="1572"/>
+        <location filename="../build/Desktop_Qt_6_9_1-Debug/FortuneAvenue_autogen/include/ui_mainwindow.h" line="1308"/>
         <source>Ctrl+K</source>
         <translation></translation>
     </message>
     <message>
         <location filename="../mainwindow.ui" line="1580"/>
+        <location filename="../build/Desktop_Qt_6_9_1-Debug/FortuneAvenue_autogen/include/ui_mainwindow.h" line="1310"/>
         <source>Drag to Pan</source>
         <translation>Trascina per spostarti</translation>
     </message>
     <message>
         <location filename="../mainwindow.ui" line="1583"/>
+        <location filename="../build/Desktop_Qt_6_9_1-Debug/FortuneAvenue_autogen/include/ui_mainwindow.h" line="1312"/>
         <source>Ctrl+D</source>
         <translation></translation>
     </message>
     <message>
         <location filename="../mainwindow.ui" line="1588"/>
+        <location filename="../build/Desktop_Qt_6_9_1-Debug/FortuneAvenue_autogen/include/ui_mainwindow.h" line="1314"/>
         <source>Screenshot</source>
         <translation>Screenshot</translation>
     </message>
     <message>
         <location filename="../mainwindow.ui" line="1593"/>
+        <location filename="../build/Desktop_Qt_6_9_1-Debug/FortuneAvenue_autogen/include/ui_mainwindow.h" line="1315"/>
         <source>Next</source>
         <translation>Prossimo</translation>
     </message>
     <message>
         <location filename="../mainwindow.ui" line="1596"/>
+        <location filename="../build/Desktop_Qt_6_9_1-Debug/FortuneAvenue_autogen/include/ui_mainwindow.h" line="1317"/>
         <source>PgUp</source>
         <translation>Pagina su</translation>
     </message>
     <message>
         <location filename="../mainwindow.ui" line="1601"/>
+        <location filename="../build/Desktop_Qt_6_9_1-Debug/FortuneAvenue_autogen/include/ui_mainwindow.h" line="1319"/>
         <source>Previous</source>
         <translation>Precedente</translation>
     </message>
     <message>
         <location filename="../mainwindow.ui" line="1604"/>
+        <location filename="../build/Desktop_Qt_6_9_1-Debug/FortuneAvenue_autogen/include/ui_mainwindow.h" line="1321"/>
         <source>PgDown</source>
         <translation>Pagina giù</translation>
     </message>
     <message>
         <location filename="../mainwindow.ui" line="1609"/>
+        <location filename="../build/Desktop_Qt_6_9_1-Debug/FortuneAvenue_autogen/include/ui_mainwindow.h" line="1323"/>
         <source>Select All</source>
         <translation>Seleziona tutto</translation>
     </message>
     <message>
         <location filename="../mainwindow.ui" line="1612"/>
+        <location filename="../build/Desktop_Qt_6_9_1-Debug/FortuneAvenue_autogen/include/ui_mainwindow.h" line="1325"/>
         <source>Ctrl+A</source>
         <translation></translation>
     </message>
     <message>
         <location filename="../mainwindow.ui" line="1617"/>
+        <location filename="../build/Desktop_Qt_6_9_1-Debug/FortuneAvenue_autogen/include/ui_mainwindow.h" line="1327"/>
         <source>Follow Waypoint Destination 1</source>
         <translation>Segui la destinazione della Tappa 1</translation>
     </message>
     <message>
         <location filename="../mainwindow.ui" line="1620"/>
+        <location filename="../build/Desktop_Qt_6_9_1-Debug/FortuneAvenue_autogen/include/ui_mainwindow.h" line="1329"/>
         <source>Ctrl+1</source>
         <translation></translation>
     </message>
     <message>
         <location filename="../mainwindow.ui" line="1625"/>
+        <location filename="../build/Desktop_Qt_6_9_1-Debug/FortuneAvenue_autogen/include/ui_mainwindow.h" line="1331"/>
         <source>Follow Waypoint Destination 2</source>
         <translation>Segui la destinazione della Tappa 2</translation>
     </message>
     <message>
         <location filename="../mainwindow.ui" line="1628"/>
+        <location filename="../build/Desktop_Qt_6_9_1-Debug/FortuneAvenue_autogen/include/ui_mainwindow.h" line="1333"/>
         <source>Ctrl+2</source>
         <translation></translation>
     </message>
     <message>
         <location filename="../mainwindow.ui" line="1633"/>
+        <location filename="../build/Desktop_Qt_6_9_1-Debug/FortuneAvenue_autogen/include/ui_mainwindow.h" line="1335"/>
         <source>Follow Waypoint Destination 3</source>
         <translation>Segui la destinazione della Tappa 3</translation>
     </message>
     <message>
         <location filename="../mainwindow.ui" line="1636"/>
+        <location filename="../build/Desktop_Qt_6_9_1-Debug/FortuneAvenue_autogen/include/ui_mainwindow.h" line="1337"/>
         <source>Ctrl+3</source>
         <translation></translation>
     </message>
     <message>
         <location filename="../mainwindow.ui" line="1641"/>
+        <location filename="../build/Desktop_Qt_6_9_1-Debug/FortuneAvenue_autogen/include/ui_mainwindow.h" line="1339"/>
         <source>Shop Price Auto-Calc Function</source>
         <translation>Funzione di calcolo automatico dei prezzi dei negozi</translation>
     </message>
     <message>
         <location filename="../mainwindow.ui" line="1646"/>
+        <location filename="../build/Desktop_Qt_6_9_1-Debug/FortuneAvenue_autogen/include/ui_mainwindow.h" line="1340"/>
         <source>District Simulator</source>
         <translation>Simulatore dei Quartieri</translation>
     </message>
     <message>
         <location filename="../mainwindow.ui" line="1654"/>
+        <location filename="../build/Desktop_Qt_6_9_1-Debug/FortuneAvenue_autogen/include/ui_mainwindow.h" line="1341"/>
         <source>Use Legacy Auto-Path</source>
         <translation>Utilizza Auto-Percorso automatico</translation>
     </message>
     <message>
         <location filename="../mainwindow.ui" line="1662"/>
+        <location filename="../build/Desktop_Qt_6_9_1-Debug/FortuneAvenue_autogen/include/ui_mainwindow.h" line="1342"/>
         <source>Use Advanced Auto-Path</source>
         <translation>Utilizza Auto-Percorso avanzato</translation>
     </message>
     <message>
         <location filename="../mainwindow.ui" line="1667"/>
+        <location filename="../build/Desktop_Qt_6_9_1-Debug/FortuneAvenue_autogen/include/ui_mainwindow.h" line="1343"/>
         <source>Auto-Assign Shop Models</source>
         <translation>Assegna in automatico i modelli dei negozi</translation>
     </message>
     <message>
         <location filename="../mainwindow.ui" line="1672"/>
+        <location filename="../build/Desktop_Qt_6_9_1-Debug/FortuneAvenue_autogen/include/ui_mainwindow.h" line="1344"/>
         <source>Set Max Path Search Depth</source>
         <translation>Imposta la profondità di ricerca massima per i percorsi</translation>
     </message>
     <message>
         <location filename="../mainwindow.ui" line="1677"/>
+        <location filename="../build/Desktop_Qt_6_9_1-Debug/FortuneAvenue_autogen/include/ui_mainwindow.h" line="1345"/>
         <source>From Other Board</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
         <location filename="../mainwindow.ui" line="1682"/>
+        <location filename="../build/Desktop_Qt_6_9_1-Debug/FortuneAvenue_autogen/include/ui_mainwindow.h" line="1346"/>
         <source>To Other Board(s)</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
         <location filename="../mainwindow.ui" line="1700"/>
+        <location filename="../build/Desktop_Qt_6_9_1-Debug/FortuneAvenue_autogen/include/ui_mainwindow.h" line="1349"/>
         <source>Selected Squares</source>
         <translation type="unfinished"></translation>
     </message>
@@ -825,6 +957,7 @@ No for Magmalice lift</source>
     </message>
     <message>
         <location filename="../mainwindow.ui" line="1692"/>
+        <location filename="../build/Desktop_Qt_6_9_1-Debug/FortuneAvenue_autogen/include/ui_mainwindow.h" line="1348"/>
         <source>Preferences...</source>
         <translation type="unfinished"></translation>
     </message>
@@ -834,6 +967,7 @@ No for Magmalice lift</source>
     </message>
     <message>
         <location filename="../mainwindow.ui" line="1687"/>
+        <location filename="../build/Desktop_Qt_6_9_1-Debug/FortuneAvenue_autogen/include/ui_mainwindow.h" line="1347"/>
         <source>Exit</source>
         <translation>Esci</translation>
     </message>
@@ -1261,41 +1395,49 @@ Enter 0 to restore game default behavior which is max(squareCount/3,16)</source>
     <name>PreferencesDialog</name>
     <message>
         <location filename="../preferencesdialog.ui" line="29"/>
+        <location filename="../build/Desktop_Qt_6_9_1-Debug/FortuneAvenue_autogen/include/ui_preferencesdialog.h" line="159"/>
         <source>Window Palette</source>
         <translation>Palette dei colori della Finestra</translation>
     </message>
     <message>
         <location filename="../preferencesdialog.ui" line="55"/>
+        <location filename="../build/Desktop_Qt_6_9_1-Debug/FortuneAvenue_autogen/include/ui_preferencesdialog.h" line="160"/>
         <source>Classic Dark</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
         <location filename="../preferencesdialog.ui" line="65"/>
+        <location filename="../build/Desktop_Qt_6_9_1-Debug/FortuneAvenue_autogen/include/ui_preferencesdialog.h" line="161"/>
         <source>Change</source>
         <translation>Cambia</translation>
     </message>
     <message>
         <location filename="../preferencesdialog.ui" line="99"/>
+        <location filename="../build/Desktop_Qt_6_9_1-Debug/FortuneAvenue_autogen/include/ui_preferencesdialog.h" line="163"/>
         <source>Use Palette Highlight Color</source>
         <translation>Usa l&apos;Evidenziatore della Palette dei Colori</translation>
     </message>
     <message>
         <location filename="../preferencesdialog.ui" line="125"/>
+        <location filename="../build/Desktop_Qt_6_9_1-Debug/FortuneAvenue_autogen/include/ui_preferencesdialog.h" line="164"/>
         <source>Display Language</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
         <location filename="../preferencesdialog.ui" line="137"/>
+        <location filename="../build/Desktop_Qt_6_9_1-Debug/FortuneAvenue_autogen/include/ui_preferencesdialog.h" line="165"/>
         <source>Auto-Path</source>
         <translation type="unfinished">Auto-Percorso</translation>
     </message>
     <message>
         <location filename="../preferencesdialog.ui" line="143"/>
+        <location filename="../build/Desktop_Qt_6_9_1-Debug/FortuneAvenue_autogen/include/ui_preferencesdialog.h" line="166"/>
         <source>Use Advanced Auto-Pathing System</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
         <location filename="../preferencesdialog.ui" line="150"/>
+        <location filename="../build/Desktop_Qt_6_9_1-Debug/FortuneAvenue_autogen/include/ui_preferencesdialog.h" line="167"/>
         <source>Auto-Path Selected: Add Entry IDs to nearby squares</source>
         <translation type="unfinished"></translation>
     </message>
@@ -1305,6 +1447,7 @@ Enter 0 to restore game default behavior which is max(squareCount/3,16)</source>
     </message>
     <message>
         <location filename="../preferencesdialog.ui" line="14"/>
+        <location filename="../build/Desktop_Qt_6_9_1-Debug/FortuneAvenue_autogen/include/ui_preferencesdialog.h" line="158"/>
         <location filename="../preferencesdialog.cpp" line="25"/>
         <source>Preferences</source>
         <translation type="unfinished">Preferenze</translation>
@@ -1322,31 +1465,37 @@ Enter 0 to restore game default behavior which is max(squareCount/3,16)</source>
     </message>
     <message>
         <location filename="../screenshotdialog.ui" line="20"/>
+        <location filename="../build/Desktop_Qt_6_9_1-Debug/FortuneAvenue_autogen/include/ui_screenshotdialog.h" line="127"/>
         <source>Dialog</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
         <location filename="../screenshotdialog.ui" line="56"/>
+        <location filename="../build/Desktop_Qt_6_9_1-Debug/FortuneAvenue_autogen/include/ui_screenshotdialog.h" line="129"/>
         <source>+</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
         <location filename="../screenshotdialog.ui" line="63"/>
+        <location filename="../build/Desktop_Qt_6_9_1-Debug/FortuneAvenue_autogen/include/ui_screenshotdialog.h" line="130"/>
         <source>-</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
         <location filename="../screenshotdialog.ui" line="89"/>
+        <location filename="../build/Desktop_Qt_6_9_1-Debug/FortuneAvenue_autogen/include/ui_screenshotdialog.h" line="131"/>
         <source>Screenshot format:</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
         <location filename="../screenshotdialog.ui" line="96"/>
+        <location filename="../build/Desktop_Qt_6_9_1-Debug/FortuneAvenue_autogen/include/ui_screenshotdialog.h" line="132"/>
         <source>webp</source>
         <translation>webp</translation>
     </message>
     <message>
         <location filename="../screenshotdialog.ui" line="26"/>
+        <location filename="../build/Desktop_Qt_6_9_1-Debug/FortuneAvenue_autogen/include/ui_screenshotdialog.h" line="128"/>
         <source>Choose board files (.frb) to take screenshots for:</source>
         <translation>Seleziona i file della mappa (.frb) da cui fare gli screenshot:</translation>
     </message>

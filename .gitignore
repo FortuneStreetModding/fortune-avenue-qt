@@ -1,6 +1,6 @@
 # This file is used to ignore files which are generated
 # ----------------------------------------------------------------------------
-
+build/
 *~
 *.autosave
 *.a
@@ -22,7 +22,7 @@ tags
 .DS_Store
 .directory
 *.debug
-Makefile*
+/Makefile*
 *.prl
 *.app
 moc_*.cpp
@@ -30,11 +30,13 @@ ui_*.h
 qrc_*.cpp
 Thumbs.db
 *.res
+# *.rc
 /.qmake.cache
 /.qmake.stash
 
 # qtcreator generated files
-CMakeLists.txt.user
+*.pro.user*
+*.txt.user*
 
 # xemacs temporary files
 *.flc
@@ -43,6 +45,7 @@ CMakeLists.txt.user
 .*.swp
 
 # Visual Studio generated files
+.vscode/*
 *.ib_pdb_index
 *.idb
 *.ilk
@@ -69,3 +72,4 @@ CMakeLists.txt.user
 *.dll
 *.exe
 
+docs/_build/*
